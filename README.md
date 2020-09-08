@@ -1,11 +1,11 @@
-# template-proto
+# aranya-proto
 
-[![CI](https://github.com/arhat-dev/template-proto/workflows/CI/badge.svg)](https://github.com/arhat-dev/template-proto/actions?query=workflow%3ACI)
-[![GoDoc](https://godoc.org/arhat.dev/template-proto?status.svg)](https://godoc.org/arhat.dev/template-proto)
-[![GoReportCard](https://goreportcard.com/badge/goiiot/libmqtt)](https://goreportcard.com/report/arhat.dev/template-proto)
-[![codecov](https://codecov.io/gh/arhat-dev/template-proto/branch/master/graph/badge.svg)](https://codecov.io/gh/arhat-dev/template-proto)
+[![CI](https://github.com/arhat-dev/aranya-proto/workflows/CI/badge.svg)](https://github.com/arhat-dev/aranya-proto/actions?query=workflow%3ACI)
+[![GoDoc](https://pkg.go.dev/badge/arhat.dev/aranya-proto)](https://pkg.go.dev/arhat.dev/aranya-proto)
+[![GoReportCard](https://goreportcard.com/badge/arhat.dev/aranya-proto)](https://goreportcard.com/report/arhat.dev/aranya-proto)
+[![codecov](https://codecov.io/gh/arhat-dev/aranya-proto/branch/master/graph/badge.svg)](https://codecov.io/gh/arhat-dev/aranya-proto)
 
-Template protocol repo
+aranya protocol repo
 
 ## Workflow
 

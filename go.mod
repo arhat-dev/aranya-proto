@@ -1,4 +1,4 @@
-module arhat.dev/template-proto
+module arhat.dev/aranya-proto
 
 go 1.15
 

@@ -39,11 +39,11 @@ _do_gen_proto_go() {
     -I"${GOPATH}/src" \
     -I"${GOPATH}/src/github.com/gogo/protobuf/protobuf" \
     -I"./src" \
-    --gogoslick_out "plugins=grpc:./template-gopb" \
+    --gogoslick_out "plugins=grpc:./aranya-gopb" \
     --gogoslick_opt "paths=source_relative" \
     ${PROTO_SOURCE}
 
-  # fix_pb_gen_json_name ./template-gopb/*.pb.go
+  # fix_pb_gen_json_name ./aranya-gopb/*.pb.go
 }
 
 _do_gen_proto_c() {
@@ -51,7 +51,7 @@ _do_gen_proto_c() {
   pipenv run \
   python build/nanopb/generator/nanopb_generator.py \
     --no-timestamp \
-    --output-dir ./template-nanopb \
+    --output-dir ./aranya-nanopb \
     -I"./src" \
     ${PROTO_SOURCE}
 }

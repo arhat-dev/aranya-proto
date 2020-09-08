@@ -1,0 +1,85 @@
+/*
+Copyright 2020 The arhat.dev Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+syntax = "proto3";
+
+// +build !nodev
+package aranya;
+
+option go_package = "arhat.dev/aranya-proto/aranyagopb";
+
+message DeviceCmd {
+    enum Action {
+        _INVALID_DEVICE_ACTION = 0;
+        LIST_DEVICES = 1;
+        ENSURE_DEVICE = 2;
+        REMOVE_DEVICE = 3;
+    }
+
+    Action action = 1;
+
+    oneof options {
+        string device_id = 2;
+        Device device_spec = 3;
+    }
+}
+
+message Device {
+    string id = 1;
+
+    DeviceConnectivity connectivity = 2;
+    repeated DeviceOperation operations = 3;
+    repeated DeviceMetrics metrics = 4;
+    DeviceConnectivity upload_connectivity = 5;
+}
+
+message DeviceConnectivity {
+    enum Mode {
+        DEVICE_CONNECTIVITY_MODE_CLIENT = 0;
+        DEVICE_CONNECTIVITY_MODE_SERVER = 1;
+    }
+
+    string transport = 1;
+    Mode mode = 2;
+    string target = 3;
+
+    map<string, string> params = 4;
+    DeviceConnectivityTLSConfig tls = 5;
+}
+
+message DeviceConnectivityTLSConfig {
+    bytes ca_cert = 1;
+    bytes cert = 2;
+    bytes key = 3;
+}
+
+message DeviceOperation {
+    string id = 1;
+    map<string, string> transport_params = 2;
+}
+
+message DeviceMetrics {
+    enum DeviceMetricsUploadMethod {
+        UPLOAD_WITH_NODE_METRICS = 0;
+        UPLOAD_WITH_ARHAT_CONNECTIVITY = 1;
+        UPLOAD_WITH_STANDALONE_CLIENT = 2;
+    }
+
+    string id = 1;
+    map<string, string> transport_params = 2;
+    DeviceMetricsUploadMethod upload_method = 3;
+    map<string, string> upload_params = 4;
+}

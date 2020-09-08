@@ -1,0 +1,325 @@
+/*
+Copyright 2019 The arhat.dev Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+syntax = "proto3";
+
+// +build !rt_none
+package aranya;
+
+option go_package = "arhat.dev/aranya-proto/aranyagopb";
+
+import "cmd_misc.proto";
+import "cmd_network.proto";
+
+message PodCmd {
+    enum Action {
+        _INVALID_POD_ACTION = 0;
+
+        // create init/work/ephemeral containers in pod
+        CREATE_CONTAINERS = 1;
+
+        // Delete a pod in device
+        DELETE_POD = 2;
+
+        // List all managed pod in device
+        LIST_PODS = 3;
+
+        // Ensure all images exist
+        ENSURE_IMAGES = 4;
+
+        // Delete containers
+        DELETE_CONTAINERS = 6;
+
+        // start arhat pod sync loop
+        START_POD_SYNC_LOOP = 7;
+    }
+
+    // action type
+    Action action = 1;
+
+    // options for action
+    oneof options {
+        SyncOptions sync_options = 2;
+        // used by image ensure
+        ImageEnsureOptions image_ensure_options = 3;
+        // used by create or update
+        CreateOptions create_options = 4;
+        // used by delete
+        DeleteOptions delete_options = 5;
+        // used by list
+        ListOptions list_options = 6;
+    }
+}
+
+message AuthConfig {
+    string username = 1;
+    string password = 2;
+
+    string auth = 3;
+    string server_address = 4;
+    // IdentityToken is used to authenticate the user and get
+    // an access token for the registry.
+    string identity_token = 5;
+    // RegistryToken is a bearer token to be sent to a registry
+    string registry_token = 6;
+    string email = 7;
+}
+
+enum ImagePullPolicy {
+    IMAGE_PULL_ALWAYS = 0;
+    IMAGE_PULL_IF_NOT_PRESENT = 1;
+    IMAGE_PULL_NEVER = 2;
+}
+
+message ImagePull {
+    // image pull secrets
+    AuthConfig auth_config = 2;
+    // pull policy
+    ImagePullPolicy pull_policy = 3;
+}
+
+message ImageEnsureOptions {
+    map<string, ImagePull> image_pull = 1;
+}
+
+message NamedData {
+    map<string, bytes> data_map = 1;
+}
+
+message ContainerPort {
+    string protocol = 1;
+    int32 container_port = 2;
+    int32 host_port = 3;
+    string host_ip = 4;
+}
+
+message SELinuxOptions {
+    string type = 1;
+    string level = 2;
+    string role = 3;
+    string user = 4;
+}
+
+message SecurityOptions {
+    enum ProcMountKind {
+        PROC_MOUNT_DEFAULT = 0;
+        PROC_MOUNT_UNMASKED = 1;
+    }
+
+    bool privileged = 1;
+    bool allow_new_privileges = 2;
+    bool non_root = 3;
+    bool read_only_rootfs = 4;
+
+    int64 user = 5;
+    int64 group = 6;
+
+    repeated string caps_add = 7;
+    repeated string caps_drop = 8;
+
+    ProcMountKind proc_mount_kind = 9;
+
+    SELinuxOptions selinux_options = 10;
+}
+
+message MountOptions {
+    string mount_path = 1;
+    string sub_path = 2;
+    bool read_only = 3;
+    // device type
+    string type = 4;
+    repeated string options = 5;
+    uint32 file_mode = 6;
+
+    // mount this volume use cluster CSI
+    bool remote = 7;
+}
+
+message ActionMethod {
+    message ActionExec {
+        repeated string command = 1;
+    }
+
+    message ActionHTTP {
+        string method = 1;
+        string url = 2;
+        repeated KeyValuePair headers = 3;
+    }
+
+    message ActionSocket {
+        string url = 1;
+    }
+
+    oneof action {
+        ActionExec exec = 1;
+        ActionHTTP http = 2;
+        ActionSocket socket = 3;
+    };
+}
+
+message Probe {
+    ActionMethod method = 1;
+
+    int64 initial_delay = 2;
+    int64 probe_timeout = 3;
+    int64 probe_interval = 4;
+
+    int32 success_threshold = 5;
+    int32 failure_threshold = 6;
+}
+
+message ContainerSpec {
+    string name = 2;
+    // container image name to pull
+    string image = 1;
+
+    // Command (ENTRYPOINT in Dockerfile)
+    repeated string command = 3;
+    // Args (CMD in Dockerfile)
+    repeated string args = 4;
+
+    string working_dir = 5;
+    bool stdin = 6;
+    bool stdin_once = 7;
+    bool tty = 8;
+
+    // Contaienr environment variables
+    //
+    // key: env key
+    // value: env value
+    map<string, string> envs = 11;
+
+    // Container voulme or device mounts
+    //
+    // key: volume or device name
+    // value: mount options
+    map<string, MountOptions> mounts = 12;
+
+    Probe readiness_check = 13;
+    Probe liveness_check = 14;
+
+    //
+    // resolved security opts in pod
+    //
+    SecurityOptions security = 21;
+
+    //
+    // Container hooks
+    //
+    ActionMethod hook_post_start = 31;
+}
+
+enum RestartPolicy {
+    RESTART_ALWAYS = 0;
+    RESTART_ON_FAILURE = 1;
+    RESTART_NEVER = 2;
+}
+
+message CreateOptions {
+    // kubernetes metadata
+    string pod_uid = 1;
+    string namespace = 2;
+    string name = 3;
+
+    RestartPolicy restart_policy = 4;
+
+    //
+    // Relationships to host namespaces
+    //
+    bool host_ipc = 5;
+    bool host_network = 6;
+    bool host_pid = 7;
+    // custom hostname to override container id as hostname
+    string hostname = 8;
+    // share pid namespace between containers in the same pod
+    bool share_pid = 9;
+
+    // key: container name in the pod
+    // value: container creation spec
+    reserved 10;
+    // map<string, ContainerSpec> init_containers = 10 [deprecated = true];
+
+    repeated ContainerSpec containers = 11;
+    // wait unitl all containers defined above exited with no error
+    bool wait_containers = 12;
+
+    // Container ports is processed when creating the pause container
+    //
+    // key: port name
+    //          the port name is in the format of `{container}/{port_name}`
+    //          if the port name is missing in the corev1.Container,
+    //          it's index number in the containers list will be used as {port_name}
+    // value: port map and spec
+    //          currently only ports with `host_port` specified will be exposed
+    map<string, ContainerPort> ports = 13;
+
+    //
+    // Network options
+    //
+    repeated string name_servers = 14;
+    repeated string search_domains = 15;
+    // /etc/hosts entries
+    //
+    // key: hostname
+    // value: ip
+    map<string, string> hosts = 16;
+    repeated string dns_options = 17;
+    NetworkOptions network_options = 18;
+
+    //
+    // Volumes and devices (in early days, they are the same)
+    //
+
+    // Volumes and devices' host path
+    //
+    // key: volume or device name
+    // value: host path
+    map<string, string> host_paths = 21;
+
+    // Data to populate files in container
+    //
+    // key: volume name
+    // value: data from {ConfigMap, Secret}
+    map<string, NamedData> volume_data = 22;
+
+    map<string, string> labels = 23;
+
+    // whether we should consider the pod failed if container creation failed
+    bool delete_pod_on_failure = 24;
+
+    // Security options
+    map<string, string> sysctls = 31;
+}
+
+message DeleteOptions {
+    // pod to perform delete operation
+    string pod_uid = 1;
+    // containers to delete, if not specified, delete this pod
+    repeated string containers = 2;
+
+    // pod deletion grace time
+    int64 grace_time = 10;
+    map<string, ActionMethod> hook_pre_stop = 11;
+}
+
+message ListOptions {
+    // pod namespace
+    string namespace = 1;
+    // pod name
+    string name = 2;
+    // show all pods available
+    bool all = 3;
+}
