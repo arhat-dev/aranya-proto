@@ -25,7 +25,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"arhat.dev/aranya-proto/gopb/protoconst"
+	"arhat.dev/aranya-proto/aranyagopb/aranyagoconst"
 )
 
 func (v *MountOptions) Ensure(dir string, dataMap map[string][]byte) (mountPath string, err error) {
@@ -58,16 +58,16 @@ func (v *MountOptions) Ensure(dir string, dataMap map[string][]byte) (mountPath 
 }
 
 func (s *PodStatus_ContainerStatus) GetTimeCreatedAt() time.Time {
-	t, _ := time.Parse(protoconst.TimeLayout, s.CreatedAt)
+	t, _ := time.Parse(aranyagoconst.TimeLayout, s.CreatedAt)
 	return t
 }
 
 func (s *PodStatus_ContainerStatus) GetTimeStartedAt() time.Time {
-	t, _ := time.Parse(protoconst.TimeLayout, s.StartedAt)
+	t, _ := time.Parse(aranyagoconst.TimeLayout, s.StartedAt)
 	return t
 }
 
 func (s *PodStatus_ContainerStatus) GetTimeFinishedAt() time.Time {
-	t, _ := time.Parse(protoconst.TimeLayout, s.FinishedAt)
+	t, _ := time.Parse(aranyagoconst.TimeLayout, s.FinishedAt)
 	return t
 }

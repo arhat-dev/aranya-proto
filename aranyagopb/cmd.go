@@ -22,9 +22,8 @@ import (
 	"math"
 	"time"
 
+	"arhat.dev/aranya-proto/aranyagopb/aranyagoconst"
 	"github.com/gogo/protobuf/proto"
-
-	"arhat.dev/aranya-proto/gopb/protoconst"
 )
 
 var (
@@ -216,7 +215,7 @@ func NewPodLogCmd(
 			Container:  container,
 			Follow:     follow,
 			Timestamp:  timestamp,
-			Since:      since.Format(protoconst.TimeLayout),
+			Since:      since.Format(aranyagoconst.TimeLayout),
 			TailLines:  tailLines,
 			BytesLimit: bytesLimit,
 			Previous:   previous,

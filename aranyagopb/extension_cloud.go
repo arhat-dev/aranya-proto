@@ -1,7 +1,7 @@
 // +build !arhat,!abbot
 
 /*
-Copyright 2019 The arhat.dev Authors.
+Copyright 2020 The arhat.dev Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,56 +17,6 @@ limitations under the License.
 */
 
 package aranyagopb
-
-import "arhat.dev/pkg/log"
-
-type (
-	MsgHandleFunc        func(msg *Msg) (exit bool)
-	DataHandleFunc       func(data *Data) (exit bool)
-	UnknownMsgHandleFunc func(u interface{}) (exit bool)
-)
-
-func HandleUnknownMessage(logger log.Interface) UnknownMsgHandleFunc {
-	return func(u interface{}) bool {
-		logger.I("unknown message type", log.Any("msg", u))
-		return true
-	}
-}
-
-func HandleMessages(
-	msgCh <-chan interface{},
-	onMsg MsgHandleFunc,
-	onData DataHandleFunc,
-	onUnknown UnknownMsgHandleFunc,
-) {
-	if onMsg == nil {
-		onMsg = func(msg *Msg) bool { return false }
-	}
-
-	if onData == nil {
-		onData = func(data *Data) bool { return false }
-	}
-
-	if onUnknown == nil {
-		onUnknown = func(u interface{}) bool { return false }
-	}
-
-	exit := false
-	for msg := range msgCh {
-		if exit {
-			continue
-		}
-
-		switch m := msg.(type) {
-		case *Msg:
-			exit = onMsg(m)
-		case *Data:
-			exit = onData(m)
-		default:
-			exit = onUnknown(msg)
-		}
-	}
-}
 
 func (m *Msg) GetError() *Error {
 	if m.Kind != MSG_ERROR {
