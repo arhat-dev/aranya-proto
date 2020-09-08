@@ -22,8 +22,9 @@ import (
 	"math"
 	"time"
 
-	"arhat.dev/aranya-proto/aranyagopb/aranyagoconst"
 	"github.com/gogo/protobuf/proto"
+
+	"arhat.dev/aranya-proto/aranyagopb/aranyagoconst"
 )
 
 var (
