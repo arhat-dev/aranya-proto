@@ -203,6 +203,8 @@ typedef struct _aranya_PodEnsureCmd_PortsEntry {
 } aranya_PodEnsureCmd_PortsEntry;
 
 typedef struct _aranya_PodNetworkOptions {
+    pb_callback_t cidr_ipv4;
+    pb_callback_t cidr_ipv6;
     bool has_bandwidth;
     aranya_Bandwidth bandwidth;
 } aranya_PodNetworkOptions;
@@ -299,7 +301,7 @@ typedef struct _aranya_PodEnsureCmd {
 #define aranya_ContainerSpec_EnvsEntry_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_ContainerSpec_MountsEntry_init_default {{{NULL}, NULL}, false, aranya_MountOptions_init_default}
 #define aranya_Bandwidth_init_default            {0, 0, 0, 0}
-#define aranya_PodNetworkOptions_init_default    {false, aranya_Bandwidth_init_default}
+#define aranya_PodNetworkOptions_init_default    {{{NULL}, NULL}, {{NULL}, NULL}, false, aranya_Bandwidth_init_default}
 #define aranya_PodEnsureCmd_init_default         {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, _aranya_RestartPolicy_MIN, 0, 0, 0, 0, 0, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, false, aranya_PodNetworkOptions_init_default, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_PodEnsureCmd_PortsEntry_init_default {{{NULL}, NULL}, false, aranya_ContainerPort_init_default}
 #define aranya_PodEnsureCmd_HostsEntry_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
@@ -330,7 +332,7 @@ typedef struct _aranya_PodEnsureCmd {
 #define aranya_ContainerSpec_EnvsEntry_init_zero {{{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_ContainerSpec_MountsEntry_init_zero {{{NULL}, NULL}, false, aranya_MountOptions_init_zero}
 #define aranya_Bandwidth_init_zero               {0, 0, 0, 0}
-#define aranya_PodNetworkOptions_init_zero       {false, aranya_Bandwidth_init_zero}
+#define aranya_PodNetworkOptions_init_zero       {{{NULL}, NULL}, {{NULL}, NULL}, false, aranya_Bandwidth_init_zero}
 #define aranya_PodEnsureCmd_init_zero            {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, _aranya_RestartPolicy_MIN, 0, 0, 0, 0, 0, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, false, aranya_PodNetworkOptions_init_zero, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_PodEnsureCmd_PortsEntry_init_zero {{{NULL}, NULL}, false, aranya_ContainerPort_init_zero}
 #define aranya_PodEnsureCmd_HostsEntry_init_zero {{{NULL}, NULL}, {{NULL}, NULL}}
@@ -422,6 +424,8 @@ typedef struct _aranya_PodEnsureCmd {
 #define aranya_PodDeleteCmd_HookPreStopEntry_value_tag 2
 #define aranya_PodEnsureCmd_PortsEntry_key_tag   1
 #define aranya_PodEnsureCmd_PortsEntry_value_tag 2
+#define aranya_PodNetworkOptions_cidr_ipv4_tag   1
+#define aranya_PodNetworkOptions_cidr_ipv6_tag   2
 #define aranya_PodNetworkOptions_bandwidth_tag   3
 #define aranya_Probe_method_tag                  1
 #define aranya_Probe_initial_delay_tag           2
@@ -642,8 +646,10 @@ X(a, STATIC,   SINGULAR, INT32,    egress_burst,      4)
 #define aranya_Bandwidth_DEFAULT NULL
 
 #define aranya_PodNetworkOptions_FIELDLIST(X, a) \
+X(a, CALLBACK, SINGULAR, STRING,   cidr_ipv4,         1) \
+X(a, CALLBACK, SINGULAR, STRING,   cidr_ipv6,         2) \
 X(a, STATIC,   OPTIONAL, MESSAGE,  bandwidth,         3)
-#define aranya_PodNetworkOptions_CALLBACK NULL
+#define aranya_PodNetworkOptions_CALLBACK pb_default_field_callback
 #define aranya_PodNetworkOptions_DEFAULT NULL
 #define aranya_PodNetworkOptions_bandwidth_MSGTYPE aranya_Bandwidth
 
@@ -827,7 +833,7 @@ extern const pb_msgdesc_t aranya_PodListCmd_msg;
 /* aranya_ContainerSpec_EnvsEntry_size depends on runtime parameters */
 /* aranya_ContainerSpec_MountsEntry_size depends on runtime parameters */
 #define aranya_Bandwidth_size                    44
-#define aranya_PodNetworkOptions_size            46
+/* aranya_PodNetworkOptions_size depends on runtime parameters */
 /* aranya_PodEnsureCmd_size depends on runtime parameters */
 /* aranya_PodEnsureCmd_PortsEntry_size depends on runtime parameters */
 /* aranya_PodEnsureCmd_HostsEntry_size depends on runtime parameters */

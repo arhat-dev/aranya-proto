@@ -202,6 +202,9 @@ message Bandwidth {
 }
 
 message PodNetworkOptions {
+    string cidr_ipv4 = 1;
+    string cidr_ipv6 = 2;
+
     Bandwidth bandwidth = 3;
 }
 
