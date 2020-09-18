@@ -6,19 +6,16 @@
 #error Regenerate this file with the current version of nanopb generator.
 #endif
 
-PB_BIND(aranya_PodCmd, aranya_PodCmd, 2)
-
-
 PB_BIND(aranya_AuthConfig, aranya_AuthConfig, AUTO)
 
 
-PB_BIND(aranya_ImagePull, aranya_ImagePull, AUTO)
+PB_BIND(aranya_ImagePullConfig, aranya_ImagePullConfig, AUTO)
 
 
-PB_BIND(aranya_ImageEnsureOptions, aranya_ImageEnsureOptions, AUTO)
+PB_BIND(aranya_ImageEnsureCmd, aranya_ImageEnsureCmd, AUTO)
 
 
-PB_BIND(aranya_ImageEnsureOptions_ImagePullEntry, aranya_ImageEnsureOptions_ImagePullEntry, AUTO)
+PB_BIND(aranya_ImageEnsureCmd_ImagesEntry, aranya_ImageEnsureCmd_ImagesEntry, AUTO)
 
 
 PB_BIND(aranya_NamedData, aranya_NamedData, AUTO)
@@ -33,10 +30,13 @@ PB_BIND(aranya_ContainerPort, aranya_ContainerPort, AUTO)
 PB_BIND(aranya_SELinuxOptions, aranya_SELinuxOptions, AUTO)
 
 
-PB_BIND(aranya_SecurityOptions, aranya_SecurityOptions, AUTO)
+PB_BIND(aranya_ContainerSecurityOptions, aranya_ContainerSecurityOptions, AUTO)
 
 
 PB_BIND(aranya_MountOptions, aranya_MountOptions, AUTO)
+
+
+PB_BIND(aranya_KeyValuePair, aranya_KeyValuePair, AUTO)
 
 
 PB_BIND(aranya_ActionMethod, aranya_ActionMethod, AUTO)
@@ -63,35 +63,40 @@ PB_BIND(aranya_ContainerSpec_EnvsEntry, aranya_ContainerSpec_EnvsEntry, AUTO)
 PB_BIND(aranya_ContainerSpec_MountsEntry, aranya_ContainerSpec_MountsEntry, AUTO)
 
 
-PB_BIND(aranya_CreateOptions, aranya_CreateOptions, 2)
+PB_BIND(aranya_Bandwidth, aranya_Bandwidth, AUTO)
 
 
-PB_BIND(aranya_CreateOptions_PortsEntry, aranya_CreateOptions_PortsEntry, AUTO)
+PB_BIND(aranya_PodNetworkOptions, aranya_PodNetworkOptions, AUTO)
 
 
-PB_BIND(aranya_CreateOptions_HostsEntry, aranya_CreateOptions_HostsEntry, AUTO)
+PB_BIND(aranya_PodEnsureCmd, aranya_PodEnsureCmd, 2)
 
 
-PB_BIND(aranya_CreateOptions_HostPathsEntry, aranya_CreateOptions_HostPathsEntry, AUTO)
+PB_BIND(aranya_PodEnsureCmd_PortsEntry, aranya_PodEnsureCmd_PortsEntry, AUTO)
 
 
-PB_BIND(aranya_CreateOptions_VolumeDataEntry, aranya_CreateOptions_VolumeDataEntry, AUTO)
+PB_BIND(aranya_PodEnsureCmd_HostsEntry, aranya_PodEnsureCmd_HostsEntry, AUTO)
 
 
-PB_BIND(aranya_CreateOptions_LabelsEntry, aranya_CreateOptions_LabelsEntry, AUTO)
+PB_BIND(aranya_PodEnsureCmd_HostPathsEntry, aranya_PodEnsureCmd_HostPathsEntry, AUTO)
 
 
-PB_BIND(aranya_CreateOptions_SysctlsEntry, aranya_CreateOptions_SysctlsEntry, AUTO)
+PB_BIND(aranya_PodEnsureCmd_VolumeDataEntry, aranya_PodEnsureCmd_VolumeDataEntry, AUTO)
 
 
-PB_BIND(aranya_DeleteOptions, aranya_DeleteOptions, AUTO)
+PB_BIND(aranya_PodEnsureCmd_LabelsEntry, aranya_PodEnsureCmd_LabelsEntry, AUTO)
 
 
-PB_BIND(aranya_DeleteOptions_HookPreStopEntry, aranya_DeleteOptions_HookPreStopEntry, AUTO)
+PB_BIND(aranya_PodEnsureCmd_SysctlsEntry, aranya_PodEnsureCmd_SysctlsEntry, AUTO)
 
 
-PB_BIND(aranya_ListOptions, aranya_ListOptions, AUTO)
+PB_BIND(aranya_PodDeleteCmd, aranya_PodDeleteCmd, AUTO)
 
+
+PB_BIND(aranya_PodDeleteCmd_HookPreStopEntry, aranya_PodDeleteCmd_HookPreStopEntry, AUTO)
+
+
+PB_BIND(aranya_PodListCmd, aranya_PodListCmd, AUTO)
 
 
 

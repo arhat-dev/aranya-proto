@@ -4,8 +4,6 @@
 #ifndef PB_ARANYA_CMD_POD_PB_H_INCLUDED
 #define PB_ARANYA_CMD_POD_PB_H_INCLUDED
 #include <pb.h>
-#include "cmd_misc.pb.h"
-#include "cmd_network.pb.h"
 
 #if PB_PROTO_HEADER_VERSION != 40
 #error Regenerate this file with the current version of nanopb generator.
@@ -28,20 +26,10 @@ typedef enum _aranya_RestartPolicy {
     aranya_RestartPolicy_RESTART_NEVER = 2
 } aranya_RestartPolicy;
 
-typedef enum _aranya_PodCmd_Action {
-    aranya_PodCmd_Action__INVALID_POD_ACTION = 0,
-    aranya_PodCmd_Action_CREATE_CONTAINERS = 1,
-    aranya_PodCmd_Action_DELETE_POD = 2,
-    aranya_PodCmd_Action_LIST_PODS = 3,
-    aranya_PodCmd_Action_ENSURE_IMAGES = 4,
-    aranya_PodCmd_Action_DELETE_CONTAINERS = 6,
-    aranya_PodCmd_Action_START_POD_SYNC_LOOP = 7
-} aranya_PodCmd_Action;
-
-typedef enum _aranya_SecurityOptions_ProcMountKind {
-    aranya_SecurityOptions_ProcMountKind_PROC_MOUNT_DEFAULT = 0,
-    aranya_SecurityOptions_ProcMountKind_PROC_MOUNT_UNMASKED = 1
-} aranya_SecurityOptions_ProcMountKind;
+typedef enum _aranya_ContainerSecurityOptions_ProcMountKind {
+    aranya_ContainerSecurityOptions_ProcMountKind_PROC_MOUNT_DEFAULT = 0,
+    aranya_ContainerSecurityOptions_ProcMountKind_PROC_MOUNT_UNMASKED = 1
+} aranya_ContainerSecurityOptions_ProcMountKind;
 
 /* Struct definitions */
 typedef struct _aranya_ActionMethod_ActionExec {
@@ -73,29 +61,14 @@ typedef struct _aranya_ContainerSpec_EnvsEntry {
     pb_callback_t value;
 } aranya_ContainerSpec_EnvsEntry;
 
-typedef struct _aranya_CreateOptions_HostPathsEntry {
+typedef struct _aranya_ImageEnsureCmd {
+    pb_callback_t images;
+} aranya_ImageEnsureCmd;
+
+typedef struct _aranya_KeyValuePair {
     pb_callback_t key;
     pb_callback_t value;
-} aranya_CreateOptions_HostPathsEntry;
-
-typedef struct _aranya_CreateOptions_HostsEntry {
-    pb_callback_t key;
-    pb_callback_t value;
-} aranya_CreateOptions_HostsEntry;
-
-typedef struct _aranya_CreateOptions_LabelsEntry {
-    pb_callback_t key;
-    pb_callback_t value;
-} aranya_CreateOptions_LabelsEntry;
-
-typedef struct _aranya_CreateOptions_SysctlsEntry {
-    pb_callback_t key;
-    pb_callback_t value;
-} aranya_CreateOptions_SysctlsEntry;
-
-typedef struct _aranya_ImageEnsureOptions {
-    pb_callback_t image_pull;
-} aranya_ImageEnsureOptions;
+} aranya_KeyValuePair;
 
 typedef struct _aranya_NamedData {
     pb_callback_t data_map;
@@ -105,6 +78,26 @@ typedef struct _aranya_NamedData_DataMapEntry {
     pb_callback_t key;
     pb_callback_t value;
 } aranya_NamedData_DataMapEntry;
+
+typedef struct _aranya_PodEnsureCmd_HostPathsEntry {
+    pb_callback_t key;
+    pb_callback_t value;
+} aranya_PodEnsureCmd_HostPathsEntry;
+
+typedef struct _aranya_PodEnsureCmd_HostsEntry {
+    pb_callback_t key;
+    pb_callback_t value;
+} aranya_PodEnsureCmd_HostsEntry;
+
+typedef struct _aranya_PodEnsureCmd_LabelsEntry {
+    pb_callback_t key;
+    pb_callback_t value;
+} aranya_PodEnsureCmd_LabelsEntry;
+
+typedef struct _aranya_PodEnsureCmd_SysctlsEntry {
+    pb_callback_t key;
+    pb_callback_t value;
+} aranya_PodEnsureCmd_SysctlsEntry;
 
 typedef struct _aranya_SELinuxOptions {
     pb_callback_t type;
@@ -122,6 +115,13 @@ typedef struct _aranya_ActionMethod {
     } action;
 } aranya_ActionMethod;
 
+typedef struct _aranya_Bandwidth {
+    int32_t ingress_rate;
+    int32_t egress_rate;
+    int32_t ingress_burst;
+    int32_t egress_burst;
+} aranya_Bandwidth;
+
 typedef struct _aranya_ContainerPort {
     pb_callback_t protocol;
     int32_t container_port;
@@ -129,56 +129,25 @@ typedef struct _aranya_ContainerPort {
     pb_callback_t host_ip;
 } aranya_ContainerPort;
 
-typedef struct _aranya_CreateOptions {
-    pb_callback_t pod_uid;
-    pb_callback_t namespace;
-    pb_callback_t name;
-    aranya_RestartPolicy restart_policy;
-    bool host_ipc;
-    bool host_network;
-    bool host_pid;
-    pb_callback_t hostname;
-    bool share_pid;
-    pb_callback_t containers;
-    bool wait_containers;
-    pb_callback_t ports;
-    pb_callback_t name_servers;
-    pb_callback_t search_domains;
-    pb_callback_t hosts;
-    pb_callback_t dns_options;
-    bool has_network_options;
-    aranya_NetworkOptions network_options;
-    pb_callback_t host_paths;
-    pb_callback_t volume_data;
-    pb_callback_t labels;
-    bool delete_pod_on_failure;
-    pb_callback_t sysctls;
-} aranya_CreateOptions;
+typedef struct _aranya_ContainerSecurityOptions {
+    bool privileged;
+    bool allow_new_privileges;
+    bool non_root;
+    bool read_only_rootfs;
+    int64_t user;
+    int64_t group;
+    pb_callback_t caps_add;
+    pb_callback_t caps_drop;
+    aranya_ContainerSecurityOptions_ProcMountKind proc_mount_kind;
+    bool has_selinux_options;
+    aranya_SELinuxOptions selinux_options;
+} aranya_ContainerSecurityOptions;
 
-typedef struct _aranya_CreateOptions_VolumeDataEntry {
-    pb_callback_t key;
-    bool has_value;
-    aranya_NamedData value;
-} aranya_CreateOptions_VolumeDataEntry;
-
-typedef struct _aranya_DeleteOptions {
-    pb_callback_t pod_uid;
-    pb_callback_t containers;
-    int64_t grace_time;
-    pb_callback_t hook_pre_stop;
-} aranya_DeleteOptions;
-
-typedef struct _aranya_ImagePull {
+typedef struct _aranya_ImagePullConfig {
     bool has_auth_config;
     aranya_AuthConfig auth_config;
     aranya_ImagePullPolicy pull_policy;
-} aranya_ImagePull;
-
-typedef struct _aranya_ListOptions {
-    pb_callback_t namespace;
-    pb_callback_t name;
-    bool all;
-} aranya_ListOptions;
+} aranya_ImagePullConfig;
 
 typedef struct _aranya_MountOptions {
     pb_callback_t mount_path;
@@ -190,19 +159,24 @@ typedef struct _aranya_MountOptions {
     bool remote;
 } aranya_MountOptions;
 
-typedef struct _aranya_SecurityOptions {
-    bool privileged;
-    bool allow_new_privileges;
-    bool non_root;
-    bool read_only_rootfs;
-    int64_t user;
-    int64_t group;
-    pb_callback_t caps_add;
-    pb_callback_t caps_drop;
-    aranya_SecurityOptions_ProcMountKind proc_mount_kind;
-    bool has_selinux_options;
-    aranya_SELinuxOptions selinux_options;
-} aranya_SecurityOptions;
+typedef struct _aranya_PodDeleteCmd {
+    pb_callback_t pod_uid;
+    pb_callback_t containers;
+    int64_t grace_time;
+    pb_callback_t hook_pre_stop;
+} aranya_PodDeleteCmd;
+
+typedef struct _aranya_PodEnsureCmd_VolumeDataEntry {
+    pb_callback_t key;
+    bool has_value;
+    aranya_NamedData value;
+} aranya_PodEnsureCmd_VolumeDataEntry;
+
+typedef struct _aranya_PodListCmd {
+    pb_callback_t namespace;
+    pb_callback_t name;
+    bool all;
+} aranya_PodListCmd;
 
 typedef struct _aranya_ContainerSpec_MountsEntry {
     pb_callback_t key;
@@ -210,35 +184,28 @@ typedef struct _aranya_ContainerSpec_MountsEntry {
     aranya_MountOptions value;
 } aranya_ContainerSpec_MountsEntry;
 
-typedef struct _aranya_CreateOptions_PortsEntry {
+typedef struct _aranya_ImageEnsureCmd_ImagesEntry {
     pb_callback_t key;
     bool has_value;
-    aranya_ContainerPort value;
-} aranya_CreateOptions_PortsEntry;
+    aranya_ImagePullConfig value;
+} aranya_ImageEnsureCmd_ImagesEntry;
 
-typedef struct _aranya_DeleteOptions_HookPreStopEntry {
+typedef struct _aranya_PodDeleteCmd_HookPreStopEntry {
     pb_callback_t key;
     bool has_value;
     aranya_ActionMethod value;
-} aranya_DeleteOptions_HookPreStopEntry;
+} aranya_PodDeleteCmd_HookPreStopEntry;
 
-typedef struct _aranya_ImageEnsureOptions_ImagePullEntry {
+typedef struct _aranya_PodEnsureCmd_PortsEntry {
     pb_callback_t key;
     bool has_value;
-    aranya_ImagePull value;
-} aranya_ImageEnsureOptions_ImagePullEntry;
+    aranya_ContainerPort value;
+} aranya_PodEnsureCmd_PortsEntry;
 
-typedef struct _aranya_PodCmd {
-    aranya_PodCmd_Action action;
-    pb_size_t which_options;
-    union {
-        aranya_SyncOptions sync_options;
-        aranya_ImageEnsureOptions image_ensure_options;
-        aranya_CreateOptions create_options;
-        aranya_DeleteOptions delete_options;
-        aranya_ListOptions list_options;
-    } options;
-} aranya_PodCmd;
+typedef struct _aranya_PodNetworkOptions {
+    bool has_bandwidth;
+    aranya_Bandwidth bandwidth;
+} aranya_PodNetworkOptions;
 
 typedef struct _aranya_Probe {
     bool has_method;
@@ -266,10 +233,35 @@ typedef struct _aranya_ContainerSpec {
     bool has_liveness_check;
     aranya_Probe liveness_check;
     bool has_security;
-    aranya_SecurityOptions security;
+    aranya_ContainerSecurityOptions security;
     bool has_hook_post_start;
     aranya_ActionMethod hook_post_start;
 } aranya_ContainerSpec;
+
+typedef struct _aranya_PodEnsureCmd {
+    pb_callback_t pod_uid;
+    pb_callback_t namespace;
+    pb_callback_t name;
+    aranya_RestartPolicy restart_policy;
+    bool host_ipc;
+    bool host_network;
+    bool host_pid;
+    bool share_pid;
+    bool wait;
+    pb_callback_t hostname;
+    pb_callback_t containers;
+    pb_callback_t ports;
+    pb_callback_t name_servers;
+    pb_callback_t search_domains;
+    pb_callback_t hosts;
+    pb_callback_t dns_options;
+    bool has_network;
+    aranya_PodNetworkOptions network;
+    pb_callback_t host_paths;
+    pb_callback_t volume_data;
+    pb_callback_t labels;
+    pb_callback_t sysctls;
+} aranya_PodEnsureCmd;
 
 
 /* Helper constants for enums */
@@ -281,74 +273,74 @@ typedef struct _aranya_ContainerSpec {
 #define _aranya_RestartPolicy_MAX aranya_RestartPolicy_RESTART_NEVER
 #define _aranya_RestartPolicy_ARRAYSIZE ((aranya_RestartPolicy)(aranya_RestartPolicy_RESTART_NEVER+1))
 
-#define _aranya_PodCmd_Action_MIN aranya_PodCmd_Action__INVALID_POD_ACTION
-#define _aranya_PodCmd_Action_MAX aranya_PodCmd_Action_START_POD_SYNC_LOOP
-#define _aranya_PodCmd_Action_ARRAYSIZE ((aranya_PodCmd_Action)(aranya_PodCmd_Action_START_POD_SYNC_LOOP+1))
-
-#define _aranya_SecurityOptions_ProcMountKind_MIN aranya_SecurityOptions_ProcMountKind_PROC_MOUNT_DEFAULT
-#define _aranya_SecurityOptions_ProcMountKind_MAX aranya_SecurityOptions_ProcMountKind_PROC_MOUNT_UNMASKED
-#define _aranya_SecurityOptions_ProcMountKind_ARRAYSIZE ((aranya_SecurityOptions_ProcMountKind)(aranya_SecurityOptions_ProcMountKind_PROC_MOUNT_UNMASKED+1))
+#define _aranya_ContainerSecurityOptions_ProcMountKind_MIN aranya_ContainerSecurityOptions_ProcMountKind_PROC_MOUNT_DEFAULT
+#define _aranya_ContainerSecurityOptions_ProcMountKind_MAX aranya_ContainerSecurityOptions_ProcMountKind_PROC_MOUNT_UNMASKED
+#define _aranya_ContainerSecurityOptions_ProcMountKind_ARRAYSIZE ((aranya_ContainerSecurityOptions_ProcMountKind)(aranya_ContainerSecurityOptions_ProcMountKind_PROC_MOUNT_UNMASKED+1))
 
 
 /* Initializer values for message structs */
-#define aranya_PodCmd_init_default               {_aranya_PodCmd_Action_MIN, 0, {aranya_SyncOptions_init_default}}
 #define aranya_AuthConfig_init_default           {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
-#define aranya_ImagePull_init_default            {false, aranya_AuthConfig_init_default, _aranya_ImagePullPolicy_MIN}
-#define aranya_ImageEnsureOptions_init_default   {{{NULL}, NULL}}
-#define aranya_ImageEnsureOptions_ImagePullEntry_init_default {{{NULL}, NULL}, false, aranya_ImagePull_init_default}
+#define aranya_ImagePullConfig_init_default      {false, aranya_AuthConfig_init_default, _aranya_ImagePullPolicy_MIN}
+#define aranya_ImageEnsureCmd_init_default       {{{NULL}, NULL}}
+#define aranya_ImageEnsureCmd_ImagesEntry_init_default {{{NULL}, NULL}, false, aranya_ImagePullConfig_init_default}
 #define aranya_NamedData_init_default            {{{NULL}, NULL}}
 #define aranya_NamedData_DataMapEntry_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_ContainerPort_init_default        {{{NULL}, NULL}, 0, 0, {{NULL}, NULL}}
 #define aranya_SELinuxOptions_init_default       {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
-#define aranya_SecurityOptions_init_default      {0, 0, 0, 0, 0, 0, {{NULL}, NULL}, {{NULL}, NULL}, _aranya_SecurityOptions_ProcMountKind_MIN, false, aranya_SELinuxOptions_init_default}
+#define aranya_ContainerSecurityOptions_init_default {0, 0, 0, 0, 0, 0, {{NULL}, NULL}, {{NULL}, NULL}, _aranya_ContainerSecurityOptions_ProcMountKind_MIN, false, aranya_SELinuxOptions_init_default}
 #define aranya_MountOptions_init_default         {{{NULL}, NULL}, {{NULL}, NULL}, 0, {{NULL}, NULL}, {{NULL}, NULL}, 0, 0}
+#define aranya_KeyValuePair_init_default         {{{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_ActionMethod_init_default         {0, {aranya_ActionMethod_ActionExec_init_default}}
 #define aranya_ActionMethod_ActionExec_init_default {{{NULL}, NULL}}
 #define aranya_ActionMethod_ActionHTTP_init_default {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_ActionMethod_ActionSocket_init_default {{{NULL}, NULL}}
 #define aranya_Probe_init_default                {false, aranya_ActionMethod_init_default, 0, 0, 0, 0, 0}
-#define aranya_ContainerSpec_init_default        {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, 0, 0, 0, {{NULL}, NULL}, {{NULL}, NULL}, false, aranya_Probe_init_default, false, aranya_Probe_init_default, false, aranya_SecurityOptions_init_default, false, aranya_ActionMethod_init_default}
+#define aranya_ContainerSpec_init_default        {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, 0, 0, 0, {{NULL}, NULL}, {{NULL}, NULL}, false, aranya_Probe_init_default, false, aranya_Probe_init_default, false, aranya_ContainerSecurityOptions_init_default, false, aranya_ActionMethod_init_default}
 #define aranya_ContainerSpec_EnvsEntry_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_ContainerSpec_MountsEntry_init_default {{{NULL}, NULL}, false, aranya_MountOptions_init_default}
-#define aranya_CreateOptions_init_default        {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, _aranya_RestartPolicy_MIN, 0, 0, 0, {{NULL}, NULL}, 0, {{NULL}, NULL}, 0, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, false, aranya_NetworkOptions_init_default, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, 0, {{NULL}, NULL}}
-#define aranya_CreateOptions_PortsEntry_init_default {{{NULL}, NULL}, false, aranya_ContainerPort_init_default}
-#define aranya_CreateOptions_HostsEntry_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
-#define aranya_CreateOptions_HostPathsEntry_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
-#define aranya_CreateOptions_VolumeDataEntry_init_default {{{NULL}, NULL}, false, aranya_NamedData_init_default}
-#define aranya_CreateOptions_LabelsEntry_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
-#define aranya_CreateOptions_SysctlsEntry_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
-#define aranya_DeleteOptions_init_default        {{{NULL}, NULL}, {{NULL}, NULL}, 0, {{NULL}, NULL}}
-#define aranya_DeleteOptions_HookPreStopEntry_init_default {{{NULL}, NULL}, false, aranya_ActionMethod_init_default}
-#define aranya_ListOptions_init_default          {{{NULL}, NULL}, {{NULL}, NULL}, 0}
-#define aranya_PodCmd_init_zero                  {_aranya_PodCmd_Action_MIN, 0, {aranya_SyncOptions_init_zero}}
+#define aranya_Bandwidth_init_default            {0, 0, 0, 0}
+#define aranya_PodNetworkOptions_init_default    {false, aranya_Bandwidth_init_default}
+#define aranya_PodEnsureCmd_init_default         {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, _aranya_RestartPolicy_MIN, 0, 0, 0, 0, 0, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, false, aranya_PodNetworkOptions_init_default, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_PodEnsureCmd_PortsEntry_init_default {{{NULL}, NULL}, false, aranya_ContainerPort_init_default}
+#define aranya_PodEnsureCmd_HostsEntry_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_PodEnsureCmd_HostPathsEntry_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_PodEnsureCmd_VolumeDataEntry_init_default {{{NULL}, NULL}, false, aranya_NamedData_init_default}
+#define aranya_PodEnsureCmd_LabelsEntry_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_PodEnsureCmd_SysctlsEntry_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_PodDeleteCmd_init_default         {{{NULL}, NULL}, {{NULL}, NULL}, 0, {{NULL}, NULL}}
+#define aranya_PodDeleteCmd_HookPreStopEntry_init_default {{{NULL}, NULL}, false, aranya_ActionMethod_init_default}
+#define aranya_PodListCmd_init_default           {{{NULL}, NULL}, {{NULL}, NULL}, 0}
 #define aranya_AuthConfig_init_zero              {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
-#define aranya_ImagePull_init_zero               {false, aranya_AuthConfig_init_zero, _aranya_ImagePullPolicy_MIN}
-#define aranya_ImageEnsureOptions_init_zero      {{{NULL}, NULL}}
-#define aranya_ImageEnsureOptions_ImagePullEntry_init_zero {{{NULL}, NULL}, false, aranya_ImagePull_init_zero}
+#define aranya_ImagePullConfig_init_zero         {false, aranya_AuthConfig_init_zero, _aranya_ImagePullPolicy_MIN}
+#define aranya_ImageEnsureCmd_init_zero          {{{NULL}, NULL}}
+#define aranya_ImageEnsureCmd_ImagesEntry_init_zero {{{NULL}, NULL}, false, aranya_ImagePullConfig_init_zero}
 #define aranya_NamedData_init_zero               {{{NULL}, NULL}}
 #define aranya_NamedData_DataMapEntry_init_zero  {{{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_ContainerPort_init_zero           {{{NULL}, NULL}, 0, 0, {{NULL}, NULL}}
 #define aranya_SELinuxOptions_init_zero          {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
-#define aranya_SecurityOptions_init_zero         {0, 0, 0, 0, 0, 0, {{NULL}, NULL}, {{NULL}, NULL}, _aranya_SecurityOptions_ProcMountKind_MIN, false, aranya_SELinuxOptions_init_zero}
+#define aranya_ContainerSecurityOptions_init_zero {0, 0, 0, 0, 0, 0, {{NULL}, NULL}, {{NULL}, NULL}, _aranya_ContainerSecurityOptions_ProcMountKind_MIN, false, aranya_SELinuxOptions_init_zero}
 #define aranya_MountOptions_init_zero            {{{NULL}, NULL}, {{NULL}, NULL}, 0, {{NULL}, NULL}, {{NULL}, NULL}, 0, 0}
+#define aranya_KeyValuePair_init_zero            {{{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_ActionMethod_init_zero            {0, {aranya_ActionMethod_ActionExec_init_zero}}
 #define aranya_ActionMethod_ActionExec_init_zero {{{NULL}, NULL}}
 #define aranya_ActionMethod_ActionHTTP_init_zero {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_ActionMethod_ActionSocket_init_zero {{{NULL}, NULL}}
 #define aranya_Probe_init_zero                   {false, aranya_ActionMethod_init_zero, 0, 0, 0, 0, 0}
-#define aranya_ContainerSpec_init_zero           {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, 0, 0, 0, {{NULL}, NULL}, {{NULL}, NULL}, false, aranya_Probe_init_zero, false, aranya_Probe_init_zero, false, aranya_SecurityOptions_init_zero, false, aranya_ActionMethod_init_zero}
+#define aranya_ContainerSpec_init_zero           {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, 0, 0, 0, {{NULL}, NULL}, {{NULL}, NULL}, false, aranya_Probe_init_zero, false, aranya_Probe_init_zero, false, aranya_ContainerSecurityOptions_init_zero, false, aranya_ActionMethod_init_zero}
 #define aranya_ContainerSpec_EnvsEntry_init_zero {{{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_ContainerSpec_MountsEntry_init_zero {{{NULL}, NULL}, false, aranya_MountOptions_init_zero}
-#define aranya_CreateOptions_init_zero           {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, _aranya_RestartPolicy_MIN, 0, 0, 0, {{NULL}, NULL}, 0, {{NULL}, NULL}, 0, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, false, aranya_NetworkOptions_init_zero, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, 0, {{NULL}, NULL}}
-#define aranya_CreateOptions_PortsEntry_init_zero {{{NULL}, NULL}, false, aranya_ContainerPort_init_zero}
-#define aranya_CreateOptions_HostsEntry_init_zero {{{NULL}, NULL}, {{NULL}, NULL}}
-#define aranya_CreateOptions_HostPathsEntry_init_zero {{{NULL}, NULL}, {{NULL}, NULL}}
-#define aranya_CreateOptions_VolumeDataEntry_init_zero {{{NULL}, NULL}, false, aranya_NamedData_init_zero}
-#define aranya_CreateOptions_LabelsEntry_init_zero {{{NULL}, NULL}, {{NULL}, NULL}}
-#define aranya_CreateOptions_SysctlsEntry_init_zero {{{NULL}, NULL}, {{NULL}, NULL}}
-#define aranya_DeleteOptions_init_zero           {{{NULL}, NULL}, {{NULL}, NULL}, 0, {{NULL}, NULL}}
-#define aranya_DeleteOptions_HookPreStopEntry_init_zero {{{NULL}, NULL}, false, aranya_ActionMethod_init_zero}
-#define aranya_ListOptions_init_zero             {{{NULL}, NULL}, {{NULL}, NULL}, 0}
+#define aranya_Bandwidth_init_zero               {0, 0, 0, 0}
+#define aranya_PodNetworkOptions_init_zero       {false, aranya_Bandwidth_init_zero}
+#define aranya_PodEnsureCmd_init_zero            {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, _aranya_RestartPolicy_MIN, 0, 0, 0, 0, 0, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, false, aranya_PodNetworkOptions_init_zero, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_PodEnsureCmd_PortsEntry_init_zero {{{NULL}, NULL}, false, aranya_ContainerPort_init_zero}
+#define aranya_PodEnsureCmd_HostsEntry_init_zero {{{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_PodEnsureCmd_HostPathsEntry_init_zero {{{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_PodEnsureCmd_VolumeDataEntry_init_zero {{{NULL}, NULL}, false, aranya_NamedData_init_zero}
+#define aranya_PodEnsureCmd_LabelsEntry_init_zero {{{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_PodEnsureCmd_SysctlsEntry_init_zero {{{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_PodDeleteCmd_init_zero            {{{NULL}, NULL}, {{NULL}, NULL}, 0, {{NULL}, NULL}}
+#define aranya_PodDeleteCmd_HookPreStopEntry_init_zero {{{NULL}, NULL}, false, aranya_ActionMethod_init_zero}
+#define aranya_PodListCmd_init_zero              {{{NULL}, NULL}, {{NULL}, NULL}, 0}
 
 /* Field tags (for use in manual encoding/decoding) */
 #define aranya_ActionMethod_ActionExec_command_tag 1
@@ -365,18 +357,20 @@ typedef struct _aranya_ContainerSpec {
 #define aranya_AuthConfig_email_tag              7
 #define aranya_ContainerSpec_EnvsEntry_key_tag   1
 #define aranya_ContainerSpec_EnvsEntry_value_tag 2
-#define aranya_CreateOptions_HostPathsEntry_key_tag 1
-#define aranya_CreateOptions_HostPathsEntry_value_tag 2
-#define aranya_CreateOptions_HostsEntry_key_tag  1
-#define aranya_CreateOptions_HostsEntry_value_tag 2
-#define aranya_CreateOptions_LabelsEntry_key_tag 1
-#define aranya_CreateOptions_LabelsEntry_value_tag 2
-#define aranya_CreateOptions_SysctlsEntry_key_tag 1
-#define aranya_CreateOptions_SysctlsEntry_value_tag 2
-#define aranya_ImageEnsureOptions_image_pull_tag 1
+#define aranya_ImageEnsureCmd_images_tag         1
+#define aranya_KeyValuePair_key_tag              1
+#define aranya_KeyValuePair_value_tag            2
 #define aranya_NamedData_data_map_tag            1
 #define aranya_NamedData_DataMapEntry_key_tag    1
 #define aranya_NamedData_DataMapEntry_value_tag  2
+#define aranya_PodEnsureCmd_HostPathsEntry_key_tag 1
+#define aranya_PodEnsureCmd_HostPathsEntry_value_tag 2
+#define aranya_PodEnsureCmd_HostsEntry_key_tag   1
+#define aranya_PodEnsureCmd_HostsEntry_value_tag 2
+#define aranya_PodEnsureCmd_LabelsEntry_key_tag  1
+#define aranya_PodEnsureCmd_LabelsEntry_value_tag 2
+#define aranya_PodEnsureCmd_SysctlsEntry_key_tag 1
+#define aranya_PodEnsureCmd_SysctlsEntry_value_tag 2
 #define aranya_SELinuxOptions_type_tag           1
 #define aranya_SELinuxOptions_level_tag          2
 #define aranya_SELinuxOptions_role_tag           3
@@ -384,43 +378,26 @@ typedef struct _aranya_ContainerSpec {
 #define aranya_ActionMethod_exec_tag             1
 #define aranya_ActionMethod_http_tag             2
 #define aranya_ActionMethod_socket_tag           3
+#define aranya_Bandwidth_ingress_rate_tag        1
+#define aranya_Bandwidth_egress_rate_tag         2
+#define aranya_Bandwidth_ingress_burst_tag       3
+#define aranya_Bandwidth_egress_burst_tag        4
 #define aranya_ContainerPort_protocol_tag        1
 #define aranya_ContainerPort_container_port_tag  2
 #define aranya_ContainerPort_host_port_tag       3
 #define aranya_ContainerPort_host_ip_tag         4
-#define aranya_CreateOptions_pod_uid_tag         1
-#define aranya_CreateOptions_namespace_tag       2
-#define aranya_CreateOptions_name_tag            3
-#define aranya_CreateOptions_restart_policy_tag  4
-#define aranya_CreateOptions_host_ipc_tag        5
-#define aranya_CreateOptions_host_network_tag    6
-#define aranya_CreateOptions_host_pid_tag        7
-#define aranya_CreateOptions_hostname_tag        8
-#define aranya_CreateOptions_share_pid_tag       9
-#define aranya_CreateOptions_containers_tag      11
-#define aranya_CreateOptions_wait_containers_tag 12
-#define aranya_CreateOptions_ports_tag           13
-#define aranya_CreateOptions_name_servers_tag    14
-#define aranya_CreateOptions_search_domains_tag  15
-#define aranya_CreateOptions_hosts_tag           16
-#define aranya_CreateOptions_dns_options_tag     17
-#define aranya_CreateOptions_network_options_tag 18
-#define aranya_CreateOptions_host_paths_tag      21
-#define aranya_CreateOptions_volume_data_tag     22
-#define aranya_CreateOptions_labels_tag          23
-#define aranya_CreateOptions_delete_pod_on_failure_tag 24
-#define aranya_CreateOptions_sysctls_tag         31
-#define aranya_CreateOptions_VolumeDataEntry_key_tag 1
-#define aranya_CreateOptions_VolumeDataEntry_value_tag 2
-#define aranya_DeleteOptions_pod_uid_tag         1
-#define aranya_DeleteOptions_containers_tag      2
-#define aranya_DeleteOptions_grace_time_tag      10
-#define aranya_DeleteOptions_hook_pre_stop_tag   11
-#define aranya_ImagePull_auth_config_tag         2
-#define aranya_ImagePull_pull_policy_tag         3
-#define aranya_ListOptions_namespace_tag         1
-#define aranya_ListOptions_name_tag              2
-#define aranya_ListOptions_all_tag               3
+#define aranya_ContainerSecurityOptions_privileged_tag 1
+#define aranya_ContainerSecurityOptions_allow_new_privileges_tag 2
+#define aranya_ContainerSecurityOptions_non_root_tag 3
+#define aranya_ContainerSecurityOptions_read_only_rootfs_tag 4
+#define aranya_ContainerSecurityOptions_user_tag 5
+#define aranya_ContainerSecurityOptions_group_tag 6
+#define aranya_ContainerSecurityOptions_caps_add_tag 7
+#define aranya_ContainerSecurityOptions_caps_drop_tag 8
+#define aranya_ContainerSecurityOptions_proc_mount_kind_tag 9
+#define aranya_ContainerSecurityOptions_selinux_options_tag 10
+#define aranya_ImagePullConfig_auth_config_tag   1
+#define aranya_ImagePullConfig_pull_policy_tag   2
 #define aranya_MountOptions_mount_path_tag       1
 #define aranya_MountOptions_sub_path_tag         2
 #define aranya_MountOptions_read_only_tag        3
@@ -428,30 +405,24 @@ typedef struct _aranya_ContainerSpec {
 #define aranya_MountOptions_options_tag          5
 #define aranya_MountOptions_file_mode_tag        6
 #define aranya_MountOptions_remote_tag           7
-#define aranya_SecurityOptions_privileged_tag    1
-#define aranya_SecurityOptions_allow_new_privileges_tag 2
-#define aranya_SecurityOptions_non_root_tag      3
-#define aranya_SecurityOptions_read_only_rootfs_tag 4
-#define aranya_SecurityOptions_user_tag          5
-#define aranya_SecurityOptions_group_tag         6
-#define aranya_SecurityOptions_caps_add_tag      7
-#define aranya_SecurityOptions_caps_drop_tag     8
-#define aranya_SecurityOptions_proc_mount_kind_tag 9
-#define aranya_SecurityOptions_selinux_options_tag 10
+#define aranya_PodDeleteCmd_pod_uid_tag          1
+#define aranya_PodDeleteCmd_containers_tag       2
+#define aranya_PodDeleteCmd_grace_time_tag       10
+#define aranya_PodDeleteCmd_hook_pre_stop_tag    11
+#define aranya_PodEnsureCmd_VolumeDataEntry_key_tag 1
+#define aranya_PodEnsureCmd_VolumeDataEntry_value_tag 2
+#define aranya_PodListCmd_namespace_tag          1
+#define aranya_PodListCmd_name_tag               2
+#define aranya_PodListCmd_all_tag                3
 #define aranya_ContainerSpec_MountsEntry_key_tag 1
 #define aranya_ContainerSpec_MountsEntry_value_tag 2
-#define aranya_CreateOptions_PortsEntry_key_tag  1
-#define aranya_CreateOptions_PortsEntry_value_tag 2
-#define aranya_DeleteOptions_HookPreStopEntry_key_tag 1
-#define aranya_DeleteOptions_HookPreStopEntry_value_tag 2
-#define aranya_ImageEnsureOptions_ImagePullEntry_key_tag 1
-#define aranya_ImageEnsureOptions_ImagePullEntry_value_tag 2
-#define aranya_PodCmd_action_tag                 1
-#define aranya_PodCmd_sync_options_tag           2
-#define aranya_PodCmd_image_ensure_options_tag   3
-#define aranya_PodCmd_create_options_tag         4
-#define aranya_PodCmd_delete_options_tag         5
-#define aranya_PodCmd_list_options_tag           6
+#define aranya_ImageEnsureCmd_ImagesEntry_key_tag 1
+#define aranya_ImageEnsureCmd_ImagesEntry_value_tag 2
+#define aranya_PodDeleteCmd_HookPreStopEntry_key_tag 1
+#define aranya_PodDeleteCmd_HookPreStopEntry_value_tag 2
+#define aranya_PodEnsureCmd_PortsEntry_key_tag   1
+#define aranya_PodEnsureCmd_PortsEntry_value_tag 2
+#define aranya_PodNetworkOptions_bandwidth_tag   3
 #define aranya_Probe_method_tag                  1
 #define aranya_Probe_initial_delay_tag           2
 #define aranya_Probe_probe_timeout_tag           3
@@ -472,23 +443,29 @@ typedef struct _aranya_ContainerSpec {
 #define aranya_ContainerSpec_liveness_check_tag  14
 #define aranya_ContainerSpec_security_tag        21
 #define aranya_ContainerSpec_hook_post_start_tag 31
+#define aranya_PodEnsureCmd_pod_uid_tag          1
+#define aranya_PodEnsureCmd_namespace_tag        2
+#define aranya_PodEnsureCmd_name_tag             3
+#define aranya_PodEnsureCmd_restart_policy_tag   4
+#define aranya_PodEnsureCmd_host_ipc_tag         5
+#define aranya_PodEnsureCmd_host_network_tag     6
+#define aranya_PodEnsureCmd_host_pid_tag         7
+#define aranya_PodEnsureCmd_share_pid_tag        8
+#define aranya_PodEnsureCmd_wait_tag             9
+#define aranya_PodEnsureCmd_hostname_tag         10
+#define aranya_PodEnsureCmd_containers_tag       11
+#define aranya_PodEnsureCmd_ports_tag            13
+#define aranya_PodEnsureCmd_name_servers_tag     14
+#define aranya_PodEnsureCmd_search_domains_tag   15
+#define aranya_PodEnsureCmd_hosts_tag            16
+#define aranya_PodEnsureCmd_dns_options_tag      17
+#define aranya_PodEnsureCmd_network_tag          18
+#define aranya_PodEnsureCmd_host_paths_tag       21
+#define aranya_PodEnsureCmd_volume_data_tag      22
+#define aranya_PodEnsureCmd_labels_tag           23
+#define aranya_PodEnsureCmd_sysctls_tag          31
 
 /* Struct field encoding specification for nanopb */
-#define aranya_PodCmd_FIELDLIST(X, a) \
-X(a, STATIC,   SINGULAR, UENUM,    action,            1) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (options,sync_options,options.sync_options),   2) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (options,image_ensure_options,options.image_ensure_options),   3) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (options,create_options,options.create_options),   4) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (options,delete_options,options.delete_options),   5) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (options,list_options,options.list_options),   6)
-#define aranya_PodCmd_CALLBACK NULL
-#define aranya_PodCmd_DEFAULT NULL
-#define aranya_PodCmd_options_sync_options_MSGTYPE aranya_SyncOptions
-#define aranya_PodCmd_options_image_ensure_options_MSGTYPE aranya_ImageEnsureOptions
-#define aranya_PodCmd_options_create_options_MSGTYPE aranya_CreateOptions
-#define aranya_PodCmd_options_delete_options_MSGTYPE aranya_DeleteOptions
-#define aranya_PodCmd_options_list_options_MSGTYPE aranya_ListOptions
-
 #define aranya_AuthConfig_FIELDLIST(X, a) \
 X(a, CALLBACK, SINGULAR, STRING,   username,          1) \
 X(a, CALLBACK, SINGULAR, STRING,   password,          2) \
@@ -500,25 +477,25 @@ X(a, CALLBACK, SINGULAR, STRING,   email,             7)
 #define aranya_AuthConfig_CALLBACK pb_default_field_callback
 #define aranya_AuthConfig_DEFAULT NULL
 
-#define aranya_ImagePull_FIELDLIST(X, a) \
-X(a, STATIC,   OPTIONAL, MESSAGE,  auth_config,       2) \
-X(a, STATIC,   SINGULAR, UENUM,    pull_policy,       3)
-#define aranya_ImagePull_CALLBACK NULL
-#define aranya_ImagePull_DEFAULT NULL
-#define aranya_ImagePull_auth_config_MSGTYPE aranya_AuthConfig
+#define aranya_ImagePullConfig_FIELDLIST(X, a) \
+X(a, STATIC,   OPTIONAL, MESSAGE,  auth_config,       1) \
+X(a, STATIC,   SINGULAR, UENUM,    pull_policy,       2)
+#define aranya_ImagePullConfig_CALLBACK NULL
+#define aranya_ImagePullConfig_DEFAULT NULL
+#define aranya_ImagePullConfig_auth_config_MSGTYPE aranya_AuthConfig
 
-#define aranya_ImageEnsureOptions_FIELDLIST(X, a) \
-X(a, CALLBACK, REPEATED, MESSAGE,  image_pull,        1)
-#define aranya_ImageEnsureOptions_CALLBACK pb_default_field_callback
-#define aranya_ImageEnsureOptions_DEFAULT NULL
-#define aranya_ImageEnsureOptions_image_pull_MSGTYPE aranya_ImageEnsureOptions_ImagePullEntry
+#define aranya_ImageEnsureCmd_FIELDLIST(X, a) \
+X(a, CALLBACK, REPEATED, MESSAGE,  images,            1)
+#define aranya_ImageEnsureCmd_CALLBACK pb_default_field_callback
+#define aranya_ImageEnsureCmd_DEFAULT NULL
+#define aranya_ImageEnsureCmd_images_MSGTYPE aranya_ImageEnsureCmd_ImagesEntry
 
-#define aranya_ImageEnsureOptions_ImagePullEntry_FIELDLIST(X, a) \
+#define aranya_ImageEnsureCmd_ImagesEntry_FIELDLIST(X, a) \
 X(a, CALLBACK, SINGULAR, STRING,   key,               1) \
 X(a, STATIC,   OPTIONAL, MESSAGE,  value,             2)
-#define aranya_ImageEnsureOptions_ImagePullEntry_CALLBACK pb_default_field_callback
-#define aranya_ImageEnsureOptions_ImagePullEntry_DEFAULT NULL
-#define aranya_ImageEnsureOptions_ImagePullEntry_value_MSGTYPE aranya_ImagePull
+#define aranya_ImageEnsureCmd_ImagesEntry_CALLBACK pb_default_field_callback
+#define aranya_ImageEnsureCmd_ImagesEntry_DEFAULT NULL
+#define aranya_ImageEnsureCmd_ImagesEntry_value_MSGTYPE aranya_ImagePullConfig
 
 #define aranya_NamedData_FIELDLIST(X, a) \
 X(a, CALLBACK, REPEATED, MESSAGE,  data_map,          1)
@@ -548,7 +525,7 @@ X(a, CALLBACK, SINGULAR, STRING,   user,              4)
 #define aranya_SELinuxOptions_CALLBACK pb_default_field_callback
 #define aranya_SELinuxOptions_DEFAULT NULL
 
-#define aranya_SecurityOptions_FIELDLIST(X, a) \
+#define aranya_ContainerSecurityOptions_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, BOOL,     privileged,        1) \
 X(a, STATIC,   SINGULAR, BOOL,     allow_new_privileges,   2) \
 X(a, STATIC,   SINGULAR, BOOL,     non_root,          3) \
@@ -559,9 +536,9 @@ X(a, CALLBACK, REPEATED, STRING,   caps_add,          7) \
 X(a, CALLBACK, REPEATED, STRING,   caps_drop,         8) \
 X(a, STATIC,   SINGULAR, UENUM,    proc_mount_kind,   9) \
 X(a, STATIC,   OPTIONAL, MESSAGE,  selinux_options,  10)
-#define aranya_SecurityOptions_CALLBACK pb_default_field_callback
-#define aranya_SecurityOptions_DEFAULT NULL
-#define aranya_SecurityOptions_selinux_options_MSGTYPE aranya_SELinuxOptions
+#define aranya_ContainerSecurityOptions_CALLBACK pb_default_field_callback
+#define aranya_ContainerSecurityOptions_DEFAULT NULL
+#define aranya_ContainerSecurityOptions_selinux_options_MSGTYPE aranya_SELinuxOptions
 
 #define aranya_MountOptions_FIELDLIST(X, a) \
 X(a, CALLBACK, SINGULAR, STRING,   mount_path,        1) \
@@ -573,6 +550,12 @@ X(a, STATIC,   SINGULAR, UINT32,   file_mode,         6) \
 X(a, STATIC,   SINGULAR, BOOL,     remote,            7)
 #define aranya_MountOptions_CALLBACK pb_default_field_callback
 #define aranya_MountOptions_DEFAULT NULL
+
+#define aranya_KeyValuePair_FIELDLIST(X, a) \
+X(a, CALLBACK, SINGULAR, STRING,   key,               1) \
+X(a, CALLBACK, SINGULAR, STRING,   value,             2)
+#define aranya_KeyValuePair_CALLBACK pb_default_field_callback
+#define aranya_KeyValuePair_DEFAULT NULL
 
 #define aranya_ActionMethod_FIELDLIST(X, a) \
 X(a, STATIC,   ONEOF,    MESSAGE,  (action,exec,action.exec),   1) \
@@ -634,7 +617,7 @@ X(a, STATIC,   OPTIONAL, MESSAGE,  hook_post_start,  31)
 #define aranya_ContainerSpec_mounts_MSGTYPE aranya_ContainerSpec_MountsEntry
 #define aranya_ContainerSpec_readiness_check_MSGTYPE aranya_Probe
 #define aranya_ContainerSpec_liveness_check_MSGTYPE aranya_Probe
-#define aranya_ContainerSpec_security_MSGTYPE aranya_SecurityOptions
+#define aranya_ContainerSpec_security_MSGTYPE aranya_ContainerSecurityOptions
 #define aranya_ContainerSpec_hook_post_start_MSGTYPE aranya_ActionMethod
 
 #define aranya_ContainerSpec_EnvsEntry_FIELDLIST(X, a) \
@@ -650,7 +633,21 @@ X(a, STATIC,   OPTIONAL, MESSAGE,  value,             2)
 #define aranya_ContainerSpec_MountsEntry_DEFAULT NULL
 #define aranya_ContainerSpec_MountsEntry_value_MSGTYPE aranya_MountOptions
 
-#define aranya_CreateOptions_FIELDLIST(X, a) \
+#define aranya_Bandwidth_FIELDLIST(X, a) \
+X(a, STATIC,   SINGULAR, INT32,    ingress_rate,      1) \
+X(a, STATIC,   SINGULAR, INT32,    egress_rate,       2) \
+X(a, STATIC,   SINGULAR, INT32,    ingress_burst,     3) \
+X(a, STATIC,   SINGULAR, INT32,    egress_burst,      4)
+#define aranya_Bandwidth_CALLBACK NULL
+#define aranya_Bandwidth_DEFAULT NULL
+
+#define aranya_PodNetworkOptions_FIELDLIST(X, a) \
+X(a, STATIC,   OPTIONAL, MESSAGE,  bandwidth,         3)
+#define aranya_PodNetworkOptions_CALLBACK NULL
+#define aranya_PodNetworkOptions_DEFAULT NULL
+#define aranya_PodNetworkOptions_bandwidth_MSGTYPE aranya_Bandwidth
+
+#define aranya_PodEnsureCmd_FIELDLIST(X, a) \
 X(a, CALLBACK, SINGULAR, STRING,   pod_uid,           1) \
 X(a, CALLBACK, SINGULAR, STRING,   namespace,         2) \
 X(a, CALLBACK, SINGULAR, STRING,   name,              3) \
@@ -658,104 +655,103 @@ X(a, STATIC,   SINGULAR, UENUM,    restart_policy,    4) \
 X(a, STATIC,   SINGULAR, BOOL,     host_ipc,          5) \
 X(a, STATIC,   SINGULAR, BOOL,     host_network,      6) \
 X(a, STATIC,   SINGULAR, BOOL,     host_pid,          7) \
-X(a, CALLBACK, SINGULAR, STRING,   hostname,          8) \
-X(a, STATIC,   SINGULAR, BOOL,     share_pid,         9) \
+X(a, STATIC,   SINGULAR, BOOL,     share_pid,         8) \
+X(a, STATIC,   SINGULAR, BOOL,     wait,              9) \
+X(a, CALLBACK, SINGULAR, STRING,   hostname,         10) \
 X(a, CALLBACK, REPEATED, MESSAGE,  containers,       11) \
-X(a, STATIC,   SINGULAR, BOOL,     wait_containers,  12) \
 X(a, CALLBACK, REPEATED, MESSAGE,  ports,            13) \
 X(a, CALLBACK, REPEATED, STRING,   name_servers,     14) \
 X(a, CALLBACK, REPEATED, STRING,   search_domains,   15) \
 X(a, CALLBACK, REPEATED, MESSAGE,  hosts,            16) \
 X(a, CALLBACK, REPEATED, STRING,   dns_options,      17) \
-X(a, STATIC,   OPTIONAL, MESSAGE,  network_options,  18) \
+X(a, STATIC,   OPTIONAL, MESSAGE,  network,          18) \
 X(a, CALLBACK, REPEATED, MESSAGE,  host_paths,       21) \
 X(a, CALLBACK, REPEATED, MESSAGE,  volume_data,      22) \
 X(a, CALLBACK, REPEATED, MESSAGE,  labels,           23) \
-X(a, STATIC,   SINGULAR, BOOL,     delete_pod_on_failure,  24) \
 X(a, CALLBACK, REPEATED, MESSAGE,  sysctls,          31)
-#define aranya_CreateOptions_CALLBACK pb_default_field_callback
-#define aranya_CreateOptions_DEFAULT NULL
-#define aranya_CreateOptions_containers_MSGTYPE aranya_ContainerSpec
-#define aranya_CreateOptions_ports_MSGTYPE aranya_CreateOptions_PortsEntry
-#define aranya_CreateOptions_hosts_MSGTYPE aranya_CreateOptions_HostsEntry
-#define aranya_CreateOptions_network_options_MSGTYPE aranya_NetworkOptions
-#define aranya_CreateOptions_host_paths_MSGTYPE aranya_CreateOptions_HostPathsEntry
-#define aranya_CreateOptions_volume_data_MSGTYPE aranya_CreateOptions_VolumeDataEntry
-#define aranya_CreateOptions_labels_MSGTYPE aranya_CreateOptions_LabelsEntry
-#define aranya_CreateOptions_sysctls_MSGTYPE aranya_CreateOptions_SysctlsEntry
+#define aranya_PodEnsureCmd_CALLBACK pb_default_field_callback
+#define aranya_PodEnsureCmd_DEFAULT NULL
+#define aranya_PodEnsureCmd_containers_MSGTYPE aranya_ContainerSpec
+#define aranya_PodEnsureCmd_ports_MSGTYPE aranya_PodEnsureCmd_PortsEntry
+#define aranya_PodEnsureCmd_hosts_MSGTYPE aranya_PodEnsureCmd_HostsEntry
+#define aranya_PodEnsureCmd_network_MSGTYPE aranya_PodNetworkOptions
+#define aranya_PodEnsureCmd_host_paths_MSGTYPE aranya_PodEnsureCmd_HostPathsEntry
+#define aranya_PodEnsureCmd_volume_data_MSGTYPE aranya_PodEnsureCmd_VolumeDataEntry
+#define aranya_PodEnsureCmd_labels_MSGTYPE aranya_PodEnsureCmd_LabelsEntry
+#define aranya_PodEnsureCmd_sysctls_MSGTYPE aranya_PodEnsureCmd_SysctlsEntry
 
-#define aranya_CreateOptions_PortsEntry_FIELDLIST(X, a) \
+#define aranya_PodEnsureCmd_PortsEntry_FIELDLIST(X, a) \
 X(a, CALLBACK, SINGULAR, STRING,   key,               1) \
 X(a, STATIC,   OPTIONAL, MESSAGE,  value,             2)
-#define aranya_CreateOptions_PortsEntry_CALLBACK pb_default_field_callback
-#define aranya_CreateOptions_PortsEntry_DEFAULT NULL
-#define aranya_CreateOptions_PortsEntry_value_MSGTYPE aranya_ContainerPort
+#define aranya_PodEnsureCmd_PortsEntry_CALLBACK pb_default_field_callback
+#define aranya_PodEnsureCmd_PortsEntry_DEFAULT NULL
+#define aranya_PodEnsureCmd_PortsEntry_value_MSGTYPE aranya_ContainerPort
 
-#define aranya_CreateOptions_HostsEntry_FIELDLIST(X, a) \
+#define aranya_PodEnsureCmd_HostsEntry_FIELDLIST(X, a) \
 X(a, CALLBACK, SINGULAR, STRING,   key,               1) \
 X(a, CALLBACK, SINGULAR, STRING,   value,             2)
-#define aranya_CreateOptions_HostsEntry_CALLBACK pb_default_field_callback
-#define aranya_CreateOptions_HostsEntry_DEFAULT NULL
+#define aranya_PodEnsureCmd_HostsEntry_CALLBACK pb_default_field_callback
+#define aranya_PodEnsureCmd_HostsEntry_DEFAULT NULL
 
-#define aranya_CreateOptions_HostPathsEntry_FIELDLIST(X, a) \
+#define aranya_PodEnsureCmd_HostPathsEntry_FIELDLIST(X, a) \
 X(a, CALLBACK, SINGULAR, STRING,   key,               1) \
 X(a, CALLBACK, SINGULAR, STRING,   value,             2)
-#define aranya_CreateOptions_HostPathsEntry_CALLBACK pb_default_field_callback
-#define aranya_CreateOptions_HostPathsEntry_DEFAULT NULL
+#define aranya_PodEnsureCmd_HostPathsEntry_CALLBACK pb_default_field_callback
+#define aranya_PodEnsureCmd_HostPathsEntry_DEFAULT NULL
 
-#define aranya_CreateOptions_VolumeDataEntry_FIELDLIST(X, a) \
+#define aranya_PodEnsureCmd_VolumeDataEntry_FIELDLIST(X, a) \
 X(a, CALLBACK, SINGULAR, STRING,   key,               1) \
 X(a, STATIC,   OPTIONAL, MESSAGE,  value,             2)
-#define aranya_CreateOptions_VolumeDataEntry_CALLBACK pb_default_field_callback
-#define aranya_CreateOptions_VolumeDataEntry_DEFAULT NULL
-#define aranya_CreateOptions_VolumeDataEntry_value_MSGTYPE aranya_NamedData
+#define aranya_PodEnsureCmd_VolumeDataEntry_CALLBACK pb_default_field_callback
+#define aranya_PodEnsureCmd_VolumeDataEntry_DEFAULT NULL
+#define aranya_PodEnsureCmd_VolumeDataEntry_value_MSGTYPE aranya_NamedData
 
-#define aranya_CreateOptions_LabelsEntry_FIELDLIST(X, a) \
+#define aranya_PodEnsureCmd_LabelsEntry_FIELDLIST(X, a) \
 X(a, CALLBACK, SINGULAR, STRING,   key,               1) \
 X(a, CALLBACK, SINGULAR, STRING,   value,             2)
-#define aranya_CreateOptions_LabelsEntry_CALLBACK pb_default_field_callback
-#define aranya_CreateOptions_LabelsEntry_DEFAULT NULL
+#define aranya_PodEnsureCmd_LabelsEntry_CALLBACK pb_default_field_callback
+#define aranya_PodEnsureCmd_LabelsEntry_DEFAULT NULL
 
-#define aranya_CreateOptions_SysctlsEntry_FIELDLIST(X, a) \
+#define aranya_PodEnsureCmd_SysctlsEntry_FIELDLIST(X, a) \
 X(a, CALLBACK, SINGULAR, STRING,   key,               1) \
 X(a, CALLBACK, SINGULAR, STRING,   value,             2)
-#define aranya_CreateOptions_SysctlsEntry_CALLBACK pb_default_field_callback
-#define aranya_CreateOptions_SysctlsEntry_DEFAULT NULL
+#define aranya_PodEnsureCmd_SysctlsEntry_CALLBACK pb_default_field_callback
+#define aranya_PodEnsureCmd_SysctlsEntry_DEFAULT NULL
 
-#define aranya_DeleteOptions_FIELDLIST(X, a) \
+#define aranya_PodDeleteCmd_FIELDLIST(X, a) \
 X(a, CALLBACK, SINGULAR, STRING,   pod_uid,           1) \
 X(a, CALLBACK, REPEATED, STRING,   containers,        2) \
 X(a, STATIC,   SINGULAR, INT64,    grace_time,       10) \
 X(a, CALLBACK, REPEATED, MESSAGE,  hook_pre_stop,    11)
-#define aranya_DeleteOptions_CALLBACK pb_default_field_callback
-#define aranya_DeleteOptions_DEFAULT NULL
-#define aranya_DeleteOptions_hook_pre_stop_MSGTYPE aranya_DeleteOptions_HookPreStopEntry
+#define aranya_PodDeleteCmd_CALLBACK pb_default_field_callback
+#define aranya_PodDeleteCmd_DEFAULT NULL
+#define aranya_PodDeleteCmd_hook_pre_stop_MSGTYPE aranya_PodDeleteCmd_HookPreStopEntry
 
-#define aranya_DeleteOptions_HookPreStopEntry_FIELDLIST(X, a) \
+#define aranya_PodDeleteCmd_HookPreStopEntry_FIELDLIST(X, a) \
 X(a, CALLBACK, SINGULAR, STRING,   key,               1) \
 X(a, STATIC,   OPTIONAL, MESSAGE,  value,             2)
-#define aranya_DeleteOptions_HookPreStopEntry_CALLBACK pb_default_field_callback
-#define aranya_DeleteOptions_HookPreStopEntry_DEFAULT NULL
-#define aranya_DeleteOptions_HookPreStopEntry_value_MSGTYPE aranya_ActionMethod
+#define aranya_PodDeleteCmd_HookPreStopEntry_CALLBACK pb_default_field_callback
+#define aranya_PodDeleteCmd_HookPreStopEntry_DEFAULT NULL
+#define aranya_PodDeleteCmd_HookPreStopEntry_value_MSGTYPE aranya_ActionMethod
 
-#define aranya_ListOptions_FIELDLIST(X, a) \
+#define aranya_PodListCmd_FIELDLIST(X, a) \
 X(a, CALLBACK, SINGULAR, STRING,   namespace,         1) \
 X(a, CALLBACK, SINGULAR, STRING,   name,              2) \
 X(a, STATIC,   SINGULAR, BOOL,     all,               3)
-#define aranya_ListOptions_CALLBACK pb_default_field_callback
-#define aranya_ListOptions_DEFAULT NULL
+#define aranya_PodListCmd_CALLBACK pb_default_field_callback
+#define aranya_PodListCmd_DEFAULT NULL
 
-extern const pb_msgdesc_t aranya_PodCmd_msg;
 extern const pb_msgdesc_t aranya_AuthConfig_msg;
-extern const pb_msgdesc_t aranya_ImagePull_msg;
-extern const pb_msgdesc_t aranya_ImageEnsureOptions_msg;
-extern const pb_msgdesc_t aranya_ImageEnsureOptions_ImagePullEntry_msg;
+extern const pb_msgdesc_t aranya_ImagePullConfig_msg;
+extern const pb_msgdesc_t aranya_ImageEnsureCmd_msg;
+extern const pb_msgdesc_t aranya_ImageEnsureCmd_ImagesEntry_msg;
 extern const pb_msgdesc_t aranya_NamedData_msg;
 extern const pb_msgdesc_t aranya_NamedData_DataMapEntry_msg;
 extern const pb_msgdesc_t aranya_ContainerPort_msg;
 extern const pb_msgdesc_t aranya_SELinuxOptions_msg;
-extern const pb_msgdesc_t aranya_SecurityOptions_msg;
+extern const pb_msgdesc_t aranya_ContainerSecurityOptions_msg;
 extern const pb_msgdesc_t aranya_MountOptions_msg;
+extern const pb_msgdesc_t aranya_KeyValuePair_msg;
 extern const pb_msgdesc_t aranya_ActionMethod_msg;
 extern const pb_msgdesc_t aranya_ActionMethod_ActionExec_msg;
 extern const pb_msgdesc_t aranya_ActionMethod_ActionHTTP_msg;
@@ -764,29 +760,31 @@ extern const pb_msgdesc_t aranya_Probe_msg;
 extern const pb_msgdesc_t aranya_ContainerSpec_msg;
 extern const pb_msgdesc_t aranya_ContainerSpec_EnvsEntry_msg;
 extern const pb_msgdesc_t aranya_ContainerSpec_MountsEntry_msg;
-extern const pb_msgdesc_t aranya_CreateOptions_msg;
-extern const pb_msgdesc_t aranya_CreateOptions_PortsEntry_msg;
-extern const pb_msgdesc_t aranya_CreateOptions_HostsEntry_msg;
-extern const pb_msgdesc_t aranya_CreateOptions_HostPathsEntry_msg;
-extern const pb_msgdesc_t aranya_CreateOptions_VolumeDataEntry_msg;
-extern const pb_msgdesc_t aranya_CreateOptions_LabelsEntry_msg;
-extern const pb_msgdesc_t aranya_CreateOptions_SysctlsEntry_msg;
-extern const pb_msgdesc_t aranya_DeleteOptions_msg;
-extern const pb_msgdesc_t aranya_DeleteOptions_HookPreStopEntry_msg;
-extern const pb_msgdesc_t aranya_ListOptions_msg;
+extern const pb_msgdesc_t aranya_Bandwidth_msg;
+extern const pb_msgdesc_t aranya_PodNetworkOptions_msg;
+extern const pb_msgdesc_t aranya_PodEnsureCmd_msg;
+extern const pb_msgdesc_t aranya_PodEnsureCmd_PortsEntry_msg;
+extern const pb_msgdesc_t aranya_PodEnsureCmd_HostsEntry_msg;
+extern const pb_msgdesc_t aranya_PodEnsureCmd_HostPathsEntry_msg;
+extern const pb_msgdesc_t aranya_PodEnsureCmd_VolumeDataEntry_msg;
+extern const pb_msgdesc_t aranya_PodEnsureCmd_LabelsEntry_msg;
+extern const pb_msgdesc_t aranya_PodEnsureCmd_SysctlsEntry_msg;
+extern const pb_msgdesc_t aranya_PodDeleteCmd_msg;
+extern const pb_msgdesc_t aranya_PodDeleteCmd_HookPreStopEntry_msg;
+extern const pb_msgdesc_t aranya_PodListCmd_msg;
 
 /* Defines for backwards compatibility with code written before nanopb-0.4.0 */
-#define aranya_PodCmd_fields &aranya_PodCmd_msg
 #define aranya_AuthConfig_fields &aranya_AuthConfig_msg
-#define aranya_ImagePull_fields &aranya_ImagePull_msg
-#define aranya_ImageEnsureOptions_fields &aranya_ImageEnsureOptions_msg
-#define aranya_ImageEnsureOptions_ImagePullEntry_fields &aranya_ImageEnsureOptions_ImagePullEntry_msg
+#define aranya_ImagePullConfig_fields &aranya_ImagePullConfig_msg
+#define aranya_ImageEnsureCmd_fields &aranya_ImageEnsureCmd_msg
+#define aranya_ImageEnsureCmd_ImagesEntry_fields &aranya_ImageEnsureCmd_ImagesEntry_msg
 #define aranya_NamedData_fields &aranya_NamedData_msg
 #define aranya_NamedData_DataMapEntry_fields &aranya_NamedData_DataMapEntry_msg
 #define aranya_ContainerPort_fields &aranya_ContainerPort_msg
 #define aranya_SELinuxOptions_fields &aranya_SELinuxOptions_msg
-#define aranya_SecurityOptions_fields &aranya_SecurityOptions_msg
+#define aranya_ContainerSecurityOptions_fields &aranya_ContainerSecurityOptions_msg
 #define aranya_MountOptions_fields &aranya_MountOptions_msg
+#define aranya_KeyValuePair_fields &aranya_KeyValuePair_msg
 #define aranya_ActionMethod_fields &aranya_ActionMethod_msg
 #define aranya_ActionMethod_ActionExec_fields &aranya_ActionMethod_ActionExec_msg
 #define aranya_ActionMethod_ActionHTTP_fields &aranya_ActionMethod_ActionHTTP_msg
@@ -795,29 +793,31 @@ extern const pb_msgdesc_t aranya_ListOptions_msg;
 #define aranya_ContainerSpec_fields &aranya_ContainerSpec_msg
 #define aranya_ContainerSpec_EnvsEntry_fields &aranya_ContainerSpec_EnvsEntry_msg
 #define aranya_ContainerSpec_MountsEntry_fields &aranya_ContainerSpec_MountsEntry_msg
-#define aranya_CreateOptions_fields &aranya_CreateOptions_msg
-#define aranya_CreateOptions_PortsEntry_fields &aranya_CreateOptions_PortsEntry_msg
-#define aranya_CreateOptions_HostsEntry_fields &aranya_CreateOptions_HostsEntry_msg
-#define aranya_CreateOptions_HostPathsEntry_fields &aranya_CreateOptions_HostPathsEntry_msg
-#define aranya_CreateOptions_VolumeDataEntry_fields &aranya_CreateOptions_VolumeDataEntry_msg
-#define aranya_CreateOptions_LabelsEntry_fields &aranya_CreateOptions_LabelsEntry_msg
-#define aranya_CreateOptions_SysctlsEntry_fields &aranya_CreateOptions_SysctlsEntry_msg
-#define aranya_DeleteOptions_fields &aranya_DeleteOptions_msg
-#define aranya_DeleteOptions_HookPreStopEntry_fields &aranya_DeleteOptions_HookPreStopEntry_msg
-#define aranya_ListOptions_fields &aranya_ListOptions_msg
+#define aranya_Bandwidth_fields &aranya_Bandwidth_msg
+#define aranya_PodNetworkOptions_fields &aranya_PodNetworkOptions_msg
+#define aranya_PodEnsureCmd_fields &aranya_PodEnsureCmd_msg
+#define aranya_PodEnsureCmd_PortsEntry_fields &aranya_PodEnsureCmd_PortsEntry_msg
+#define aranya_PodEnsureCmd_HostsEntry_fields &aranya_PodEnsureCmd_HostsEntry_msg
+#define aranya_PodEnsureCmd_HostPathsEntry_fields &aranya_PodEnsureCmd_HostPathsEntry_msg
+#define aranya_PodEnsureCmd_VolumeDataEntry_fields &aranya_PodEnsureCmd_VolumeDataEntry_msg
+#define aranya_PodEnsureCmd_LabelsEntry_fields &aranya_PodEnsureCmd_LabelsEntry_msg
+#define aranya_PodEnsureCmd_SysctlsEntry_fields &aranya_PodEnsureCmd_SysctlsEntry_msg
+#define aranya_PodDeleteCmd_fields &aranya_PodDeleteCmd_msg
+#define aranya_PodDeleteCmd_HookPreStopEntry_fields &aranya_PodDeleteCmd_HookPreStopEntry_msg
+#define aranya_PodListCmd_fields &aranya_PodListCmd_msg
 
 /* Maximum encoded size of messages (where known) */
-/* aranya_PodCmd_size depends on runtime parameters */
 /* aranya_AuthConfig_size depends on runtime parameters */
-/* aranya_ImagePull_size depends on runtime parameters */
-/* aranya_ImageEnsureOptions_size depends on runtime parameters */
-/* aranya_ImageEnsureOptions_ImagePullEntry_size depends on runtime parameters */
+/* aranya_ImagePullConfig_size depends on runtime parameters */
+/* aranya_ImageEnsureCmd_size depends on runtime parameters */
+/* aranya_ImageEnsureCmd_ImagesEntry_size depends on runtime parameters */
 /* aranya_NamedData_size depends on runtime parameters */
 /* aranya_NamedData_DataMapEntry_size depends on runtime parameters */
 /* aranya_ContainerPort_size depends on runtime parameters */
 /* aranya_SELinuxOptions_size depends on runtime parameters */
-/* aranya_SecurityOptions_size depends on runtime parameters */
+/* aranya_ContainerSecurityOptions_size depends on runtime parameters */
 /* aranya_MountOptions_size depends on runtime parameters */
+/* aranya_KeyValuePair_size depends on runtime parameters */
 /* aranya_ActionMethod_size depends on runtime parameters */
 /* aranya_ActionMethod_ActionExec_size depends on runtime parameters */
 /* aranya_ActionMethod_ActionHTTP_size depends on runtime parameters */
@@ -826,16 +826,18 @@ extern const pb_msgdesc_t aranya_ListOptions_msg;
 /* aranya_ContainerSpec_size depends on runtime parameters */
 /* aranya_ContainerSpec_EnvsEntry_size depends on runtime parameters */
 /* aranya_ContainerSpec_MountsEntry_size depends on runtime parameters */
-/* aranya_CreateOptions_size depends on runtime parameters */
-/* aranya_CreateOptions_PortsEntry_size depends on runtime parameters */
-/* aranya_CreateOptions_HostsEntry_size depends on runtime parameters */
-/* aranya_CreateOptions_HostPathsEntry_size depends on runtime parameters */
-/* aranya_CreateOptions_VolumeDataEntry_size depends on runtime parameters */
-/* aranya_CreateOptions_LabelsEntry_size depends on runtime parameters */
-/* aranya_CreateOptions_SysctlsEntry_size depends on runtime parameters */
-/* aranya_DeleteOptions_size depends on runtime parameters */
-/* aranya_DeleteOptions_HookPreStopEntry_size depends on runtime parameters */
-/* aranya_ListOptions_size depends on runtime parameters */
+#define aranya_Bandwidth_size                    44
+#define aranya_PodNetworkOptions_size            46
+/* aranya_PodEnsureCmd_size depends on runtime parameters */
+/* aranya_PodEnsureCmd_PortsEntry_size depends on runtime parameters */
+/* aranya_PodEnsureCmd_HostsEntry_size depends on runtime parameters */
+/* aranya_PodEnsureCmd_HostPathsEntry_size depends on runtime parameters */
+/* aranya_PodEnsureCmd_VolumeDataEntry_size depends on runtime parameters */
+/* aranya_PodEnsureCmd_LabelsEntry_size depends on runtime parameters */
+/* aranya_PodEnsureCmd_SysctlsEntry_size depends on runtime parameters */
+/* aranya_PodDeleteCmd_size depends on runtime parameters */
+/* aranya_PodDeleteCmd_HookPreStopEntry_size depends on runtime parameters */
+/* aranya_PodListCmd_size depends on runtime parameters */
 
 #ifdef __cplusplus
 } /* extern "C" */

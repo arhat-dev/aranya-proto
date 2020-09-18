@@ -6,14 +6,7 @@
 #error Regenerate this file with the current version of nanopb generator.
 #endif
 
-PB_BIND(aranya_NetworkCmd, aranya_NetworkCmd, AUTO)
-
-
-PB_BIND(aranya_NetworkOptions, aranya_NetworkOptions, AUTO)
-
-
-PB_BIND(aranya_Bandwidth, aranya_Bandwidth, AUTO)
-
+PB_BIND(aranya_NetworkUpdatePodNetworkCmd, aranya_NetworkUpdatePodNetworkCmd, AUTO)
 
 
 

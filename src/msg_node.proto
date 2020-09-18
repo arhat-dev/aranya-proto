@@ -1,5 +1,5 @@
 /*
-Copyright 2019 The arhat.dev Authors.
+Copyright 2020 The arhat.dev Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,11 +16,13 @@ limitations under the License.
 
 syntax = "proto3";
 
+// +build !nosysinfo
 package aranya;
 
 option go_package = "arhat.dev/aranya-proto/aranyagopb";
 
-message ContainerRuntimeInfo {
+
+message NodeContainerRuntimeInfo {
     string name = 1;
     string version = 2;
 }
@@ -35,14 +37,13 @@ message NodeSystemInfo {
     string machine_id = 12;
     string system_uuid = 13;
 
-    ContainerRuntimeInfo runtime_info = 21;
+    NodeContainerRuntimeInfo runtime_info = 21;
 }
 
 message NodeResources {
     uint64 cpu_count = 1;
     uint64 memory_bytes = 2;
     uint64 storage_bytes = 3;
-    uint64 pod_count = 4 [deprecated = true];
 }
 
 message NodeConditions {
@@ -62,13 +63,13 @@ message NodeConditions {
 
 // set extra node information
 message NodeExtInfo {
-    enum ExtInfoValueType {
+    enum ValueType {
         NODE_EXT_INFO_TYPE_STRING = 0;
         NODE_EXT_INFO_TYPE_INTEGER = 1;
         NODE_EXT_INFO_TYPE_FLOAT = 2;
     }
 
-    enum ExtInfoOperator {
+    enum Operator {
         // no matter what previous value is, set to new value
         NODE_EXT_INFO_OPERATOR_SET = 0;
         // only valid for {integer, float}
@@ -77,18 +78,25 @@ message NodeExtInfo {
         NODE_EXT_INFO_OPERATOR_MINUS = 2;
     }
 
+    enum Target {
+        NODE_EXT_INFO_TARGET_ANNOTATION = 0;
+        NODE_EXT_INFO_TARGET_LABEL = 1;
+    }
+
     // value is always transmitted in string format
     string value = 1;
     // type of the value
-    ExtInfoValueType value_type = 3;
+    ValueType value_type = 2;
     // operator
-    ExtInfoOperator operator = 4;
-    string apply_to = 5;
+    Operator operator = 3;
+
+    Target target = 4;
+    string target_key = 5;
 }
 
-message NodeStatus {
+message NodeStatusMsg {
     NodeSystemInfo system_info = 1;
     NodeResources capacity = 2;
-    repeated NodeExtInfo ext_info = 3;
-    NodeConditions conditions = 4;
+    NodeConditions conditions = 3;
+    repeated NodeExtInfo ext_info = 4;
 }

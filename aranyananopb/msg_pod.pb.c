@@ -6,22 +6,22 @@
 #error Regenerate this file with the current version of nanopb generator.
 #endif
 
-PB_BIND(aranya_PodStatus, aranya_PodStatus, AUTO)
+PB_BIND(aranya_ContainerStatus, aranya_ContainerStatus, AUTO)
 
 
-PB_BIND(aranya_PodStatus_ContainerStatus, aranya_PodStatus_ContainerStatus, AUTO)
+PB_BIND(aranya_PodStatusMsg, aranya_PodStatusMsg, AUTO)
 
 
-PB_BIND(aranya_PodStatus_ContainerStatusesEntry, aranya_PodStatus_ContainerStatusesEntry, AUTO)
+PB_BIND(aranya_PodStatusMsg_ContainerStatusesEntry, aranya_PodStatusMsg_ContainerStatusesEntry, AUTO)
 
 
-PB_BIND(aranya_PodStatusList, aranya_PodStatusList, AUTO)
+PB_BIND(aranya_PodStatusListMsg, aranya_PodStatusListMsg, AUTO)
 
 
-PB_BIND(aranya_Image, aranya_Image, AUTO)
+PB_BIND(aranya_ImageStatusMsg, aranya_ImageStatusMsg, AUTO)
 
 
-PB_BIND(aranya_ImageList, aranya_ImageList, AUTO)
+PB_BIND(aranya_ImageStatusListMsg, aranya_ImageStatusListMsg, AUTO)
 
 
 

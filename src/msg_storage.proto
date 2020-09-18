@@ -1,5 +1,5 @@
 /*
-Copyright 2019 The arhat.dev Authors.
+Copyright 2020 The arhat.dev Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ package aranya;
 
 option go_package = "arhat.dev/aranya-proto/aranyagopb";
 
-message StorageStatus {
+message StorageStatusMsg {
     enum State {
         VOLUME_UNKONW = 0;
         VOLUME_UNMOUNTED = 1;
@@ -33,6 +33,6 @@ message StorageStatus {
     string mount_point = 3;
 }
 
-message StorageStatusList {
-    repeated StorageStatus storages = 1;
+message StorageStatusListMsg {
+    repeated StorageStatusMsg storages = 1;
 }

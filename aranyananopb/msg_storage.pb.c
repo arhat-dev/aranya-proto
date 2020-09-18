@@ -6,10 +6,10 @@
 #error Regenerate this file with the current version of nanopb generator.
 #endif
 
-PB_BIND(aranya_StorageStatus, aranya_StorageStatus, AUTO)
+PB_BIND(aranya_StorageStatusMsg, aranya_StorageStatusMsg, AUTO)
 
 
-PB_BIND(aranya_StorageStatusList, aranya_StorageStatusList, AUTO)
+PB_BIND(aranya_StorageStatusListMsg, aranya_StorageStatusListMsg, AUTO)
 
 
 

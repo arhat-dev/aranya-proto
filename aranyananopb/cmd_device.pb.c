@@ -6,21 +6,6 @@
 #error Regenerate this file with the current version of nanopb generator.
 #endif
 
-PB_BIND(aranya_DeviceCmd, aranya_DeviceCmd, 2)
-
-
-PB_BIND(aranya_Device, aranya_Device, 2)
-
-
-PB_BIND(aranya_DeviceConnectivity, aranya_DeviceConnectivity, AUTO)
-
-
-PB_BIND(aranya_DeviceConnectivity_ParamsEntry, aranya_DeviceConnectivity_ParamsEntry, AUTO)
-
-
-PB_BIND(aranya_DeviceConnectivityTLSConfig, aranya_DeviceConnectivityTLSConfig, AUTO)
-
-
 PB_BIND(aranya_DeviceOperation, aranya_DeviceOperation, AUTO)
 
 
@@ -35,6 +20,23 @@ PB_BIND(aranya_DeviceMetrics_TransportParamsEntry, aranya_DeviceMetrics_Transpor
 
 PB_BIND(aranya_DeviceMetrics_UploadParamsEntry, aranya_DeviceMetrics_UploadParamsEntry, AUTO)
 
+
+PB_BIND(aranya_DeviceConnectivityTLSConfig, aranya_DeviceConnectivityTLSConfig, AUTO)
+
+
+PB_BIND(aranya_DeviceConnectivity, aranya_DeviceConnectivity, AUTO)
+
+
+PB_BIND(aranya_DeviceConnectivity_ParamsEntry, aranya_DeviceConnectivity_ParamsEntry, AUTO)
+
+
+PB_BIND(aranya_DeviceEnsureCmd, aranya_DeviceEnsureCmd, 2)
+
+
+PB_BIND(aranya_DeviceListCmd, aranya_DeviceListCmd, AUTO)
+
+
+PB_BIND(aranya_DeviceDeleteCmd, aranya_DeviceDeleteCmd, AUTO)
 
 
 

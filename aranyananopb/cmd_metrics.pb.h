@@ -14,71 +14,64 @@ extern "C" {
 #endif
 
 /* Enum definitions */
-typedef enum _aranya_MetricsCmd_Action {
-    aranya_MetricsCmd_Action__INVALID_METRICS_ACTION = 0,
-    aranya_MetricsCmd_Action_COLLECT_NODE_METRICS = 1,
-    aranya_MetricsCmd_Action_COLLECT_CONTAINER_METRICS = 2,
-    aranya_MetricsCmd_Action_CONFIGURE_NODE_METRICS_COLLECTION = 3,
-    aranya_MetricsCmd_Action_CONFIGURE_CONTAINER_METRICS_COLLECTION = 4
-} aranya_MetricsCmd_Action;
+typedef enum _aranya_MetricsTarget {
+    aranya_MetricsTarget_METRICS_TARGET_NODE = 0,
+    aranya_MetricsTarget_METRICS_TARGET_CONTAINER = 1
+} aranya_MetricsTarget;
 
 /* Struct definitions */
-typedef struct _aranya_MetricsConfigOptions {
+typedef struct _aranya_MetricsCollectCmd {
+    aranya_MetricsTarget target;
+} aranya_MetricsCollectCmd;
+
+typedef struct _aranya_MetricsConfigCmd {
+    aranya_MetricsTarget target;
     pb_callback_t collect;
     pb_callback_t extra_args;
-} aranya_MetricsConfigOptions;
-
-typedef struct _aranya_MetricsCmd {
-    aranya_MetricsCmd_Action action;
-    pb_size_t which_options;
-    union {
-        aranya_MetricsConfigOptions config;
-    } options;
-} aranya_MetricsCmd;
+} aranya_MetricsConfigCmd;
 
 
 /* Helper constants for enums */
-#define _aranya_MetricsCmd_Action_MIN aranya_MetricsCmd_Action__INVALID_METRICS_ACTION
-#define _aranya_MetricsCmd_Action_MAX aranya_MetricsCmd_Action_CONFIGURE_CONTAINER_METRICS_COLLECTION
-#define _aranya_MetricsCmd_Action_ARRAYSIZE ((aranya_MetricsCmd_Action)(aranya_MetricsCmd_Action_CONFIGURE_CONTAINER_METRICS_COLLECTION+1))
+#define _aranya_MetricsTarget_MIN aranya_MetricsTarget_METRICS_TARGET_NODE
+#define _aranya_MetricsTarget_MAX aranya_MetricsTarget_METRICS_TARGET_CONTAINER
+#define _aranya_MetricsTarget_ARRAYSIZE ((aranya_MetricsTarget)(aranya_MetricsTarget_METRICS_TARGET_CONTAINER+1))
 
 
 /* Initializer values for message structs */
-#define aranya_MetricsCmd_init_default           {_aranya_MetricsCmd_Action_MIN, 0, {aranya_MetricsConfigOptions_init_default}}
-#define aranya_MetricsConfigOptions_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
-#define aranya_MetricsCmd_init_zero              {_aranya_MetricsCmd_Action_MIN, 0, {aranya_MetricsConfigOptions_init_zero}}
-#define aranya_MetricsConfigOptions_init_zero    {{{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_MetricsConfigCmd_init_default     {_aranya_MetricsTarget_MIN, {{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_MetricsCollectCmd_init_default    {_aranya_MetricsTarget_MIN}
+#define aranya_MetricsConfigCmd_init_zero        {_aranya_MetricsTarget_MIN, {{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_MetricsCollectCmd_init_zero       {_aranya_MetricsTarget_MIN}
 
 /* Field tags (for use in manual encoding/decoding) */
-#define aranya_MetricsConfigOptions_collect_tag  1
-#define aranya_MetricsConfigOptions_extra_args_tag 2
-#define aranya_MetricsCmd_action_tag             1
-#define aranya_MetricsCmd_config_tag             2
+#define aranya_MetricsCollectCmd_target_tag      1
+#define aranya_MetricsConfigCmd_target_tag       1
+#define aranya_MetricsConfigCmd_collect_tag      2
+#define aranya_MetricsConfigCmd_extra_args_tag   3
 
 /* Struct field encoding specification for nanopb */
-#define aranya_MetricsCmd_FIELDLIST(X, a) \
-X(a, STATIC,   SINGULAR, UENUM,    action,            1) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (options,config,options.config),   2)
-#define aranya_MetricsCmd_CALLBACK NULL
-#define aranya_MetricsCmd_DEFAULT NULL
-#define aranya_MetricsCmd_options_config_MSGTYPE aranya_MetricsConfigOptions
+#define aranya_MetricsConfigCmd_FIELDLIST(X, a) \
+X(a, STATIC,   SINGULAR, UENUM,    target,            1) \
+X(a, CALLBACK, REPEATED, STRING,   collect,           2) \
+X(a, CALLBACK, REPEATED, STRING,   extra_args,        3)
+#define aranya_MetricsConfigCmd_CALLBACK pb_default_field_callback
+#define aranya_MetricsConfigCmd_DEFAULT NULL
 
-#define aranya_MetricsConfigOptions_FIELDLIST(X, a) \
-X(a, CALLBACK, REPEATED, STRING,   collect,           1) \
-X(a, CALLBACK, REPEATED, STRING,   extra_args,        2)
-#define aranya_MetricsConfigOptions_CALLBACK pb_default_field_callback
-#define aranya_MetricsConfigOptions_DEFAULT NULL
+#define aranya_MetricsCollectCmd_FIELDLIST(X, a) \
+X(a, STATIC,   SINGULAR, UENUM,    target,            1)
+#define aranya_MetricsCollectCmd_CALLBACK NULL
+#define aranya_MetricsCollectCmd_DEFAULT NULL
 
-extern const pb_msgdesc_t aranya_MetricsCmd_msg;
-extern const pb_msgdesc_t aranya_MetricsConfigOptions_msg;
+extern const pb_msgdesc_t aranya_MetricsConfigCmd_msg;
+extern const pb_msgdesc_t aranya_MetricsCollectCmd_msg;
 
 /* Defines for backwards compatibility with code written before nanopb-0.4.0 */
-#define aranya_MetricsCmd_fields &aranya_MetricsCmd_msg
-#define aranya_MetricsConfigOptions_fields &aranya_MetricsConfigOptions_msg
+#define aranya_MetricsConfigCmd_fields &aranya_MetricsConfigCmd_msg
+#define aranya_MetricsCollectCmd_fields &aranya_MetricsCollectCmd_msg
 
 /* Maximum encoded size of messages (where known) */
-/* aranya_MetricsCmd_size depends on runtime parameters */
-/* aranya_MetricsConfigOptions_size depends on runtime parameters */
+/* aranya_MetricsConfigCmd_size depends on runtime parameters */
+#define aranya_MetricsCollectCmd_size            2
 
 #ifdef __cplusplus
 } /* extern "C" */

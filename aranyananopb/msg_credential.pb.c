@@ -6,7 +6,7 @@
 #error Regenerate this file with the current version of nanopb generator.
 #endif
 
-PB_BIND(aranya_CredentialStatus, aranya_CredentialStatus, AUTO)
+PB_BIND(aranya_CredentialStatusMsg, aranya_CredentialStatusMsg, AUTO)
 
 
 

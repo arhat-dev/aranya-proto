@@ -6,10 +6,10 @@
 #error Regenerate this file with the current version of nanopb generator.
 #endif
 
-PB_BIND(aranya_MetricsCmd, aranya_MetricsCmd, AUTO)
+PB_BIND(aranya_MetricsConfigCmd, aranya_MetricsConfigCmd, AUTO)
 
 
-PB_BIND(aranya_MetricsConfigOptions, aranya_MetricsConfigOptions, AUTO)
+PB_BIND(aranya_MetricsCollectCmd, aranya_MetricsCollectCmd, AUTO)
 
 
 

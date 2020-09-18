@@ -1,5 +1,5 @@
 /*
-Copyright 2019 The arhat.dev Authors.
+Copyright 2020 The arhat.dev Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,28 +21,28 @@ package aranya;
 
 option go_package = "arhat.dev/aranya-proto/aranyagopb";
 
-message PodStatus {
+message ContainerStatus {
+    string container_id = 1;
+    string image_id = 2;
+
+    // time values in rfc3339nano format
+    string created_at = 4;
+    string started_at = 5;
+    string finished_at = 6;
+    int32 exit_code = 7;
+    int32 restart_count = 8;
+
+    string reason = 11;
+    string message = 12;
+}
+
+message PodStatusMsg {
     enum State {
-        STATE_UNKNOWN = 0;
-        STATE_PENDING = 1;
-        STATE_RUNNING = 2;
-        STATE_SUCCEEDED = 3;
-        STATE_FAILED = 4;
-    }
-
-    message ContainerStatus {
-        string container_id = 1;
-        string image_id = 2;
-
-        // time values in rfc3339nano format
-        string created_at = 4;
-        string started_at = 5;
-        string finished_at = 6;
-        int32 exit_code = 7;
-        int32 restart_count = 8;
-
-        string reason = 11;
-        string message = 12;
+        POD_STATE_UNKNOWN = 0;
+        POD_STATE_PENDING = 1;
+        POD_STATE_RUNNING = 2;
+        POD_STATE_SUCCEEDED = 3;
+        POD_STATE_FAILED = 4;
     }
 
     // metadata
@@ -53,15 +53,17 @@ message PodStatus {
     string pod_ip = 3;
 }
 
-message PodStatusList {
-    repeated PodStatus pods = 1;
+message PodStatusListMsg {
+    repeated PodStatusMsg pods = 1;
 }
 
-message Image {
+message ImageStatusMsg {
     string sha256 = 1;
-    repeated string names = 2;
+    // size of the image in bytes
+    uint64 size = 2;
+    repeated string names = 3;
 }
 
-message ImageList {
-    repeated Image images = 1;
+message ImageStatusListMsg {
+    repeated ImageStatusMsg images = 1;
 }

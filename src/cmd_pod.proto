@@ -1,5 +1,5 @@
 /*
-Copyright 2019 The arhat.dev Authors.
+Copyright 2020 The arhat.dev Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,48 +21,6 @@ package aranya;
 
 option go_package = "arhat.dev/aranya-proto/aranyagopb";
 
-import "cmd_misc.proto";
-import "cmd_network.proto";
-
-message PodCmd {
-    enum Action {
-        _INVALID_POD_ACTION = 0;
-
-        // create init/work/ephemeral containers in pod
-        CREATE_CONTAINERS = 1;
-
-        // Delete a pod in device
-        DELETE_POD = 2;
-
-        // List all managed pod in device
-        LIST_PODS = 3;
-
-        // Ensure all images exist
-        ENSURE_IMAGES = 4;
-
-        // Delete containers
-        DELETE_CONTAINERS = 6;
-
-        // start arhat pod sync loop
-        START_POD_SYNC_LOOP = 7;
-    }
-
-    // action type
-    Action action = 1;
-
-    // options for action
-    oneof options {
-        SyncOptions sync_options = 2;
-        // used by image ensure
-        ImageEnsureOptions image_ensure_options = 3;
-        // used by create or update
-        CreateOptions create_options = 4;
-        // used by delete
-        DeleteOptions delete_options = 5;
-        // used by list
-        ListOptions list_options = 6;
-    }
-}
 
 message AuthConfig {
     string username = 1;
@@ -84,15 +42,15 @@ enum ImagePullPolicy {
     IMAGE_PULL_NEVER = 2;
 }
 
-message ImagePull {
+message ImagePullConfig {
     // image pull secrets
-    AuthConfig auth_config = 2;
+    AuthConfig auth_config = 1;
     // pull policy
-    ImagePullPolicy pull_policy = 3;
+    ImagePullPolicy pull_policy = 2;
 }
 
-message ImageEnsureOptions {
-    map<string, ImagePull> image_pull = 1;
+message ImageEnsureCmd {
+    map<string, ImagePullConfig> images = 1;
 }
 
 message NamedData {
@@ -113,7 +71,7 @@ message SELinuxOptions {
     string user = 4;
 }
 
-message SecurityOptions {
+message ContainerSecurityOptions {
     enum ProcMountKind {
         PROC_MOUNT_DEFAULT = 0;
         PROC_MOUNT_UNMASKED = 1;
@@ -146,6 +104,11 @@ message MountOptions {
 
     // mount this volume use cluster CSI
     bool remote = 7;
+}
+
+message KeyValuePair {
+    string key = 1;
+    string value = 2;
 }
 
 message ActionMethod {
@@ -214,7 +177,7 @@ message ContainerSpec {
     //
     // resolved security opts in pod
     //
-    SecurityOptions security = 21;
+    ContainerSecurityOptions security = 21;
 
     //
     // Container hooks
@@ -228,7 +191,21 @@ enum RestartPolicy {
     RESTART_NEVER = 2;
 }
 
-message CreateOptions {
+message Bandwidth {
+    // unit: bits/s
+    int32 ingress_rate = 1;
+    int32 egress_rate = 2;
+
+    // unit: bits
+    int32 ingress_burst = 3;
+    int32 egress_burst = 4;
+}
+
+message PodNetworkOptions {
+    Bandwidth bandwidth = 3;
+}
+
+message PodEnsureCmd {
     // kubernetes metadata
     string pod_uid = 1;
     string namespace = 2;
@@ -242,19 +219,14 @@ message CreateOptions {
     bool host_ipc = 5;
     bool host_network = 6;
     bool host_pid = 7;
-    // custom hostname to override container id as hostname
-    string hostname = 8;
     // share pid namespace between containers in the same pod
-    bool share_pid = 9;
-
-    // key: container name in the pod
-    // value: container creation spec
-    reserved 10;
-    // map<string, ContainerSpec> init_containers = 10 [deprecated = true];
+    bool share_pid = 8;
+    // wait unitl all containers defined in this cmd exited with no error
+    bool wait = 9;
+    // custom hostname to override container id as hostname
+    string hostname = 10;
 
     repeated ContainerSpec containers = 11;
-    // wait unitl all containers defined above exited with no error
-    bool wait_containers = 12;
 
     // Container ports is processed when creating the pause container
     //
@@ -277,7 +249,7 @@ message CreateOptions {
     // value: ip
     map<string, string> hosts = 16;
     repeated string dns_options = 17;
-    NetworkOptions network_options = 18;
+    PodNetworkOptions network = 18;
 
     //
     // Volumes and devices (in early days, they are the same)
@@ -297,14 +269,11 @@ message CreateOptions {
 
     map<string, string> labels = 23;
 
-    // whether we should consider the pod failed if container creation failed
-    bool delete_pod_on_failure = 24;
-
     // Security options
     map<string, string> sysctls = 31;
 }
 
-message DeleteOptions {
+message PodDeleteCmd {
     // pod to perform delete operation
     string pod_uid = 1;
     // containers to delete, if not specified, delete this pod
@@ -315,7 +284,7 @@ message DeleteOptions {
     map<string, ActionMethod> hook_pre_stop = 11;
 }
 
-message ListOptions {
+message PodListCmd {
     // pod namespace
     string namespace = 1;
     // pod name

@@ -14,35 +14,30 @@ extern "C" {
 #endif
 
 /* Enum definitions */
-typedef enum _aranya_PodStatus_State {
-    aranya_PodStatus_State_STATE_UNKNOWN = 0,
-    aranya_PodStatus_State_STATE_PENDING = 1,
-    aranya_PodStatus_State_STATE_RUNNING = 2,
-    aranya_PodStatus_State_STATE_SUCCEEDED = 3,
-    aranya_PodStatus_State_STATE_FAILED = 4
-} aranya_PodStatus_State;
+typedef enum _aranya_PodStatusMsg_State {
+    aranya_PodStatusMsg_State_POD_STATE_UNKNOWN = 0,
+    aranya_PodStatusMsg_State_POD_STATE_PENDING = 1,
+    aranya_PodStatusMsg_State_POD_STATE_RUNNING = 2,
+    aranya_PodStatusMsg_State_POD_STATE_SUCCEEDED = 3,
+    aranya_PodStatusMsg_State_POD_STATE_FAILED = 4
+} aranya_PodStatusMsg_State;
 
 /* Struct definitions */
-typedef struct _aranya_Image {
-    pb_callback_t sha256;
-    pb_callback_t names;
-} aranya_Image;
-
-typedef struct _aranya_ImageList {
+typedef struct _aranya_ImageStatusListMsg {
     pb_callback_t images;
-} aranya_ImageList;
+} aranya_ImageStatusListMsg;
 
-typedef struct _aranya_PodStatus {
+typedef struct _aranya_PodStatusListMsg {
+    pb_callback_t pods;
+} aranya_PodStatusListMsg;
+
+typedef struct _aranya_PodStatusMsg {
     pb_callback_t uid;
     pb_callback_t container_statuses;
     pb_callback_t pod_ip;
-} aranya_PodStatus;
+} aranya_PodStatusMsg;
 
-typedef struct _aranya_PodStatusList {
-    pb_callback_t pods;
-} aranya_PodStatusList;
-
-typedef struct _aranya_PodStatus_ContainerStatus {
+typedef struct _aranya_ContainerStatus {
     pb_callback_t container_id;
     pb_callback_t image_id;
     pb_callback_t created_at;
@@ -52,65 +47,64 @@ typedef struct _aranya_PodStatus_ContainerStatus {
     int32_t restart_count;
     pb_callback_t reason;
     pb_callback_t message;
-} aranya_PodStatus_ContainerStatus;
+} aranya_ContainerStatus;
 
-typedef struct _aranya_PodStatus_ContainerStatusesEntry {
+typedef struct _aranya_ImageStatusMsg {
+    pb_callback_t sha256;
+    uint64_t size;
+    pb_callback_t names;
+} aranya_ImageStatusMsg;
+
+typedef struct _aranya_PodStatusMsg_ContainerStatusesEntry {
     pb_callback_t key;
     bool has_value;
-    aranya_PodStatus_ContainerStatus value;
-} aranya_PodStatus_ContainerStatusesEntry;
+    aranya_ContainerStatus value;
+} aranya_PodStatusMsg_ContainerStatusesEntry;
 
 
 /* Helper constants for enums */
-#define _aranya_PodStatus_State_MIN aranya_PodStatus_State_STATE_UNKNOWN
-#define _aranya_PodStatus_State_MAX aranya_PodStatus_State_STATE_FAILED
-#define _aranya_PodStatus_State_ARRAYSIZE ((aranya_PodStatus_State)(aranya_PodStatus_State_STATE_FAILED+1))
+#define _aranya_PodStatusMsg_State_MIN aranya_PodStatusMsg_State_POD_STATE_UNKNOWN
+#define _aranya_PodStatusMsg_State_MAX aranya_PodStatusMsg_State_POD_STATE_FAILED
+#define _aranya_PodStatusMsg_State_ARRAYSIZE ((aranya_PodStatusMsg_State)(aranya_PodStatusMsg_State_POD_STATE_FAILED+1))
 
 
 /* Initializer values for message structs */
-#define aranya_PodStatus_init_default            {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
-#define aranya_PodStatus_ContainerStatus_init_default {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, 0, 0, {{NULL}, NULL}, {{NULL}, NULL}}
-#define aranya_PodStatus_ContainerStatusesEntry_init_default {{{NULL}, NULL}, false, aranya_PodStatus_ContainerStatus_init_default}
-#define aranya_PodStatusList_init_default        {{{NULL}, NULL}}
-#define aranya_Image_init_default                {{{NULL}, NULL}, {{NULL}, NULL}}
-#define aranya_ImageList_init_default            {{{NULL}, NULL}}
-#define aranya_PodStatus_init_zero               {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
-#define aranya_PodStatus_ContainerStatus_init_zero {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, 0, 0, {{NULL}, NULL}, {{NULL}, NULL}}
-#define aranya_PodStatus_ContainerStatusesEntry_init_zero {{{NULL}, NULL}, false, aranya_PodStatus_ContainerStatus_init_zero}
-#define aranya_PodStatusList_init_zero           {{{NULL}, NULL}}
-#define aranya_Image_init_zero                   {{{NULL}, NULL}, {{NULL}, NULL}}
-#define aranya_ImageList_init_zero               {{{NULL}, NULL}}
+#define aranya_ContainerStatus_init_default      {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, 0, 0, {{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_PodStatusMsg_init_default         {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_PodStatusMsg_ContainerStatusesEntry_init_default {{{NULL}, NULL}, false, aranya_ContainerStatus_init_default}
+#define aranya_PodStatusListMsg_init_default     {{{NULL}, NULL}}
+#define aranya_ImageStatusMsg_init_default       {{{NULL}, NULL}, 0, {{NULL}, NULL}}
+#define aranya_ImageStatusListMsg_init_default   {{{NULL}, NULL}}
+#define aranya_ContainerStatus_init_zero         {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, 0, 0, {{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_PodStatusMsg_init_zero            {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_PodStatusMsg_ContainerStatusesEntry_init_zero {{{NULL}, NULL}, false, aranya_ContainerStatus_init_zero}
+#define aranya_PodStatusListMsg_init_zero        {{{NULL}, NULL}}
+#define aranya_ImageStatusMsg_init_zero          {{{NULL}, NULL}, 0, {{NULL}, NULL}}
+#define aranya_ImageStatusListMsg_init_zero      {{{NULL}, NULL}}
 
 /* Field tags (for use in manual encoding/decoding) */
-#define aranya_Image_sha256_tag                  1
-#define aranya_Image_names_tag                   2
-#define aranya_ImageList_images_tag              1
-#define aranya_PodStatus_uid_tag                 1
-#define aranya_PodStatus_container_statuses_tag  2
-#define aranya_PodStatus_pod_ip_tag              3
-#define aranya_PodStatusList_pods_tag            1
-#define aranya_PodStatus_ContainerStatus_container_id_tag 1
-#define aranya_PodStatus_ContainerStatus_image_id_tag 2
-#define aranya_PodStatus_ContainerStatus_created_at_tag 4
-#define aranya_PodStatus_ContainerStatus_started_at_tag 5
-#define aranya_PodStatus_ContainerStatus_finished_at_tag 6
-#define aranya_PodStatus_ContainerStatus_exit_code_tag 7
-#define aranya_PodStatus_ContainerStatus_restart_count_tag 8
-#define aranya_PodStatus_ContainerStatus_reason_tag 11
-#define aranya_PodStatus_ContainerStatus_message_tag 12
-#define aranya_PodStatus_ContainerStatusesEntry_key_tag 1
-#define aranya_PodStatus_ContainerStatusesEntry_value_tag 2
+#define aranya_ImageStatusListMsg_images_tag     1
+#define aranya_PodStatusListMsg_pods_tag         1
+#define aranya_PodStatusMsg_uid_tag              1
+#define aranya_PodStatusMsg_container_statuses_tag 2
+#define aranya_PodStatusMsg_pod_ip_tag           3
+#define aranya_ContainerStatus_container_id_tag  1
+#define aranya_ContainerStatus_image_id_tag      2
+#define aranya_ContainerStatus_created_at_tag    4
+#define aranya_ContainerStatus_started_at_tag    5
+#define aranya_ContainerStatus_finished_at_tag   6
+#define aranya_ContainerStatus_exit_code_tag     7
+#define aranya_ContainerStatus_restart_count_tag 8
+#define aranya_ContainerStatus_reason_tag        11
+#define aranya_ContainerStatus_message_tag       12
+#define aranya_ImageStatusMsg_sha256_tag         1
+#define aranya_ImageStatusMsg_size_tag           2
+#define aranya_ImageStatusMsg_names_tag          3
+#define aranya_PodStatusMsg_ContainerStatusesEntry_key_tag 1
+#define aranya_PodStatusMsg_ContainerStatusesEntry_value_tag 2
 
 /* Struct field encoding specification for nanopb */
-#define aranya_PodStatus_FIELDLIST(X, a) \
-X(a, CALLBACK, SINGULAR, STRING,   uid,               1) \
-X(a, CALLBACK, REPEATED, MESSAGE,  container_statuses,   2) \
-X(a, CALLBACK, SINGULAR, STRING,   pod_ip,            3)
-#define aranya_PodStatus_CALLBACK pb_default_field_callback
-#define aranya_PodStatus_DEFAULT NULL
-#define aranya_PodStatus_container_statuses_MSGTYPE aranya_PodStatus_ContainerStatusesEntry
-
-#define aranya_PodStatus_ContainerStatus_FIELDLIST(X, a) \
+#define aranya_ContainerStatus_FIELDLIST(X, a) \
 X(a, CALLBACK, SINGULAR, STRING,   container_id,      1) \
 X(a, CALLBACK, SINGULAR, STRING,   image_id,          2) \
 X(a, CALLBACK, SINGULAR, STRING,   created_at,        4) \
@@ -120,56 +114,65 @@ X(a, STATIC,   SINGULAR, INT32,    exit_code,         7) \
 X(a, STATIC,   SINGULAR, INT32,    restart_count,     8) \
 X(a, CALLBACK, SINGULAR, STRING,   reason,           11) \
 X(a, CALLBACK, SINGULAR, STRING,   message,          12)
-#define aranya_PodStatus_ContainerStatus_CALLBACK pb_default_field_callback
-#define aranya_PodStatus_ContainerStatus_DEFAULT NULL
+#define aranya_ContainerStatus_CALLBACK pb_default_field_callback
+#define aranya_ContainerStatus_DEFAULT NULL
 
-#define aranya_PodStatus_ContainerStatusesEntry_FIELDLIST(X, a) \
+#define aranya_PodStatusMsg_FIELDLIST(X, a) \
+X(a, CALLBACK, SINGULAR, STRING,   uid,               1) \
+X(a, CALLBACK, REPEATED, MESSAGE,  container_statuses,   2) \
+X(a, CALLBACK, SINGULAR, STRING,   pod_ip,            3)
+#define aranya_PodStatusMsg_CALLBACK pb_default_field_callback
+#define aranya_PodStatusMsg_DEFAULT NULL
+#define aranya_PodStatusMsg_container_statuses_MSGTYPE aranya_PodStatusMsg_ContainerStatusesEntry
+
+#define aranya_PodStatusMsg_ContainerStatusesEntry_FIELDLIST(X, a) \
 X(a, CALLBACK, SINGULAR, STRING,   key,               1) \
 X(a, STATIC,   OPTIONAL, MESSAGE,  value,             2)
-#define aranya_PodStatus_ContainerStatusesEntry_CALLBACK pb_default_field_callback
-#define aranya_PodStatus_ContainerStatusesEntry_DEFAULT NULL
-#define aranya_PodStatus_ContainerStatusesEntry_value_MSGTYPE aranya_PodStatus_ContainerStatus
+#define aranya_PodStatusMsg_ContainerStatusesEntry_CALLBACK pb_default_field_callback
+#define aranya_PodStatusMsg_ContainerStatusesEntry_DEFAULT NULL
+#define aranya_PodStatusMsg_ContainerStatusesEntry_value_MSGTYPE aranya_ContainerStatus
 
-#define aranya_PodStatusList_FIELDLIST(X, a) \
+#define aranya_PodStatusListMsg_FIELDLIST(X, a) \
 X(a, CALLBACK, REPEATED, MESSAGE,  pods,              1)
-#define aranya_PodStatusList_CALLBACK pb_default_field_callback
-#define aranya_PodStatusList_DEFAULT NULL
-#define aranya_PodStatusList_pods_MSGTYPE aranya_PodStatus
+#define aranya_PodStatusListMsg_CALLBACK pb_default_field_callback
+#define aranya_PodStatusListMsg_DEFAULT NULL
+#define aranya_PodStatusListMsg_pods_MSGTYPE aranya_PodStatusMsg
 
-#define aranya_Image_FIELDLIST(X, a) \
+#define aranya_ImageStatusMsg_FIELDLIST(X, a) \
 X(a, CALLBACK, SINGULAR, STRING,   sha256,            1) \
-X(a, CALLBACK, REPEATED, STRING,   names,             2)
-#define aranya_Image_CALLBACK pb_default_field_callback
-#define aranya_Image_DEFAULT NULL
+X(a, STATIC,   SINGULAR, UINT64,   size,              2) \
+X(a, CALLBACK, REPEATED, STRING,   names,             3)
+#define aranya_ImageStatusMsg_CALLBACK pb_default_field_callback
+#define aranya_ImageStatusMsg_DEFAULT NULL
 
-#define aranya_ImageList_FIELDLIST(X, a) \
+#define aranya_ImageStatusListMsg_FIELDLIST(X, a) \
 X(a, CALLBACK, REPEATED, MESSAGE,  images,            1)
-#define aranya_ImageList_CALLBACK pb_default_field_callback
-#define aranya_ImageList_DEFAULT NULL
-#define aranya_ImageList_images_MSGTYPE aranya_Image
+#define aranya_ImageStatusListMsg_CALLBACK pb_default_field_callback
+#define aranya_ImageStatusListMsg_DEFAULT NULL
+#define aranya_ImageStatusListMsg_images_MSGTYPE aranya_ImageStatusMsg
 
-extern const pb_msgdesc_t aranya_PodStatus_msg;
-extern const pb_msgdesc_t aranya_PodStatus_ContainerStatus_msg;
-extern const pb_msgdesc_t aranya_PodStatus_ContainerStatusesEntry_msg;
-extern const pb_msgdesc_t aranya_PodStatusList_msg;
-extern const pb_msgdesc_t aranya_Image_msg;
-extern const pb_msgdesc_t aranya_ImageList_msg;
+extern const pb_msgdesc_t aranya_ContainerStatus_msg;
+extern const pb_msgdesc_t aranya_PodStatusMsg_msg;
+extern const pb_msgdesc_t aranya_PodStatusMsg_ContainerStatusesEntry_msg;
+extern const pb_msgdesc_t aranya_PodStatusListMsg_msg;
+extern const pb_msgdesc_t aranya_ImageStatusMsg_msg;
+extern const pb_msgdesc_t aranya_ImageStatusListMsg_msg;
 
 /* Defines for backwards compatibility with code written before nanopb-0.4.0 */
-#define aranya_PodStatus_fields &aranya_PodStatus_msg
-#define aranya_PodStatus_ContainerStatus_fields &aranya_PodStatus_ContainerStatus_msg
-#define aranya_PodStatus_ContainerStatusesEntry_fields &aranya_PodStatus_ContainerStatusesEntry_msg
-#define aranya_PodStatusList_fields &aranya_PodStatusList_msg
-#define aranya_Image_fields &aranya_Image_msg
-#define aranya_ImageList_fields &aranya_ImageList_msg
+#define aranya_ContainerStatus_fields &aranya_ContainerStatus_msg
+#define aranya_PodStatusMsg_fields &aranya_PodStatusMsg_msg
+#define aranya_PodStatusMsg_ContainerStatusesEntry_fields &aranya_PodStatusMsg_ContainerStatusesEntry_msg
+#define aranya_PodStatusListMsg_fields &aranya_PodStatusListMsg_msg
+#define aranya_ImageStatusMsg_fields &aranya_ImageStatusMsg_msg
+#define aranya_ImageStatusListMsg_fields &aranya_ImageStatusListMsg_msg
 
 /* Maximum encoded size of messages (where known) */
-/* aranya_PodStatus_size depends on runtime parameters */
-/* aranya_PodStatus_ContainerStatus_size depends on runtime parameters */
-/* aranya_PodStatus_ContainerStatusesEntry_size depends on runtime parameters */
-/* aranya_PodStatusList_size depends on runtime parameters */
-/* aranya_Image_size depends on runtime parameters */
-/* aranya_ImageList_size depends on runtime parameters */
+/* aranya_ContainerStatus_size depends on runtime parameters */
+/* aranya_PodStatusMsg_size depends on runtime parameters */
+/* aranya_PodStatusMsg_ContainerStatusesEntry_size depends on runtime parameters */
+/* aranya_PodStatusListMsg_size depends on runtime parameters */
+/* aranya_ImageStatusMsg_size depends on runtime parameters */
+/* aranya_ImageStatusListMsg_size depends on runtime parameters */
 
 #ifdef __cplusplus
 } /* extern "C" */

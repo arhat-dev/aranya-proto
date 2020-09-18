@@ -13,98 +13,35 @@
 extern "C" {
 #endif
 
-/* Enum definitions */
-typedef enum _aranya_NetworkCmd_Action {
-    aranya_NetworkCmd_Action__INVALID_NETWORK_ACTION = 0,
-    aranya_NetworkCmd_Action_UPDATE_NETWORK = 1
-} aranya_NetworkCmd_Action;
-
 /* Struct definitions */
-typedef struct _aranya_Bandwidth {
-    int32_t ingress_rate;
-    int32_t egress_rate;
-    int32_t ingress_burst;
-    int32_t egress_burst;
-} aranya_Bandwidth;
-
-typedef struct _aranya_NetworkOptions {
-    pb_callback_t ipv4_pod_cidr;
-    pb_callback_t ipv6_pod_cidr;
-    bool has_bandwidth;
-    aranya_Bandwidth bandwidth;
-} aranya_NetworkOptions;
-
-typedef struct _aranya_NetworkCmd {
-    aranya_NetworkCmd_Action action;
-    pb_size_t which_options;
-    union {
-        aranya_NetworkOptions network_options;
-    } options;
-} aranya_NetworkCmd;
-
-
-/* Helper constants for enums */
-#define _aranya_NetworkCmd_Action_MIN aranya_NetworkCmd_Action__INVALID_NETWORK_ACTION
-#define _aranya_NetworkCmd_Action_MAX aranya_NetworkCmd_Action_UPDATE_NETWORK
-#define _aranya_NetworkCmd_Action_ARRAYSIZE ((aranya_NetworkCmd_Action)(aranya_NetworkCmd_Action_UPDATE_NETWORK+1))
+typedef struct _aranya_NetworkUpdatePodNetworkCmd {
+    pb_callback_t cidr_ipv4;
+    pb_callback_t cidr_ipv6;
+} aranya_NetworkUpdatePodNetworkCmd;
 
 
 /* Initializer values for message structs */
-#define aranya_NetworkCmd_init_default           {_aranya_NetworkCmd_Action_MIN, 0, {aranya_NetworkOptions_init_default}}
-#define aranya_NetworkOptions_init_default       {{{NULL}, NULL}, {{NULL}, NULL}, false, aranya_Bandwidth_init_default}
-#define aranya_Bandwidth_init_default            {0, 0, 0, 0}
-#define aranya_NetworkCmd_init_zero              {_aranya_NetworkCmd_Action_MIN, 0, {aranya_NetworkOptions_init_zero}}
-#define aranya_NetworkOptions_init_zero          {{{NULL}, NULL}, {{NULL}, NULL}, false, aranya_Bandwidth_init_zero}
-#define aranya_Bandwidth_init_zero               {0, 0, 0, 0}
+#define aranya_NetworkUpdatePodNetworkCmd_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_NetworkUpdatePodNetworkCmd_init_zero {{{NULL}, NULL}, {{NULL}, NULL}}
 
 /* Field tags (for use in manual encoding/decoding) */
-#define aranya_Bandwidth_ingress_rate_tag        1
-#define aranya_Bandwidth_egress_rate_tag         2
-#define aranya_Bandwidth_ingress_burst_tag       3
-#define aranya_Bandwidth_egress_burst_tag        4
-#define aranya_NetworkOptions_ipv4_pod_cidr_tag  1
-#define aranya_NetworkOptions_ipv6_pod_cidr_tag  2
-#define aranya_NetworkOptions_bandwidth_tag      3
-#define aranya_NetworkCmd_action_tag             1
-#define aranya_NetworkCmd_network_options_tag    2
+#define aranya_NetworkUpdatePodNetworkCmd_cidr_ipv4_tag 1
+#define aranya_NetworkUpdatePodNetworkCmd_cidr_ipv6_tag 2
 
 /* Struct field encoding specification for nanopb */
-#define aranya_NetworkCmd_FIELDLIST(X, a) \
-X(a, STATIC,   SINGULAR, UENUM,    action,            1) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (options,network_options,options.network_options),   2)
-#define aranya_NetworkCmd_CALLBACK NULL
-#define aranya_NetworkCmd_DEFAULT NULL
-#define aranya_NetworkCmd_options_network_options_MSGTYPE aranya_NetworkOptions
+#define aranya_NetworkUpdatePodNetworkCmd_FIELDLIST(X, a) \
+X(a, CALLBACK, SINGULAR, STRING,   cidr_ipv4,         1) \
+X(a, CALLBACK, SINGULAR, STRING,   cidr_ipv6,         2)
+#define aranya_NetworkUpdatePodNetworkCmd_CALLBACK pb_default_field_callback
+#define aranya_NetworkUpdatePodNetworkCmd_DEFAULT NULL
 
-#define aranya_NetworkOptions_FIELDLIST(X, a) \
-X(a, CALLBACK, SINGULAR, STRING,   ipv4_pod_cidr,     1) \
-X(a, CALLBACK, SINGULAR, STRING,   ipv6_pod_cidr,     2) \
-X(a, STATIC,   OPTIONAL, MESSAGE,  bandwidth,         3)
-#define aranya_NetworkOptions_CALLBACK pb_default_field_callback
-#define aranya_NetworkOptions_DEFAULT NULL
-#define aranya_NetworkOptions_bandwidth_MSGTYPE aranya_Bandwidth
-
-#define aranya_Bandwidth_FIELDLIST(X, a) \
-X(a, STATIC,   SINGULAR, INT32,    ingress_rate,      1) \
-X(a, STATIC,   SINGULAR, INT32,    egress_rate,       2) \
-X(a, STATIC,   SINGULAR, INT32,    ingress_burst,     3) \
-X(a, STATIC,   SINGULAR, INT32,    egress_burst,      4)
-#define aranya_Bandwidth_CALLBACK NULL
-#define aranya_Bandwidth_DEFAULT NULL
-
-extern const pb_msgdesc_t aranya_NetworkCmd_msg;
-extern const pb_msgdesc_t aranya_NetworkOptions_msg;
-extern const pb_msgdesc_t aranya_Bandwidth_msg;
+extern const pb_msgdesc_t aranya_NetworkUpdatePodNetworkCmd_msg;
 
 /* Defines for backwards compatibility with code written before nanopb-0.4.0 */
-#define aranya_NetworkCmd_fields &aranya_NetworkCmd_msg
-#define aranya_NetworkOptions_fields &aranya_NetworkOptions_msg
-#define aranya_Bandwidth_fields &aranya_Bandwidth_msg
+#define aranya_NetworkUpdatePodNetworkCmd_fields &aranya_NetworkUpdatePodNetworkCmd_msg
 
 /* Maximum encoded size of messages (where known) */
-/* aranya_NetworkCmd_size depends on runtime parameters */
-/* aranya_NetworkOptions_size depends on runtime parameters */
-#define aranya_Bandwidth_size                    44
+/* aranya_NetworkUpdatePodNetworkCmd_size depends on runtime parameters */
 
 #ifdef __cplusplus
 } /* extern "C" */

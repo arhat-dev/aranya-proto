@@ -13,66 +13,60 @@
 extern "C" {
 #endif
 
-/* Enum definitions */
-typedef enum _aranya_CredentialCmd_Action {
-    aranya_CredentialCmd_Action__INVALID_CREDENTIAL_ACTION = 0,
-    aranya_CredentialCmd_Action_UPDATE_STORAGE_CREDENTIAL = 1
-} aranya_CredentialCmd_Action;
-
 /* Struct definitions */
-typedef struct _aranya_StorageCredentialOptions {
+typedef struct _aranya_CredentialDeleteCmd {
+    char dummy_field;
+} aranya_CredentialDeleteCmd;
+
+typedef struct _aranya_CredentialEnsureCmd {
     pb_callback_t ssh_private_key;
-} aranya_StorageCredentialOptions;
+} aranya_CredentialEnsureCmd;
 
-typedef struct _aranya_CredentialCmd {
-    aranya_CredentialCmd_Action action;
-    pb_size_t which_options;
-    union {
-        aranya_StorageCredentialOptions storage;
-    } options;
-} aranya_CredentialCmd;
-
-
-/* Helper constants for enums */
-#define _aranya_CredentialCmd_Action_MIN aranya_CredentialCmd_Action__INVALID_CREDENTIAL_ACTION
-#define _aranya_CredentialCmd_Action_MAX aranya_CredentialCmd_Action_UPDATE_STORAGE_CREDENTIAL
-#define _aranya_CredentialCmd_Action_ARRAYSIZE ((aranya_CredentialCmd_Action)(aranya_CredentialCmd_Action_UPDATE_STORAGE_CREDENTIAL+1))
+typedef struct _aranya_CredentialListCmd {
+    char dummy_field;
+} aranya_CredentialListCmd;
 
 
 /* Initializer values for message structs */
-#define aranya_CredentialCmd_init_default        {_aranya_CredentialCmd_Action_MIN, 0, {aranya_StorageCredentialOptions_init_default}}
-#define aranya_StorageCredentialOptions_init_default {{{NULL}, NULL}}
-#define aranya_CredentialCmd_init_zero           {_aranya_CredentialCmd_Action_MIN, 0, {aranya_StorageCredentialOptions_init_zero}}
-#define aranya_StorageCredentialOptions_init_zero {{{NULL}, NULL}}
+#define aranya_CredentialListCmd_init_default    {0}
+#define aranya_CredentialEnsureCmd_init_default  {{{NULL}, NULL}}
+#define aranya_CredentialDeleteCmd_init_default  {0}
+#define aranya_CredentialListCmd_init_zero       {0}
+#define aranya_CredentialEnsureCmd_init_zero     {{{NULL}, NULL}}
+#define aranya_CredentialDeleteCmd_init_zero     {0}
 
 /* Field tags (for use in manual encoding/decoding) */
-#define aranya_StorageCredentialOptions_ssh_private_key_tag 1
-#define aranya_CredentialCmd_action_tag          1
-#define aranya_CredentialCmd_storage_tag         2
+#define aranya_CredentialEnsureCmd_ssh_private_key_tag 1
 
 /* Struct field encoding specification for nanopb */
-#define aranya_CredentialCmd_FIELDLIST(X, a) \
-X(a, STATIC,   SINGULAR, UENUM,    action,            1) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (options,storage,options.storage),   2)
-#define aranya_CredentialCmd_CALLBACK NULL
-#define aranya_CredentialCmd_DEFAULT NULL
-#define aranya_CredentialCmd_options_storage_MSGTYPE aranya_StorageCredentialOptions
+#define aranya_CredentialListCmd_FIELDLIST(X, a) \
 
-#define aranya_StorageCredentialOptions_FIELDLIST(X, a) \
+#define aranya_CredentialListCmd_CALLBACK NULL
+#define aranya_CredentialListCmd_DEFAULT NULL
+
+#define aranya_CredentialEnsureCmd_FIELDLIST(X, a) \
 X(a, CALLBACK, SINGULAR, BYTES,    ssh_private_key,   1)
-#define aranya_StorageCredentialOptions_CALLBACK pb_default_field_callback
-#define aranya_StorageCredentialOptions_DEFAULT NULL
+#define aranya_CredentialEnsureCmd_CALLBACK pb_default_field_callback
+#define aranya_CredentialEnsureCmd_DEFAULT NULL
 
-extern const pb_msgdesc_t aranya_CredentialCmd_msg;
-extern const pb_msgdesc_t aranya_StorageCredentialOptions_msg;
+#define aranya_CredentialDeleteCmd_FIELDLIST(X, a) \
+
+#define aranya_CredentialDeleteCmd_CALLBACK NULL
+#define aranya_CredentialDeleteCmd_DEFAULT NULL
+
+extern const pb_msgdesc_t aranya_CredentialListCmd_msg;
+extern const pb_msgdesc_t aranya_CredentialEnsureCmd_msg;
+extern const pb_msgdesc_t aranya_CredentialDeleteCmd_msg;
 
 /* Defines for backwards compatibility with code written before nanopb-0.4.0 */
-#define aranya_CredentialCmd_fields &aranya_CredentialCmd_msg
-#define aranya_StorageCredentialOptions_fields &aranya_StorageCredentialOptions_msg
+#define aranya_CredentialListCmd_fields &aranya_CredentialListCmd_msg
+#define aranya_CredentialEnsureCmd_fields &aranya_CredentialEnsureCmd_msg
+#define aranya_CredentialDeleteCmd_fields &aranya_CredentialDeleteCmd_msg
 
 /* Maximum encoded size of messages (where known) */
-/* aranya_CredentialCmd_size depends on runtime parameters */
-/* aranya_StorageCredentialOptions_size depends on runtime parameters */
+#define aranya_CredentialListCmd_size            0
+/* aranya_CredentialEnsureCmd_size depends on runtime parameters */
+#define aranya_CredentialDeleteCmd_size          0
 
 #ifdef __cplusplus
 } /* extern "C" */

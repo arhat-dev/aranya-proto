@@ -1,5 +1,5 @@
 /*
-Copyright 2019 The arhat.dev Authors.
+Copyright 2020 The arhat.dev Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,21 +21,16 @@ package aranya;
 
 option go_package = "arhat.dev/aranya-proto/aranyagopb";
 
-message StorageCmd {
-    enum Action {
-        _INVALID_STORAGE_ACTION = 0;
-        MOUNT_REMOTE_VOLUME = 1;
-        UNMOUNT_REMOTE_VOLUME = 2;
-    }
+message StorageListCmd {
 
-    Action action = 1;
-
-    oneof options {
-        RemoteVolumeMountOptions mount = 2;
-    }
 }
 
-message RemoteVolumeMountOptions {
+message StorageEnsureCmd {
+    string remote_path = 1;
+    string local_path = 2;
+}
+
+message StorageDeleteCmd {
     string remote_path = 1;
     string local_path = 2;
 }

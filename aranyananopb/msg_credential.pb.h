@@ -14,31 +14,31 @@ extern "C" {
 #endif
 
 /* Struct definitions */
-typedef struct _aranya_CredentialStatus {
+typedef struct _aranya_CredentialStatusMsg {
     pb_callback_t ssh_private_key_sha256_hex;
-} aranya_CredentialStatus;
+} aranya_CredentialStatusMsg;
 
 
 /* Initializer values for message structs */
-#define aranya_CredentialStatus_init_default     {{{NULL}, NULL}}
-#define aranya_CredentialStatus_init_zero        {{{NULL}, NULL}}
+#define aranya_CredentialStatusMsg_init_default  {{{NULL}, NULL}}
+#define aranya_CredentialStatusMsg_init_zero     {{{NULL}, NULL}}
 
 /* Field tags (for use in manual encoding/decoding) */
-#define aranya_CredentialStatus_ssh_private_key_sha256_hex_tag 1
+#define aranya_CredentialStatusMsg_ssh_private_key_sha256_hex_tag 1
 
 /* Struct field encoding specification for nanopb */
-#define aranya_CredentialStatus_FIELDLIST(X, a) \
+#define aranya_CredentialStatusMsg_FIELDLIST(X, a) \
 X(a, CALLBACK, SINGULAR, STRING,   ssh_private_key_sha256_hex,   1)
-#define aranya_CredentialStatus_CALLBACK pb_default_field_callback
-#define aranya_CredentialStatus_DEFAULT NULL
+#define aranya_CredentialStatusMsg_CALLBACK pb_default_field_callback
+#define aranya_CredentialStatusMsg_DEFAULT NULL
 
-extern const pb_msgdesc_t aranya_CredentialStatus_msg;
+extern const pb_msgdesc_t aranya_CredentialStatusMsg_msg;
 
 /* Defines for backwards compatibility with code written before nanopb-0.4.0 */
-#define aranya_CredentialStatus_fields &aranya_CredentialStatus_msg
+#define aranya_CredentialStatusMsg_fields &aranya_CredentialStatusMsg_msg
 
 /* Maximum encoded size of messages (where known) */
-/* aranya_CredentialStatus_size depends on runtime parameters */
+/* aranya_CredentialStatusMsg_size depends on runtime parameters */
 
 #ifdef __cplusplus
 } /* extern "C" */

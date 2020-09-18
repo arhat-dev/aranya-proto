@@ -1,5 +1,5 @@
 /*
-Copyright 2019 The arhat.dev Authors.
+Copyright 2020 The arhat.dev Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,20 +16,13 @@ limitations under the License.
 
 syntax = "proto3";
 
+// +build !mqtt,!coap
 package aranya;
 
 option go_package = "arhat.dev/aranya-proto/aranyagopb";
 
-message SessionCmd {
-    enum Action {
-        _INVALID_SESSION_ACTION = 0;
+import "proto.proto";
 
-        CLOSE_SESSION = 1;
-    }
-
-    Action action = 1;
-
-    oneof options {
-        uint64 session_id = 2;
-    }
+service Connectivity {
+    rpc Sync (stream Msg) returns (stream Cmd);
 }

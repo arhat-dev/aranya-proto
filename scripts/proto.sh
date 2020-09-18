@@ -35,6 +35,7 @@ fix_pb_gen_json_name() {
 
 _do_gen_proto_go() {
   # shellcheck disable=SC2086
+  rm aranyagopb/*.pb.go
   protoc \
     -I"${GOPATH}/src" \
     -I"${GOPATH}/src/github.com/gogo/protobuf/protobuf" \
@@ -48,6 +49,7 @@ _do_gen_proto_go() {
 
 _do_gen_proto_c() {
   # shellcheck disable=SC2086
+  rm aranyananopb/*.pb.c aranyananopb/*.pb.h
   pipenv run \
   python build/nanopb/generator/nanopb_generator.py \
     --no-timestamp \

@@ -21,29 +21,28 @@ package aranya;
 
 option go_package = "arhat.dev/aranya-proto/aranyagopb";
 
-message DeviceCmd {
-    enum Action {
-        _INVALID_DEVICE_ACTION = 0;
-        LIST_DEVICES = 1;
-        ENSURE_DEVICE = 2;
-        REMOVE_DEVICE = 3;
-    }
-
-    Action action = 1;
-
-    oneof options {
-        string device_id = 2;
-        Device device_spec = 3;
-    }
+message DeviceOperation {
+    string id = 1;
+    map<string, string> transport_params = 2;
 }
 
-message Device {
-    string id = 1;
+message DeviceMetrics {
+    enum UploadMethod {
+        UPLOAD_WITH_NODE_METRICS = 0;
+        UPLOAD_WITH_ARHAT_CONNECTIVITY = 1;
+        UPLOAD_WITH_STANDALONE_CLIENT = 2;
+    }
 
-    DeviceConnectivity connectivity = 2;
-    repeated DeviceOperation operations = 3;
-    repeated DeviceMetrics metrics = 4;
-    DeviceConnectivity upload_connectivity = 5;
+    string name = 1;
+    map<string, string> transport_params = 2;
+    UploadMethod upload_method = 3;
+    map<string, string> upload_params = 4;
+}
+
+message DeviceConnectivityTLSConfig {
+    bytes ca_cert = 1;
+    bytes cert = 2;
+    bytes key = 3;
 }
 
 message DeviceConnectivity {
@@ -60,26 +59,20 @@ message DeviceConnectivity {
     DeviceConnectivityTLSConfig tls = 5;
 }
 
-message DeviceConnectivityTLSConfig {
-    bytes ca_cert = 1;
-    bytes cert = 2;
-    bytes key = 3;
+message DeviceEnsureCmd {
+    string device_id = 1;
+
+    DeviceConnectivity device_connectivity = 2;
+    DeviceConnectivity upload_connectivity = 3;
+
+    repeated DeviceOperation device_operations = 4;
+    repeated DeviceMetrics device_metrics = 5;
 }
 
-message DeviceOperation {
-    string id = 1;
-    map<string, string> transport_params = 2;
+message DeviceListCmd {
+
 }
 
-message DeviceMetrics {
-    enum DeviceMetricsUploadMethod {
-        UPLOAD_WITH_NODE_METRICS = 0;
-        UPLOAD_WITH_ARHAT_CONNECTIVITY = 1;
-        UPLOAD_WITH_STANDALONE_CLIENT = 2;
-    }
-
-    string id = 1;
-    map<string, string> transport_params = 2;
-    DeviceMetricsUploadMethod upload_method = 3;
-    map<string, string> upload_params = 4;
+message DeviceDeleteCmd {
+    repeated string device_ids = 1;
 }

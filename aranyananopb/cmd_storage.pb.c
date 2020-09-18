@@ -6,11 +6,13 @@
 #error Regenerate this file with the current version of nanopb generator.
 #endif
 
-PB_BIND(aranya_StorageCmd, aranya_StorageCmd, AUTO)
+PB_BIND(aranya_StorageListCmd, aranya_StorageListCmd, AUTO)
 
 
-PB_BIND(aranya_RemoteVolumeMountOptions, aranya_RemoteVolumeMountOptions, AUTO)
+PB_BIND(aranya_StorageEnsureCmd, aranya_StorageEnsureCmd, AUTO)
 
+
+PB_BIND(aranya_StorageDeleteCmd, aranya_StorageDeleteCmd, AUTO)
 
 
 

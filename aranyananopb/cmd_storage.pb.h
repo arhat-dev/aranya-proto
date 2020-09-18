@@ -13,70 +13,67 @@
 extern "C" {
 #endif
 
-/* Enum definitions */
-typedef enum _aranya_StorageCmd_Action {
-    aranya_StorageCmd_Action__INVALID_STORAGE_ACTION = 0,
-    aranya_StorageCmd_Action_MOUNT_REMOTE_VOLUME = 1,
-    aranya_StorageCmd_Action_UNMOUNT_REMOTE_VOLUME = 2
-} aranya_StorageCmd_Action;
-
 /* Struct definitions */
-typedef struct _aranya_RemoteVolumeMountOptions {
+typedef struct _aranya_StorageDeleteCmd {
     pb_callback_t remote_path;
     pb_callback_t local_path;
-} aranya_RemoteVolumeMountOptions;
+} aranya_StorageDeleteCmd;
 
-typedef struct _aranya_StorageCmd {
-    aranya_StorageCmd_Action action;
-    pb_size_t which_options;
-    union {
-        aranya_RemoteVolumeMountOptions mount;
-    } options;
-} aranya_StorageCmd;
+typedef struct _aranya_StorageEnsureCmd {
+    pb_callback_t remote_path;
+    pb_callback_t local_path;
+} aranya_StorageEnsureCmd;
 
-
-/* Helper constants for enums */
-#define _aranya_StorageCmd_Action_MIN aranya_StorageCmd_Action__INVALID_STORAGE_ACTION
-#define _aranya_StorageCmd_Action_MAX aranya_StorageCmd_Action_UNMOUNT_REMOTE_VOLUME
-#define _aranya_StorageCmd_Action_ARRAYSIZE ((aranya_StorageCmd_Action)(aranya_StorageCmd_Action_UNMOUNT_REMOTE_VOLUME+1))
+typedef struct _aranya_StorageListCmd {
+    char dummy_field;
+} aranya_StorageListCmd;
 
 
 /* Initializer values for message structs */
-#define aranya_StorageCmd_init_default           {_aranya_StorageCmd_Action_MIN, 0, {aranya_RemoteVolumeMountOptions_init_default}}
-#define aranya_RemoteVolumeMountOptions_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
-#define aranya_StorageCmd_init_zero              {_aranya_StorageCmd_Action_MIN, 0, {aranya_RemoteVolumeMountOptions_init_zero}}
-#define aranya_RemoteVolumeMountOptions_init_zero {{{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_StorageListCmd_init_default       {0}
+#define aranya_StorageEnsureCmd_init_default     {{{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_StorageDeleteCmd_init_default     {{{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_StorageListCmd_init_zero          {0}
+#define aranya_StorageEnsureCmd_init_zero        {{{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_StorageDeleteCmd_init_zero        {{{NULL}, NULL}, {{NULL}, NULL}}
 
 /* Field tags (for use in manual encoding/decoding) */
-#define aranya_RemoteVolumeMountOptions_remote_path_tag 1
-#define aranya_RemoteVolumeMountOptions_local_path_tag 2
-#define aranya_StorageCmd_action_tag             1
-#define aranya_StorageCmd_mount_tag              2
+#define aranya_StorageDeleteCmd_remote_path_tag  1
+#define aranya_StorageDeleteCmd_local_path_tag   2
+#define aranya_StorageEnsureCmd_remote_path_tag  1
+#define aranya_StorageEnsureCmd_local_path_tag   2
 
 /* Struct field encoding specification for nanopb */
-#define aranya_StorageCmd_FIELDLIST(X, a) \
-X(a, STATIC,   SINGULAR, UENUM,    action,            1) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (options,mount,options.mount),   2)
-#define aranya_StorageCmd_CALLBACK NULL
-#define aranya_StorageCmd_DEFAULT NULL
-#define aranya_StorageCmd_options_mount_MSGTYPE aranya_RemoteVolumeMountOptions
+#define aranya_StorageListCmd_FIELDLIST(X, a) \
 
-#define aranya_RemoteVolumeMountOptions_FIELDLIST(X, a) \
+#define aranya_StorageListCmd_CALLBACK NULL
+#define aranya_StorageListCmd_DEFAULT NULL
+
+#define aranya_StorageEnsureCmd_FIELDLIST(X, a) \
 X(a, CALLBACK, SINGULAR, STRING,   remote_path,       1) \
 X(a, CALLBACK, SINGULAR, STRING,   local_path,        2)
-#define aranya_RemoteVolumeMountOptions_CALLBACK pb_default_field_callback
-#define aranya_RemoteVolumeMountOptions_DEFAULT NULL
+#define aranya_StorageEnsureCmd_CALLBACK pb_default_field_callback
+#define aranya_StorageEnsureCmd_DEFAULT NULL
 
-extern const pb_msgdesc_t aranya_StorageCmd_msg;
-extern const pb_msgdesc_t aranya_RemoteVolumeMountOptions_msg;
+#define aranya_StorageDeleteCmd_FIELDLIST(X, a) \
+X(a, CALLBACK, SINGULAR, STRING,   remote_path,       1) \
+X(a, CALLBACK, SINGULAR, STRING,   local_path,        2)
+#define aranya_StorageDeleteCmd_CALLBACK pb_default_field_callback
+#define aranya_StorageDeleteCmd_DEFAULT NULL
+
+extern const pb_msgdesc_t aranya_StorageListCmd_msg;
+extern const pb_msgdesc_t aranya_StorageEnsureCmd_msg;
+extern const pb_msgdesc_t aranya_StorageDeleteCmd_msg;
 
 /* Defines for backwards compatibility with code written before nanopb-0.4.0 */
-#define aranya_StorageCmd_fields &aranya_StorageCmd_msg
-#define aranya_RemoteVolumeMountOptions_fields &aranya_RemoteVolumeMountOptions_msg
+#define aranya_StorageListCmd_fields &aranya_StorageListCmd_msg
+#define aranya_StorageEnsureCmd_fields &aranya_StorageEnsureCmd_msg
+#define aranya_StorageDeleteCmd_fields &aranya_StorageDeleteCmd_msg
 
 /* Maximum encoded size of messages (where known) */
-/* aranya_StorageCmd_size depends on runtime parameters */
-/* aranya_RemoteVolumeMountOptions_size depends on runtime parameters */
+#define aranya_StorageListCmd_size               0
+/* aranya_StorageEnsureCmd_size depends on runtime parameters */
+/* aranya_StorageDeleteCmd_size depends on runtime parameters */
 
 #ifdef __cplusplus
 } /* extern "C" */

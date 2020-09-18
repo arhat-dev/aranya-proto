@@ -6,11 +6,13 @@
 #error Regenerate this file with the current version of nanopb generator.
 #endif
 
-PB_BIND(aranya_CredentialCmd, aranya_CredentialCmd, AUTO)
+PB_BIND(aranya_CredentialListCmd, aranya_CredentialListCmd, AUTO)
 
 
-PB_BIND(aranya_StorageCredentialOptions, aranya_StorageCredentialOptions, AUTO)
+PB_BIND(aranya_CredentialEnsureCmd, aranya_CredentialEnsureCmd, AUTO)
 
+
+PB_BIND(aranya_CredentialDeleteCmd, aranya_CredentialDeleteCmd, AUTO)
 
 
 

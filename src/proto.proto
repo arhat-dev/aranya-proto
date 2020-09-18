@@ -1,0 +1,273 @@
+/*
+Copyright 2020 The arhat.dev Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+syntax = "proto3";
+
+package aranya;
+
+option go_package = "arhat.dev/aranya-proto/aranyagopb";
+
+message Empty {}
+
+enum Kind {
+    EMPTY = 0;
+
+    // if kind name contains _DATA_, the message body is raw day
+    // not the encoded protobuf bytes
+    MSG_DATA_STDOUT = 1;
+    MSG_DATA_STDERR = 2;
+    MSG_DATA_METRICS = 3;
+
+    CMD_DATA_UPSTREAM = 4;
+
+    // reserved for raw data to reduce overhead
+    reserved 5,6,7,8,9;
+
+    CMD_REJECT = 10;
+    CMD_SESSION_CLOSE = 11;
+
+    // basic pod operations (frequently used with kubectl)
+    CMD_POD_CTR_EXEC = 12;
+    CMD_POD_CTR_ATTACH = 13;
+    CMD_POD_CTR_LOGS = 14;
+    CMD_POD_CTR_TTY_RESIZE = 15;
+    CMD_POD_PORT_FORWARD = 16;
+
+    // node operations
+    CMD_NODE_INFO_GET = 17;
+
+    // metrics operations
+    CMD_METRICS_CONFIG = 21;
+    CMD_METRICS_COLLECT = 22;
+
+    // network operations
+    CMD_NET_UPDATE_POD_NET = 25;
+
+    // credentials operations
+    CMD_CRED_ENSURE = 31;
+
+    // container image / application bundle operations
+    CMD_IMAGE_LIST = 41;    // TODO
+    CMD_IMAGE_ENSURE = 42;
+    CMD_IMAGE_DELETE = 43;  // TODO
+
+    // storage operations (remote csi)
+    CMD_STORAGE_LIST = 51;
+    CMD_STORAGE_ENSURE = 52;
+    CMD_STORAGE_DELETE = 53;
+
+    // pod container provision
+    CMD_POD_LIST = 61;
+    CMD_POD_ENSURE = 62;
+    CMD_POD_DELETE = 63;
+
+    // device operations
+    CMD_DEVICE_LIST = 71;
+    CMD_DEVICE_ENSURE = 72;
+    CMD_DEVICE_DELETE = 73;
+
+    MSG_DONE = 100;
+    MSG_STATE = 101;
+    MSG_ERROR = 102;
+
+    MSG_NODE_STATUS = 111;
+
+    MSG_NETWORK_STATUS = 121;   // TODO
+
+    MSG_CRED_STATUS = 131;
+
+    MSG_IMAGE_STATUS = 141;
+    MSG_IMAGE_STATUS_LIST = 142;
+
+    MSG_STORAGE_STATUS = 151;
+    MSG_STORAGE_STATUS_LIST = 152;
+
+    MSG_POD_STATUS = 161;
+    MSG_POD_STATUS_LIST = 162;
+
+    MSG_DEVICE_STATUS = 171;
+    MSG_DEVICE_STATUS_LIST = 172;
+}
+
+message Header {
+    Kind kind = 1;
+
+    // session id used by Cmd/Msg
+    uint64 sid = 2;
+
+    // sequence in the session, to ensure ordered data
+    // if the session contains multiple Cmd/Msg,
+    // seq keeps increasing
+    uint64 seq = 3;
+
+    // mark this Msg is the last message in the session
+    bool completed = 4;
+
+    // sub sequence in the session, which is used to multiplex the
+    // session
+    //  e.g. aranya starts a session with container exec
+    //       arhat executed the command with output but command exited
+    //          with code 1
+    //       arhat should report this error along with the output, then
+    //          it just upload the output with sub_seq=0, and report the
+    //          error with sub_seq=1
+    uint64 sub_seq = 5;
+}
+
+message Cmd {
+    Header header = 1;
+
+    bytes body = 11;
+}
+
+message Msg {
+    Header header = 1;
+
+    // online_id of the agent
+    string online_id = 4;
+
+    // body of encoded XxxMsg or raw data bytes
+    bytes body = 11;
+}
+
+// required Cmd and Msg
+
+message NodeInfoGetCmd {
+    enum Kind {
+        NODE_INFO_DYN = 0;
+        NODE_INFO_ALL = 1;
+    }
+
+    Kind kind = 1;
+}
+
+message SessionCloseCmd {
+    uint64 sid = 1;
+}
+
+message RejectCmd {
+    enum Reason {
+        _INVALID_REJECTION_REASON = 0;
+        REJECTION_ALREADY_CONNECTED = 1;
+        REJECTION_POD_STATUS_SYNC_ERROR = 2;
+        REJECTION_NODE_STATUS_SYNC_ERROR = 3;
+        REJECTION_NETWORK_UPDATE_FAILURE = 4;
+        REJECTION_CREDENTIAL_FAILURE = 5;
+        REJECTION_INTERNAL_SERVER_ERROR = 6;
+        REJECTION_INVALID_PROTO = 7;
+    }
+
+    Reason reason = 1;
+    string message = 2;
+}
+
+message ContainerLogsCmd {
+    string pod_uid = 1;
+    string container = 2;
+
+    bool follow = 3;
+    bool timestamp = 4;
+
+    string since = 5; // rfc3339 time
+    int64 tail_lines = 6;
+    int64 bytes_limit = 7;
+
+    bool previous = 8;
+
+    // host log path
+    string path = 9;
+}
+
+// Pod Exec/Attach Cmd
+message ContainerExecOrAttachCmd {
+    string pod_uid = 1;
+    string container = 2;
+
+    bool stdin = 3;
+    bool stdout = 4;
+    bool stderr = 5;
+    bool tty = 6;
+
+    // command is empty when used for container attach
+    repeated string command = 7;
+
+    // environment variables when used with virtual host container image
+    // values are resolved by aranya
+    map<string, string> envs = 8;
+}
+
+message PodPortForwardCmd {
+    string pod_uid = 1;
+
+    int32 port = 2;
+    string protocol = 3;
+}
+
+message ContainerTerminalResizeCmd {
+    uint32 cols = 1;
+    uint32 rows = 2;
+}
+
+// Error infomation
+message ErrorMsg {
+    enum Kind {
+        // ERR_COMMON means Error happened, but we don't know what to do,
+        // report as failure and retry later.
+        ERR_COMMON = 0;
+
+        // ERR_NOT_FOUND means something not found but may be expected by
+        // the scheduler, aranya should schedule according task or ignore.
+        ERR_NOT_FOUND = 1;
+
+        // ERR_ALREADY_EXISTS means something expected by the scheduler already
+        // exists in agent, agent only report this error when it's sure the
+        // existing object is the same with the one expected by the scheduler,
+        // otherwise it should report ERR_NOT_FOUND.
+        ERR_ALREADY_EXISTS = 2;
+
+        // ERR_NOT_SUPPORTED means Cmd not supported by the agent,
+        // aranya should ignore this error and cancel all future
+        // job.
+        ERR_NOT_SUPPORTED = 3;
+
+        // ERR_TIMEOUT only happen in connectivity server,
+        // right after the session is timed out
+        ERR_TIMEOUT = 4;
+    }
+
+    Kind kind = 1;
+
+    // Human readable error description
+    string description = 2;
+
+    // error code may be used for:
+    //  - exit code of command execution
+    //  - ...TBD
+    int64 code = 3;
+}
+
+// State of agent, online/offline
+message StateMsg {
+    enum Kind {
+        _INVALID_STATE = 0;
+
+        STATE_ONLINE = 1;
+        STATE_OFFLINE = 2;
+    }
+
+    Kind kind = 1;
+    string device_id = 2;
+}

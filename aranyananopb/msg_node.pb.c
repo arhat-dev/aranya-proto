@@ -6,7 +6,7 @@
 #error Regenerate this file with the current version of nanopb generator.
 #endif
 
-PB_BIND(aranya_ContainerRuntimeInfo, aranya_ContainerRuntimeInfo, AUTO)
+PB_BIND(aranya_NodeContainerRuntimeInfo, aranya_NodeContainerRuntimeInfo, AUTO)
 
 
 PB_BIND(aranya_NodeSystemInfo, aranya_NodeSystemInfo, AUTO)
@@ -21,7 +21,8 @@ PB_BIND(aranya_NodeConditions, aranya_NodeConditions, AUTO)
 PB_BIND(aranya_NodeExtInfo, aranya_NodeExtInfo, AUTO)
 
 
-PB_BIND(aranya_NodeStatus, aranya_NodeStatus, AUTO)
+PB_BIND(aranya_NodeStatusMsg, aranya_NodeStatusMsg, AUTO)
+
 
 
 
