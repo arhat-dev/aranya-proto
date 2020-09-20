@@ -23,18 +23,22 @@ option go_package = "arhat.dev/aranya-proto/aranyagopb";
 message Empty {}
 
 enum Kind {
+    option allow_alias = true;
+
     EMPTY = 0;
 
     // if kind name contains _DATA_, the message body is raw day
     // not the encoded protobuf bytes
+    MSG_DATA_DEFAULT = 1;
     MSG_DATA_STDOUT = 1;
-    MSG_DATA_STDERR = 2;
-    MSG_DATA_METRICS = 3;
+    MSG_DATA_METRICS = 1;
 
-    CMD_DATA_UPSTREAM = 4;
+    MSG_DATA_STDERR = 2;
+
+    CMD_DATA_UPSTREAM = 3;
 
     // reserved for raw data to reduce overhead
-    reserved 5,6,7,8,9;
+    reserved 4,5,6,7,8,9;
 
     CMD_REJECT = 10;
     CMD_SESSION_CLOSE = 11;

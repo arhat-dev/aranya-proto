@@ -16,10 +16,11 @@ extern "C" {
 /* Enum definitions */
 typedef enum _aranya_Kind {
     aranya_Kind_EMPTY = 0,
+    aranya_Kind_MSG_DATA_DEFAULT = 1,
     aranya_Kind_MSG_DATA_STDOUT = 1,
+    aranya_Kind_MSG_DATA_METRICS = 1,
     aranya_Kind_MSG_DATA_STDERR = 2,
-    aranya_Kind_MSG_DATA_METRICS = 3,
-    aranya_Kind_CMD_DATA_UPSTREAM = 4,
+    aranya_Kind_CMD_DATA_UPSTREAM = 3,
     aranya_Kind_CMD_REJECT = 10,
     aranya_Kind_CMD_SESSION_CLOSE = 11,
     aranya_Kind_CMD_POD_CTR_EXEC = 12,
