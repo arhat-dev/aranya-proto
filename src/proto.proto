@@ -117,31 +117,19 @@ message Header {
     // seq keeps increasing
     uint64 seq = 3;
 
-    // mark this Msg is the last message in the session
+    // mark this Cmd/Msg is the last message in the session
     bool completed = 4;
-
-    // sub sequence in the session, which is used to multiplex the
-    // session
-    //  e.g. aranya starts a session with container exec
-    //       arhat executed the command with output but command exited
-    //          with code 1
-    //       arhat should report this error along with the output, then
-    //          it just upload the output with sub_seq=0, and report the
-    //          error with sub_seq=1
-    uint64 sub_seq = 5;
 }
 
 message Cmd {
     Header header = 1;
 
+    // body of encoded XxxCmd or raw data bytes
     bytes body = 11;
 }
 
 message Msg {
     Header header = 1;
-
-    // online_id of the agent
-    string online_id = 4;
 
     // body of encoded XxxMsg or raw data bytes
     bytes body = 11;

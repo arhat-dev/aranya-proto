@@ -140,7 +140,6 @@ typedef struct _aranya_Header {
     uint64_t sid;
     uint64_t seq;
     bool completed;
-    uint64_t sub_seq;
 } aranya_Header;
 
 typedef struct _aranya_NodeInfoGetCmd {
@@ -176,7 +175,6 @@ typedef struct _aranya_Cmd {
 typedef struct _aranya_Msg {
     bool has_header;
     aranya_Header header;
-    pb_callback_t online_id;
     pb_callback_t body;
 } aranya_Msg;
 
@@ -205,9 +203,9 @@ typedef struct _aranya_Msg {
 
 /* Initializer values for message structs */
 #define aranya_Empty_init_default                {0}
-#define aranya_Header_init_default               {_aranya_Kind_MIN, 0, 0, 0, 0}
+#define aranya_Header_init_default               {_aranya_Kind_MIN, 0, 0, 0}
 #define aranya_Cmd_init_default                  {false, aranya_Header_init_default, {{NULL}, NULL}}
-#define aranya_Msg_init_default                  {false, aranya_Header_init_default, {{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_Msg_init_default                  {false, aranya_Header_init_default, {{NULL}, NULL}}
 #define aranya_NodeInfoGetCmd_init_default       {_aranya_NodeInfoGetCmd_Kind_MIN}
 #define aranya_SessionCloseCmd_init_default      {0}
 #define aranya_RejectCmd_init_default            {_aranya_RejectCmd_Reason_MIN, {{NULL}, NULL}}
@@ -219,9 +217,9 @@ typedef struct _aranya_Msg {
 #define aranya_ErrorMsg_init_default             {_aranya_ErrorMsg_Kind_MIN, {{NULL}, NULL}, 0}
 #define aranya_StateMsg_init_default             {_aranya_StateMsg_Kind_MIN, {{NULL}, NULL}}
 #define aranya_Empty_init_zero                   {0}
-#define aranya_Header_init_zero                  {_aranya_Kind_MIN, 0, 0, 0, 0}
+#define aranya_Header_init_zero                  {_aranya_Kind_MIN, 0, 0, 0}
 #define aranya_Cmd_init_zero                     {false, aranya_Header_init_zero, {{NULL}, NULL}}
-#define aranya_Msg_init_zero                     {false, aranya_Header_init_zero, {{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_Msg_init_zero                     {false, aranya_Header_init_zero, {{NULL}, NULL}}
 #define aranya_NodeInfoGetCmd_init_zero          {_aranya_NodeInfoGetCmd_Kind_MIN}
 #define aranya_SessionCloseCmd_init_zero         {0}
 #define aranya_RejectCmd_init_zero               {_aranya_RejectCmd_Reason_MIN, {{NULL}, NULL}}
@@ -262,7 +260,6 @@ typedef struct _aranya_Msg {
 #define aranya_Header_sid_tag                    2
 #define aranya_Header_seq_tag                    3
 #define aranya_Header_completed_tag              4
-#define aranya_Header_sub_seq_tag                5
 #define aranya_NodeInfoGetCmd_kind_tag           1
 #define aranya_PodPortForwardCmd_pod_uid_tag     1
 #define aranya_PodPortForwardCmd_port_tag        2
@@ -275,7 +272,6 @@ typedef struct _aranya_Msg {
 #define aranya_Cmd_header_tag                    1
 #define aranya_Cmd_body_tag                      11
 #define aranya_Msg_header_tag                    1
-#define aranya_Msg_online_id_tag                 4
 #define aranya_Msg_body_tag                      11
 
 /* Struct field encoding specification for nanopb */
@@ -288,8 +284,7 @@ typedef struct _aranya_Msg {
 X(a, STATIC,   SINGULAR, UENUM,    kind,              1) \
 X(a, STATIC,   SINGULAR, UINT64,   sid,               2) \
 X(a, STATIC,   SINGULAR, UINT64,   seq,               3) \
-X(a, STATIC,   SINGULAR, BOOL,     completed,         4) \
-X(a, STATIC,   SINGULAR, UINT64,   sub_seq,           5)
+X(a, STATIC,   SINGULAR, BOOL,     completed,         4)
 #define aranya_Header_CALLBACK NULL
 #define aranya_Header_DEFAULT NULL
 
@@ -302,7 +297,6 @@ X(a, CALLBACK, SINGULAR, BYTES,    body,             11)
 
 #define aranya_Msg_FIELDLIST(X, a) \
 X(a, STATIC,   OPTIONAL, MESSAGE,  header,            1) \
-X(a, CALLBACK, SINGULAR, STRING,   online_id,         4) \
 X(a, CALLBACK, SINGULAR, BYTES,    body,             11)
 #define aranya_Msg_CALLBACK pb_default_field_callback
 #define aranya_Msg_DEFAULT NULL
@@ -415,7 +409,7 @@ extern const pb_msgdesc_t aranya_StateMsg_msg;
 
 /* Maximum encoded size of messages (where known) */
 #define aranya_Empty_size                        0
-#define aranya_Header_size                       38
+#define aranya_Header_size                       27
 /* aranya_Cmd_size depends on runtime parameters */
 /* aranya_Msg_size depends on runtime parameters */
 #define aranya_NodeInfoGetCmd_size               2
