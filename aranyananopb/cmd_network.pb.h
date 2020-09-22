@@ -14,34 +14,30 @@ extern "C" {
 #endif
 
 /* Struct definitions */
-typedef struct _aranya_NetworkUpdatePodNetworkCmd {
-    pb_callback_t cidr_ipv4;
-    pb_callback_t cidr_ipv6;
-} aranya_NetworkUpdatePodNetworkCmd;
+typedef struct _aranya_NetworkEnsureCmd {
+    char dummy_field;
+} aranya_NetworkEnsureCmd;
 
 
 /* Initializer values for message structs */
-#define aranya_NetworkUpdatePodNetworkCmd_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
-#define aranya_NetworkUpdatePodNetworkCmd_init_zero {{{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_NetworkEnsureCmd_init_default     {0}
+#define aranya_NetworkEnsureCmd_init_zero        {0}
 
 /* Field tags (for use in manual encoding/decoding) */
-#define aranya_NetworkUpdatePodNetworkCmd_cidr_ipv4_tag 1
-#define aranya_NetworkUpdatePodNetworkCmd_cidr_ipv6_tag 2
 
 /* Struct field encoding specification for nanopb */
-#define aranya_NetworkUpdatePodNetworkCmd_FIELDLIST(X, a) \
-X(a, CALLBACK, SINGULAR, STRING,   cidr_ipv4,         1) \
-X(a, CALLBACK, SINGULAR, STRING,   cidr_ipv6,         2)
-#define aranya_NetworkUpdatePodNetworkCmd_CALLBACK pb_default_field_callback
-#define aranya_NetworkUpdatePodNetworkCmd_DEFAULT NULL
+#define aranya_NetworkEnsureCmd_FIELDLIST(X, a) \
 
-extern const pb_msgdesc_t aranya_NetworkUpdatePodNetworkCmd_msg;
+#define aranya_NetworkEnsureCmd_CALLBACK NULL
+#define aranya_NetworkEnsureCmd_DEFAULT NULL
+
+extern const pb_msgdesc_t aranya_NetworkEnsureCmd_msg;
 
 /* Defines for backwards compatibility with code written before nanopb-0.4.0 */
-#define aranya_NetworkUpdatePodNetworkCmd_fields &aranya_NetworkUpdatePodNetworkCmd_msg
+#define aranya_NetworkEnsureCmd_fields &aranya_NetworkEnsureCmd_msg
 
 /* Maximum encoded size of messages (where known) */
-/* aranya_NetworkUpdatePodNetworkCmd_size depends on runtime parameters */
+#define aranya_NetworkEnsureCmd_size             0
 
 #ifdef __cplusplus
 } /* extern "C" */

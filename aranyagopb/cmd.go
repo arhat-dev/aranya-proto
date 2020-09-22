@@ -181,10 +181,10 @@ func NewMetricsConfigCmd(t MetricsTarget, collect, extraArgs []string) *MetricsC
 	return &MetricsConfigCmd{Target: t, Collect: collect, ExtraArgs: extraArgs}
 }
 
-func NewNetworkUpdatePodNetCmd(ipv4PodCIDR, ipv6PodCIDR string) *NetworkUpdatePodNetworkCmd {
-	return &NetworkUpdatePodNetworkCmd{
-		CidrIpv4: ipv4PodCIDR,
-		CidrIpv6: ipv6PodCIDR,
+func NewContainerNetworkEnsureCmd(ipv4CIDR, ipv6CIDR string) *ContainerNetworkEnsureCmd {
+	return &ContainerNetworkEnsureCmd{
+		CidrIpv4: ipv4CIDR,
+		CidrIpv6: ipv6CIDR,
 	}
 }
 

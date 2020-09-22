@@ -206,6 +206,17 @@ message PodNetworkOptions {
     string cidr_ipv6 = 2;
 
     Bandwidth bandwidth = 3;
+
+    // /etc/resolv.conf entries
+    repeated string name_servers = 4;
+    repeated string search_domains = 5;
+    repeated string dns_options = 6;
+
+    // /etc/hosts entries
+    //
+    // key: hostname
+    // value: ip
+    map<string, string> hosts = 7;
 }
 
 message PodEnsureCmd {
@@ -244,15 +255,7 @@ message PodEnsureCmd {
     //
     // Network options
     //
-    repeated string name_servers = 14;
-    repeated string search_domains = 15;
-    // /etc/hosts entries
-    //
-    // key: hostname
-    // value: ip
-    map<string, string> hosts = 16;
-    repeated string dns_options = 17;
-    PodNetworkOptions network = 18;
+    PodNetworkOptions network = 14;
 
     //
     // Volumes and devices (in early days, they are the same)

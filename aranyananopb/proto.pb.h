@@ -31,7 +31,6 @@ typedef enum _aranya_Kind {
     aranya_Kind_CMD_NODE_INFO_GET = 17,
     aranya_Kind_CMD_METRICS_CONFIG = 21,
     aranya_Kind_CMD_METRICS_COLLECT = 22,
-    aranya_Kind_CMD_NET_UPDATE_POD_NET = 25,
     aranya_Kind_CMD_CRED_ENSURE = 31,
     aranya_Kind_CMD_IMAGE_LIST = 41,
     aranya_Kind_CMD_IMAGE_ENSURE = 42,
@@ -45,11 +44,15 @@ typedef enum _aranya_Kind {
     aranya_Kind_CMD_DEVICE_LIST = 71,
     aranya_Kind_CMD_DEVICE_ENSURE = 72,
     aranya_Kind_CMD_DEVICE_DELETE = 73,
+    aranya_Kind_CMD_CTR_NET_LIST = 81,
+    aranya_Kind_CMD_CTR_NET_ENSURE = 82,
+    aranya_Kind_CMD_NET_LIST = 91,
+    aranya_Kind_CMD_NET_ENSURE = 92,
+    aranya_Kind_CMD_NET_DELETE = 93,
     aranya_Kind_MSG_DONE = 100,
     aranya_Kind_MSG_STATE = 101,
     aranya_Kind_MSG_ERROR = 102,
     aranya_Kind_MSG_NODE_STATUS = 111,
-    aranya_Kind_MSG_NETWORK_STATUS = 121,
     aranya_Kind_MSG_CRED_STATUS = 131,
     aranya_Kind_MSG_IMAGE_STATUS = 141,
     aranya_Kind_MSG_IMAGE_STATUS_LIST = 142,
@@ -58,7 +61,11 @@ typedef enum _aranya_Kind {
     aranya_Kind_MSG_POD_STATUS = 161,
     aranya_Kind_MSG_POD_STATUS_LIST = 162,
     aranya_Kind_MSG_DEVICE_STATUS = 171,
-    aranya_Kind_MSG_DEVICE_STATUS_LIST = 172
+    aranya_Kind_MSG_DEVICE_STATUS_LIST = 172,
+    aranya_Kind_MSG_CTR_NET_STATUS = 181,
+    aranya_Kind_MSG_CTR_NET_STATUS_LIST = 182,
+    aranya_Kind_MSG_NET_STATUS = 191,
+    aranya_Kind_MSG_NET_STATUS_LIST = 192
 } aranya_Kind;
 
 typedef enum _aranya_NodeInfoGetCmd_Kind {
@@ -181,8 +188,8 @@ typedef struct _aranya_Msg {
 
 /* Helper constants for enums */
 #define _aranya_Kind_MIN aranya_Kind_EMPTY
-#define _aranya_Kind_MAX aranya_Kind_MSG_DEVICE_STATUS_LIST
-#define _aranya_Kind_ARRAYSIZE ((aranya_Kind)(aranya_Kind_MSG_DEVICE_STATUS_LIST+1))
+#define _aranya_Kind_MAX aranya_Kind_MSG_NET_STATUS_LIST
+#define _aranya_Kind_ARRAYSIZE ((aranya_Kind)(aranya_Kind_MSG_NET_STATUS_LIST+1))
 
 #define _aranya_NodeInfoGetCmd_Kind_MIN aranya_NodeInfoGetCmd_Kind_NODE_INFO_DYN
 #define _aranya_NodeInfoGetCmd_Kind_MAX aranya_NodeInfoGetCmd_Kind_NODE_INFO_ALL

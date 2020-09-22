@@ -16,9 +16,12 @@ limitations under the License.
 
 syntax = "proto3";
 
+// +build !rt_none
 package aranya;
 
 option go_package = "arhat.dev/aranya-proto/aranyagopb";
 
-message NetworkEnsureCmd {
+message ContainerNetworkEnsureCmd {
+    string cidr_ipv4 = 1;
+    string cidr_ipv6 = 2;
 }

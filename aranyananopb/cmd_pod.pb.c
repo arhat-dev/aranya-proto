@@ -69,13 +69,13 @@ PB_BIND(aranya_Bandwidth, aranya_Bandwidth, AUTO)
 PB_BIND(aranya_PodNetworkOptions, aranya_PodNetworkOptions, AUTO)
 
 
+PB_BIND(aranya_PodNetworkOptions_HostsEntry, aranya_PodNetworkOptions_HostsEntry, AUTO)
+
+
 PB_BIND(aranya_PodEnsureCmd, aranya_PodEnsureCmd, 2)
 
 
 PB_BIND(aranya_PodEnsureCmd_PortsEntry, aranya_PodEnsureCmd_PortsEntry, AUTO)
-
-
-PB_BIND(aranya_PodEnsureCmd_HostsEntry, aranya_PodEnsureCmd_HostsEntry, AUTO)
 
 
 PB_BIND(aranya_PodEnsureCmd_HostPathsEntry, aranya_PodEnsureCmd_HostPathsEntry, AUTO)
