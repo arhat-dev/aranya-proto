@@ -34,7 +34,8 @@ typedef struct _aranya_PodStatusListMsg {
 typedef struct _aranya_PodStatusMsg {
     pb_callback_t uid;
     pb_callback_t container_statuses;
-    pb_callback_t pod_ip;
+    pb_callback_t pod_ipv4;
+    pb_callback_t pod_ipv6;
 } aranya_PodStatusMsg;
 
 typedef struct _aranya_ContainerStatus {
@@ -70,13 +71,13 @@ typedef struct _aranya_PodStatusMsg_ContainerStatusesEntry {
 
 /* Initializer values for message structs */
 #define aranya_ContainerStatus_init_default      {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, 0, 0, {{NULL}, NULL}, {{NULL}, NULL}}
-#define aranya_PodStatusMsg_init_default         {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_PodStatusMsg_init_default         {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_PodStatusMsg_ContainerStatusesEntry_init_default {{{NULL}, NULL}, false, aranya_ContainerStatus_init_default}
 #define aranya_PodStatusListMsg_init_default     {{{NULL}, NULL}}
 #define aranya_ImageStatusMsg_init_default       {{{NULL}, NULL}, 0, {{NULL}, NULL}}
 #define aranya_ImageStatusListMsg_init_default   {{{NULL}, NULL}}
 #define aranya_ContainerStatus_init_zero         {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, 0, 0, {{NULL}, NULL}, {{NULL}, NULL}}
-#define aranya_PodStatusMsg_init_zero            {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_PodStatusMsg_init_zero            {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_PodStatusMsg_ContainerStatusesEntry_init_zero {{{NULL}, NULL}, false, aranya_ContainerStatus_init_zero}
 #define aranya_PodStatusListMsg_init_zero        {{{NULL}, NULL}}
 #define aranya_ImageStatusMsg_init_zero          {{{NULL}, NULL}, 0, {{NULL}, NULL}}
@@ -87,7 +88,8 @@ typedef struct _aranya_PodStatusMsg_ContainerStatusesEntry {
 #define aranya_PodStatusListMsg_pods_tag         1
 #define aranya_PodStatusMsg_uid_tag              1
 #define aranya_PodStatusMsg_container_statuses_tag 2
-#define aranya_PodStatusMsg_pod_ip_tag           3
+#define aranya_PodStatusMsg_pod_ipv4_tag         3
+#define aranya_PodStatusMsg_pod_ipv6_tag         4
 #define aranya_ContainerStatus_container_id_tag  1
 #define aranya_ContainerStatus_image_id_tag      2
 #define aranya_ContainerStatus_created_at_tag    4
@@ -120,7 +122,8 @@ X(a, CALLBACK, SINGULAR, STRING,   message,          12)
 #define aranya_PodStatusMsg_FIELDLIST(X, a) \
 X(a, CALLBACK, SINGULAR, STRING,   uid,               1) \
 X(a, CALLBACK, REPEATED, MESSAGE,  container_statuses,   2) \
-X(a, CALLBACK, SINGULAR, STRING,   pod_ip,            3)
+X(a, CALLBACK, SINGULAR, STRING,   pod_ipv4,          3) \
+X(a, CALLBACK, SINGULAR, STRING,   pod_ipv6,          4)
 #define aranya_PodStatusMsg_CALLBACK pb_default_field_callback
 #define aranya_PodStatusMsg_DEFAULT NULL
 #define aranya_PodStatusMsg_container_statuses_MSGTYPE aranya_PodStatusMsg_ContainerStatusesEntry

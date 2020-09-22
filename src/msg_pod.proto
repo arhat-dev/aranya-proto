@@ -50,7 +50,8 @@ message PodStatusMsg {
     // status
     map<string, ContainerStatus> container_statuses = 2;
     // allocated pod ip address
-    string pod_ip = 3;
+    string pod_ipv4 = 3;
+    string pod_ipv6 = 4;
 }
 
 message PodStatusListMsg {
