@@ -21,47 +21,8 @@ package aranya;
 
 option go_package = "arhat.dev/aranya-proto/aranyagopb";
 
-
-message AuthConfig {
-    string username = 1;
-    string password = 2;
-
-    string auth = 3;
-    string server_address = 4;
-    // IdentityToken is used to authenticate the user and get
-    // an access token for the registry.
-    string identity_token = 5;
-    // RegistryToken is a bearer token to be sent to a registry
-    string registry_token = 6;
-    string email = 7;
-}
-
-enum ImagePullPolicy {
-    IMAGE_PULL_ALWAYS = 0;
-    IMAGE_PULL_IF_NOT_PRESENT = 1;
-    IMAGE_PULL_NEVER = 2;
-}
-
-message ImagePullConfig {
-    // image pull secrets
-    AuthConfig auth_config = 1;
-    // pull policy
-    ImagePullPolicy pull_policy = 2;
-}
-
-message ImageEnsureCmd {
-    map<string, ImagePullConfig> images = 1;
-}
-
 message NamedData {
     map<string, bytes> data_map = 1;
-}
-
-message ContainerPort {
-    string protocol = 1;
-    int32 container_port = 2;
-    int32 host_port = 3;
-    string host_ip = 4;
 }
 
 message SELinuxOptions {
@@ -71,7 +32,7 @@ message SELinuxOptions {
     string user = 4;
 }
 
-message ContainerSecurityOptions {
+message ContainerSecuritySpec {
     enum ProcMountKind {
         PROC_MOUNT_DEFAULT = 0;
         PROC_MOUNT_UNMASKED = 1;
@@ -93,7 +54,7 @@ message ContainerSecurityOptions {
     SELinuxOptions selinux_options = 10;
 }
 
-message MountOptions {
+message ContainerMountSpec {
     string mount_path = 1;
     string sub_path = 2;
     bool read_only = 3;
@@ -111,84 +72,80 @@ message KeyValuePair {
     string value = 2;
 }
 
-message ActionMethod {
-    message ActionExec {
+message ContainerAction {
+    message Exec {
         repeated string command = 1;
     }
 
-    message ActionHTTP {
+    message HTTP {
         string method = 1;
         string url = 2;
         repeated KeyValuePair headers = 3;
     }
 
-    message ActionSocket {
-        string url = 1;
+    message Socket {
+        string address = 1;
     }
 
     oneof action {
-        ActionExec exec = 1;
-        ActionHTTP http = 2;
-        ActionSocket socket = 3;
+        Exec exec = 1;
+        HTTP http = 2;
+        Socket socket = 3;
     };
 }
 
-message Probe {
-    ActionMethod method = 1;
+message ContainerProbeSpec {
+    int64 initial_delay = 1;
+    int64 probe_timeout = 2;
+    int64 probe_interval = 3;
 
-    int64 initial_delay = 2;
-    int64 probe_timeout = 3;
-    int64 probe_interval = 4;
+    int32 success_threshold = 4;
+    int32 failure_threshold = 5;
 
-    int32 success_threshold = 5;
-    int32 failure_threshold = 6;
+    ContainerAction method = 6;
 }
 
 message ContainerSpec {
-    string name = 2;
+    string name = 1;
+    
     // container image name to pull
-    string image = 1;
+    string image = 2;
+
+    string working_dir = 3;
+
+    bool stdin = 4;
+    bool stdin_once = 5;
+    bool tty = 6;
 
     // Command (ENTRYPOINT in Dockerfile)
-    repeated string command = 3;
+    repeated string command = 7;
     // Args (CMD in Dockerfile)
-    repeated string args = 4;
-
-    string working_dir = 5;
-    bool stdin = 6;
-    bool stdin_once = 7;
-    bool tty = 8;
+    repeated string args = 8;
 
     // Contaienr environment variables
     //
     // key: env key
     // value: env value
-    map<string, string> envs = 11;
+    map<string, string> envs = 9;
 
     // Container voulme or device mounts
     //
     // key: volume or device name
     // value: mount options
-    map<string, MountOptions> mounts = 12;
+    map<string, ContainerMountSpec> mounts = 10;
 
-    Probe readiness_check = 13;
-    Probe liveness_check = 14;
+    ContainerProbeSpec readiness_check = 11;
+    ContainerProbeSpec liveness_check = 12;
 
     //
     // resolved security opts in pod
     //
-    ContainerSecurityOptions security = 21;
+    ContainerSecuritySpec security = 13;
 
     //
     // Container hooks
     //
-    ActionMethod hook_post_start = 31;
-}
-
-enum RestartPolicy {
-    RESTART_ALWAYS = 0;
-    RESTART_ON_FAILURE = 1;
-    RESTART_NEVER = 2;
+    ContainerAction hook_post_start = 14;
 }
 
 message Bandwidth {
@@ -201,7 +158,14 @@ message Bandwidth {
     int32 egress_burst = 4;
 }
 
-message PodNetworkOptions {
+message ContainerPortSpec {
+    string protocol = 1;
+    int32 container_port = 2;
+    int32 host_port = 3;
+    string host_ip = 4;
+}
+
+message PodNetworkSpec {
     string cidr_ipv4 = 1;
     string cidr_ipv6 = 2;
 
@@ -217,6 +181,46 @@ message PodNetworkOptions {
     // key: hostname
     // value: ip
     map<string, string> hosts = 7;
+
+    // Container ports is processed when creating the pause container
+    //
+    // key: port name
+    //          the port name is in the format of `{container}/{port_name}`
+    //          if the port name is missing in the corev1.Container,
+    //          it's index number in the containers list will be used as {port_name}
+    // value: port map and spec
+    //          currently only ports with `host_port` specified will be exposed
+    map<string, ContainerPortSpec> ports = 8;
+}
+
+enum RestartPolicy {
+    RESTART_ALWAYS = 0;
+    RESTART_ON_FAILURE = 1;
+    RESTART_NEVER = 2;
+}
+
+message PodVolumeSpec {
+    //
+    // Volumes and devices (in early days, they are the same)
+    //
+
+    // Volumes and devices' host path
+    //
+    // key: volume or device name
+    // value: host path
+    map<string, string> host_paths = 21;
+
+    // Data to populate files in container
+    //
+    // key: volume name
+    // value: data from {ConfigMap, Secret}
+    map<string, NamedData> volume_data = 22;
+}
+
+message PodSecuritySpec {
+    // key:
+    // value:
+    map<string, string> sysctls = 15;
 }
 
 message PodEnsureCmd {
@@ -235,59 +239,34 @@ message PodEnsureCmd {
     bool host_pid = 7;
     // share pid namespace between containers in the same pod
     bool share_pid = 8;
+
     // wait unitl all containers defined in this cmd exited with no error
     bool wait = 9;
+
     // custom hostname to override container id as hostname
     string hostname = 10;
 
     repeated ContainerSpec containers = 11;
+    PodNetworkSpec network = 12;
+    PodVolumeSpec volumes = 13;
+    PodSecuritySpec security = 14;
 
-    // Container ports is processed when creating the pause container
-    //
-    // key: port name
-    //          the port name is in the format of `{container}/{port_name}`
-    //          if the port name is missing in the corev1.Container,
-    //          it's index number in the containers list will be used as {port_name}
-    // value: port map and spec
-    //          currently only ports with `host_port` specified will be exposed
-    map<string, ContainerPort> ports = 13;
-
-    //
-    // Network options
-    //
-    PodNetworkOptions network = 14;
-
-    //
-    // Volumes and devices (in early days, they are the same)
-    //
-
-    // Volumes and devices' host path
-    //
-    // key: volume or device name
-    // value: host path
-    map<string, string> host_paths = 21;
-
-    // Data to populate files in container
-    //
-    // key: volume name
-    // value: data from {ConfigMap, Secret}
-    map<string, NamedData> volume_data = 22;
-
-    map<string, string> labels = 23;
-
-    // Security options
-    map<string, string> sysctls = 31;
+    map<string, string> labels = 15;
 }
 
 message PodDeleteCmd {
     // pod to perform delete operation
     string pod_uid = 1;
+
     // containers to delete, if not specified, delete this pod
     repeated string containers = 2;
 
     // pod deletion grace time
     int64 grace_time = 10;
-    map<string, ActionMethod> hook_pre_stop = 11;
+    
+    // key: container name
+    // value:
+    map<string, ContainerAction> hook_pre_stop = 11;
 }
 
 message PodListCmd {

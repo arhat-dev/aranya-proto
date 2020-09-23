@@ -77,7 +77,7 @@ func NewCredentialEnsureCmd(sshPrivateKey []byte) *CredentialEnsureCmd {
 	}
 }
 
-func NewPodDeleteCmd(podUID string, graceTime time.Duration, preStopHooks map[string]*ActionMethod) *PodDeleteCmd {
+func NewPodDeleteCmd(podUID string, graceTime time.Duration, preStopHooks map[string]*ContainerAction) *PodDeleteCmd {
 	return &PodDeleteCmd{
 		PodUid:      podUID,
 		GraceTime:   int64(graceTime),
