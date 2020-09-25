@@ -99,10 +99,14 @@ message DeviceDeleteCmd {
 }
 
 message DeviceOperateCmd {
-    // (required) identifier of this operation
-    string operation_id = 1;
+    // (required) device id of a normal device
+    string device_id = 1;
 
-    bytes data = 2;
+    // (required) identifier of this operation
+    string operation_id = 2;
+
+    // (optional) extra data for this operation
+    bytes data = 3;
 }
 
 message DeviceMetricsCollectCmd {

@@ -246,3 +246,18 @@ func HexHashOfConnectivity(c *Connectivity) string {
 
 	return hex.EncodeToString(h.Sum(nil))
 }
+
+func NewDeviceOperateCmd(deviceID, operationID string, data []byte) *DeviceOperateCmd {
+	return &DeviceOperateCmd{
+		DeviceId:    deviceID,
+		OperationId: operationID,
+		Data:        data,
+	}
+}
+
+func NewDeviceMetricsCollectCmd(all bool, deviceIDs ...string) *DeviceMetricsCollectCmd {
+	return &DeviceMetricsCollectCmd{
+		All:       all,
+		DeviceIds: deviceIDs,
+	}
+}
