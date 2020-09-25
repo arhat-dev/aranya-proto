@@ -198,7 +198,7 @@ func NewDeviceListCmd() *DeviceListCmd {
 
 func NewDeviceEnsureCmd(
 	kind DeviceType,
-	connectorHashHex string,
+	connectorHashHex, deviceID string,
 	connector *Connectivity,
 	operations []*DeviceOperation,
 	metrics []*DeviceMetric,
@@ -208,6 +208,7 @@ func NewDeviceEnsureCmd(
 		ConnectorHashHex: connectorHashHex,
 		Connector:        connector,
 
+		DeviceId:   deviceID,
 		Operations: operations,
 		Metrics:    metrics,
 	}

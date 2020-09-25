@@ -76,11 +76,14 @@ message DeviceEnsureCmd {
     // upon this connector
     Connectivity connector = 3;
 
+    // (optional) identifier of this normal devices, used to find this device in aranya
+    string device_id = 4;
+
     // (optional) User defined device operations
-    repeated DeviceOperation operations = 4;
+    repeated DeviceOperation operations = 5;
 
     // (optional) User defined device metrics
-    repeated DeviceMetric metrics = 5;
+    repeated DeviceMetric metrics = 6;
 }
 
 message DeviceListCmd {

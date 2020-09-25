@@ -59,6 +59,7 @@ typedef struct _aranya_DeviceEnsureCmd {
     pb_callback_t connector_hash_hex;
     bool has_connector;
     aranya_Connectivity connector;
+    pb_callback_t device_id;
     pb_callback_t operations;
     pb_callback_t metrics;
 } aranya_DeviceEnsureCmd;
@@ -93,7 +94,7 @@ typedef struct _aranya_DeviceMetric {
 #define aranya_DeviceMetric_init_default         {{{NULL}, NULL}, _aranya_DeviceMetric_ReportMethod_MIN, _aranya_DeviceMetric_ValueType_MIN, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_DeviceMetric_DeviceParamsEntry_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_DeviceMetric_ReporterParamsEntry_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
-#define aranya_DeviceEnsureCmd_init_default      {_aranya_DeviceType_MIN, {{NULL}, NULL}, false, aranya_Connectivity_init_default, {{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_DeviceEnsureCmd_init_default      {_aranya_DeviceType_MIN, {{NULL}, NULL}, false, aranya_Connectivity_init_default, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_DeviceListCmd_init_default        {_aranya_DeviceType_MIN}
 #define aranya_DeviceDeleteCmd_init_default      {{{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_DeviceOperation_init_zero         {{{NULL}, NULL}, {{NULL}, NULL}}
@@ -101,7 +102,7 @@ typedef struct _aranya_DeviceMetric {
 #define aranya_DeviceMetric_init_zero            {{{NULL}, NULL}, _aranya_DeviceMetric_ReportMethod_MIN, _aranya_DeviceMetric_ValueType_MIN, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_DeviceMetric_DeviceParamsEntry_init_zero {{{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_DeviceMetric_ReporterParamsEntry_init_zero {{{NULL}, NULL}, {{NULL}, NULL}}
-#define aranya_DeviceEnsureCmd_init_zero         {_aranya_DeviceType_MIN, {{NULL}, NULL}, false, aranya_Connectivity_init_zero, {{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_DeviceEnsureCmd_init_zero         {_aranya_DeviceType_MIN, {{NULL}, NULL}, false, aranya_Connectivity_init_zero, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_DeviceListCmd_init_zero           {_aranya_DeviceType_MIN}
 #define aranya_DeviceDeleteCmd_init_zero         {{{NULL}, NULL}, {{NULL}, NULL}}
 
@@ -119,8 +120,9 @@ typedef struct _aranya_DeviceMetric {
 #define aranya_DeviceEnsureCmd_kind_tag          1
 #define aranya_DeviceEnsureCmd_connector_hash_hex_tag 2
 #define aranya_DeviceEnsureCmd_connector_tag     3
-#define aranya_DeviceEnsureCmd_operations_tag    4
-#define aranya_DeviceEnsureCmd_metrics_tag       5
+#define aranya_DeviceEnsureCmd_device_id_tag     4
+#define aranya_DeviceEnsureCmd_operations_tag    5
+#define aranya_DeviceEnsureCmd_metrics_tag       6
 #define aranya_DeviceListCmd_kind_tag            1
 #define aranya_DeviceMetric_name_tag             1
 #define aranya_DeviceMetric_report_method_tag    2
@@ -171,8 +173,9 @@ X(a, CALLBACK, SINGULAR, STRING,   value,             2)
 X(a, STATIC,   SINGULAR, UENUM,    kind,              1) \
 X(a, CALLBACK, SINGULAR, STRING,   connector_hash_hex,   2) \
 X(a, STATIC,   OPTIONAL, MESSAGE,  connector,         3) \
-X(a, CALLBACK, REPEATED, MESSAGE,  operations,        4) \
-X(a, CALLBACK, REPEATED, MESSAGE,  metrics,           5)
+X(a, CALLBACK, SINGULAR, STRING,   device_id,         4) \
+X(a, CALLBACK, REPEATED, MESSAGE,  operations,        5) \
+X(a, CALLBACK, REPEATED, MESSAGE,  metrics,           6)
 #define aranya_DeviceEnsureCmd_CALLBACK pb_default_field_callback
 #define aranya_DeviceEnsureCmd_DEFAULT NULL
 #define aranya_DeviceEnsureCmd_connector_MSGTYPE aranya_Connectivity
