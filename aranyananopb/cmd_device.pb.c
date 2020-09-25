@@ -30,6 +30,12 @@ PB_BIND(aranya_DeviceListCmd, aranya_DeviceListCmd, AUTO)
 PB_BIND(aranya_DeviceDeleteCmd, aranya_DeviceDeleteCmd, AUTO)
 
 
+PB_BIND(aranya_DeviceOperateCmd, aranya_DeviceOperateCmd, AUTO)
+
+
+PB_BIND(aranya_DeviceMetricsCollectCmd, aranya_DeviceMetricsCollectCmd, AUTO)
+
+
 
 
 

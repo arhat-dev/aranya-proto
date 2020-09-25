@@ -45,3 +45,7 @@ message DeviceStatusMsg {
 message DeviceStatusListMsg {
     repeated DeviceStatusMsg devices = 1;
 }
+
+message DeviceOperationResultMsg {
+    repeated bytes data = 1;
+}

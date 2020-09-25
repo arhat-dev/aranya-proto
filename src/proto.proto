@@ -79,6 +79,8 @@ enum Kind {
     CMD_DEVICE_LIST = 71;
     CMD_DEVICE_ENSURE = 72;
     CMD_DEVICE_DELETE = 73;
+    CMD_DEVICE_OPERATE = 74;
+    CMD_DEVICE_COLLECT_METRICS = 75;
 
     // container network operations
     CMD_CTR_NET_LIST = 81;      // list container network config
@@ -108,6 +110,7 @@ enum Kind {
 
     MSG_DEVICE_STATUS = 171;        // associated device status
     MSG_DEVICE_STATUS_LIST = 172;
+    MSG_DEVICE_OPERATION_RESULT = 173;
 
     MSG_CTR_NET_STATUS = 181;       // container network status
     MSG_CTR_NET_STATUS_LIST = 182;  // list of container network status

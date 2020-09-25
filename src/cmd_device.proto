@@ -97,3 +97,16 @@ message DeviceDeleteCmd {
     // delete metrics reporters
     repeated string metrics_reporter_hash_hexes = 2;
 }
+
+message DeviceOperateCmd {
+    // (required) identifier of this operation
+    string operation_id = 1;
+
+    bytes data = 2;
+}
+
+message DeviceMetricsCollectCmd {
+    bool all = 1;
+
+    repeated string device_ids = 2;
+}

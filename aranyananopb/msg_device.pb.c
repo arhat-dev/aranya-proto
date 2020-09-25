@@ -12,5 +12,8 @@ PB_BIND(aranya_DeviceStatusMsg, aranya_DeviceStatusMsg, AUTO)
 PB_BIND(aranya_DeviceStatusListMsg, aranya_DeviceStatusListMsg, AUTO)
 
 
+PB_BIND(aranya_DeviceOperationResultMsg, aranya_DeviceOperationResultMsg, AUTO)
+
+
 
 

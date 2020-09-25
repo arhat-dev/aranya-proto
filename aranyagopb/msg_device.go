@@ -14,3 +14,9 @@ func NewDeviceStatusMsg(kind DeviceType, connectorHashHex string, state DeviceSt
 func NewDeviceStatusListMsg(devices []*DeviceStatusMsg) *DeviceStatusListMsg {
 	return &DeviceStatusListMsg{Devices: devices}
 }
+
+func NewDeviceOperationResultMsg(result [][]byte) *DeviceOperationResultMsg {
+	return &DeviceOperationResultMsg{
+		Data: result,
+	}
+}

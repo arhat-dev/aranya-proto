@@ -24,6 +24,10 @@ typedef enum _aranya_DeviceState {
 } aranya_DeviceState;
 
 /* Struct definitions */
+typedef struct _aranya_DeviceOperationResultMsg {
+    pb_callback_t data;
+} aranya_DeviceOperationResultMsg;
+
 typedef struct _aranya_DeviceStatusListMsg {
     pb_callback_t devices;
 } aranya_DeviceStatusListMsg;
@@ -45,10 +49,13 @@ typedef struct _aranya_DeviceStatusMsg {
 /* Initializer values for message structs */
 #define aranya_DeviceStatusMsg_init_default      {_aranya_DeviceType_MIN, {{NULL}, NULL}, _aranya_DeviceState_MIN, {{NULL}, NULL}}
 #define aranya_DeviceStatusListMsg_init_default  {{{NULL}, NULL}}
+#define aranya_DeviceOperationResultMsg_init_default {{{NULL}, NULL}}
 #define aranya_DeviceStatusMsg_init_zero         {_aranya_DeviceType_MIN, {{NULL}, NULL}, _aranya_DeviceState_MIN, {{NULL}, NULL}}
 #define aranya_DeviceStatusListMsg_init_zero     {{{NULL}, NULL}}
+#define aranya_DeviceOperationResultMsg_init_zero {{{NULL}, NULL}}
 
 /* Field tags (for use in manual encoding/decoding) */
+#define aranya_DeviceOperationResultMsg_data_tag 1
 #define aranya_DeviceStatusListMsg_devices_tag   1
 #define aranya_DeviceStatusMsg_kind_tag          1
 #define aranya_DeviceStatusMsg_connector_hash_hex_tag 2
@@ -70,16 +77,24 @@ X(a, CALLBACK, REPEATED, MESSAGE,  devices,           1)
 #define aranya_DeviceStatusListMsg_DEFAULT NULL
 #define aranya_DeviceStatusListMsg_devices_MSGTYPE aranya_DeviceStatusMsg
 
+#define aranya_DeviceOperationResultMsg_FIELDLIST(X, a) \
+X(a, CALLBACK, REPEATED, BYTES,    data,              1)
+#define aranya_DeviceOperationResultMsg_CALLBACK pb_default_field_callback
+#define aranya_DeviceOperationResultMsg_DEFAULT NULL
+
 extern const pb_msgdesc_t aranya_DeviceStatusMsg_msg;
 extern const pb_msgdesc_t aranya_DeviceStatusListMsg_msg;
+extern const pb_msgdesc_t aranya_DeviceOperationResultMsg_msg;
 
 /* Defines for backwards compatibility with code written before nanopb-0.4.0 */
 #define aranya_DeviceStatusMsg_fields &aranya_DeviceStatusMsg_msg
 #define aranya_DeviceStatusListMsg_fields &aranya_DeviceStatusListMsg_msg
+#define aranya_DeviceOperationResultMsg_fields &aranya_DeviceOperationResultMsg_msg
 
 /* Maximum encoded size of messages (where known) */
 /* aranya_DeviceStatusMsg_size depends on runtime parameters */
 /* aranya_DeviceStatusListMsg_size depends on runtime parameters */
+/* aranya_DeviceOperationResultMsg_size depends on runtime parameters */
 
 #ifdef __cplusplus
 } /* extern "C" */

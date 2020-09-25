@@ -44,6 +44,11 @@ typedef struct _aranya_DeviceMetric_ReporterParamsEntry {
     pb_callback_t value;
 } aranya_DeviceMetric_ReporterParamsEntry;
 
+typedef struct _aranya_DeviceOperateCmd {
+    pb_callback_t operation_id;
+    pb_callback_t data;
+} aranya_DeviceOperateCmd;
+
 typedef struct _aranya_DeviceOperation {
     pb_callback_t operation_id;
     pb_callback_t params;
@@ -77,6 +82,11 @@ typedef struct _aranya_DeviceMetric {
     pb_callback_t reporter_params;
 } aranya_DeviceMetric;
 
+typedef struct _aranya_DeviceMetricsCollectCmd {
+    bool all;
+    pb_callback_t device_ids;
+} aranya_DeviceMetricsCollectCmd;
+
 
 /* Helper constants for enums */
 #define _aranya_DeviceMetric_ReportMethod_MIN aranya_DeviceMetric_ReportMethod_REPORT_WITH_NODE_METRICS
@@ -97,6 +107,8 @@ typedef struct _aranya_DeviceMetric {
 #define aranya_DeviceEnsureCmd_init_default      {_aranya_DeviceType_MIN, {{NULL}, NULL}, false, aranya_Connectivity_init_default, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_DeviceListCmd_init_default        {_aranya_DeviceType_MIN}
 #define aranya_DeviceDeleteCmd_init_default      {{{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_DeviceOperateCmd_init_default     {{{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_DeviceMetricsCollectCmd_init_default {0, {{NULL}, NULL}}
 #define aranya_DeviceOperation_init_zero         {{{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_DeviceOperation_ParamsEntry_init_zero {{{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_DeviceMetric_init_zero            {{{NULL}, NULL}, _aranya_DeviceMetric_ReportMethod_MIN, _aranya_DeviceMetric_ValueType_MIN, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
@@ -105,6 +117,8 @@ typedef struct _aranya_DeviceMetric {
 #define aranya_DeviceEnsureCmd_init_zero         {_aranya_DeviceType_MIN, {{NULL}, NULL}, false, aranya_Connectivity_init_zero, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_DeviceListCmd_init_zero           {_aranya_DeviceType_MIN}
 #define aranya_DeviceDeleteCmd_init_zero         {{{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_DeviceOperateCmd_init_zero        {{{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_DeviceMetricsCollectCmd_init_zero {0, {{NULL}, NULL}}
 
 /* Field tags (for use in manual encoding/decoding) */
 #define aranya_DeviceDeleteCmd_device_ids_tag    1
@@ -113,6 +127,8 @@ typedef struct _aranya_DeviceMetric {
 #define aranya_DeviceMetric_DeviceParamsEntry_value_tag 2
 #define aranya_DeviceMetric_ReporterParamsEntry_key_tag 1
 #define aranya_DeviceMetric_ReporterParamsEntry_value_tag 2
+#define aranya_DeviceOperateCmd_operation_id_tag 1
+#define aranya_DeviceOperateCmd_data_tag         2
 #define aranya_DeviceOperation_operation_id_tag  1
 #define aranya_DeviceOperation_params_tag        2
 #define aranya_DeviceOperation_ParamsEntry_key_tag 1
@@ -130,6 +146,8 @@ typedef struct _aranya_DeviceMetric {
 #define aranya_DeviceMetric_device_params_tag    4
 #define aranya_DeviceMetric_reporter_hash_hex_tag 5
 #define aranya_DeviceMetric_reporter_params_tag  6
+#define aranya_DeviceMetricsCollectCmd_all_tag   1
+#define aranya_DeviceMetricsCollectCmd_device_ids_tag 2
 
 /* Struct field encoding specification for nanopb */
 #define aranya_DeviceOperation_FIELDLIST(X, a) \
@@ -193,6 +211,18 @@ X(a, CALLBACK, REPEATED, STRING,   metrics_reporter_hash_hexes,   2)
 #define aranya_DeviceDeleteCmd_CALLBACK pb_default_field_callback
 #define aranya_DeviceDeleteCmd_DEFAULT NULL
 
+#define aranya_DeviceOperateCmd_FIELDLIST(X, a) \
+X(a, CALLBACK, SINGULAR, STRING,   operation_id,      1) \
+X(a, CALLBACK, SINGULAR, BYTES,    data,              2)
+#define aranya_DeviceOperateCmd_CALLBACK pb_default_field_callback
+#define aranya_DeviceOperateCmd_DEFAULT NULL
+
+#define aranya_DeviceMetricsCollectCmd_FIELDLIST(X, a) \
+X(a, STATIC,   SINGULAR, BOOL,     all,               1) \
+X(a, CALLBACK, REPEATED, STRING,   device_ids,        2)
+#define aranya_DeviceMetricsCollectCmd_CALLBACK pb_default_field_callback
+#define aranya_DeviceMetricsCollectCmd_DEFAULT NULL
+
 extern const pb_msgdesc_t aranya_DeviceOperation_msg;
 extern const pb_msgdesc_t aranya_DeviceOperation_ParamsEntry_msg;
 extern const pb_msgdesc_t aranya_DeviceMetric_msg;
@@ -201,6 +231,8 @@ extern const pb_msgdesc_t aranya_DeviceMetric_ReporterParamsEntry_msg;
 extern const pb_msgdesc_t aranya_DeviceEnsureCmd_msg;
 extern const pb_msgdesc_t aranya_DeviceListCmd_msg;
 extern const pb_msgdesc_t aranya_DeviceDeleteCmd_msg;
+extern const pb_msgdesc_t aranya_DeviceOperateCmd_msg;
+extern const pb_msgdesc_t aranya_DeviceMetricsCollectCmd_msg;
 
 /* Defines for backwards compatibility with code written before nanopb-0.4.0 */
 #define aranya_DeviceOperation_fields &aranya_DeviceOperation_msg
@@ -211,6 +243,8 @@ extern const pb_msgdesc_t aranya_DeviceDeleteCmd_msg;
 #define aranya_DeviceEnsureCmd_fields &aranya_DeviceEnsureCmd_msg
 #define aranya_DeviceListCmd_fields &aranya_DeviceListCmd_msg
 #define aranya_DeviceDeleteCmd_fields &aranya_DeviceDeleteCmd_msg
+#define aranya_DeviceOperateCmd_fields &aranya_DeviceOperateCmd_msg
+#define aranya_DeviceMetricsCollectCmd_fields &aranya_DeviceMetricsCollectCmd_msg
 
 /* Maximum encoded size of messages (where known) */
 /* aranya_DeviceOperation_size depends on runtime parameters */
@@ -221,6 +255,8 @@ extern const pb_msgdesc_t aranya_DeviceDeleteCmd_msg;
 /* aranya_DeviceEnsureCmd_size depends on runtime parameters */
 #define aranya_DeviceListCmd_size                2
 /* aranya_DeviceDeleteCmd_size depends on runtime parameters */
+/* aranya_DeviceOperateCmd_size depends on runtime parameters */
+/* aranya_DeviceMetricsCollectCmd_size depends on runtime parameters */
 
 #ifdef __cplusplus
 } /* extern "C" */
