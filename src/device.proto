@@ -29,5 +29,5 @@ enum DeviceType {
     DEVICE_TYPE_NORMAL = 1;
 
     // a reporter device is used to report metrics
-    DEVICE_TYPE_METRICS_REPOTER = 2;
+    DEVICE_TYPE_METRICS_REPORTER = 2;
 }

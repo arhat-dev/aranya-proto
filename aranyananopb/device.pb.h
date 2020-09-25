@@ -17,13 +17,13 @@ extern "C" {
 typedef enum _aranya_DeviceType {
     aranya_DeviceType_DEVICE_TYPE_UNSPECIFIED = 0,
     aranya_DeviceType_DEVICE_TYPE_NORMAL = 1,
-    aranya_DeviceType_DEVICE_TYPE_METRICS_REPOTER = 2
+    aranya_DeviceType_DEVICE_TYPE_METRICS_REPORTER = 2
 } aranya_DeviceType;
 
 /* Helper constants for enums */
 #define _aranya_DeviceType_MIN aranya_DeviceType_DEVICE_TYPE_UNSPECIFIED
-#define _aranya_DeviceType_MAX aranya_DeviceType_DEVICE_TYPE_METRICS_REPOTER
-#define _aranya_DeviceType_ARRAYSIZE ((aranya_DeviceType)(aranya_DeviceType_DEVICE_TYPE_METRICS_REPOTER+1))
+#define _aranya_DeviceType_MAX aranya_DeviceType_DEVICE_TYPE_METRICS_REPORTER
+#define _aranya_DeviceType_ARRAYSIZE ((aranya_DeviceType)(aranya_DeviceType_DEVICE_TYPE_METRICS_REPORTER+1))
 
 
 #ifdef __cplusplus
