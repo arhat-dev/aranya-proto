@@ -80,7 +80,10 @@ func (DeviceMetric_ValueType) EnumDescriptor() ([]byte, []int) {
 }
 
 type DeviceOperation struct {
-	Id     string            `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// (required) identifier of this operation
+	OperationId string `protobuf:"bytes,1,opt,name=operation_id,json=operationId,proto3" json:"operation_id,omitempty"`
+	// (optional) params usd for device connectivity when executing this
+	// operation
 	Params map[string]string `protobuf:"bytes,2,rep,name=params,proto3" json:"params,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
@@ -116,9 +119,9 @@ func (m *DeviceOperation) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_DeviceOperation proto.InternalMessageInfo
 
-func (m *DeviceOperation) GetId() string {
+func (m *DeviceOperation) GetOperationId() string {
 	if m != nil {
-		return m.Id
+		return m.OperationId
 	}
 	return ""
 }
@@ -132,13 +135,15 @@ func (m *DeviceOperation) GetParams() map[string]string {
 
 type DeviceMetric struct {
 	// Name of this metric
-	Name             string                    `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	ReportMethod     DeviceMetric_ReportMethod `protobuf:"varint,2,opt,name=report_method,json=reportMethod,proto3,enum=aranya.DeviceMetric_ReportMethod" json:"report_method,omitempty"`
-	MetricsValueType DeviceMetric_ValueType    `protobuf:"varint,3,opt,name=metrics_value_type,json=metricsValueType,proto3,enum=aranya.DeviceMetric_ValueType" json:"metrics_value_type,omitempty"`
+	Name         string                    `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	ReportMethod DeviceMetric_ReportMethod `protobuf:"varint,2,opt,name=report_method,json=reportMethod,proto3,enum=aranya.DeviceMetric_ReportMethod" json:"report_method,omitempty"`
+	ValueType    DeviceMetric_ValueType    `protobuf:"varint,3,opt,name=value_type,json=valueType,proto3,enum=aranya.DeviceMetric_ValueType" json:"value_type,omitempty"`
 	// (required) params for device connector to retrieve metrics
 	DeviceParams map[string]string `protobuf:"bytes,4,rep,name=device_params,json=deviceParams,proto3" json:"device_params,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	// Hex encoded hash of the metrics reporter
+	ReporterHashHex string `protobuf:"bytes,5,opt,name=reporter_hash_hex,json=reporterHashHex,proto3" json:"reporter_hash_hex,omitempty"`
 	// (optional) params for metrics_reporter to upload metrics
-	ReportParams map[string]string `protobuf:"bytes,5,rep,name=report_params,json=reportParams,proto3" json:"report_params,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	ReporterParams map[string]string `protobuf:"bytes,6,rep,name=reporter_params,json=reporterParams,proto3" json:"reporter_params,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
 func (m *DeviceMetric) Reset()      { *m = DeviceMetric{} }
@@ -187,9 +192,9 @@ func (m *DeviceMetric) GetReportMethod() DeviceMetric_ReportMethod {
 	return REPORT_WITH_NODE_METRICS
 }
 
-func (m *DeviceMetric) GetMetricsValueType() DeviceMetric_ValueType {
+func (m *DeviceMetric) GetValueType() DeviceMetric_ValueType {
 	if m != nil {
-		return m.MetricsValueType
+		return m.ValueType
 	}
 	return METRICS_VALUE_TYPE_UNTYPED
 }
@@ -201,25 +206,30 @@ func (m *DeviceMetric) GetDeviceParams() map[string]string {
 	return nil
 }
 
-func (m *DeviceMetric) GetReportParams() map[string]string {
+func (m *DeviceMetric) GetReporterHashHex() string {
 	if m != nil {
-		return m.ReportParams
+		return m.ReporterHashHex
+	}
+	return ""
+}
+
+func (m *DeviceMetric) GetReporterParams() map[string]string {
+	if m != nil {
+		return m.ReporterParams
 	}
 	return nil
 }
 
 type DeviceEnsureCmd struct {
-	DeviceId string `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	// Connector defines how to connect to the device, operations operate
+	Kind DeviceType `protobuf:"varint,1,opt,name=kind,proto3,enum=aranya.DeviceType" json:"kind,omitempty"`
+	// (required) Hex encoded hash of the connector of this device
+	ConnectorHashHex string `protobuf:"bytes,2,opt,name=connector_hash_hex,json=connectorHashHex,proto3" json:"connector_hash_hex,omitempty"`
+	// (required) Connector defines how to connect to the device, operations operate
 	// upon this connector
-	Connector *Connectivity `protobuf:"bytes,2,opt,name=connector,proto3" json:"connector,omitempty"`
-	// MetricsReporter defines a standalone client for metrics reporting,
-	// metrics will be reported via this reporter if its report_method is
-	// REPORT_WITH_STANDALONE_CLIENT
-	MetricsReporter *Connectivity `protobuf:"bytes,3,opt,name=metrics_reporter,json=metricsReporter,proto3" json:"metrics_reporter,omitempty"`
-	// User defined device operations
+	Connector *Connectivity `protobuf:"bytes,3,opt,name=connector,proto3" json:"connector,omitempty"`
+	// (optional) User defined device operations
 	Operations []*DeviceOperation `protobuf:"bytes,4,rep,name=operations,proto3" json:"operations,omitempty"`
-	// User defined device metrics
+	// (optional) User defined device metrics
 	Metrics []*DeviceMetric `protobuf:"bytes,5,rep,name=metrics,proto3" json:"metrics,omitempty"`
 }
 
@@ -255,9 +265,16 @@ func (m *DeviceEnsureCmd) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_DeviceEnsureCmd proto.InternalMessageInfo
 
-func (m *DeviceEnsureCmd) GetDeviceId() string {
+func (m *DeviceEnsureCmd) GetKind() DeviceType {
 	if m != nil {
-		return m.DeviceId
+		return m.Kind
+	}
+	return DEVICE_TYPE_UNSPECIFIED
+}
+
+func (m *DeviceEnsureCmd) GetConnectorHashHex() string {
+	if m != nil {
+		return m.ConnectorHashHex
 	}
 	return ""
 }
@@ -265,13 +282,6 @@ func (m *DeviceEnsureCmd) GetDeviceId() string {
 func (m *DeviceEnsureCmd) GetConnector() *Connectivity {
 	if m != nil {
 		return m.Connector
-	}
-	return nil
-}
-
-func (m *DeviceEnsureCmd) GetMetricsReporter() *Connectivity {
-	if m != nil {
-		return m.MetricsReporter
 	}
 	return nil
 }
@@ -291,6 +301,7 @@ func (m *DeviceEnsureCmd) GetMetrics() []*DeviceMetric {
 }
 
 type DeviceListCmd struct {
+	Kind DeviceType `protobuf:"varint,1,opt,name=kind,proto3,enum=aranya.DeviceType" json:"kind,omitempty"`
 }
 
 func (m *DeviceListCmd) Reset()      { *m = DeviceListCmd{} }
@@ -325,8 +336,18 @@ func (m *DeviceListCmd) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_DeviceListCmd proto.InternalMessageInfo
 
+func (m *DeviceListCmd) GetKind() DeviceType {
+	if m != nil {
+		return m.Kind
+	}
+	return DEVICE_TYPE_UNSPECIFIED
+}
+
 type DeviceDeleteCmd struct {
+	// delete normal devices
 	DeviceIds []string `protobuf:"bytes,1,rep,name=device_ids,json=deviceIds,proto3" json:"device_ids,omitempty"`
+	// delete metrics reporters
+	MetricsReporterHashHexes []string `protobuf:"bytes,2,rep,name=metrics_reporter_hash_hexes,json=metricsReporterHashHexes,proto3" json:"metrics_reporter_hash_hexes,omitempty"`
 }
 
 func (m *DeviceDeleteCmd) Reset()      { *m = DeviceDeleteCmd{} }
@@ -368,6 +389,13 @@ func (m *DeviceDeleteCmd) GetDeviceIds() []string {
 	return nil
 }
 
+func (m *DeviceDeleteCmd) GetMetricsReporterHashHexes() []string {
+	if m != nil {
+		return m.MetricsReporterHashHexes
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterEnum("aranya.DeviceMetric_ReportMethod", DeviceMetric_ReportMethod_name, DeviceMetric_ReportMethod_value)
 	proto.RegisterEnum("aranya.DeviceMetric_ValueType", DeviceMetric_ValueType_name, DeviceMetric_ValueType_value)
@@ -375,7 +403,7 @@ func init() {
 	proto.RegisterMapType((map[string]string)(nil), "aranya.DeviceOperation.ParamsEntry")
 	proto.RegisterType((*DeviceMetric)(nil), "aranya.DeviceMetric")
 	proto.RegisterMapType((map[string]string)(nil), "aranya.DeviceMetric.DeviceParamsEntry")
-	proto.RegisterMapType((map[string]string)(nil), "aranya.DeviceMetric.ReportParamsEntry")
+	proto.RegisterMapType((map[string]string)(nil), "aranya.DeviceMetric.ReporterParamsEntry")
 	proto.RegisterType((*DeviceEnsureCmd)(nil), "aranya.DeviceEnsureCmd")
 	proto.RegisterType((*DeviceListCmd)(nil), "aranya.DeviceListCmd")
 	proto.RegisterType((*DeviceDeleteCmd)(nil), "aranya.DeviceDeleteCmd")
@@ -384,49 +412,53 @@ func init() {
 func init() { proto.RegisterFile("cmd_device.proto", fileDescriptor_9e38e886ce453fd3) }
 
 var fileDescriptor_9e38e886ce453fd3 = []byte{
-	// 664 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x54, 0x4f, 0x4f, 0xdb, 0x4a,
-	0x10, 0xf7, 0x3a, 0xc0, 0x7b, 0x19, 0x02, 0xf8, 0xad, 0x90, 0x5e, 0x94, 0xf7, 0x58, 0x41, 0x2a,
-	0x55, 0x5c, 0x9a, 0x56, 0xe9, 0xa1, 0xff, 0x0e, 0x28, 0x75, 0x5c, 0x88, 0x1a, 0x1c, 0xb4, 0x38,
-	0x20, 0x7a, 0x59, 0x99, 0x78, 0x55, 0xac, 0x12, 0xdb, 0x5a, 0x9b, 0x48, 0xb9, 0xf5, 0x03, 0xf4,
-	0xd0, 0x6b, 0xbf, 0x41, 0x3f, 0x40, 0x3f, 0x44, 0x8f, 0x1c, 0x39, 0x16, 0x73, 0xe9, 0x91, 0x8f,
-	0x50, 0x65, 0xbd, 0x06, 0x53, 0x42, 0x25, 0x4e, 0xf1, 0xcc, 0xfc, 0xe6, 0x37, 0xb3, 0xbf, 0x99,
-	0x09, 0x18, 0x83, 0xa1, 0xc7, 0x3c, 0x3e, 0xf2, 0x07, 0xbc, 0x11, 0x89, 0x30, 0x09, 0xf1, 0x9c,
-	0x2b, 0xdc, 0x60, 0xec, 0xd6, 0xf0, 0x20, 0x0c, 0x02, 0x3e, 0x48, 0xfc, 0x91, 0x9f, 0x8c, 0xb3,
-	0x58, 0xfd, 0x0b, 0x82, 0xa5, 0xb6, 0x04, 0xf7, 0x22, 0x2e, 0xdc, 0xc4, 0x0f, 0x03, 0xbc, 0x08,
-	0xba, 0xef, 0x55, 0xd1, 0x2a, 0x5a, 0x2f, 0x53, 0xdd, 0xf7, 0xf0, 0x2b, 0x98, 0x8b, 0x5c, 0xe1,
-	0x0e, 0xe3, 0xaa, 0xbe, 0x5a, 0x5a, 0x9f, 0x6f, 0x3e, 0x68, 0x64, 0x84, 0x8d, 0xdf, 0x12, 0x1b,
-	0x3b, 0x12, 0x65, 0x05, 0x89, 0x18, 0x53, 0x95, 0x52, 0x7b, 0x01, 0xf3, 0x05, 0x37, 0x36, 0xa0,
-	0xf4, 0x81, 0x8f, 0x15, 0xf9, 0xe4, 0x13, 0x2f, 0xc3, 0xec, 0xc8, 0x3d, 0x3e, 0xe1, 0x55, 0x5d,
-	0xfa, 0x32, 0xe3, 0xa5, 0xfe, 0x1c, 0xd5, 0xbf, 0xcd, 0x42, 0x25, 0x2b, 0xb1, 0xcd, 0x13, 0xe1,
-	0x0f, 0x30, 0x86, 0x99, 0xc0, 0x1d, 0x72, 0x95, 0x2d, 0xbf, 0xf1, 0x1b, 0x58, 0x10, 0x3c, 0x0a,
-	0x45, 0xc2, 0x86, 0x3c, 0x39, 0x0a, 0x3d, 0x49, 0xb3, 0xd8, 0x5c, 0xbb, 0xd9, 0x63, 0x46, 0xd0,
-	0xa0, 0x12, 0xb9, 0x2d, 0x81, 0xb4, 0x22, 0x0a, 0x16, 0xee, 0x02, 0x1e, 0x4a, 0x50, 0xcc, 0x64,
-	0x07, 0x2c, 0x19, 0x47, 0xbc, 0x5a, 0x92, 0x64, 0x64, 0x2a, 0xd9, 0xde, 0x04, 0xe6, 0x8c, 0x23,
-	0x4e, 0x0d, 0x95, 0x79, 0xe5, 0xc1, 0x6f, 0x61, 0x21, 0x1b, 0x01, 0x53, 0xca, 0xcd, 0x48, 0xe5,
-	0x1e, 0x4e, 0x25, 0xca, 0x8c, 0xa2, 0x78, 0x15, 0xaf, 0xe0, 0x9a, 0x90, 0xa9, 0x27, 0x2a, 0xb2,
-	0xd9, 0x3f, 0x90, 0x65, 0x4f, 0xbc, 0x41, 0x26, 0x0a, 0xae, 0xda, 0x06, 0xfc, 0x73, 0xab, 0xde,
-	0x7d, 0xa6, 0x32, 0x21, 0xb8, 0x55, 0xe3, 0x5e, 0x63, 0x8d, 0xa1, 0x52, 0x9c, 0x03, 0xfe, 0x1f,
-	0xaa, 0xd4, 0xda, 0xe9, 0x51, 0x87, 0xed, 0x77, 0x9c, 0x2d, 0x66, 0xf7, 0xda, 0x16, 0xdb, 0xb6,
-	0x1c, 0xda, 0x31, 0x77, 0x0d, 0x0d, 0xd7, 0x81, 0x14, 0xa3, 0x2d, 0xba, 0xd5, 0x72, 0x98, 0xd9,
-	0xb3, 0x6d, 0xcb, 0x74, 0x3a, 0x7b, 0x1d, 0xe7, 0xc0, 0x40, 0x78, 0x0d, 0x56, 0x8a, 0x98, 0x5d,
-	0xa7, 0x65, 0xb7, 0x5b, 0xdd, 0x9e, 0x6d, 0x31, 0xb3, 0xdb, 0xb1, 0x6c, 0xc7, 0xd0, 0xeb, 0x3e,
-	0x94, 0xaf, 0xa7, 0x43, 0xa0, 0xa6, 0x0a, 0xb0, 0xbd, 0x56, 0xb7, 0x6f, 0x31, 0xe7, 0x60, 0xc7,
-	0x62, 0x7d, 0x7b, 0xf2, 0xd3, 0x36, 0xb4, 0x3b, 0xe2, 0x66, 0xaf, 0x6f, 0x3b, 0x16, 0x35, 0xd0,
-	0xa4, 0xe3, 0x29, 0xf1, 0xcd, 0x56, 0x7f, 0xd3, 0x32, 0xf4, 0xfa, 0x27, 0x3d, 0x3f, 0x29, 0x2b,
-	0x88, 0x4f, 0x04, 0x37, 0x87, 0x1e, 0xfe, 0x0f, 0xca, 0x6a, 0x1f, 0xae, 0x2e, 0xeb, 0xef, 0xcc,
-	0xd1, 0xf1, 0x70, 0x13, 0xca, 0xea, 0x32, 0x43, 0x21, 0xe5, 0x9a, 0x6f, 0x2e, 0xe7, 0xb3, 0x35,
-	0x0b, 0x27, 0x4b, 0xaf, 0x61, 0x78, 0x03, 0xf2, 0xa5, 0x63, 0xd9, 0x78, 0xb9, 0x90, 0xcb, 0x7a,
-	0x57, 0xea, 0x92, 0x42, 0x53, 0x05, 0xc6, 0xcf, 0x00, 0xc2, 0xfc, 0x70, 0xf3, 0xf5, 0xfc, 0xf7,
-	0x8e, 0xc3, 0xa6, 0x05, 0x28, 0x6e, 0xc0, 0x5f, 0x8a, 0x4b, 0xed, 0xe1, 0xf2, 0xb4, 0x3d, 0xa4,
-	0x39, 0xa8, 0xbe, 0x04, 0x0b, 0x59, 0xa0, 0xeb, 0xc7, 0x89, 0x39, 0xf4, 0xea, 0x4f, 0x72, 0x79,
-	0xda, 0xfc, 0x98, 0x27, 0x52, 0x9e, 0x15, 0x80, 0x2b, 0x79, 0xe2, 0x2a, 0x5a, 0x2d, 0xad, 0x97,
-	0x69, 0x39, 0xd7, 0x27, 0x7e, 0xbd, 0x7f, 0x7a, 0x4e, 0xb4, 0xb3, 0x73, 0xa2, 0x5d, 0x9e, 0x13,
-	0xf4, 0x31, 0x25, 0xe8, 0x6b, 0x4a, 0xd0, 0xf7, 0x94, 0xa0, 0xd3, 0x94, 0xa0, 0x1f, 0x29, 0x41,
-	0x3f, 0x53, 0xa2, 0x5d, 0xa6, 0x04, 0x7d, 0xbe, 0x20, 0xda, 0xe9, 0x05, 0xd1, 0xce, 0x2e, 0x88,
-	0xf6, 0x6e, 0xcd, 0x15, 0x47, 0x6e, 0xd2, 0xf0, 0xf8, 0xe8, 0x71, 0xd6, 0xe0, 0x23, 0xf9, 0x97,
-	0xa7, 0x8c, 0xf7, 0x61, 0x74, 0x78, 0x38, 0x27, 0x3d, 0x4f, 0x7f, 0x05, 0x00, 0x00, 0xff, 0xff,
-	0x48, 0xf4, 0x9c, 0x6e, 0x34, 0x05, 0x00, 0x00,
+	// 724 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x54, 0xcd, 0x6e, 0xda, 0x4c,
+	0x14, 0xb5, 0x21, 0xf0, 0x89, 0x0b, 0x49, 0x9c, 0xf9, 0x22, 0xd5, 0xa2, 0xcd, 0x28, 0x50, 0x29,
+	0x42, 0x55, 0x4b, 0x25, 0xba, 0x48, 0x7f, 0x14, 0x55, 0x14, 0xdc, 0x80, 0x4a, 0x4c, 0x3a, 0x31,
+	0x89, 0xd2, 0xcd, 0xc8, 0xc1, 0xa3, 0x62, 0x25, 0xd8, 0xc8, 0x76, 0x50, 0xd8, 0x75, 0xd1, 0x07,
+	0xe8, 0x63, 0x74, 0xd1, 0x07, 0xe9, 0x32, 0xcb, 0x74, 0xd7, 0x90, 0x4d, 0x97, 0x79, 0x84, 0x8a,
+	0x19, 0x9b, 0x9a, 0x86, 0x54, 0xca, 0xca, 0x33, 0xe7, 0x9e, 0xb9, 0x67, 0x7c, 0xee, 0xbd, 0x03,
+	0x4a, 0xb7, 0x6f, 0x51, 0x8b, 0x0d, 0xed, 0x2e, 0x2b, 0x0f, 0x3c, 0x37, 0x70, 0x51, 0xda, 0xf4,
+	0x4c, 0x67, 0x64, 0xe6, 0x73, 0x71, 0x34, 0x8f, 0xba, 0xae, 0xe3, 0xb0, 0x6e, 0x60, 0x0f, 0xed,
+	0x60, 0x24, 0xb0, 0xe2, 0x37, 0x19, 0x96, 0xeb, 0x9c, 0xd4, 0x1e, 0x30, 0xcf, 0x0c, 0x6c, 0xd7,
+	0x41, 0x05, 0xc8, 0xb9, 0xd1, 0x86, 0xda, 0x96, 0x2a, 0xaf, 0xcb, 0xa5, 0x0c, 0xc9, 0x4e, 0xb1,
+	0xa6, 0x85, 0x5e, 0x41, 0x7a, 0x60, 0x7a, 0x66, 0xdf, 0x57, 0x13, 0xeb, 0xc9, 0x52, 0xb6, 0xf2,
+	0xb0, 0x2c, 0x14, 0xcb, 0x7f, 0xe5, 0x2a, 0xef, 0x72, 0x96, 0xe6, 0x04, 0xde, 0x88, 0x84, 0x47,
+	0xf2, 0x2f, 0x20, 0x1b, 0x83, 0x91, 0x02, 0xc9, 0x63, 0x36, 0x0a, 0x55, 0x26, 0x4b, 0xb4, 0x0a,
+	0xa9, 0xa1, 0x79, 0x72, 0xca, 0xd4, 0x04, 0xc7, 0xc4, 0xe6, 0x65, 0xe2, 0xb9, 0x5c, 0xfc, 0x91,
+	0x82, 0x9c, 0x90, 0xd8, 0x61, 0x81, 0x67, 0x77, 0x11, 0x82, 0x05, 0xc7, 0xec, 0xb3, 0xf0, 0x34,
+	0x5f, 0xa3, 0xb7, 0xb0, 0xe8, 0xb1, 0x81, 0xeb, 0x05, 0xb4, 0xcf, 0x82, 0x9e, 0x6b, 0xf1, 0x34,
+	0x4b, 0x95, 0xc2, 0xec, 0x1d, 0x45, 0x82, 0x32, 0xe1, 0xcc, 0x1d, 0x4e, 0x24, 0x39, 0x2f, 0xb6,
+	0x43, 0x5b, 0x00, 0x5c, 0x99, 0x06, 0xa3, 0x01, 0x53, 0x93, 0x3c, 0x09, 0x9e, 0x9b, 0x64, 0x7f,
+	0x42, 0x33, 0x46, 0x03, 0x46, 0x32, 0xc3, 0x68, 0x89, 0xde, 0xc1, 0xa2, 0xb0, 0x9f, 0x86, 0x56,
+	0x2d, 0x70, 0xab, 0x36, 0xe6, 0x66, 0x10, 0x9b, 0xb8, 0x5b, 0x61, 0xed, 0x04, 0x84, 0x1e, 0xc1,
+	0x8a, 0xb8, 0x1b, 0xf3, 0x68, 0xcf, 0xf4, 0x7b, 0xb4, 0xc7, 0xce, 0xd4, 0x14, 0xff, 0xe9, 0xe5,
+	0x28, 0xd0, 0x30, 0xfd, 0x5e, 0x83, 0x9d, 0xa1, 0xf7, 0x30, 0x85, 0x22, 0xe9, 0x34, 0x97, 0x2e,
+	0xfd, 0xc3, 0x01, 0xe6, 0xc5, 0xc5, 0x97, 0xbc, 0x19, 0x30, 0xff, 0x1a, 0x56, 0x6e, 0xdc, 0xf0,
+	0x2e, 0x85, 0xcb, 0x57, 0xe1, 0xff, 0x39, 0x3a, 0x77, 0xaa, 0xbd, 0x0f, 0xb9, 0x78, 0xb1, 0xd0,
+	0x03, 0x50, 0x89, 0xb6, 0xdb, 0x26, 0x06, 0x3d, 0x68, 0x1a, 0x0d, 0xaa, 0xb7, 0xeb, 0x1a, 0xdd,
+	0xd1, 0x0c, 0xd2, 0xac, 0xed, 0x29, 0x12, 0x2a, 0x02, 0x8e, 0x47, 0xab, 0xa4, 0x51, 0x35, 0x68,
+	0xad, 0xad, 0xeb, 0x5a, 0xcd, 0x68, 0xee, 0x37, 0x8d, 0x43, 0x45, 0x46, 0x05, 0x58, 0x8b, 0x73,
+	0xf6, 0x8c, 0xaa, 0x5e, 0xaf, 0xb6, 0xda, 0xba, 0x46, 0x6b, 0xad, 0xa6, 0xa6, 0x1b, 0x4a, 0xa2,
+	0x68, 0x43, 0x66, 0x5a, 0x5c, 0x84, 0x21, 0x1f, 0x0a, 0xd0, 0xfd, 0x6a, 0xab, 0xa3, 0x51, 0xe3,
+	0x70, 0x57, 0xa3, 0x1d, 0x7d, 0xf2, 0xa9, 0x2b, 0xd2, 0x2d, 0xf1, 0x5a, 0xbb, 0xa3, 0x1b, 0x1a,
+	0x51, 0xe4, 0xc9, 0x8d, 0xe7, 0xc4, 0xb7, 0xab, 0x9d, 0x6d, 0x4d, 0x49, 0x14, 0x3f, 0x27, 0xa2,
+	0x51, 0xd4, 0x1c, 0xff, 0xd4, 0x63, 0xb5, 0xbe, 0x85, 0x36, 0x60, 0xe1, 0xd8, 0x76, 0xc4, 0x08,
+	0x2e, 0x55, 0xd0, 0x6c, 0xfd, 0x78, 0xc3, 0xf1, 0x38, 0x7a, 0x0c, 0xd1, 0x70, 0xbb, 0xb1, 0xfe,
+	0x10, 0x16, 0x2a, 0xd3, 0x48, 0xd4, 0x20, 0x15, 0xc8, 0x4c, 0x31, 0xde, 0xd7, 0xd9, 0xca, 0x6a,
+	0x94, 0xba, 0x16, 0x7b, 0x23, 0xc8, 0x1f, 0x1a, 0xda, 0x04, 0x98, 0x3e, 0x00, 0x51, 0x2b, 0xdf,
+	0xbb, 0x65, 0xea, 0x49, 0x8c, 0x8a, 0xca, 0xf0, 0x5f, 0x9f, 0x37, 0x9a, 0xaf, 0xa6, 0xf8, 0xa9,
+	0xd5, 0x79, 0x5d, 0x48, 0x22, 0x52, 0x71, 0x13, 0x16, 0x45, 0xa0, 0x65, 0xfb, 0xc1, 0x1d, 0x3c,
+	0x28, 0xba, 0x91, 0x7d, 0x75, 0x76, 0xc2, 0x02, 0x6e, 0xdf, 0x1a, 0x40, 0x38, 0x82, 0xb6, 0xe5,
+	0xab, 0xf2, 0x7a, 0xb2, 0x94, 0x21, 0x19, 0x81, 0x34, 0x2d, 0x1f, 0x6d, 0xc1, 0xfd, 0x50, 0x95,
+	0xde, 0x18, 0x2e, 0x26, 0x9e, 0xb6, 0x0c, 0x51, 0x43, 0x0a, 0x99, 0x9d, 0x32, 0xe6, 0xbf, 0x39,
+	0x38, 0xbf, 0xc4, 0xd2, 0xc5, 0x25, 0x96, 0xae, 0x2f, 0xb1, 0xfc, 0x69, 0x8c, 0xe5, 0xaf, 0x63,
+	0x2c, 0x7f, 0x1f, 0x63, 0xf9, 0x7c, 0x8c, 0xe5, 0x9f, 0x63, 0x2c, 0xff, 0x1a, 0x63, 0xe9, 0x7a,
+	0x8c, 0xe5, 0x2f, 0x57, 0x58, 0x3a, 0xbf, 0xc2, 0xd2, 0xc5, 0x15, 0x96, 0x3e, 0x14, 0x4c, 0xaf,
+	0x67, 0x06, 0x65, 0x8b, 0x0d, 0x9f, 0x8a, 0x3f, 0x79, 0xc2, 0x5f, 0xe2, 0x70, 0xf3, 0xd1, 0x1d,
+	0x1c, 0x1d, 0xa5, 0x39, 0xf2, 0xec, 0x77, 0x00, 0x00, 0x00, 0xff, 0xff, 0x2b, 0x48, 0x88, 0x74,
+	0xd9, 0x05, 0x00, 0x00,
 }
 
 func (x DeviceMetric_ReportMethod) String() string {
@@ -462,7 +494,7 @@ func (this *DeviceOperation) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
-	if this.Id != that1.Id {
+	if this.OperationId != that1.OperationId {
 		return false
 	}
 	if len(this.Params) != len(that1.Params) {
@@ -500,7 +532,7 @@ func (this *DeviceMetric) Equal(that interface{}) bool {
 	if this.ReportMethod != that1.ReportMethod {
 		return false
 	}
-	if this.MetricsValueType != that1.MetricsValueType {
+	if this.ValueType != that1.ValueType {
 		return false
 	}
 	if len(this.DeviceParams) != len(that1.DeviceParams) {
@@ -511,11 +543,14 @@ func (this *DeviceMetric) Equal(that interface{}) bool {
 			return false
 		}
 	}
-	if len(this.ReportParams) != len(that1.ReportParams) {
+	if this.ReporterHashHex != that1.ReporterHashHex {
 		return false
 	}
-	for i := range this.ReportParams {
-		if this.ReportParams[i] != that1.ReportParams[i] {
+	if len(this.ReporterParams) != len(that1.ReporterParams) {
+		return false
+	}
+	for i := range this.ReporterParams {
+		if this.ReporterParams[i] != that1.ReporterParams[i] {
 			return false
 		}
 	}
@@ -540,13 +575,13 @@ func (this *DeviceEnsureCmd) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
-	if this.DeviceId != that1.DeviceId {
+	if this.Kind != that1.Kind {
+		return false
+	}
+	if this.ConnectorHashHex != that1.ConnectorHashHex {
 		return false
 	}
 	if !this.Connector.Equal(that1.Connector) {
-		return false
-	}
-	if !this.MetricsReporter.Equal(that1.MetricsReporter) {
 		return false
 	}
 	if len(this.Operations) != len(that1.Operations) {
@@ -586,6 +621,9 @@ func (this *DeviceListCmd) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
+	if this.Kind != that1.Kind {
+		return false
+	}
 	return true
 }
 func (this *DeviceDeleteCmd) Equal(that interface{}) bool {
@@ -615,6 +653,14 @@ func (this *DeviceDeleteCmd) Equal(that interface{}) bool {
 			return false
 		}
 	}
+	if len(this.MetricsReporterHashHexes) != len(that1.MetricsReporterHashHexes) {
+		return false
+	}
+	for i := range this.MetricsReporterHashHexes {
+		if this.MetricsReporterHashHexes[i] != that1.MetricsReporterHashHexes[i] {
+			return false
+		}
+	}
 	return true
 }
 func (this *DeviceOperation) GoString() string {
@@ -623,7 +669,7 @@ func (this *DeviceOperation) GoString() string {
 	}
 	s := make([]string, 0, 6)
 	s = append(s, "&aranyagopb.DeviceOperation{")
-	s = append(s, "Id: "+fmt.Sprintf("%#v", this.Id)+",\n")
+	s = append(s, "OperationId: "+fmt.Sprintf("%#v", this.OperationId)+",\n")
 	keysForParams := make([]string, 0, len(this.Params))
 	for k, _ := range this.Params {
 		keysForParams = append(keysForParams, k)
@@ -644,11 +690,11 @@ func (this *DeviceMetric) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := make([]string, 0, 9)
+	s := make([]string, 0, 10)
 	s = append(s, "&aranyagopb.DeviceMetric{")
 	s = append(s, "Name: "+fmt.Sprintf("%#v", this.Name)+",\n")
 	s = append(s, "ReportMethod: "+fmt.Sprintf("%#v", this.ReportMethod)+",\n")
-	s = append(s, "MetricsValueType: "+fmt.Sprintf("%#v", this.MetricsValueType)+",\n")
+	s = append(s, "ValueType: "+fmt.Sprintf("%#v", this.ValueType)+",\n")
 	keysForDeviceParams := make([]string, 0, len(this.DeviceParams))
 	for k, _ := range this.DeviceParams {
 		keysForDeviceParams = append(keysForDeviceParams, k)
@@ -662,18 +708,19 @@ func (this *DeviceMetric) GoString() string {
 	if this.DeviceParams != nil {
 		s = append(s, "DeviceParams: "+mapStringForDeviceParams+",\n")
 	}
-	keysForReportParams := make([]string, 0, len(this.ReportParams))
-	for k, _ := range this.ReportParams {
-		keysForReportParams = append(keysForReportParams, k)
+	s = append(s, "ReporterHashHex: "+fmt.Sprintf("%#v", this.ReporterHashHex)+",\n")
+	keysForReporterParams := make([]string, 0, len(this.ReporterParams))
+	for k, _ := range this.ReporterParams {
+		keysForReporterParams = append(keysForReporterParams, k)
 	}
-	github_com_gogo_protobuf_sortkeys.Strings(keysForReportParams)
-	mapStringForReportParams := "map[string]string{"
-	for _, k := range keysForReportParams {
-		mapStringForReportParams += fmt.Sprintf("%#v: %#v,", k, this.ReportParams[k])
+	github_com_gogo_protobuf_sortkeys.Strings(keysForReporterParams)
+	mapStringForReporterParams := "map[string]string{"
+	for _, k := range keysForReporterParams {
+		mapStringForReporterParams += fmt.Sprintf("%#v: %#v,", k, this.ReporterParams[k])
 	}
-	mapStringForReportParams += "}"
-	if this.ReportParams != nil {
-		s = append(s, "ReportParams: "+mapStringForReportParams+",\n")
+	mapStringForReporterParams += "}"
+	if this.ReporterParams != nil {
+		s = append(s, "ReporterParams: "+mapStringForReporterParams+",\n")
 	}
 	s = append(s, "}")
 	return strings.Join(s, "")
@@ -684,12 +731,10 @@ func (this *DeviceEnsureCmd) GoString() string {
 	}
 	s := make([]string, 0, 9)
 	s = append(s, "&aranyagopb.DeviceEnsureCmd{")
-	s = append(s, "DeviceId: "+fmt.Sprintf("%#v", this.DeviceId)+",\n")
+	s = append(s, "Kind: "+fmt.Sprintf("%#v", this.Kind)+",\n")
+	s = append(s, "ConnectorHashHex: "+fmt.Sprintf("%#v", this.ConnectorHashHex)+",\n")
 	if this.Connector != nil {
 		s = append(s, "Connector: "+fmt.Sprintf("%#v", this.Connector)+",\n")
-	}
-	if this.MetricsReporter != nil {
-		s = append(s, "MetricsReporter: "+fmt.Sprintf("%#v", this.MetricsReporter)+",\n")
 	}
 	if this.Operations != nil {
 		s = append(s, "Operations: "+fmt.Sprintf("%#v", this.Operations)+",\n")
@@ -704,8 +749,9 @@ func (this *DeviceListCmd) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := make([]string, 0, 4)
+	s := make([]string, 0, 5)
 	s = append(s, "&aranyagopb.DeviceListCmd{")
+	s = append(s, "Kind: "+fmt.Sprintf("%#v", this.Kind)+",\n")
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
@@ -713,9 +759,10 @@ func (this *DeviceDeleteCmd) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := make([]string, 0, 5)
+	s := make([]string, 0, 6)
 	s = append(s, "&aranyagopb.DeviceDeleteCmd{")
 	s = append(s, "DeviceIds: "+fmt.Sprintf("%#v", this.DeviceIds)+",\n")
+	s = append(s, "MetricsReporterHashHexes: "+fmt.Sprintf("%#v", this.MetricsReporterHashHexes)+",\n")
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
@@ -766,10 +813,10 @@ func (m *DeviceOperation) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0x12
 		}
 	}
-	if len(m.Id) > 0 {
-		i -= len(m.Id)
-		copy(dAtA[i:], m.Id)
-		i = encodeVarintCmdDevice(dAtA, i, uint64(len(m.Id)))
+	if len(m.OperationId) > 0 {
+		i -= len(m.OperationId)
+		copy(dAtA[i:], m.OperationId)
+		i = encodeVarintCmdDevice(dAtA, i, uint64(len(m.OperationId)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -796,9 +843,9 @@ func (m *DeviceMetric) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if len(m.ReportParams) > 0 {
-		for k := range m.ReportParams {
-			v := m.ReportParams[k]
+	if len(m.ReporterParams) > 0 {
+		for k := range m.ReporterParams {
+			v := m.ReporterParams[k]
 			baseI := i
 			i -= len(v)
 			copy(dAtA[i:], v)
@@ -812,8 +859,15 @@ func (m *DeviceMetric) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0xa
 			i = encodeVarintCmdDevice(dAtA, i, uint64(baseI-i))
 			i--
-			dAtA[i] = 0x2a
+			dAtA[i] = 0x32
 		}
+	}
+	if len(m.ReporterHashHex) > 0 {
+		i -= len(m.ReporterHashHex)
+		copy(dAtA[i:], m.ReporterHashHex)
+		i = encodeVarintCmdDevice(dAtA, i, uint64(len(m.ReporterHashHex)))
+		i--
+		dAtA[i] = 0x2a
 	}
 	if len(m.DeviceParams) > 0 {
 		for k := range m.DeviceParams {
@@ -834,8 +888,8 @@ func (m *DeviceMetric) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0x22
 		}
 	}
-	if m.MetricsValueType != 0 {
-		i = encodeVarintCmdDevice(dAtA, i, uint64(m.MetricsValueType))
+	if m.ValueType != 0 {
+		i = encodeVarintCmdDevice(dAtA, i, uint64(m.ValueType))
 		i--
 		dAtA[i] = 0x18
 	}
@@ -902,18 +956,6 @@ func (m *DeviceEnsureCmd) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0x22
 		}
 	}
-	if m.MetricsReporter != nil {
-		{
-			size, err := m.MetricsReporter.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintCmdDevice(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x1a
-	}
 	if m.Connector != nil {
 		{
 			size, err := m.Connector.MarshalToSizedBuffer(dAtA[:i])
@@ -924,14 +966,19 @@ func (m *DeviceEnsureCmd) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			i = encodeVarintCmdDevice(dAtA, i, uint64(size))
 		}
 		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.ConnectorHashHex) > 0 {
+		i -= len(m.ConnectorHashHex)
+		copy(dAtA[i:], m.ConnectorHashHex)
+		i = encodeVarintCmdDevice(dAtA, i, uint64(len(m.ConnectorHashHex)))
+		i--
 		dAtA[i] = 0x12
 	}
-	if len(m.DeviceId) > 0 {
-		i -= len(m.DeviceId)
-		copy(dAtA[i:], m.DeviceId)
-		i = encodeVarintCmdDevice(dAtA, i, uint64(len(m.DeviceId)))
+	if m.Kind != 0 {
+		i = encodeVarintCmdDevice(dAtA, i, uint64(m.Kind))
 		i--
-		dAtA[i] = 0xa
+		dAtA[i] = 0x8
 	}
 	return len(dAtA) - i, nil
 }
@@ -956,6 +1003,11 @@ func (m *DeviceListCmd) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.Kind != 0 {
+		i = encodeVarintCmdDevice(dAtA, i, uint64(m.Kind))
+		i--
+		dAtA[i] = 0x8
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -979,6 +1031,15 @@ func (m *DeviceDeleteCmd) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if len(m.MetricsReporterHashHexes) > 0 {
+		for iNdEx := len(m.MetricsReporterHashHexes) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.MetricsReporterHashHexes[iNdEx])
+			copy(dAtA[i:], m.MetricsReporterHashHexes[iNdEx])
+			i = encodeVarintCmdDevice(dAtA, i, uint64(len(m.MetricsReporterHashHexes[iNdEx])))
+			i--
+			dAtA[i] = 0x12
+		}
+	}
 	if len(m.DeviceIds) > 0 {
 		for iNdEx := len(m.DeviceIds) - 1; iNdEx >= 0; iNdEx-- {
 			i -= len(m.DeviceIds[iNdEx])
@@ -1008,7 +1069,7 @@ func (m *DeviceOperation) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Id)
+	l = len(m.OperationId)
 	if l > 0 {
 		n += 1 + l + sovCmdDevice(uint64(l))
 	}
@@ -1036,8 +1097,8 @@ func (m *DeviceMetric) Size() (n int) {
 	if m.ReportMethod != 0 {
 		n += 1 + sovCmdDevice(uint64(m.ReportMethod))
 	}
-	if m.MetricsValueType != 0 {
-		n += 1 + sovCmdDevice(uint64(m.MetricsValueType))
+	if m.ValueType != 0 {
+		n += 1 + sovCmdDevice(uint64(m.ValueType))
 	}
 	if len(m.DeviceParams) > 0 {
 		for k, v := range m.DeviceParams {
@@ -1047,8 +1108,12 @@ func (m *DeviceMetric) Size() (n int) {
 			n += mapEntrySize + 1 + sovCmdDevice(uint64(mapEntrySize))
 		}
 	}
-	if len(m.ReportParams) > 0 {
-		for k, v := range m.ReportParams {
+	l = len(m.ReporterHashHex)
+	if l > 0 {
+		n += 1 + l + sovCmdDevice(uint64(l))
+	}
+	if len(m.ReporterParams) > 0 {
+		for k, v := range m.ReporterParams {
 			_ = k
 			_ = v
 			mapEntrySize := 1 + len(k) + sovCmdDevice(uint64(len(k))) + 1 + len(v) + sovCmdDevice(uint64(len(v)))
@@ -1064,16 +1129,15 @@ func (m *DeviceEnsureCmd) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.DeviceId)
+	if m.Kind != 0 {
+		n += 1 + sovCmdDevice(uint64(m.Kind))
+	}
+	l = len(m.ConnectorHashHex)
 	if l > 0 {
 		n += 1 + l + sovCmdDevice(uint64(l))
 	}
 	if m.Connector != nil {
 		l = m.Connector.Size()
-		n += 1 + l + sovCmdDevice(uint64(l))
-	}
-	if m.MetricsReporter != nil {
-		l = m.MetricsReporter.Size()
 		n += 1 + l + sovCmdDevice(uint64(l))
 	}
 	if len(m.Operations) > 0 {
@@ -1097,6 +1161,9 @@ func (m *DeviceListCmd) Size() (n int) {
 	}
 	var l int
 	_ = l
+	if m.Kind != 0 {
+		n += 1 + sovCmdDevice(uint64(m.Kind))
+	}
 	return n
 }
 
@@ -1108,6 +1175,12 @@ func (m *DeviceDeleteCmd) Size() (n int) {
 	_ = l
 	if len(m.DeviceIds) > 0 {
 		for _, s := range m.DeviceIds {
+			l = len(s)
+			n += 1 + l + sovCmdDevice(uint64(l))
+		}
+	}
+	if len(m.MetricsReporterHashHexes) > 0 {
+		for _, s := range m.MetricsReporterHashHexes {
 			l = len(s)
 			n += 1 + l + sovCmdDevice(uint64(l))
 		}
@@ -1136,7 +1209,7 @@ func (this *DeviceOperation) String() string {
 	}
 	mapStringForParams += "}"
 	s := strings.Join([]string{`&DeviceOperation{`,
-		`Id:` + fmt.Sprintf("%v", this.Id) + `,`,
+		`OperationId:` + fmt.Sprintf("%v", this.OperationId) + `,`,
 		`Params:` + mapStringForParams + `,`,
 		`}`,
 	}, "")
@@ -1156,22 +1229,23 @@ func (this *DeviceMetric) String() string {
 		mapStringForDeviceParams += fmt.Sprintf("%v: %v,", k, this.DeviceParams[k])
 	}
 	mapStringForDeviceParams += "}"
-	keysForReportParams := make([]string, 0, len(this.ReportParams))
-	for k, _ := range this.ReportParams {
-		keysForReportParams = append(keysForReportParams, k)
+	keysForReporterParams := make([]string, 0, len(this.ReporterParams))
+	for k, _ := range this.ReporterParams {
+		keysForReporterParams = append(keysForReporterParams, k)
 	}
-	github_com_gogo_protobuf_sortkeys.Strings(keysForReportParams)
-	mapStringForReportParams := "map[string]string{"
-	for _, k := range keysForReportParams {
-		mapStringForReportParams += fmt.Sprintf("%v: %v,", k, this.ReportParams[k])
+	github_com_gogo_protobuf_sortkeys.Strings(keysForReporterParams)
+	mapStringForReporterParams := "map[string]string{"
+	for _, k := range keysForReporterParams {
+		mapStringForReporterParams += fmt.Sprintf("%v: %v,", k, this.ReporterParams[k])
 	}
-	mapStringForReportParams += "}"
+	mapStringForReporterParams += "}"
 	s := strings.Join([]string{`&DeviceMetric{`,
 		`Name:` + fmt.Sprintf("%v", this.Name) + `,`,
 		`ReportMethod:` + fmt.Sprintf("%v", this.ReportMethod) + `,`,
-		`MetricsValueType:` + fmt.Sprintf("%v", this.MetricsValueType) + `,`,
+		`ValueType:` + fmt.Sprintf("%v", this.ValueType) + `,`,
 		`DeviceParams:` + mapStringForDeviceParams + `,`,
-		`ReportParams:` + mapStringForReportParams + `,`,
+		`ReporterHashHex:` + fmt.Sprintf("%v", this.ReporterHashHex) + `,`,
+		`ReporterParams:` + mapStringForReporterParams + `,`,
 		`}`,
 	}, "")
 	return s
@@ -1191,9 +1265,9 @@ func (this *DeviceEnsureCmd) String() string {
 	}
 	repeatedStringForMetrics += "}"
 	s := strings.Join([]string{`&DeviceEnsureCmd{`,
-		`DeviceId:` + fmt.Sprintf("%v", this.DeviceId) + `,`,
+		`Kind:` + fmt.Sprintf("%v", this.Kind) + `,`,
+		`ConnectorHashHex:` + fmt.Sprintf("%v", this.ConnectorHashHex) + `,`,
 		`Connector:` + strings.Replace(fmt.Sprintf("%v", this.Connector), "Connectivity", "Connectivity", 1) + `,`,
-		`MetricsReporter:` + strings.Replace(fmt.Sprintf("%v", this.MetricsReporter), "Connectivity", "Connectivity", 1) + `,`,
 		`Operations:` + repeatedStringForOperations + `,`,
 		`Metrics:` + repeatedStringForMetrics + `,`,
 		`}`,
@@ -1205,6 +1279,7 @@ func (this *DeviceListCmd) String() string {
 		return "nil"
 	}
 	s := strings.Join([]string{`&DeviceListCmd{`,
+		`Kind:` + fmt.Sprintf("%v", this.Kind) + `,`,
 		`}`,
 	}, "")
 	return s
@@ -1215,6 +1290,7 @@ func (this *DeviceDeleteCmd) String() string {
 	}
 	s := strings.Join([]string{`&DeviceDeleteCmd{`,
 		`DeviceIds:` + fmt.Sprintf("%v", this.DeviceIds) + `,`,
+		`MetricsReporterHashHexes:` + fmt.Sprintf("%v", this.MetricsReporterHashHexes) + `,`,
 		`}`,
 	}, "")
 	return s
@@ -1258,7 +1334,7 @@ func (m *DeviceOperation) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field OperationId", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -1286,7 +1362,7 @@ func (m *DeviceOperation) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Id = string(dAtA[iNdEx:postIndex])
+			m.OperationId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -1521,9 +1597,9 @@ func (m *DeviceMetric) Unmarshal(dAtA []byte) error {
 			}
 		case 3:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field MetricsValueType", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field ValueType", wireType)
 			}
-			m.MetricsValueType = 0
+			m.ValueType = 0
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowCmdDevice
@@ -1533,7 +1609,7 @@ func (m *DeviceMetric) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.MetricsValueType |= DeviceMetric_ValueType(b&0x7F) << shift
+				m.ValueType |= DeviceMetric_ValueType(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -1667,7 +1743,39 @@ func (m *DeviceMetric) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 5:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ReportParams", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field ReporterHashHex", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCmdDevice
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthCmdDevice
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthCmdDevice
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ReporterHashHex = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ReporterParams", wireType)
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
@@ -1694,8 +1802,8 @@ func (m *DeviceMetric) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.ReportParams == nil {
-				m.ReportParams = make(map[string]string)
+			if m.ReporterParams == nil {
+				m.ReporterParams = make(map[string]string)
 			}
 			var mapkey string
 			var mapvalue string
@@ -1790,7 +1898,7 @@ func (m *DeviceMetric) Unmarshal(dAtA []byte) error {
 					iNdEx += skippy
 				}
 			}
-			m.ReportParams[mapkey] = mapvalue
+			m.ReporterParams[mapkey] = mapvalue
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -1846,8 +1954,27 @@ func (m *DeviceEnsureCmd) Unmarshal(dAtA []byte) error {
 		}
 		switch fieldNum {
 		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Kind", wireType)
+			}
+			m.Kind = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCmdDevice
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Kind |= DeviceType(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DeviceId", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field ConnectorHashHex", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -1875,9 +2002,9 @@ func (m *DeviceEnsureCmd) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.DeviceId = string(dAtA[iNdEx:postIndex])
+			m.ConnectorHashHex = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 2:
+		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Connector", wireType)
 			}
@@ -1910,42 +2037,6 @@ func (m *DeviceEnsureCmd) Unmarshal(dAtA []byte) error {
 				m.Connector = &Connectivity{}
 			}
 			if err := m.Connector.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 3:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field MetricsReporter", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCmdDevice
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCmdDevice
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCmdDevice
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.MetricsReporter == nil {
-				m.MetricsReporter = &Connectivity{}
-			}
-			if err := m.MetricsReporter.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -2070,6 +2161,25 @@ func (m *DeviceListCmd) Unmarshal(dAtA []byte) error {
 			return fmt.Errorf("proto: DeviceListCmd: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Kind", wireType)
+			}
+			m.Kind = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCmdDevice
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Kind |= DeviceType(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipCmdDevice(dAtA[iNdEx:])
@@ -2154,6 +2264,38 @@ func (m *DeviceDeleteCmd) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.DeviceIds = append(m.DeviceIds, string(dAtA[iNdEx:postIndex]))
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MetricsReporterHashHexes", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCmdDevice
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthCmdDevice
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthCmdDevice
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.MetricsReporterHashHexes = append(m.MetricsReporterHashHexes, string(dAtA[iNdEx:postIndex]))
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex

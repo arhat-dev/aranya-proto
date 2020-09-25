@@ -4,6 +4,7 @@
 #ifndef PB_ARANYA_MSG_DEVICE_PB_H_INCLUDED
 #define PB_ARANYA_MSG_DEVICE_PB_H_INCLUDED
 #include <pb.h>
+#include "device.pb.h"
 
 #if PB_PROTO_HEADER_VERSION != 40
 #error Regenerate this file with the current version of nanopb generator.
@@ -14,12 +15,13 @@ extern "C" {
 #endif
 
 /* Enum definitions */
-typedef enum _aranya_DeviceStatusMsg_State {
-    aranya_DeviceStatusMsg_State_DEVICE_STATE_UNKNOWN = 0,
-    aranya_DeviceStatusMsg_State_DEVICE_STATE_CREATED = 1,
-    aranya_DeviceStatusMsg_State_DEVICE_STATE_CONNECTED = 2,
-    aranya_DeviceStatusMsg_State_DEVICE_STATE_ERRORED = 3
-} aranya_DeviceStatusMsg_State;
+typedef enum _aranya_DeviceState {
+    aranya_DeviceState_DEVICE_STATE_UNKNOWN = 0,
+    aranya_DeviceState_DEVICE_STATE_CREATED = 1,
+    aranya_DeviceState_DEVICE_STATE_CONNECTED = 2,
+    aranya_DeviceState_DEVICE_STATE_ERRORED = 3,
+    aranya_DeviceState_DEVICE_STATE_REMOVED = 4
+} aranya_DeviceState;
 
 /* Struct definitions */
 typedef struct _aranya_DeviceStatusListMsg {
@@ -27,35 +29,38 @@ typedef struct _aranya_DeviceStatusListMsg {
 } aranya_DeviceStatusListMsg;
 
 typedef struct _aranya_DeviceStatusMsg {
-    pb_callback_t device_id;
-    aranya_DeviceStatusMsg_State state;
+    aranya_DeviceType kind;
+    pb_callback_t connector_hash_hex;
+    aranya_DeviceState state;
     pb_callback_t message;
 } aranya_DeviceStatusMsg;
 
 
 /* Helper constants for enums */
-#define _aranya_DeviceStatusMsg_State_MIN aranya_DeviceStatusMsg_State_DEVICE_STATE_UNKNOWN
-#define _aranya_DeviceStatusMsg_State_MAX aranya_DeviceStatusMsg_State_DEVICE_STATE_ERRORED
-#define _aranya_DeviceStatusMsg_State_ARRAYSIZE ((aranya_DeviceStatusMsg_State)(aranya_DeviceStatusMsg_State_DEVICE_STATE_ERRORED+1))
+#define _aranya_DeviceState_MIN aranya_DeviceState_DEVICE_STATE_UNKNOWN
+#define _aranya_DeviceState_MAX aranya_DeviceState_DEVICE_STATE_REMOVED
+#define _aranya_DeviceState_ARRAYSIZE ((aranya_DeviceState)(aranya_DeviceState_DEVICE_STATE_REMOVED+1))
 
 
 /* Initializer values for message structs */
-#define aranya_DeviceStatusMsg_init_default      {{{NULL}, NULL}, _aranya_DeviceStatusMsg_State_MIN, {{NULL}, NULL}}
+#define aranya_DeviceStatusMsg_init_default      {_aranya_DeviceType_MIN, {{NULL}, NULL}, _aranya_DeviceState_MIN, {{NULL}, NULL}}
 #define aranya_DeviceStatusListMsg_init_default  {{{NULL}, NULL}}
-#define aranya_DeviceStatusMsg_init_zero         {{{NULL}, NULL}, _aranya_DeviceStatusMsg_State_MIN, {{NULL}, NULL}}
+#define aranya_DeviceStatusMsg_init_zero         {_aranya_DeviceType_MIN, {{NULL}, NULL}, _aranya_DeviceState_MIN, {{NULL}, NULL}}
 #define aranya_DeviceStatusListMsg_init_zero     {{{NULL}, NULL}}
 
 /* Field tags (for use in manual encoding/decoding) */
 #define aranya_DeviceStatusListMsg_devices_tag   1
-#define aranya_DeviceStatusMsg_device_id_tag     1
-#define aranya_DeviceStatusMsg_state_tag         2
-#define aranya_DeviceStatusMsg_message_tag       3
+#define aranya_DeviceStatusMsg_kind_tag          1
+#define aranya_DeviceStatusMsg_connector_hash_hex_tag 2
+#define aranya_DeviceStatusMsg_state_tag         3
+#define aranya_DeviceStatusMsg_message_tag       4
 
 /* Struct field encoding specification for nanopb */
 #define aranya_DeviceStatusMsg_FIELDLIST(X, a) \
-X(a, CALLBACK, SINGULAR, STRING,   device_id,         1) \
-X(a, STATIC,   SINGULAR, UENUM,    state,             2) \
-X(a, CALLBACK, SINGULAR, STRING,   message,           3)
+X(a, STATIC,   SINGULAR, UENUM,    kind,              1) \
+X(a, CALLBACK, SINGULAR, STRING,   connector_hash_hex,   2) \
+X(a, STATIC,   SINGULAR, UENUM,    state,             3) \
+X(a, CALLBACK, SINGULAR, STRING,   message,           4)
 #define aranya_DeviceStatusMsg_CALLBACK pb_default_field_callback
 #define aranya_DeviceStatusMsg_DEFAULT NULL
 

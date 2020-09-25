@@ -18,10 +18,10 @@ PB_BIND(aranya_DeviceMetric, aranya_DeviceMetric, AUTO)
 PB_BIND(aranya_DeviceMetric_DeviceParamsEntry, aranya_DeviceMetric_DeviceParamsEntry, AUTO)
 
 
-PB_BIND(aranya_DeviceMetric_ReportParamsEntry, aranya_DeviceMetric_ReportParamsEntry, AUTO)
+PB_BIND(aranya_DeviceMetric_ReporterParamsEntry, aranya_DeviceMetric_ReporterParamsEntry, AUTO)
 
 
-PB_BIND(aranya_DeviceEnsureCmd, aranya_DeviceEnsureCmd, 2)
+PB_BIND(aranya_DeviceEnsureCmd, aranya_DeviceEnsureCmd, AUTO)
 
 
 PB_BIND(aranya_DeviceListCmd, aranya_DeviceListCmd, AUTO)

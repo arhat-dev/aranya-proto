@@ -21,11 +21,15 @@ package aranya;
 
 option go_package = "arhat.dev/aranya-proto/aranyagopb";
 
+import "device.proto";
 import "connectivity.proto";
 
 message DeviceOperation {
-    string id = 1;
+    // (required) identifier of this operation
+    string operation_id = 1;
 
+    // (optional) params usd for device connectivity when executing this
+    // operation
     map<string, string> params = 2;
 }
 
@@ -50,38 +54,43 @@ message DeviceMetric {
 
     ReportMethod report_method = 2;
 
-    ValueType metrics_value_type = 3;
+    ValueType value_type = 3;
 
     // (required) params for device connector to retrieve metrics
     map<string, string> device_params = 4;
 
+    // Hex encoded hash of the metrics reporter
+    string reporter_hash_hex = 5;
+
     // (optional) params for metrics_reporter to upload metrics
-    map<string, string> report_params = 5;
+    map<string, string> reporter_params = 6;
 }
 
 message DeviceEnsureCmd {
-    string device_id = 1;
+    DeviceType kind = 1;
 
-    // Connector defines how to connect to the device, operations operate
+    // (required) Hex encoded hash of the connector of this device
+    string connector_hash_hex = 2;
+
+    // (required) Connector defines how to connect to the device, operations operate
     // upon this connector
-    Connectivity connector = 2;
+    Connectivity connector = 3;
 
-    // MetricsReporter defines a standalone client for metrics reporting,
-    // metrics will be reported via this reporter if its report_method is
-    // REPORT_WITH_STANDALONE_CLIENT
-    Connectivity metrics_reporter = 3;
-
-    // User defined device operations
+    // (optional) User defined device operations
     repeated DeviceOperation operations = 4;
 
-    // User defined device metrics
+    // (optional) User defined device metrics
     repeated DeviceMetric metrics = 5;
 }
 
 message DeviceListCmd {
-
+    DeviceType kind = 1;
 }
 
 message DeviceDeleteCmd {
+    // delete normal devices
     repeated string device_ids = 1;
+
+    // delete metrics reporters
+    repeated string metrics_reporter_hash_hexes = 2;
 }

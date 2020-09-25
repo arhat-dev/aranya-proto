@@ -21,28 +21,13 @@ package aranya;
 
 option go_package = "arhat.dev/aranya-proto/aranyagopb";
 
-message TLSConfig {
-    bytes ca_cert = 1;
-    bytes cert = 2;
-    bytes key = 3;
-}
+enum DeviceType {
+    // unknown type of device
+    DEVICE_TYPE_UNSPECIFIED = 0;
 
-enum ConnectivityMode {
-    CONNECTIVITY_MODE_CLIENT = 0;
-    CONNECTIVITY_MODE_SERVER = 1;
-}
+    // a normal device for physical operations (e.g. sensor, cam)
+    DEVICE_TYPE_NORMAL = 1;
 
-message Connectivity {
-    ConnectivityMode mode = 1;
-
-    // method name of the connectivity
-    string method = 2;
-
-    // target to connect
-    string target = 3;
-
-    // parameters used when creating this connectivity
-    map<string, string> params = 4;
-
-    TLSConfig tls = 5;
+    // a reporter device is used to report metrics
+    DEVICE_TYPE_METRICS_REPOTER = 2;
 }
