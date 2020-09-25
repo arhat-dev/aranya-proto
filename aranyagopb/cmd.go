@@ -194,16 +194,16 @@ func NewDeviceListCmd() *DeviceListCmd {
 
 func NewDeviceEnsureCmd(
 	deviceID string,
-	deviceConnectivity, uploadConnectivity *DeviceConnectivity,
-	deviceOperations []*DeviceOperation,
-	deviceMetrics []*DeviceMetrics,
+	connector, metricsReporter *Connectivity,
+	operations []*DeviceOperation,
+	metrics []*DeviceMetric,
 ) *DeviceEnsureCmd {
 	return &DeviceEnsureCmd{
-		DeviceId:           deviceID,
-		DeviceConnectivity: deviceConnectivity,
-		UploadConnectivity: uploadConnectivity,
-		DeviceOperations:   deviceOperations,
-		DeviceMetrics:      deviceMetrics,
+		DeviceId:        deviceID,
+		Connector:       connector,
+		MetricsReporter: metricsReporter,
+		Operations:      operations,
+		Metrics:         metrics,
 	}
 }
 

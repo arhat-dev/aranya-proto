@@ -16,13 +16,27 @@ limitations under the License.
 
 syntax = "proto3";
 
-// +build !mqtt,!coap
+// +build !nodev
 package aranya;
 
 option go_package = "arhat.dev/aranya-proto/aranyagopb";
 
-import "proto.proto";
+message TLSConfig {
+    bytes ca_cert = 1;
+    bytes cert = 2;
+    bytes key = 3;
+}
 
-service EdgeDevice {
-    rpc Sync (stream Msg) returns (stream Cmd);
+message Connectivity {
+    enum Mode {
+        DEVICE_CONNECTIVITY_MODE_CLIENT = 0;
+        DEVICE_CONNECTIVITY_MODE_SERVER = 1;
+    }
+
+    string transport = 1;
+    Mode mode = 2;
+    string target = 3;
+
+    map<string, string> params = 4;
+    TLSConfig tls = 5;
 }

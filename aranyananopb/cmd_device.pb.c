@@ -9,25 +9,16 @@
 PB_BIND(aranya_DeviceOperation, aranya_DeviceOperation, AUTO)
 
 
-PB_BIND(aranya_DeviceOperation_TransportParamsEntry, aranya_DeviceOperation_TransportParamsEntry, AUTO)
+PB_BIND(aranya_DeviceOperation_ParamsEntry, aranya_DeviceOperation_ParamsEntry, AUTO)
 
 
-PB_BIND(aranya_DeviceMetrics, aranya_DeviceMetrics, AUTO)
+PB_BIND(aranya_DeviceMetric, aranya_DeviceMetric, AUTO)
 
 
-PB_BIND(aranya_DeviceMetrics_TransportParamsEntry, aranya_DeviceMetrics_TransportParamsEntry, AUTO)
+PB_BIND(aranya_DeviceMetric_DeviceParamsEntry, aranya_DeviceMetric_DeviceParamsEntry, AUTO)
 
 
-PB_BIND(aranya_DeviceMetrics_UploadParamsEntry, aranya_DeviceMetrics_UploadParamsEntry, AUTO)
-
-
-PB_BIND(aranya_DeviceConnectivityTLSConfig, aranya_DeviceConnectivityTLSConfig, AUTO)
-
-
-PB_BIND(aranya_DeviceConnectivity, aranya_DeviceConnectivity, AUTO)
-
-
-PB_BIND(aranya_DeviceConnectivity_ParamsEntry, aranya_DeviceConnectivity_ParamsEntry, AUTO)
+PB_BIND(aranya_DeviceMetric_ReportParamsEntry, aranya_DeviceMetric_ReportParamsEntry, AUTO)
 
 
 PB_BIND(aranya_DeviceEnsureCmd, aranya_DeviceEnsureCmd, 2)

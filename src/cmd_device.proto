@@ -21,52 +21,61 @@ package aranya;
 
 option go_package = "arhat.dev/aranya-proto/aranyagopb";
 
+import "connectivity.proto";
+
 message DeviceOperation {
     string id = 1;
-    map<string, string> transport_params = 2;
+
+    map<string, string> params = 2;
 }
 
-message DeviceMetrics {
-    enum UploadMethod {
-        UPLOAD_WITH_NODE_METRICS = 0;
-        UPLOAD_WITH_ARHAT_CONNECTIVITY = 1;
-        UPLOAD_WITH_STANDALONE_CLIENT = 2;
+message DeviceMetric {
+    enum ReportMethod {
+        // Report device metrics when collecting node metrics
+        REPORT_WITH_NODE_METRICS = 0;
+        // Report device metrics along with arhat client
+        REPORT_WITH_ARHAT_CONNECTIVITY = 1;
+        // Create a standalone client for metrics uploading
+        REPORT_WITH_STANDALONE_CLIENT = 2;
     }
 
+    enum ValueType {
+        METRICS_VALUE_TYPE_UNTYPED = 0;
+        METRICS_VALUE_TYPE_COUNTER = 1;
+        METRICS_VALUE_TYPE_GAUGE = 2;
+    }
+
+    // Name of this metric
     string name = 1;
-    map<string, string> transport_params = 2;
-    UploadMethod upload_method = 3;
-    map<string, string> upload_params = 4;
-}
 
-message DeviceConnectivityTLSConfig {
-    bytes ca_cert = 1;
-    bytes cert = 2;
-    bytes key = 3;
-}
+    ReportMethod report_method = 2;
 
-message DeviceConnectivity {
-    enum Mode {
-        DEVICE_CONNECTIVITY_MODE_CLIENT = 0;
-        DEVICE_CONNECTIVITY_MODE_SERVER = 1;
-    }
+    ValueType metrics_value_type = 3;
 
-    string transport = 1;
-    Mode mode = 2;
-    string target = 3;
+    // (required) params for device connector to retrieve metrics
+    map<string, string> device_params = 4;
 
-    map<string, string> params = 4;
-    DeviceConnectivityTLSConfig tls = 5;
+    // (optional) params for metrics_reporter to upload metrics
+    map<string, string> report_params = 5;
 }
 
 message DeviceEnsureCmd {
     string device_id = 1;
 
-    DeviceConnectivity device_connectivity = 2;
-    DeviceConnectivity upload_connectivity = 3;
+    // Connector defines how to connect to the device, operations operate
+    // upon this connector
+    Connectivity connector = 2;
 
-    repeated DeviceOperation device_operations = 4;
-    repeated DeviceMetrics device_metrics = 5;
+    // MetricsReporter defines a standalone client for metrics reporting,
+    // metrics will be reported via this reporter if its report_method is
+    // REPORT_WITH_STANDALONE_CLIENT
+    Connectivity metrics_reporter = 3;
+
+    // User defined device operations
+    repeated DeviceOperation operations = 4;
+
+    // User defined device metrics
+    repeated DeviceMetric metrics = 5;
 }
 
 message DeviceListCmd {
