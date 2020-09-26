@@ -77,6 +77,18 @@ func NewCredentialEnsureCmd(sshPrivateKey []byte) *CredentialEnsureCmd {
 	}
 }
 
+func NewImageListCmd(refs ...string) *ImageListCmd {
+	return &ImageListCmd{
+		Refs: refs,
+	}
+}
+
+func NewImageDeleteCmd(refs ...string) *ImageDeleteCmd {
+	return &ImageDeleteCmd{
+		Refs: refs,
+	}
+}
+
 func NewPodDeleteCmd(podUID string, graceTime time.Duration, preStopHooks map[string]*ContainerAction) *PodDeleteCmd {
 	return &PodDeleteCmd{
 		PodUid:      podUID,
@@ -160,7 +172,7 @@ func NewPortForwardCmd(podUID string, port int32, protocol string) *PortForwardC
 	}
 }
 
-func NewPodTerminalResizeCmd(cols uint16, rows uint16) *TerminalResizeCmd {
+func NewTerminalResizeCmd(cols uint16, rows uint16) *TerminalResizeCmd {
 	return &TerminalResizeCmd{
 		Cols: uint32(cols),
 		Rows: uint32(rows),

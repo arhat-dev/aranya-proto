@@ -31,9 +31,17 @@ typedef struct _aranya_ImageAuthConfig {
     pb_callback_t email;
 } aranya_ImageAuthConfig;
 
+typedef struct _aranya_ImageDeleteCmd {
+    pb_callback_t refs;
+} aranya_ImageDeleteCmd;
+
 typedef struct _aranya_ImageEnsureCmd {
     pb_callback_t images;
 } aranya_ImageEnsureCmd;
+
+typedef struct _aranya_ImageListCmd {
+    pb_callback_t refs;
+} aranya_ImageListCmd;
 
 typedef struct _aranya_ImagePullSpec {
     bool has_auth_config;
@@ -57,12 +65,16 @@ typedef struct _aranya_ImageEnsureCmd_ImagesEntry {
 /* Initializer values for message structs */
 #define aranya_ImageAuthConfig_init_default      {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_ImagePullSpec_init_default        {false, aranya_ImageAuthConfig_init_default, _aranya_ImagePullPolicy_MIN}
+#define aranya_ImageListCmd_init_default         {{{NULL}, NULL}}
 #define aranya_ImageEnsureCmd_init_default       {{{NULL}, NULL}}
 #define aranya_ImageEnsureCmd_ImagesEntry_init_default {{{NULL}, NULL}, false, aranya_ImagePullSpec_init_default}
+#define aranya_ImageDeleteCmd_init_default       {{{NULL}, NULL}}
 #define aranya_ImageAuthConfig_init_zero         {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_ImagePullSpec_init_zero           {false, aranya_ImageAuthConfig_init_zero, _aranya_ImagePullPolicy_MIN}
+#define aranya_ImageListCmd_init_zero            {{{NULL}, NULL}}
 #define aranya_ImageEnsureCmd_init_zero          {{{NULL}, NULL}}
 #define aranya_ImageEnsureCmd_ImagesEntry_init_zero {{{NULL}, NULL}, false, aranya_ImagePullSpec_init_zero}
+#define aranya_ImageDeleteCmd_init_zero          {{{NULL}, NULL}}
 
 /* Field tags (for use in manual encoding/decoding) */
 #define aranya_ImageAuthConfig_username_tag      1
@@ -72,7 +84,9 @@ typedef struct _aranya_ImageEnsureCmd_ImagesEntry {
 #define aranya_ImageAuthConfig_identity_token_tag 5
 #define aranya_ImageAuthConfig_registry_token_tag 6
 #define aranya_ImageAuthConfig_email_tag         7
+#define aranya_ImageDeleteCmd_refs_tag           1
 #define aranya_ImageEnsureCmd_images_tag         1
+#define aranya_ImageListCmd_refs_tag             1
 #define aranya_ImagePullSpec_auth_config_tag     1
 #define aranya_ImagePullSpec_pull_policy_tag     2
 #define aranya_ImageEnsureCmd_ImagesEntry_key_tag 1
@@ -97,6 +111,11 @@ X(a, STATIC,   SINGULAR, UENUM,    pull_policy,       2)
 #define aranya_ImagePullSpec_DEFAULT NULL
 #define aranya_ImagePullSpec_auth_config_MSGTYPE aranya_ImageAuthConfig
 
+#define aranya_ImageListCmd_FIELDLIST(X, a) \
+X(a, CALLBACK, REPEATED, STRING,   refs,              1)
+#define aranya_ImageListCmd_CALLBACK pb_default_field_callback
+#define aranya_ImageListCmd_DEFAULT NULL
+
 #define aranya_ImageEnsureCmd_FIELDLIST(X, a) \
 X(a, CALLBACK, REPEATED, MESSAGE,  images,            1)
 #define aranya_ImageEnsureCmd_CALLBACK pb_default_field_callback
@@ -110,22 +129,33 @@ X(a, STATIC,   OPTIONAL, MESSAGE,  value,             2)
 #define aranya_ImageEnsureCmd_ImagesEntry_DEFAULT NULL
 #define aranya_ImageEnsureCmd_ImagesEntry_value_MSGTYPE aranya_ImagePullSpec
 
+#define aranya_ImageDeleteCmd_FIELDLIST(X, a) \
+X(a, CALLBACK, REPEATED, STRING,   refs,              1)
+#define aranya_ImageDeleteCmd_CALLBACK pb_default_field_callback
+#define aranya_ImageDeleteCmd_DEFAULT NULL
+
 extern const pb_msgdesc_t aranya_ImageAuthConfig_msg;
 extern const pb_msgdesc_t aranya_ImagePullSpec_msg;
+extern const pb_msgdesc_t aranya_ImageListCmd_msg;
 extern const pb_msgdesc_t aranya_ImageEnsureCmd_msg;
 extern const pb_msgdesc_t aranya_ImageEnsureCmd_ImagesEntry_msg;
+extern const pb_msgdesc_t aranya_ImageDeleteCmd_msg;
 
 /* Defines for backwards compatibility with code written before nanopb-0.4.0 */
 #define aranya_ImageAuthConfig_fields &aranya_ImageAuthConfig_msg
 #define aranya_ImagePullSpec_fields &aranya_ImagePullSpec_msg
+#define aranya_ImageListCmd_fields &aranya_ImageListCmd_msg
 #define aranya_ImageEnsureCmd_fields &aranya_ImageEnsureCmd_msg
 #define aranya_ImageEnsureCmd_ImagesEntry_fields &aranya_ImageEnsureCmd_ImagesEntry_msg
+#define aranya_ImageDeleteCmd_fields &aranya_ImageDeleteCmd_msg
 
 /* Maximum encoded size of messages (where known) */
 /* aranya_ImageAuthConfig_size depends on runtime parameters */
 /* aranya_ImagePullSpec_size depends on runtime parameters */
+/* aranya_ImageListCmd_size depends on runtime parameters */
 /* aranya_ImageEnsureCmd_size depends on runtime parameters */
 /* aranya_ImageEnsureCmd_ImagesEntry_size depends on runtime parameters */
+/* aranya_ImageDeleteCmd_size depends on runtime parameters */
 
 #ifdef __cplusplus
 } /* extern "C" */

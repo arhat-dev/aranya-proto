@@ -12,10 +12,16 @@ PB_BIND(aranya_ImageAuthConfig, aranya_ImageAuthConfig, AUTO)
 PB_BIND(aranya_ImagePullSpec, aranya_ImagePullSpec, AUTO)
 
 
+PB_BIND(aranya_ImageListCmd, aranya_ImageListCmd, AUTO)
+
+
 PB_BIND(aranya_ImageEnsureCmd, aranya_ImageEnsureCmd, AUTO)
 
 
 PB_BIND(aranya_ImageEnsureCmd_ImagesEntry, aranya_ImageEnsureCmd_ImagesEntry, AUTO)
+
+
+PB_BIND(aranya_ImageDeleteCmd, aranya_ImageDeleteCmd, AUTO)
 
 
 

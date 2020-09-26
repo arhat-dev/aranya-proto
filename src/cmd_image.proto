@@ -48,8 +48,16 @@ message ImagePullSpec {
     ImagePullPolicy pull_policy = 2;
 }
 
+message ImageListCmd {
+    repeated string refs = 1;
+}
+
 message ImageEnsureCmd {
-    // key: image name
+    // key: image ref (name)
     // value: pull config
     map<string, ImagePullSpec> images = 1;
+}
+
+message ImageDeleteCmd {
+    repeated string refs = 1;
 }
