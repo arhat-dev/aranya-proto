@@ -36,13 +36,11 @@ var (
 func init() {
 	emptyBody, _ := (&Empty{}).Marshal()
 	emptyCmd := &Cmd{
-		Header: &Header{
-			Kind:      math.MaxInt32,
-			Sid:       math.MaxUint64,
-			Seq:       math.MaxUint64,
-			Completed: true,
-		},
-		Body: emptyBody,
+		Kind:      math.MaxInt32,
+		Sid:       math.MaxUint64,
+		Seq:       math.MaxUint64,
+		Completed: true,
+		Body:      emptyBody,
 	}
 
 	EmptyCmdSize = emptyCmd.Size()
@@ -50,15 +48,13 @@ func init() {
 }
 
 // NewCmd to create cmd object to be marshaled and sent to agent
-func NewCmd(kind Kind, sid, seq uint64, completed bool, payload []byte) *Cmd {
+func NewCmd(kind CmdType, sid, seq uint64, completed bool, payload []byte) *Cmd {
 	return &Cmd{
-		Header: &Header{
-			Kind:      kind,
-			Sid:       sid,
-			Seq:       seq,
-			Completed: completed,
-		},
-		Body: payload,
+		Kind:      kind,
+		Sid:       sid,
+		Seq:       seq,
+		Completed: completed,
+		Body:      payload,
 	}
 }
 
@@ -104,13 +100,13 @@ func NewPodListCmd(namespace, name string, all bool) *PodListCmd {
 	}
 }
 
-func NewPodContainerExecCmd(
+func NewExecCmd(
 	podUID, container string,
 	command []string,
 	stdin, stdout, stderr, tty bool,
 	env map[string]string,
-) *ContainerExecOrAttachCmd {
-	return &ContainerExecOrAttachCmd{
+) *ExecOrAttachCmd {
+	return &ExecOrAttachCmd{
 		PodUid:    podUID,
 		Container: container,
 		Command:   command,
@@ -122,8 +118,8 @@ func NewPodContainerExecCmd(
 	}
 }
 
-func NewPodContainerAttachCmd(podUID, container string, stdin, stdout, stderr, tty bool) *ContainerExecOrAttachCmd {
-	return &ContainerExecOrAttachCmd{
+func NewAttachCmd(podUID, container string, stdin, stdout, stderr, tty bool) *ExecOrAttachCmd {
+	return &ExecOrAttachCmd{
 		PodUid:    podUID,
 		Container: container,
 		Stdin:     stdin,
@@ -133,18 +129,18 @@ func NewPodContainerAttachCmd(podUID, container string, stdin, stdout, stderr, t
 	}
 }
 
-func NewHostLogCmd(path string) *ContainerLogsCmd {
-	return &ContainerLogsCmd{
+func NewHostLogCmd(path string) *LogsCmd {
+	return &LogsCmd{
 		Path: path,
 	}
 }
 
-func NewPodContainerLogsCmd(
+func NewLogsCmd(
 	podUID, container string,
 	follow, timestamp, previous bool,
 	since time.Time, tailLines, bytesLimit int64,
-) *ContainerLogsCmd {
-	return &ContainerLogsCmd{
+) *LogsCmd {
+	return &LogsCmd{
 		PodUid:     podUID,
 		Container:  container,
 		Follow:     follow,
@@ -156,16 +152,16 @@ func NewPodContainerLogsCmd(
 	}
 }
 
-func NewPodPortForwardCmd(podUID string, port int32, protocol string) *PodPortForwardCmd {
-	return &PodPortForwardCmd{
+func NewPortForwardCmd(podUID string, port int32, protocol string) *PortForwardCmd {
+	return &PortForwardCmd{
 		PodUid:   podUID,
 		Port:     port,
 		Protocol: protocol,
 	}
 }
 
-func NewPodContainerTerminalResizeCmd(cols uint16, rows uint16) *ContainerTerminalResizeCmd {
-	return &ContainerTerminalResizeCmd{
+func NewPodTerminalResizeCmd(cols uint16, rows uint16) *TerminalResizeCmd {
+	return &TerminalResizeCmd{
 		Cols: uint32(cols),
 		Rows: uint32(rows),
 	}

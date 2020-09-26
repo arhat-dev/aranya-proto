@@ -47,24 +47,15 @@ message PodStatusMsg {
 
     // metadata
     string uid = 1;
-    // status
-    map<string, ContainerStatus> container_statuses = 2;
+
     // allocated pod ip address
-    string pod_ipv4 = 3;
-    string pod_ipv6 = 4;
+    string ipv4 = 2;
+    string ipv6 = 3;
+
+    // status
+    map<string, ContainerStatus> containers = 4;
 }
 
 message PodStatusListMsg {
     repeated PodStatusMsg pods = 1;
-}
-
-message ImageStatusMsg {
-    string sha256 = 1;
-    // size of the image in bytes
-    uint64 size = 2;
-    repeated string names = 3;
-}
-
-message ImageStatusListMsg {
-    repeated ImageStatusMsg images = 1;
 }

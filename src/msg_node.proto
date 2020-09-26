@@ -21,7 +21,6 @@ package aranya;
 
 option go_package = "arhat.dev/aranya-proto/aranyagopb";
 
-
 message NodeContainerRuntimeInfo {
     string name = 1;
     string version = 2;
@@ -32,12 +31,11 @@ message NodeSystemInfo {
     string os_image = 2;
     string arch = 3;
     string kernel_version = 4;
+    string boot_id = 5;
+    string machine_id = 6;
+    string system_uuid = 7;
 
-    string boot_id = 11;
-    string machine_id = 12;
-    string system_uuid = 13;
-
-    NodeContainerRuntimeInfo runtime_info = 21;
+    NodeContainerRuntimeInfo runtime_info = 11;
 }
 
 message NodeResources {
@@ -46,19 +44,19 @@ message NodeResources {
     uint64 storage_bytes = 3;
 }
 
-message NodeConditions {
-    enum Condition {
-        NODE_CONDITION_UNKNOWN = 0;
-        NODE_CONDITION_HEALTHY = 1;
-        NODE_CONDITION_UNHEALTHY = 2;
-    }
+enum NodeCondition {
+    NODE_CONDITION_UNKNOWN = 0;
+    NODE_CONDITION_HEALTHY = 1;
+    NODE_CONDITION_UNHEALTHY = 2;
+}
 
-    Condition ready = 1;
-    Condition memory = 2;
-    Condition disk = 3;
-    Condition pid = 4;
-    Condition network = 5;
-    Condition pod = 6;
+message NodeConditions {
+    NodeCondition ready = 1;
+    NodeCondition memory = 2;
+    NodeCondition disk = 3;
+    NodeCondition pid = 4;
+    NodeCondition network = 5;
+    NodeCondition pod = 6;
 }
 
 // set extra node information

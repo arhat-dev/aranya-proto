@@ -12,16 +12,10 @@ PB_BIND(aranya_ContainerStatus, aranya_ContainerStatus, AUTO)
 PB_BIND(aranya_PodStatusMsg, aranya_PodStatusMsg, AUTO)
 
 
-PB_BIND(aranya_PodStatusMsg_ContainerStatusesEntry, aranya_PodStatusMsg_ContainerStatusesEntry, AUTO)
+PB_BIND(aranya_PodStatusMsg_ContainersEntry, aranya_PodStatusMsg_ContainersEntry, AUTO)
 
 
 PB_BIND(aranya_PodStatusListMsg, aranya_PodStatusListMsg, AUTO)
-
-
-PB_BIND(aranya_ImageStatusMsg, aranya_ImageStatusMsg, AUTO)
-
-
-PB_BIND(aranya_ImageStatusListMsg, aranya_ImageStatusListMsg, AUTO)
 
 
 

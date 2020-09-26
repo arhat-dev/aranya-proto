@@ -9,9 +9,6 @@
 PB_BIND(aranya_Empty, aranya_Empty, AUTO)
 
 
-PB_BIND(aranya_Header, aranya_Header, AUTO)
-
-
 PB_BIND(aranya_Cmd, aranya_Cmd, AUTO)
 
 
@@ -27,25 +24,26 @@ PB_BIND(aranya_SessionCloseCmd, aranya_SessionCloseCmd, AUTO)
 PB_BIND(aranya_RejectCmd, aranya_RejectCmd, AUTO)
 
 
-PB_BIND(aranya_ContainerLogsCmd, aranya_ContainerLogsCmd, AUTO)
+PB_BIND(aranya_LogsCmd, aranya_LogsCmd, AUTO)
 
 
-PB_BIND(aranya_ContainerExecOrAttachCmd, aranya_ContainerExecOrAttachCmd, AUTO)
+PB_BIND(aranya_ExecOrAttachCmd, aranya_ExecOrAttachCmd, AUTO)
 
 
-PB_BIND(aranya_ContainerExecOrAttachCmd_EnvsEntry, aranya_ContainerExecOrAttachCmd_EnvsEntry, AUTO)
+PB_BIND(aranya_ExecOrAttachCmd_EnvsEntry, aranya_ExecOrAttachCmd_EnvsEntry, AUTO)
 
 
-PB_BIND(aranya_PodPortForwardCmd, aranya_PodPortForwardCmd, AUTO)
+PB_BIND(aranya_PortForwardCmd, aranya_PortForwardCmd, AUTO)
 
 
-PB_BIND(aranya_ContainerTerminalResizeCmd, aranya_ContainerTerminalResizeCmd, AUTO)
+PB_BIND(aranya_TerminalResizeCmd, aranya_TerminalResizeCmd, AUTO)
 
 
 PB_BIND(aranya_ErrorMsg, aranya_ErrorMsg, AUTO)
 
 
 PB_BIND(aranya_StateMsg, aranya_StateMsg, AUTO)
+
 
 
 

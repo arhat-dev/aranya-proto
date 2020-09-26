@@ -16,13 +16,18 @@ limitations under the License.
 
 syntax = "proto3";
 
-// +build nomqtt,nocoap
+// +build !rt_none
 package aranya;
 
 option go_package = "arhat.dev/aranya-proto/aranyagopb";
 
-import "proto.proto";
+message ImageStatusMsg {
+    string sha256 = 1;
+    // size of the image in bytes
+    uint64 size = 2;
+    repeated string names = 3;
+}
 
-service EdgeDevice {
-    rpc Sync (stream Msg) returns (stream Cmd);
+message ImageStatusListMsg {
+    repeated ImageStatusMsg images = 1;
 }

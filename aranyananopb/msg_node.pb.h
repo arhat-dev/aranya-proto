@@ -14,11 +14,11 @@ extern "C" {
 #endif
 
 /* Enum definitions */
-typedef enum _aranya_NodeConditions_Condition {
-    aranya_NodeConditions_Condition_NODE_CONDITION_UNKNOWN = 0,
-    aranya_NodeConditions_Condition_NODE_CONDITION_HEALTHY = 1,
-    aranya_NodeConditions_Condition_NODE_CONDITION_UNHEALTHY = 2
-} aranya_NodeConditions_Condition;
+typedef enum _aranya_NodeCondition {
+    aranya_NodeCondition_NODE_CONDITION_UNKNOWN = 0,
+    aranya_NodeCondition_NODE_CONDITION_HEALTHY = 1,
+    aranya_NodeCondition_NODE_CONDITION_UNHEALTHY = 2
+} aranya_NodeCondition;
 
 typedef enum _aranya_NodeExtInfo_ValueType {
     aranya_NodeExtInfo_ValueType_NODE_EXT_INFO_TYPE_STRING = 0,
@@ -44,12 +44,12 @@ typedef struct _aranya_NodeContainerRuntimeInfo {
 } aranya_NodeContainerRuntimeInfo;
 
 typedef struct _aranya_NodeConditions {
-    aranya_NodeConditions_Condition ready;
-    aranya_NodeConditions_Condition memory;
-    aranya_NodeConditions_Condition disk;
-    aranya_NodeConditions_Condition pid;
-    aranya_NodeConditions_Condition network;
-    aranya_NodeConditions_Condition pod;
+    aranya_NodeCondition ready;
+    aranya_NodeCondition memory;
+    aranya_NodeCondition disk;
+    aranya_NodeCondition pid;
+    aranya_NodeCondition network;
+    aranya_NodeCondition pod;
 } aranya_NodeConditions;
 
 typedef struct _aranya_NodeExtInfo {
@@ -90,9 +90,9 @@ typedef struct _aranya_NodeStatusMsg {
 
 
 /* Helper constants for enums */
-#define _aranya_NodeConditions_Condition_MIN aranya_NodeConditions_Condition_NODE_CONDITION_UNKNOWN
-#define _aranya_NodeConditions_Condition_MAX aranya_NodeConditions_Condition_NODE_CONDITION_UNHEALTHY
-#define _aranya_NodeConditions_Condition_ARRAYSIZE ((aranya_NodeConditions_Condition)(aranya_NodeConditions_Condition_NODE_CONDITION_UNHEALTHY+1))
+#define _aranya_NodeCondition_MIN aranya_NodeCondition_NODE_CONDITION_UNKNOWN
+#define _aranya_NodeCondition_MAX aranya_NodeCondition_NODE_CONDITION_UNHEALTHY
+#define _aranya_NodeCondition_ARRAYSIZE ((aranya_NodeCondition)(aranya_NodeCondition_NODE_CONDITION_UNHEALTHY+1))
 
 #define _aranya_NodeExtInfo_ValueType_MIN aranya_NodeExtInfo_ValueType_NODE_EXT_INFO_TYPE_STRING
 #define _aranya_NodeExtInfo_ValueType_MAX aranya_NodeExtInfo_ValueType_NODE_EXT_INFO_TYPE_FLOAT
@@ -111,13 +111,13 @@ typedef struct _aranya_NodeStatusMsg {
 #define aranya_NodeContainerRuntimeInfo_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_NodeSystemInfo_init_default       {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, false, aranya_NodeContainerRuntimeInfo_init_default}
 #define aranya_NodeResources_init_default        {0, 0, 0}
-#define aranya_NodeConditions_init_default       {_aranya_NodeConditions_Condition_MIN, _aranya_NodeConditions_Condition_MIN, _aranya_NodeConditions_Condition_MIN, _aranya_NodeConditions_Condition_MIN, _aranya_NodeConditions_Condition_MIN, _aranya_NodeConditions_Condition_MIN}
+#define aranya_NodeConditions_init_default       {_aranya_NodeCondition_MIN, _aranya_NodeCondition_MIN, _aranya_NodeCondition_MIN, _aranya_NodeCondition_MIN, _aranya_NodeCondition_MIN, _aranya_NodeCondition_MIN}
 #define aranya_NodeExtInfo_init_default          {{{NULL}, NULL}, _aranya_NodeExtInfo_ValueType_MIN, _aranya_NodeExtInfo_Operator_MIN, _aranya_NodeExtInfo_Target_MIN, {{NULL}, NULL}}
 #define aranya_NodeStatusMsg_init_default        {false, aranya_NodeSystemInfo_init_default, false, aranya_NodeResources_init_default, false, aranya_NodeConditions_init_default, {{NULL}, NULL}}
 #define aranya_NodeContainerRuntimeInfo_init_zero {{{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_NodeSystemInfo_init_zero          {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, false, aranya_NodeContainerRuntimeInfo_init_zero}
 #define aranya_NodeResources_init_zero           {0, 0, 0}
-#define aranya_NodeConditions_init_zero          {_aranya_NodeConditions_Condition_MIN, _aranya_NodeConditions_Condition_MIN, _aranya_NodeConditions_Condition_MIN, _aranya_NodeConditions_Condition_MIN, _aranya_NodeConditions_Condition_MIN, _aranya_NodeConditions_Condition_MIN}
+#define aranya_NodeConditions_init_zero          {_aranya_NodeCondition_MIN, _aranya_NodeCondition_MIN, _aranya_NodeCondition_MIN, _aranya_NodeCondition_MIN, _aranya_NodeCondition_MIN, _aranya_NodeCondition_MIN}
 #define aranya_NodeExtInfo_init_zero             {{{NULL}, NULL}, _aranya_NodeExtInfo_ValueType_MIN, _aranya_NodeExtInfo_Operator_MIN, _aranya_NodeExtInfo_Target_MIN, {{NULL}, NULL}}
 #define aranya_NodeStatusMsg_init_zero           {false, aranya_NodeSystemInfo_init_zero, false, aranya_NodeResources_init_zero, false, aranya_NodeConditions_init_zero, {{NULL}, NULL}}
 
@@ -142,10 +142,10 @@ typedef struct _aranya_NodeStatusMsg {
 #define aranya_NodeSystemInfo_os_image_tag       2
 #define aranya_NodeSystemInfo_arch_tag           3
 #define aranya_NodeSystemInfo_kernel_version_tag 4
-#define aranya_NodeSystemInfo_boot_id_tag        11
-#define aranya_NodeSystemInfo_machine_id_tag     12
-#define aranya_NodeSystemInfo_system_uuid_tag    13
-#define aranya_NodeSystemInfo_runtime_info_tag   21
+#define aranya_NodeSystemInfo_boot_id_tag        5
+#define aranya_NodeSystemInfo_machine_id_tag     6
+#define aranya_NodeSystemInfo_system_uuid_tag    7
+#define aranya_NodeSystemInfo_runtime_info_tag   11
 #define aranya_NodeStatusMsg_system_info_tag     1
 #define aranya_NodeStatusMsg_capacity_tag        2
 #define aranya_NodeStatusMsg_conditions_tag      3
@@ -163,10 +163,10 @@ X(a, CALLBACK, SINGULAR, STRING,   os,                1) \
 X(a, CALLBACK, SINGULAR, STRING,   os_image,          2) \
 X(a, CALLBACK, SINGULAR, STRING,   arch,              3) \
 X(a, CALLBACK, SINGULAR, STRING,   kernel_version,    4) \
-X(a, CALLBACK, SINGULAR, STRING,   boot_id,          11) \
-X(a, CALLBACK, SINGULAR, STRING,   machine_id,       12) \
-X(a, CALLBACK, SINGULAR, STRING,   system_uuid,      13) \
-X(a, STATIC,   OPTIONAL, MESSAGE,  runtime_info,     21)
+X(a, CALLBACK, SINGULAR, STRING,   boot_id,           5) \
+X(a, CALLBACK, SINGULAR, STRING,   machine_id,        6) \
+X(a, CALLBACK, SINGULAR, STRING,   system_uuid,       7) \
+X(a, STATIC,   OPTIONAL, MESSAGE,  runtime_info,     11)
 #define aranya_NodeSystemInfo_CALLBACK pb_default_field_callback
 #define aranya_NodeSystemInfo_DEFAULT NULL
 #define aranya_NodeSystemInfo_runtime_info_MSGTYPE aranya_NodeContainerRuntimeInfo
