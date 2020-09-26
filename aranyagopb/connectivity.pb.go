@@ -51,9 +51,15 @@ func (ConnectivityMode) EnumDescriptor() ([]byte, []int) {
 }
 
 type TLSConfig struct {
-	CaCert []byte `protobuf:"bytes,1,opt,name=ca_cert,json=caCert,proto3" json:"ca_cert,omitempty"`
-	Cert   []byte `protobuf:"bytes,2,opt,name=cert,proto3" json:"cert,omitempty"`
-	Key    []byte `protobuf:"bytes,3,opt,name=key,proto3" json:"key,omitempty"`
+	ServerName         string   `protobuf:"bytes,1,opt,name=server_name,json=serverName,proto3" json:"server_name,omitempty"`
+	InsecureSkipVerify bool     `protobuf:"varint,2,opt,name=insecure_skip_verify,json=insecureSkipVerify,proto3" json:"insecure_skip_verify,omitempty"`
+	MinVersion         uint32   `protobuf:"varint,3,opt,name=min_version,json=minVersion,proto3" json:"min_version,omitempty"`
+	MaxVersion         uint32   `protobuf:"varint,4,opt,name=max_version,json=maxVersion,proto3" json:"max_version,omitempty"`
+	CaCert             []byte   `protobuf:"bytes,5,opt,name=ca_cert,json=caCert,proto3" json:"ca_cert,omitempty"`
+	Cert               []byte   `protobuf:"bytes,6,opt,name=cert,proto3" json:"cert,omitempty"`
+	Key                []byte   `protobuf:"bytes,7,opt,name=key,proto3" json:"key,omitempty"`
+	CipherSuites       []uint32 `protobuf:"varint,8,rep,packed,name=cipher_suites,json=cipherSuites,proto3" json:"cipher_suites,omitempty"`
+	NextProtos         []string `protobuf:"bytes,9,rep,name=next_protos,json=nextProtos,proto3" json:"next_protos,omitempty"`
 }
 
 func (m *TLSConfig) Reset()      { *m = TLSConfig{} }
@@ -88,6 +94,34 @@ func (m *TLSConfig) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_TLSConfig proto.InternalMessageInfo
 
+func (m *TLSConfig) GetServerName() string {
+	if m != nil {
+		return m.ServerName
+	}
+	return ""
+}
+
+func (m *TLSConfig) GetInsecureSkipVerify() bool {
+	if m != nil {
+		return m.InsecureSkipVerify
+	}
+	return false
+}
+
+func (m *TLSConfig) GetMinVersion() uint32 {
+	if m != nil {
+		return m.MinVersion
+	}
+	return 0
+}
+
+func (m *TLSConfig) GetMaxVersion() uint32 {
+	if m != nil {
+		return m.MaxVersion
+	}
+	return 0
+}
+
 func (m *TLSConfig) GetCaCert() []byte {
 	if m != nil {
 		return m.CaCert
@@ -105,6 +139,20 @@ func (m *TLSConfig) GetCert() []byte {
 func (m *TLSConfig) GetKey() []byte {
 	if m != nil {
 		return m.Key
+	}
+	return nil
+}
+
+func (m *TLSConfig) GetCipherSuites() []uint32 {
+	if m != nil {
+		return m.CipherSuites
+	}
+	return nil
+}
+
+func (m *TLSConfig) GetNextProtos() []string {
+	if m != nil {
+		return m.NextProtos
 	}
 	return nil
 }
@@ -197,32 +245,40 @@ func init() {
 func init() { proto.RegisterFile("connectivity.proto", fileDescriptor_2872c2021a21e8fe) }
 
 var fileDescriptor_2872c2021a21e8fe = []byte{
-	// 388 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x6c, 0x51, 0x31, 0x6f, 0xda, 0x40,
-	0x14, 0xf6, 0x61, 0x70, 0xc5, 0x81, 0x2a, 0xf7, 0x54, 0xb5, 0x56, 0x55, 0x9d, 0x5c, 0xba, 0xa0,
-	0xaa, 0x75, 0x25, 0xba, 0xd0, 0x8e, 0x75, 0x3d, 0x50, 0x81, 0xa9, 0x0e, 0x8b, 0x2a, 0x59, 0xd0,
-	0x61, 0x5f, 0x00, 0x05, 0x7c, 0xe8, 0xb8, 0x20, 0x79, 0xcb, 0x94, 0x39, 0x3f, 0x23, 0x3f, 0x25,
-	0x23, 0x23, 0x63, 0x30, 0x4b, 0x46, 0x7e, 0x42, 0xe4, 0xc3, 0x44, 0x28, 0x62, 0x7b, 0xdf, 0xf7,
-	0xbe, 0xf7, 0xbe, 0xf7, 0xdd, 0x41, 0x14, 0xf2, 0x38, 0x66, 0xa1, 0x9c, 0x2c, 0x27, 0x32, 0x71,
-	0xe6, 0x82, 0x4b, 0x8e, 0x0c, 0x2a, 0x68, 0x9c, 0xd0, 0xda, 0x5f, 0x58, 0x0e, 0xda, 0x3d, 0x97,
-	0xc7, 0x17, 0x93, 0x11, 0x7a, 0x0f, 0x5f, 0x85, 0x74, 0x10, 0x32, 0x21, 0x2d, 0x60, 0x83, 0x7a,
-	0x95, 0x18, 0x21, 0x75, 0x99, 0x90, 0x08, 0xc1, 0xa2, 0x62, 0x0b, 0x8a, 0x55, 0x35, 0x32, 0xa1,
-	0x7e, 0xc9, 0x12, 0x4b, 0x57, 0x54, 0x56, 0xd6, 0x6e, 0x0a, 0xb0, 0xea, 0x1e, 0x59, 0xa1, 0xaf,
-	0xb0, 0x38, 0xe3, 0x11, 0x53, 0xcb, 0x5e, 0x37, 0x2c, 0x67, 0xef, 0xe9, 0x1c, 0x6b, 0x3a, 0x3c,
-	0x62, 0x44, 0xa9, 0xd0, 0x3b, 0x68, 0xcc, 0x98, 0x1c, 0xf3, 0x48, 0xd9, 0x94, 0x49, 0x8e, 0x32,
-	0x5e, 0x52, 0x31, 0x62, 0x52, 0x79, 0x95, 0x49, 0x8e, 0x50, 0x13, 0x1a, 0x73, 0x2a, 0xe8, 0x6c,
-	0x61, 0x15, 0x6d, 0xbd, 0x5e, 0x69, 0xd8, 0xa7, 0xf6, 0x3b, 0xff, 0x94, 0xc4, 0x8b, 0xa5, 0x48,
-	0x48, 0xae, 0x47, 0x9f, 0xa1, 0x2e, 0xa7, 0x0b, 0xab, 0x64, 0x83, 0x7a, 0xa5, 0xf1, 0xe6, 0x30,
-	0xf6, 0xfc, 0x0e, 0x24, 0xeb, 0x7e, 0xf8, 0x09, 0x2b, 0x47, 0xb3, 0x87, 0xb8, 0x40, 0x9d, 0x90,
-	0x95, 0xe8, 0x2d, 0x2c, 0x2d, 0xe9, 0xf4, 0x8a, 0xe5, 0xe7, 0xee, 0xc1, 0xaf, 0x42, 0x13, 0x7c,
-	0xf1, 0xa1, 0xf9, 0x32, 0x23, 0xfa, 0x08, 0x2d, 0xb7, 0xeb, 0xfb, 0x9e, 0x1b, 0xb4, 0xfa, 0xad,
-	0xe0, 0x6c, 0xd0, 0xe9, 0xfe, 0xf1, 0x06, 0x6e, 0xbb, 0xe5, 0xf9, 0x81, 0xa9, 0x9d, 0xee, 0xf6,
-	0x3c, 0xd2, 0xf7, 0x88, 0x09, 0x7e, 0xff, 0x5f, 0x6d, 0xb0, 0xb6, 0xde, 0x60, 0x6d, 0xb7, 0xc1,
-	0xe0, 0x3a, 0xc5, 0xe0, 0x2e, 0xc5, 0xe0, 0x3e, 0xc5, 0x60, 0x95, 0x62, 0xf0, 0x90, 0x62, 0xf0,
-	0x98, 0x62, 0x6d, 0x97, 0x62, 0x70, 0xbb, 0xc5, 0xda, 0x6a, 0x8b, 0xb5, 0xf5, 0x16, 0x6b, 0xe7,
-	0x9f, 0xa8, 0x18, 0x53, 0xe9, 0x44, 0x6c, 0xf9, 0x7d, 0x9f, 0xf0, 0x9b, 0xfa, 0xfa, 0x1c, 0x8c,
-	0xf8, 0x7c, 0x38, 0x34, 0x14, 0xf3, 0xe3, 0x29, 0x00, 0x00, 0xff, 0xff, 0xac, 0xe0, 0x19, 0xb2,
-	0x22, 0x02, 0x00, 0x00,
+	// 513 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x6c, 0x91, 0x41, 0x6f, 0xd3, 0x30,
+	0x14, 0xc7, 0xe3, 0xa6, 0xcb, 0x56, 0xb7, 0x45, 0xc5, 0x9a, 0x20, 0x42, 0xc8, 0x84, 0xed, 0x12,
+	0x21, 0x28, 0xa8, 0x5c, 0x06, 0x47, 0x42, 0x0e, 0x95, 0xb6, 0x6e, 0x72, 0xab, 0x22, 0xb8, 0x44,
+	0x5e, 0xea, 0xb5, 0x56, 0x17, 0x27, 0x72, 0xdc, 0xaa, 0xbd, 0x71, 0xe2, 0xcc, 0x97, 0x40, 0xe2,
+	0xa3, 0x70, 0xec, 0x71, 0x47, 0x9a, 0x5e, 0x38, 0xee, 0x23, 0xa0, 0x38, 0xe9, 0x54, 0x4d, 0xbb,
+	0xf9, 0xfd, 0xde, 0xdf, 0x96, 0xdf, 0xef, 0x41, 0x14, 0xc6, 0x42, 0xb0, 0x50, 0xf1, 0x39, 0x57,
+	0xcb, 0x76, 0x22, 0x63, 0x15, 0x23, 0x8b, 0x4a, 0x2a, 0x96, 0xf4, 0xe8, 0x57, 0x05, 0xd6, 0x06,
+	0xa7, 0x7d, 0x2f, 0x16, 0x57, 0x7c, 0x8c, 0x5e, 0xc0, 0x7a, 0xca, 0xe4, 0x9c, 0xc9, 0x40, 0xd0,
+	0x88, 0xd9, 0xc0, 0x01, 0x6e, 0x8d, 0xc0, 0x02, 0xf5, 0x68, 0xc4, 0xd0, 0x3b, 0x78, 0xc8, 0x45,
+	0xca, 0xc2, 0x99, 0x64, 0x41, 0x3a, 0xe5, 0x49, 0x30, 0x67, 0x92, 0x5f, 0x2d, 0xed, 0x8a, 0x03,
+	0xdc, 0x03, 0x82, 0xb6, 0xbd, 0xfe, 0x94, 0x27, 0x43, 0xdd, 0xc9, 0x9f, 0x8c, 0xb8, 0xc8, 0x73,
+	0x29, 0x8f, 0x85, 0x6d, 0x3a, 0xc0, 0x6d, 0x12, 0x18, 0x71, 0x31, 0x2c, 0x88, 0x0e, 0xd0, 0xc5,
+	0x5d, 0xa0, 0x5a, 0x06, 0xe8, 0x62, 0x1b, 0x78, 0x0a, 0xf7, 0x43, 0x1a, 0x84, 0x4c, 0x2a, 0x7b,
+	0xcf, 0x01, 0x6e, 0x83, 0x58, 0x21, 0xf5, 0x98, 0x54, 0x08, 0xc1, 0xaa, 0xa6, 0x96, 0xa6, 0xfa,
+	0x8c, 0x5a, 0xd0, 0x9c, 0xb2, 0xa5, 0xbd, 0xaf, 0x51, 0x7e, 0x44, 0xc7, 0xb0, 0x19, 0xf2, 0x64,
+	0xc2, 0x64, 0x90, 0xce, 0xb8, 0x62, 0xa9, 0x7d, 0xe0, 0x98, 0x6e, 0x93, 0x34, 0x0a, 0xd8, 0xd7,
+	0x2c, 0xff, 0x84, 0x60, 0x0b, 0x15, 0x68, 0x39, 0xa9, 0x5d, 0x73, 0xcc, 0x7c, 0xf0, 0x1c, 0x5d,
+	0x68, 0x72, 0xf4, 0xa3, 0x02, 0x1b, 0xde, 0x8e, 0x46, 0xf4, 0x1a, 0x56, 0xa3, 0x78, 0x54, 0x38,
+	0x7a, 0xd4, 0xb1, 0xdb, 0x85, 0xcf, 0xf6, 0x6e, 0xe6, 0x2c, 0x1e, 0x31, 0xa2, 0x53, 0xe8, 0x09,
+	0xb4, 0x22, 0xa6, 0x26, 0xf1, 0x48, 0x9b, 0xaa, 0x91, 0xb2, 0xca, 0xb9, 0xa2, 0x72, 0xcc, 0x94,
+	0x16, 0x53, 0x23, 0x65, 0x85, 0x4e, 0xa0, 0x95, 0x50, 0x49, 0xa3, 0xd4, 0xae, 0x3a, 0xa6, 0x5b,
+	0xef, 0x38, 0x0f, 0xbd, 0xdf, 0xbe, 0xd0, 0x11, 0x5f, 0x28, 0xb9, 0x24, 0x65, 0x1e, 0x1d, 0x43,
+	0x53, 0x5d, 0xa7, 0xda, 0x54, 0xbd, 0xf3, 0x78, 0x7b, 0xed, 0x6e, 0xc5, 0x24, 0xef, 0x3e, 0xfb,
+	0x00, 0xeb, 0x3b, 0x77, 0xb7, 0xd2, 0x8a, 0x75, 0x6b, 0x69, 0x87, 0x70, 0x6f, 0x4e, 0xaf, 0x67,
+	0xac, 0xfc, 0x6e, 0x51, 0x7c, 0xac, 0x9c, 0x80, 0x57, 0x3d, 0xd8, 0xba, 0x3f, 0x23, 0x7a, 0x0e,
+	0x6d, 0xef, 0xbc, 0xd7, 0xf3, 0xbd, 0x41, 0x77, 0xd8, 0x1d, 0x7c, 0x0d, 0xce, 0xce, 0x3f, 0xfb,
+	0x81, 0x77, 0xda, 0xf5, 0x7b, 0x83, 0x96, 0xf1, 0x70, 0xb7, 0xef, 0x93, 0xa1, 0x4f, 0x5a, 0xe0,
+	0xd3, 0x97, 0xd5, 0x1a, 0x1b, 0x37, 0x6b, 0x6c, 0xdc, 0xae, 0x31, 0xf8, 0x9e, 0x61, 0xf0, 0x3b,
+	0xc3, 0xe0, 0x4f, 0x86, 0xc1, 0x2a, 0xc3, 0xe0, 0x6f, 0x86, 0xc1, 0xbf, 0x0c, 0x1b, 0xb7, 0x19,
+	0x06, 0x3f, 0x37, 0xd8, 0x58, 0x6d, 0xb0, 0x71, 0xb3, 0xc1, 0xc6, 0xb7, 0x97, 0x54, 0x4e, 0xa8,
+	0x6a, 0x8f, 0xd8, 0xfc, 0x6d, 0x31, 0xe1, 0x1b, 0xbd, 0xb9, 0xb2, 0x18, 0xc7, 0xc9, 0xe5, 0xa5,
+	0xa5, 0xc9, 0xfb, 0xff, 0x01, 0x00, 0x00, 0xff, 0xff, 0x59, 0x19, 0xd1, 0x85, 0xfe, 0x02, 0x00,
+	0x00,
 }
 
 func (x ConnectivityMode) String() string {
@@ -251,6 +307,18 @@ func (this *TLSConfig) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
+	if this.ServerName != that1.ServerName {
+		return false
+	}
+	if this.InsecureSkipVerify != that1.InsecureSkipVerify {
+		return false
+	}
+	if this.MinVersion != that1.MinVersion {
+		return false
+	}
+	if this.MaxVersion != that1.MaxVersion {
+		return false
+	}
 	if !bytes.Equal(this.CaCert, that1.CaCert) {
 		return false
 	}
@@ -259,6 +327,22 @@ func (this *TLSConfig) Equal(that interface{}) bool {
 	}
 	if !bytes.Equal(this.Key, that1.Key) {
 		return false
+	}
+	if len(this.CipherSuites) != len(that1.CipherSuites) {
+		return false
+	}
+	for i := range this.CipherSuites {
+		if this.CipherSuites[i] != that1.CipherSuites[i] {
+			return false
+		}
+	}
+	if len(this.NextProtos) != len(that1.NextProtos) {
+		return false
+	}
+	for i := range this.NextProtos {
+		if this.NextProtos[i] != that1.NextProtos[i] {
+			return false
+		}
 	}
 	return true
 }
@@ -307,11 +391,17 @@ func (this *TLSConfig) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := make([]string, 0, 7)
+	s := make([]string, 0, 13)
 	s = append(s, "&aranyagopb.TLSConfig{")
+	s = append(s, "ServerName: "+fmt.Sprintf("%#v", this.ServerName)+",\n")
+	s = append(s, "InsecureSkipVerify: "+fmt.Sprintf("%#v", this.InsecureSkipVerify)+",\n")
+	s = append(s, "MinVersion: "+fmt.Sprintf("%#v", this.MinVersion)+",\n")
+	s = append(s, "MaxVersion: "+fmt.Sprintf("%#v", this.MaxVersion)+",\n")
 	s = append(s, "CaCert: "+fmt.Sprintf("%#v", this.CaCert)+",\n")
 	s = append(s, "Cert: "+fmt.Sprintf("%#v", this.Cert)+",\n")
 	s = append(s, "Key: "+fmt.Sprintf("%#v", this.Key)+",\n")
+	s = append(s, "CipherSuites: "+fmt.Sprintf("%#v", this.CipherSuites)+",\n")
+	s = append(s, "NextProtos: "+fmt.Sprintf("%#v", this.NextProtos)+",\n")
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
@@ -371,24 +461,78 @@ func (m *TLSConfig) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if len(m.NextProtos) > 0 {
+		for iNdEx := len(m.NextProtos) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.NextProtos[iNdEx])
+			copy(dAtA[i:], m.NextProtos[iNdEx])
+			i = encodeVarintConnectivity(dAtA, i, uint64(len(m.NextProtos[iNdEx])))
+			i--
+			dAtA[i] = 0x4a
+		}
+	}
+	if len(m.CipherSuites) > 0 {
+		dAtA2 := make([]byte, len(m.CipherSuites)*10)
+		var j1 int
+		for _, num := range m.CipherSuites {
+			for num >= 1<<7 {
+				dAtA2[j1] = uint8(uint64(num)&0x7f | 0x80)
+				num >>= 7
+				j1++
+			}
+			dAtA2[j1] = uint8(num)
+			j1++
+		}
+		i -= j1
+		copy(dAtA[i:], dAtA2[:j1])
+		i = encodeVarintConnectivity(dAtA, i, uint64(j1))
+		i--
+		dAtA[i] = 0x42
+	}
 	if len(m.Key) > 0 {
 		i -= len(m.Key)
 		copy(dAtA[i:], m.Key)
 		i = encodeVarintConnectivity(dAtA, i, uint64(len(m.Key)))
 		i--
-		dAtA[i] = 0x1a
+		dAtA[i] = 0x3a
 	}
 	if len(m.Cert) > 0 {
 		i -= len(m.Cert)
 		copy(dAtA[i:], m.Cert)
 		i = encodeVarintConnectivity(dAtA, i, uint64(len(m.Cert)))
 		i--
-		dAtA[i] = 0x12
+		dAtA[i] = 0x32
 	}
 	if len(m.CaCert) > 0 {
 		i -= len(m.CaCert)
 		copy(dAtA[i:], m.CaCert)
 		i = encodeVarintConnectivity(dAtA, i, uint64(len(m.CaCert)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if m.MaxVersion != 0 {
+		i = encodeVarintConnectivity(dAtA, i, uint64(m.MaxVersion))
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.MinVersion != 0 {
+		i = encodeVarintConnectivity(dAtA, i, uint64(m.MinVersion))
+		i--
+		dAtA[i] = 0x18
+	}
+	if m.InsecureSkipVerify {
+		i--
+		if m.InsecureSkipVerify {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x10
+	}
+	if len(m.ServerName) > 0 {
+		i -= len(m.ServerName)
+		copy(dAtA[i:], m.ServerName)
+		i = encodeVarintConnectivity(dAtA, i, uint64(len(m.ServerName)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -485,6 +629,19 @@ func (m *TLSConfig) Size() (n int) {
 	}
 	var l int
 	_ = l
+	l = len(m.ServerName)
+	if l > 0 {
+		n += 1 + l + sovConnectivity(uint64(l))
+	}
+	if m.InsecureSkipVerify {
+		n += 2
+	}
+	if m.MinVersion != 0 {
+		n += 1 + sovConnectivity(uint64(m.MinVersion))
+	}
+	if m.MaxVersion != 0 {
+		n += 1 + sovConnectivity(uint64(m.MaxVersion))
+	}
 	l = len(m.CaCert)
 	if l > 0 {
 		n += 1 + l + sovConnectivity(uint64(l))
@@ -496,6 +653,19 @@ func (m *TLSConfig) Size() (n int) {
 	l = len(m.Key)
 	if l > 0 {
 		n += 1 + l + sovConnectivity(uint64(l))
+	}
+	if len(m.CipherSuites) > 0 {
+		l = 0
+		for _, e := range m.CipherSuites {
+			l += sovConnectivity(uint64(e))
+		}
+		n += 1 + sovConnectivity(uint64(l)) + l
+	}
+	if len(m.NextProtos) > 0 {
+		for _, s := range m.NextProtos {
+			l = len(s)
+			n += 1 + l + sovConnectivity(uint64(l))
+		}
 	}
 	return n
 }
@@ -543,9 +713,15 @@ func (this *TLSConfig) String() string {
 		return "nil"
 	}
 	s := strings.Join([]string{`&TLSConfig{`,
+		`ServerName:` + fmt.Sprintf("%v", this.ServerName) + `,`,
+		`InsecureSkipVerify:` + fmt.Sprintf("%v", this.InsecureSkipVerify) + `,`,
+		`MinVersion:` + fmt.Sprintf("%v", this.MinVersion) + `,`,
+		`MaxVersion:` + fmt.Sprintf("%v", this.MaxVersion) + `,`,
 		`CaCert:` + fmt.Sprintf("%v", this.CaCert) + `,`,
 		`Cert:` + fmt.Sprintf("%v", this.Cert) + `,`,
 		`Key:` + fmt.Sprintf("%v", this.Key) + `,`,
+		`CipherSuites:` + fmt.Sprintf("%v", this.CipherSuites) + `,`,
+		`NextProtos:` + fmt.Sprintf("%v", this.NextProtos) + `,`,
 		`}`,
 	}, "")
 	return s
@@ -613,6 +789,96 @@ func (m *TLSConfig) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ServerName", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowConnectivity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthConnectivity
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthConnectivity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ServerName = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field InsecureSkipVerify", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowConnectivity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.InsecureSkipVerify = bool(v != 0)
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MinVersion", wireType)
+			}
+			m.MinVersion = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowConnectivity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.MinVersion |= uint32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MaxVersion", wireType)
+			}
+			m.MaxVersion = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowConnectivity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.MaxVersion |= uint32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 5:
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field CaCert", wireType)
 			}
 			var byteLen int
@@ -645,7 +911,7 @@ func (m *TLSConfig) Unmarshal(dAtA []byte) error {
 				m.CaCert = []byte{}
 			}
 			iNdEx = postIndex
-		case 2:
+		case 6:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Cert", wireType)
 			}
@@ -679,7 +945,7 @@ func (m *TLSConfig) Unmarshal(dAtA []byte) error {
 				m.Cert = []byte{}
 			}
 			iNdEx = postIndex
-		case 3:
+		case 7:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Key", wireType)
 			}
@@ -712,6 +978,114 @@ func (m *TLSConfig) Unmarshal(dAtA []byte) error {
 			if m.Key == nil {
 				m.Key = []byte{}
 			}
+			iNdEx = postIndex
+		case 8:
+			if wireType == 0 {
+				var v uint32
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowConnectivity
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					v |= uint32(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				m.CipherSuites = append(m.CipherSuites, v)
+			} else if wireType == 2 {
+				var packedLen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowConnectivity
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					packedLen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if packedLen < 0 {
+					return ErrInvalidLengthConnectivity
+				}
+				postIndex := iNdEx + packedLen
+				if postIndex < 0 {
+					return ErrInvalidLengthConnectivity
+				}
+				if postIndex > l {
+					return io.ErrUnexpectedEOF
+				}
+				var elementCount int
+				var count int
+				for _, integer := range dAtA[iNdEx:postIndex] {
+					if integer < 128 {
+						count++
+					}
+				}
+				elementCount = count
+				if elementCount != 0 && len(m.CipherSuites) == 0 {
+					m.CipherSuites = make([]uint32, 0, elementCount)
+				}
+				for iNdEx < postIndex {
+					var v uint32
+					for shift := uint(0); ; shift += 7 {
+						if shift >= 64 {
+							return ErrIntOverflowConnectivity
+						}
+						if iNdEx >= l {
+							return io.ErrUnexpectedEOF
+						}
+						b := dAtA[iNdEx]
+						iNdEx++
+						v |= uint32(b&0x7F) << shift
+						if b < 0x80 {
+							break
+						}
+					}
+					m.CipherSuites = append(m.CipherSuites, v)
+				}
+			} else {
+				return fmt.Errorf("proto: wrong wireType = %d for field CipherSuites", wireType)
+			}
+		case 9:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NextProtos", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowConnectivity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthConnectivity
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthConnectivity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.NextProtos = append(m.NextProtos, string(dAtA[iNdEx:postIndex]))
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex

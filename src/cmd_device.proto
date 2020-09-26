@@ -87,15 +87,12 @@ message DeviceEnsureCmd {
 }
 
 message DeviceListCmd {
-    DeviceType kind = 1;
+    repeated string ids = 1;
 }
 
 message DeviceDeleteCmd {
-    // delete normal devices
-    repeated string device_ids = 1;
-
-    // delete metrics reporters
-    repeated string metrics_reporter_hash_hexes = 2;
+    // delete normal devices or metrics reporters
+    repeated string ids = 1;
 }
 
 message DeviceOperateCmd {
@@ -110,7 +107,5 @@ message DeviceOperateCmd {
 }
 
 message DeviceMetricsCollectCmd {
-    bool all = 1;
-
     repeated string device_ids = 2;
 }

@@ -16,20 +16,12 @@ limitations under the License.
 
 syntax = "proto3";
 
-// +build !nostorage
+// +build !rt_none
 package aranya;
 
 option go_package = "arhat.dev/aranya-proto/aranyagopb";
 
-message StorageListCmd {
-}
-
-message StorageEnsureCmd {
-    string remote_path = 1;
-    string local_path = 2;
-}
-
-message StorageDeleteCmd {
-    string remote_path = 1;
-    string local_path = 2;
+message ContainerNetworkStatusMsg {
+    string ipv4_cidr = 1;
+    string ipv6_cidr = 2;
 }

@@ -21,14 +21,14 @@ package aranya;
 
 option go_package = "arhat.dev/aranya-proto/aranyagopb";
 
-message StorageStatusMsg {
-    enum State {
-        VOLUME_UNKONW = 0;
-        VOLUME_UNMOUNTED = 1;
-        VOLUME_MOUNTED = 2;
-    }
+enum StorageState {
+    STORAGE_STATE_UNKONW = 0;
+    STORAGE_STATE_UNMOUNTED = 1;
+    STORAGE_STATE_MOUNTED = 2;
+}
 
-    State state = 1;
+message StorageStatusMsg {
+    StorageState state = 1;
     string remote_path = 2;
     string mount_point = 3;
 }

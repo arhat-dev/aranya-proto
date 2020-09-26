@@ -58,7 +58,7 @@ func NewCmd(kind CmdType, sid, seq uint64, completed bool, payload []byte) *Cmd 
 	}
 }
 
-func NewRejectCmd(reason RejectCmd_Reason, message string) *RejectCmd {
+func NewRejectCmd(reason RejectionReason, message string) *RejectCmd {
 	return &RejectCmd{
 		Reason:  reason,
 		Message: message,
@@ -178,18 +178,26 @@ func NewMetricsCollectCmd(t MetricsTarget) *MetricsCollectCmd {
 }
 
 func NewMetricsConfigCmd(t MetricsTarget, collect, extraArgs []string) *MetricsConfigCmd {
-	return &MetricsConfigCmd{Target: t, Collect: collect, ExtraArgs: extraArgs}
+	return &MetricsConfigCmd{
+		Target:    t,
+		Collect:   collect,
+		ExtraArgs: extraArgs,
+	}
+}
+
+func NewContainerNetworkListCmd() *ContainerNetworkListCmd {
+	return &ContainerNetworkListCmd{}
 }
 
 func NewContainerNetworkEnsureCmd(ipv4CIDR, ipv6CIDR string) *ContainerNetworkEnsureCmd {
 	return &ContainerNetworkEnsureCmd{
-		CidrIpv4: ipv4CIDR,
-		CidrIpv6: ipv6CIDR,
+		Ipv4Cidr: ipv4CIDR,
+		Ipv6Cidr: ipv6CIDR,
 	}
 }
 
-func NewDeviceListCmd() *DeviceListCmd {
-	return &DeviceListCmd{}
+func NewDeviceListCmd(ids ...string) *DeviceListCmd {
+	return &DeviceListCmd{Ids: ids}
 }
 
 func NewDeviceEnsureCmd(
@@ -211,7 +219,7 @@ func NewDeviceEnsureCmd(
 }
 
 func NewDeviceDeleteCmd(ids ...string) *DeviceDeleteCmd {
-	return &DeviceDeleteCmd{DeviceIds: ids}
+	return &DeviceDeleteCmd{Ids: ids}
 }
 
 func HexHashOfConnectivity(c *Connectivity) string {
@@ -251,9 +259,8 @@ func NewDeviceOperateCmd(deviceID, operationID string, data []byte) *DeviceOpera
 	}
 }
 
-func NewDeviceMetricsCollectCmd(all bool, deviceIDs ...string) *DeviceMetricsCollectCmd {
+func NewDeviceMetricsCollectCmd(deviceIDs ...string) *DeviceMetricsCollectCmd {
 	return &DeviceMetricsCollectCmd{
-		All:       all,
 		DeviceIds: deviceIDs,
 	}
 }

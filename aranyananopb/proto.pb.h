@@ -44,9 +44,7 @@ typedef enum _aranya_CmdType {
     aranya_CmdType_CMD_CTR_NET_LIST = 81,
     aranya_CmdType_CMD_CTR_NET_ENSURE = 82,
     aranya_CmdType_CMD_CTR_NET_DELETE = 83,
-    aranya_CmdType_CMD_HOST_NET_LIST = 84,
-    aranya_CmdType_CMD_HOST_NET_ENSURE = 85,
-    aranya_CmdType_CMD_HOST_NET_DELETE = 86
+    aranya_CmdType_CMD_HOST_NET_LIST = 84
 } aranya_CmdType;
 
 typedef enum _aranya_MsgType {
@@ -71,25 +69,21 @@ typedef enum _aranya_MsgType {
     aranya_MsgType_MSG_DEVICE_OPERATION_RESULT = 73,
     aranya_MsgType_MSG_CTR_NET_STATUS = 81,
     aranya_MsgType_MSG_CTR_NET_STATUS_LIST = 82,
-    aranya_MsgType_MSG_NET_STATUS = 83,
-    aranya_MsgType_MSG_NET_STATUS_LIST = 84
+    aranya_MsgType_MSG_HOST_NET_STATUS = 83
 } aranya_MsgType;
+
+typedef enum _aranya_RejectionReason {
+    aranya_RejectionReason__INVALID_REJECTION_REASON = 0,
+    aranya_RejectionReason_REJECTION_INVALID_PROTO = 1,
+    aranya_RejectionReason_REJECTION_ALREADY_CONNECTED = 2,
+    aranya_RejectionReason_REJECTION_INITIAL_CHECK_FAILURE = 3,
+    aranya_RejectionReason_REJECTION_INTERNAL_SERVER_ERROR = 4
+} aranya_RejectionReason;
 
 typedef enum _aranya_NodeInfoGetCmd_Kind {
     aranya_NodeInfoGetCmd_Kind_NODE_INFO_DYN = 0,
     aranya_NodeInfoGetCmd_Kind_NODE_INFO_ALL = 1
 } aranya_NodeInfoGetCmd_Kind;
-
-typedef enum _aranya_RejectCmd_Reason {
-    aranya_RejectCmd_Reason__INVALID_REJECTION_REASON = 0,
-    aranya_RejectCmd_Reason_REJECTION_ALREADY_CONNECTED = 1,
-    aranya_RejectCmd_Reason_REJECTION_POD_STATUS_SYNC_ERROR = 2,
-    aranya_RejectCmd_Reason_REJECTION_NODE_STATUS_SYNC_ERROR = 3,
-    aranya_RejectCmd_Reason_REJECTION_NETWORK_UPDATE_FAILURE = 4,
-    aranya_RejectCmd_Reason_REJECTION_CREDENTIAL_FAILURE = 5,
-    aranya_RejectCmd_Reason_REJECTION_INTERNAL_SERVER_ERROR = 6,
-    aranya_RejectCmd_Reason_REJECTION_INVALID_PROTO = 7
-} aranya_RejectCmd_Reason;
 
 typedef enum _aranya_ErrorMsg_Kind {
     aranya_ErrorMsg_Kind_ERR_COMMON = 0,
@@ -171,7 +165,7 @@ typedef struct _aranya_PortForwardCmd {
 } aranya_PortForwardCmd;
 
 typedef struct _aranya_RejectCmd {
-    aranya_RejectCmd_Reason reason;
+    aranya_RejectionReason reason;
     pb_callback_t message;
 } aranya_RejectCmd;
 
@@ -192,20 +186,20 @@ typedef struct _aranya_TerminalResizeCmd {
 
 /* Helper constants for enums */
 #define _aranya_CmdType_MIN aranya_CmdType_CMD_DATA_UPSTREAM
-#define _aranya_CmdType_MAX aranya_CmdType_CMD_HOST_NET_DELETE
-#define _aranya_CmdType_ARRAYSIZE ((aranya_CmdType)(aranya_CmdType_CMD_HOST_NET_DELETE+1))
+#define _aranya_CmdType_MAX aranya_CmdType_CMD_HOST_NET_LIST
+#define _aranya_CmdType_ARRAYSIZE ((aranya_CmdType)(aranya_CmdType_CMD_HOST_NET_LIST+1))
 
 #define _aranya_MsgType_MIN aranya_MsgType_MSG_DATA
-#define _aranya_MsgType_MAX aranya_MsgType_MSG_NET_STATUS_LIST
-#define _aranya_MsgType_ARRAYSIZE ((aranya_MsgType)(aranya_MsgType_MSG_NET_STATUS_LIST+1))
+#define _aranya_MsgType_MAX aranya_MsgType_MSG_HOST_NET_STATUS
+#define _aranya_MsgType_ARRAYSIZE ((aranya_MsgType)(aranya_MsgType_MSG_HOST_NET_STATUS+1))
+
+#define _aranya_RejectionReason_MIN aranya_RejectionReason__INVALID_REJECTION_REASON
+#define _aranya_RejectionReason_MAX aranya_RejectionReason_REJECTION_INTERNAL_SERVER_ERROR
+#define _aranya_RejectionReason_ARRAYSIZE ((aranya_RejectionReason)(aranya_RejectionReason_REJECTION_INTERNAL_SERVER_ERROR+1))
 
 #define _aranya_NodeInfoGetCmd_Kind_MIN aranya_NodeInfoGetCmd_Kind_NODE_INFO_DYN
 #define _aranya_NodeInfoGetCmd_Kind_MAX aranya_NodeInfoGetCmd_Kind_NODE_INFO_ALL
 #define _aranya_NodeInfoGetCmd_Kind_ARRAYSIZE ((aranya_NodeInfoGetCmd_Kind)(aranya_NodeInfoGetCmd_Kind_NODE_INFO_ALL+1))
-
-#define _aranya_RejectCmd_Reason_MIN aranya_RejectCmd_Reason__INVALID_REJECTION_REASON
-#define _aranya_RejectCmd_Reason_MAX aranya_RejectCmd_Reason_REJECTION_INVALID_PROTO
-#define _aranya_RejectCmd_Reason_ARRAYSIZE ((aranya_RejectCmd_Reason)(aranya_RejectCmd_Reason_REJECTION_INVALID_PROTO+1))
 
 #define _aranya_ErrorMsg_Kind_MIN aranya_ErrorMsg_Kind_ERR_COMMON
 #define _aranya_ErrorMsg_Kind_MAX aranya_ErrorMsg_Kind_ERR_TIMEOUT
@@ -222,7 +216,7 @@ typedef struct _aranya_TerminalResizeCmd {
 #define aranya_Msg_init_default                  {_aranya_MsgType_MIN, 0, 0, 0, {{NULL}, NULL}}
 #define aranya_NodeInfoGetCmd_init_default       {_aranya_NodeInfoGetCmd_Kind_MIN}
 #define aranya_SessionCloseCmd_init_default      {0}
-#define aranya_RejectCmd_init_default            {_aranya_RejectCmd_Reason_MIN, {{NULL}, NULL}}
+#define aranya_RejectCmd_init_default            {_aranya_RejectionReason_MIN, {{NULL}, NULL}}
 #define aranya_LogsCmd_init_default              {{{NULL}, NULL}, {{NULL}, NULL}, 0, 0, {{NULL}, NULL}, 0, 0, 0, {{NULL}, NULL}}
 #define aranya_ExecOrAttachCmd_init_default      {{{NULL}, NULL}, {{NULL}, NULL}, 0, 0, 0, 0, {{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_ExecOrAttachCmd_EnvsEntry_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
@@ -235,7 +229,7 @@ typedef struct _aranya_TerminalResizeCmd {
 #define aranya_Msg_init_zero                     {_aranya_MsgType_MIN, 0, 0, 0, {{NULL}, NULL}}
 #define aranya_NodeInfoGetCmd_init_zero          {_aranya_NodeInfoGetCmd_Kind_MIN}
 #define aranya_SessionCloseCmd_init_zero         {0}
-#define aranya_RejectCmd_init_zero               {_aranya_RejectCmd_Reason_MIN, {{NULL}, NULL}}
+#define aranya_RejectCmd_init_zero               {_aranya_RejectionReason_MIN, {{NULL}, NULL}}
 #define aranya_LogsCmd_init_zero                 {{{NULL}, NULL}, {{NULL}, NULL}, 0, 0, {{NULL}, NULL}, 0, 0, 0, {{NULL}, NULL}}
 #define aranya_ExecOrAttachCmd_init_zero         {{{NULL}, NULL}, {{NULL}, NULL}, 0, 0, 0, 0, {{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_ExecOrAttachCmd_EnvsEntry_init_zero {{{NULL}, NULL}, {{NULL}, NULL}}

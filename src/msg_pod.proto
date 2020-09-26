@@ -36,15 +36,15 @@ message ContainerStatus {
     string message = 12;
 }
 
-message PodStatusMsg {
-    enum State {
-        POD_STATE_UNKNOWN = 0;
-        POD_STATE_PENDING = 1;
-        POD_STATE_RUNNING = 2;
-        POD_STATE_SUCCEEDED = 3;
-        POD_STATE_FAILED = 4;
-    }
+enum PodState {
+    POD_STATE_UNKNOWN = 0;
+    POD_STATE_PENDING = 1;
+    POD_STATE_RUNNING = 2;
+    POD_STATE_SUCCEEDED = 3;
+    POD_STATE_FAILED = 4;
+}
 
+message PodStatusMsg {
     // metadata
     string uid = 1;
 

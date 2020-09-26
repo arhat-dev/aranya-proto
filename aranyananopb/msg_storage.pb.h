@@ -14,11 +14,11 @@ extern "C" {
 #endif
 
 /* Enum definitions */
-typedef enum _aranya_StorageStatusMsg_State {
-    aranya_StorageStatusMsg_State_VOLUME_UNKONW = 0,
-    aranya_StorageStatusMsg_State_VOLUME_UNMOUNTED = 1,
-    aranya_StorageStatusMsg_State_VOLUME_MOUNTED = 2
-} aranya_StorageStatusMsg_State;
+typedef enum _aranya_StorageState {
+    aranya_StorageState_STORAGE_STATE_UNKONW = 0,
+    aranya_StorageState_STORAGE_STATE_UNMOUNTED = 1,
+    aranya_StorageState_STORAGE_STATE_MOUNTED = 2
+} aranya_StorageState;
 
 /* Struct definitions */
 typedef struct _aranya_StorageStatusListMsg {
@@ -26,22 +26,22 @@ typedef struct _aranya_StorageStatusListMsg {
 } aranya_StorageStatusListMsg;
 
 typedef struct _aranya_StorageStatusMsg {
-    aranya_StorageStatusMsg_State state;
+    aranya_StorageState state;
     pb_callback_t remote_path;
     pb_callback_t mount_point;
 } aranya_StorageStatusMsg;
 
 
 /* Helper constants for enums */
-#define _aranya_StorageStatusMsg_State_MIN aranya_StorageStatusMsg_State_VOLUME_UNKONW
-#define _aranya_StorageStatusMsg_State_MAX aranya_StorageStatusMsg_State_VOLUME_MOUNTED
-#define _aranya_StorageStatusMsg_State_ARRAYSIZE ((aranya_StorageStatusMsg_State)(aranya_StorageStatusMsg_State_VOLUME_MOUNTED+1))
+#define _aranya_StorageState_MIN aranya_StorageState_STORAGE_STATE_UNKONW
+#define _aranya_StorageState_MAX aranya_StorageState_STORAGE_STATE_MOUNTED
+#define _aranya_StorageState_ARRAYSIZE ((aranya_StorageState)(aranya_StorageState_STORAGE_STATE_MOUNTED+1))
 
 
 /* Initializer values for message structs */
-#define aranya_StorageStatusMsg_init_default     {_aranya_StorageStatusMsg_State_MIN, {{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_StorageStatusMsg_init_default     {_aranya_StorageState_MIN, {{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_StorageStatusListMsg_init_default {{{NULL}, NULL}}
-#define aranya_StorageStatusMsg_init_zero        {_aranya_StorageStatusMsg_State_MIN, {{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_StorageStatusMsg_init_zero        {_aranya_StorageState_MIN, {{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_StorageStatusListMsg_init_zero    {{{NULL}, NULL}}
 
 /* Field tags (for use in manual encoding/decoding) */

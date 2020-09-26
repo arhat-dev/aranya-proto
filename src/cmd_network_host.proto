@@ -20,5 +20,6 @@ package aranya;
 
 option go_package = "arhat.dev/aranya-proto/aranyagopb";
 
-message NetworkEnsureCmd {
+message HostNetworkListCmd {
+    repeated string interface_names = 1;
 }

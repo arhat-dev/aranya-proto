@@ -26,9 +26,15 @@ typedef struct _aranya_Connectivity_ParamsEntry {
 } aranya_Connectivity_ParamsEntry;
 
 typedef struct _aranya_TLSConfig {
+    pb_callback_t server_name;
+    bool insecure_skip_verify;
+    uint32_t min_version;
+    uint32_t max_version;
     pb_callback_t ca_cert;
     pb_callback_t cert;
     pb_callback_t key;
+    pb_callback_t cipher_suites;
+    pb_callback_t next_protos;
 } aranya_TLSConfig;
 
 typedef struct _aranya_Connectivity {
@@ -48,19 +54,25 @@ typedef struct _aranya_Connectivity {
 
 
 /* Initializer values for message structs */
-#define aranya_TLSConfig_init_default            {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_TLSConfig_init_default            {{{NULL}, NULL}, 0, 0, 0, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_Connectivity_init_default         {_aranya_ConnectivityMode_MIN, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, false, aranya_TLSConfig_init_default}
 #define aranya_Connectivity_ParamsEntry_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
-#define aranya_TLSConfig_init_zero               {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_TLSConfig_init_zero               {{{NULL}, NULL}, 0, 0, 0, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_Connectivity_init_zero            {_aranya_ConnectivityMode_MIN, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, false, aranya_TLSConfig_init_zero}
 #define aranya_Connectivity_ParamsEntry_init_zero {{{NULL}, NULL}, {{NULL}, NULL}}
 
 /* Field tags (for use in manual encoding/decoding) */
 #define aranya_Connectivity_ParamsEntry_key_tag  1
 #define aranya_Connectivity_ParamsEntry_value_tag 2
-#define aranya_TLSConfig_ca_cert_tag             1
-#define aranya_TLSConfig_cert_tag                2
-#define aranya_TLSConfig_key_tag                 3
+#define aranya_TLSConfig_server_name_tag         1
+#define aranya_TLSConfig_insecure_skip_verify_tag 2
+#define aranya_TLSConfig_min_version_tag         3
+#define aranya_TLSConfig_max_version_tag         4
+#define aranya_TLSConfig_ca_cert_tag             5
+#define aranya_TLSConfig_cert_tag                6
+#define aranya_TLSConfig_key_tag                 7
+#define aranya_TLSConfig_cipher_suites_tag       8
+#define aranya_TLSConfig_next_protos_tag         9
 #define aranya_Connectivity_mode_tag             1
 #define aranya_Connectivity_method_tag           2
 #define aranya_Connectivity_target_tag           3
@@ -69,9 +81,15 @@ typedef struct _aranya_Connectivity {
 
 /* Struct field encoding specification for nanopb */
 #define aranya_TLSConfig_FIELDLIST(X, a) \
-X(a, CALLBACK, SINGULAR, BYTES,    ca_cert,           1) \
-X(a, CALLBACK, SINGULAR, BYTES,    cert,              2) \
-X(a, CALLBACK, SINGULAR, BYTES,    key,               3)
+X(a, CALLBACK, SINGULAR, STRING,   server_name,       1) \
+X(a, STATIC,   SINGULAR, BOOL,     insecure_skip_verify,   2) \
+X(a, STATIC,   SINGULAR, UINT32,   min_version,       3) \
+X(a, STATIC,   SINGULAR, UINT32,   max_version,       4) \
+X(a, CALLBACK, SINGULAR, BYTES,    ca_cert,           5) \
+X(a, CALLBACK, SINGULAR, BYTES,    cert,              6) \
+X(a, CALLBACK, SINGULAR, BYTES,    key,               7) \
+X(a, CALLBACK, REPEATED, UINT32,   cipher_suites,     8) \
+X(a, CALLBACK, REPEATED, STRING,   next_protos,       9)
 #define aranya_TLSConfig_CALLBACK pb_default_field_callback
 #define aranya_TLSConfig_DEFAULT NULL
 

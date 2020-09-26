@@ -14,13 +14,13 @@ extern "C" {
 #endif
 
 /* Enum definitions */
-typedef enum _aranya_PodStatusMsg_State {
-    aranya_PodStatusMsg_State_POD_STATE_UNKNOWN = 0,
-    aranya_PodStatusMsg_State_POD_STATE_PENDING = 1,
-    aranya_PodStatusMsg_State_POD_STATE_RUNNING = 2,
-    aranya_PodStatusMsg_State_POD_STATE_SUCCEEDED = 3,
-    aranya_PodStatusMsg_State_POD_STATE_FAILED = 4
-} aranya_PodStatusMsg_State;
+typedef enum _aranya_PodState {
+    aranya_PodState_POD_STATE_UNKNOWN = 0,
+    aranya_PodState_POD_STATE_PENDING = 1,
+    aranya_PodState_POD_STATE_RUNNING = 2,
+    aranya_PodState_POD_STATE_SUCCEEDED = 3,
+    aranya_PodState_POD_STATE_FAILED = 4
+} aranya_PodState;
 
 /* Struct definitions */
 typedef struct _aranya_PodStatusListMsg {
@@ -54,9 +54,9 @@ typedef struct _aranya_PodStatusMsg_ContainersEntry {
 
 
 /* Helper constants for enums */
-#define _aranya_PodStatusMsg_State_MIN aranya_PodStatusMsg_State_POD_STATE_UNKNOWN
-#define _aranya_PodStatusMsg_State_MAX aranya_PodStatusMsg_State_POD_STATE_FAILED
-#define _aranya_PodStatusMsg_State_ARRAYSIZE ((aranya_PodStatusMsg_State)(aranya_PodStatusMsg_State_POD_STATE_FAILED+1))
+#define _aranya_PodState_MIN aranya_PodState_POD_STATE_UNKNOWN
+#define _aranya_PodState_MAX aranya_PodState_POD_STATE_FAILED
+#define _aranya_PodState_ARRAYSIZE ((aranya_PodState)(aranya_PodState_POD_STATE_FAILED+1))
 
 
 /* Initializer values for message structs */

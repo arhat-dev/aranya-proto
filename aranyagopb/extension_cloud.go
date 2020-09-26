@@ -211,7 +211,7 @@ func (m *ErrorMsg) isKind(kind ErrorMsg_Kind) bool {
 	return m.Kind == kind
 }
 
-func (s *ContainerStatus) GetState() PodStatusMsg_State {
+func (s *ContainerStatus) GetState() PodState {
 	if s == nil {
 		return POD_STATE_UNKNOWN
 	}
