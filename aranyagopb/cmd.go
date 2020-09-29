@@ -20,7 +20,6 @@ package aranyagopb
 
 import (
 	"crypto/sha256"
-	"encoding/binary"
 	"encoding/hex"
 	"math"
 	"sort"
@@ -236,9 +235,6 @@ func NewDeviceDeleteCmd(ids ...string) *DeviceDeleteCmd {
 
 func HexHashOfConnectivity(c *Connectivity) string {
 	h := sha256.New()
-	modeBuf := make([]byte, 4)
-	binary.BigEndian.PutUint32(modeBuf, uint32(c.Mode))
-	_, _ = h.Write(modeBuf)
 
 	_, _ = h.Write([]byte(c.Method))
 	_, _ = h.Write([]byte(c.Target))

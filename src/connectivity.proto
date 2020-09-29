@@ -36,22 +36,15 @@ message TLSConfig {
     repeated string next_protos = 9;
 }
 
-enum ConnectivityMode {
-    CONNECTIVITY_MODE_CLIENT = 0;
-    CONNECTIVITY_MODE_SERVER = 1;
-}
-
 message Connectivity {
-    ConnectivityMode mode = 1;
-
     // method name of the connectivity
-    string method = 2;
+    string method = 1;
 
     // target to connect
-    string target = 3;
+    string target = 2;
 
     // parameters used when creating this connectivity
-    map<string, string> params = 4;
+    map<string, string> params = 3;
 
-    TLSConfig tls = 5;
+    TLSConfig tls = 4;
 }

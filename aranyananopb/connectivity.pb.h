@@ -13,12 +13,6 @@
 extern "C" {
 #endif
 
-/* Enum definitions */
-typedef enum _aranya_ConnectivityMode {
-    aranya_ConnectivityMode_CONNECTIVITY_MODE_CLIENT = 0,
-    aranya_ConnectivityMode_CONNECTIVITY_MODE_SERVER = 1
-} aranya_ConnectivityMode;
-
 /* Struct definitions */
 typedef struct _aranya_Connectivity_ParamsEntry {
     pb_callback_t key;
@@ -38,7 +32,6 @@ typedef struct _aranya_TLSConfig {
 } aranya_TLSConfig;
 
 typedef struct _aranya_Connectivity {
-    aranya_ConnectivityMode mode;
     pb_callback_t method;
     pb_callback_t target;
     pb_callback_t params;
@@ -47,18 +40,12 @@ typedef struct _aranya_Connectivity {
 } aranya_Connectivity;
 
 
-/* Helper constants for enums */
-#define _aranya_ConnectivityMode_MIN aranya_ConnectivityMode_CONNECTIVITY_MODE_CLIENT
-#define _aranya_ConnectivityMode_MAX aranya_ConnectivityMode_CONNECTIVITY_MODE_SERVER
-#define _aranya_ConnectivityMode_ARRAYSIZE ((aranya_ConnectivityMode)(aranya_ConnectivityMode_CONNECTIVITY_MODE_SERVER+1))
-
-
 /* Initializer values for message structs */
 #define aranya_TLSConfig_init_default            {{{NULL}, NULL}, 0, 0, 0, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
-#define aranya_Connectivity_init_default         {_aranya_ConnectivityMode_MIN, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, false, aranya_TLSConfig_init_default}
+#define aranya_Connectivity_init_default         {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, false, aranya_TLSConfig_init_default}
 #define aranya_Connectivity_ParamsEntry_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_TLSConfig_init_zero               {{{NULL}, NULL}, 0, 0, 0, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
-#define aranya_Connectivity_init_zero            {_aranya_ConnectivityMode_MIN, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, false, aranya_TLSConfig_init_zero}
+#define aranya_Connectivity_init_zero            {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, false, aranya_TLSConfig_init_zero}
 #define aranya_Connectivity_ParamsEntry_init_zero {{{NULL}, NULL}, {{NULL}, NULL}}
 
 /* Field tags (for use in manual encoding/decoding) */
@@ -73,11 +60,10 @@ typedef struct _aranya_Connectivity {
 #define aranya_TLSConfig_key_tag                 7
 #define aranya_TLSConfig_cipher_suites_tag       8
 #define aranya_TLSConfig_next_protos_tag         9
-#define aranya_Connectivity_mode_tag             1
-#define aranya_Connectivity_method_tag           2
-#define aranya_Connectivity_target_tag           3
-#define aranya_Connectivity_params_tag           4
-#define aranya_Connectivity_tls_tag              5
+#define aranya_Connectivity_method_tag           1
+#define aranya_Connectivity_target_tag           2
+#define aranya_Connectivity_params_tag           3
+#define aranya_Connectivity_tls_tag              4
 
 /* Struct field encoding specification for nanopb */
 #define aranya_TLSConfig_FIELDLIST(X, a) \
@@ -94,11 +80,10 @@ X(a, CALLBACK, REPEATED, STRING,   next_protos,       9)
 #define aranya_TLSConfig_DEFAULT NULL
 
 #define aranya_Connectivity_FIELDLIST(X, a) \
-X(a, STATIC,   SINGULAR, UENUM,    mode,              1) \
-X(a, CALLBACK, SINGULAR, STRING,   method,            2) \
-X(a, CALLBACK, SINGULAR, STRING,   target,            3) \
-X(a, CALLBACK, REPEATED, MESSAGE,  params,            4) \
-X(a, STATIC,   OPTIONAL, MESSAGE,  tls,               5)
+X(a, CALLBACK, SINGULAR, STRING,   method,            1) \
+X(a, CALLBACK, SINGULAR, STRING,   target,            2) \
+X(a, CALLBACK, REPEATED, MESSAGE,  params,            3) \
+X(a, STATIC,   OPTIONAL, MESSAGE,  tls,               4)
 #define aranya_Connectivity_CALLBACK pb_default_field_callback
 #define aranya_Connectivity_DEFAULT NULL
 #define aranya_Connectivity_params_MSGTYPE aranya_Connectivity_ParamsEntry
