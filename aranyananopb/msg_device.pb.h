@@ -34,7 +34,7 @@ typedef struct _aranya_DeviceStatusListMsg {
 
 typedef struct _aranya_DeviceStatusMsg {
     aranya_DeviceType kind;
-    pb_callback_t connector_hash_hex;
+    pb_callback_t name;
     aranya_DeviceState state;
     pb_callback_t message;
 } aranya_DeviceStatusMsg;
@@ -58,14 +58,14 @@ typedef struct _aranya_DeviceStatusMsg {
 #define aranya_DeviceOperationResultMsg_data_tag 1
 #define aranya_DeviceStatusListMsg_devices_tag   1
 #define aranya_DeviceStatusMsg_kind_tag          1
-#define aranya_DeviceStatusMsg_connector_hash_hex_tag 2
+#define aranya_DeviceStatusMsg_name_tag          2
 #define aranya_DeviceStatusMsg_state_tag         3
 #define aranya_DeviceStatusMsg_message_tag       4
 
 /* Struct field encoding specification for nanopb */
 #define aranya_DeviceStatusMsg_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, UENUM,    kind,              1) \
-X(a, CALLBACK, SINGULAR, STRING,   connector_hash_hex,   2) \
+X(a, CALLBACK, SINGULAR, STRING,   name,              2) \
 X(a, STATIC,   SINGULAR, UENUM,    state,             3) \
 X(a, CALLBACK, SINGULAR, STRING,   message,           4)
 #define aranya_DeviceStatusMsg_CALLBACK pb_default_field_callback

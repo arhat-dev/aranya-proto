@@ -23,7 +23,7 @@ option go_package = "arhat.dev/aranya-proto/aranyagopb";
 
 enum DeviceType {
     // unknown type of device
-    DEVICE_TYPE_UNSPECIFIED = 0;
+    _INVALID_DEVICE_TYPE = 0;
 
     // a normal device for physical operations (e.g. sensor, cam)
     DEVICE_TYPE_NORMAL = 1;

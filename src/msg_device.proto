@@ -34,7 +34,7 @@ enum DeviceState {
 message DeviceStatusMsg {
     DeviceType kind = 1;
 
-    string connector_hash_hex = 2;
+    string name = 2;
 
     DeviceState state = 3;
 

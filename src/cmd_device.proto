@@ -60,7 +60,7 @@ message DeviceMetric {
     map<string, string> device_params = 4;
 
     // Hex encoded hash of the metrics reporter
-    string reporter_hash_hex = 5;
+    string reporter_name = 5;
 
     // (optional) params for metrics_reporter to upload metrics
     map<string, string> reporter_params = 6;
@@ -69,35 +69,32 @@ message DeviceMetric {
 message DeviceEnsureCmd {
     DeviceType kind = 1;
 
-    // (required) Hex encoded hash of the connector of this device
-    string connector_hash_hex = 2;
+    // (required) User defined device name
+    string name = 2;
 
     // (required) Connector defines how to connect to the device, operations operate
     // upon this connector
     Connectivity connector = 3;
 
-    // (optional) identifier of this normal devices, used to find this device in aranya
-    string device_id = 4;
-
     // (optional) User defined device operations
-    repeated DeviceOperation operations = 5;
+    repeated DeviceOperation operations = 4;
 
     // (optional) User defined device metrics
-    repeated DeviceMetric metrics = 6;
+    repeated DeviceMetric metrics = 5;
 }
 
 message DeviceListCmd {
-    repeated string ids = 1;
+    repeated string device_names = 1;
 }
 
 message DeviceDeleteCmd {
     // delete normal devices or metrics reporters
-    repeated string ids = 1;
+    repeated string device_names = 1;
 }
 
 message DeviceOperateCmd {
     // (required) device id of a normal device
-    string device_id = 1;
+    string device_name = 1;
 
     // (required) identifier of this operation
     string operation_id = 2;
@@ -107,5 +104,5 @@ message DeviceOperateCmd {
 }
 
 message DeviceMetricsCollectCmd {
-    repeated string device_ids = 2;
+    repeated string device_names = 2;
 }
