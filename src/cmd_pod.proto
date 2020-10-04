@@ -107,7 +107,7 @@ message ContainerProbeSpec {
 
 message ContainerSpec {
     string name = 1;
-    
+
     // container image name to pull
     string image = 2;
 
@@ -263,7 +263,7 @@ message PodDeleteCmd {
 
     // pod deletion grace time
     int64 grace_time = 10;
-    
+
     // key: container name
     // value:
     map<string, ContainerAction> hook_pre_stop = 11;

@@ -35,6 +35,7 @@ fix_pb_gen_json_name() {
 
 _do_gen_proto_go() {
   rm aranyagopb/*.pb.go || true
+
   # shellcheck disable=SC2086
   protoc \
     -I"${GOPATH}/src" \
@@ -47,14 +48,46 @@ _do_gen_proto_go() {
   # fix_pb_gen_json_name ./aranyagopb/*.pb.go
 }
 
+_do_gen_proto_python() {
+  rm aranyapythonpb/*_pb*.py || true
+
+  # shellcheck disable=SC2086
+  pipenv run \
+  python -m grpc_tools.protoc \
+    -I"${GOPATH}/src" \
+    -I"${GOPATH}/src/github.com/gogo/protobuf/protobuf" \
+    -I"./src" \
+    --python_out "./aranyapythonpb" \
+    --grpc_python_out "./aranyapythonpb" \
+    ${PROTO_SOURCE}
+}
+
 _do_gen_proto_c() {
   rm aranyananopb/*.pb.c aranyananopb/*.pb.h || true
+
   # shellcheck disable=SC2086
   pipenv run \
   python build/nanopb/generator/nanopb_generator.py \
     --no-timestamp \
+    -x github.com/gogo/protobuf/gogoproto/gogo.proto \
     --output-dir ./aranyananopb \
+    -I"${GOPATH}/src" \
+    -I"${GOPATH}/src/github.com/gogo/protobuf/protobuf" \
     -I"./src" \
+    ${PROTO_SOURCE}
+}
+
+_do_gen_proto_rust() {
+  rm aranyarustpb/*.pb.rs || true
+
+  # shellcheck disable=SC2086
+  pipenv run \
+  protoc \
+    -I ./src \
+    -I "${GOPATH}/src/github.com/gogo/protobuf/protobuf" \
+    -I "${GOPATH}/src" \
+    --plugin "protoc-gen-rust=$(pwd)/build/pb-jelly/pb-jelly-gen/codegen/codegen.py" \
+    --rust_out=./aranyarustpb \
     ${PROTO_SOURCE}
 }
 

@@ -1,4 +1,9 @@
-exclude: .*.pb.c
+exclude: |
+  (?x)^(
+    .*_pb.*.py|
+    .*.pb.c
+  )$
+
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v2.5.0
@@ -6,6 +11,3 @@ repos:
   - id: trailing-whitespace
   - id: end-of-file-fixer
   - id: check-yaml
-    exclude: cicd/deploy/charts/.*?/aranyas
-    args:
-    - --allow-multiple-documents
