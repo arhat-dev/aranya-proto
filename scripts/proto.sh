@@ -75,6 +75,8 @@ _do_gen_proto_c() {
     -I"${GOPATH}/src/github.com/gogo/protobuf/protobuf" \
     -I"./src" \
     ${PROTO_SOURCE}
+
+  rm -rf ./aranyananopb/google ./aranyananopb/github.com
 }
 
 _do_gen_proto_rust() {
