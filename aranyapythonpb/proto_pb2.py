@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z!arhat.dev/aranya-proto/aranyagopb',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x0bproto.proto\x12\x06\x61ranya\"\x07\n\x05\x45mpty\"_\n\x03\x43md\x12\x1d\n\x04kind\x18\x01 \x01(\x0e\x32\x0f.aranya.CmdType\x12\x0b\n\x03sid\x18\x02 \x01(\x04\x12\x0b\n\x03seq\x18\x03 \x01(\x04\x12\x11\n\tcompleted\x18\x04 \x01(\x08\x12\x0c\n\x04\x62ody\x18\x0b \x01(\x0c\"_\n\x03Msg\x12\x1d\n\x04kind\x18\x01 \x01(\x0e\x32\x0f.aranya.MsgType\x12\x0b\n\x03sid\x18\x02 \x01(\x04\x12\x0b\n\x03seq\x18\x03 \x01(\x04\x12\x11\n\tcompleted\x18\x04 \x01(\x08\x12\x0c\n\x04\x62ody\x18\x0b \x01(\x0c\"i\n\x0eNodeInfoGetCmd\x12)\n\x04kind\x18\x01 \x01(\x0e\x32\x1b.aranya.NodeInfoGetCmd.Kind\",\n\x04Kind\x12\x11\n\rNODE_INFO_DYN\x10\x00\x12\x11\n\rNODE_INFO_ALL\x10\x01\"\x1e\n\x0fSessionCloseCmd\x12\x0b\n\x03sid\x18\x01 \x01(\x04\"E\n\tRejectCmd\x12\'\n\x06reason\x18\x01 \x01(\x0e\x32\x17.aranya.RejectionReason\x12\x0f\n\x07message\x18\x02 \x01(\t\"\xa8\x01\n\x07LogsCmd\x12\x0f\n\x07pod_uid\x18\x01 \x01(\t\x12\x11\n\tcontainer\x18\x02 \x01(\t\x12\x0e\n\x06\x66ollow\x18\x03 \x01(\x08\x12\x11\n\ttimestamp\x18\x04 \x01(\x08\x12\r\n\x05since\x18\x05 \x01(\t\x12\x12\n\ntail_lines\x18\x06 \x01(\x03\x12\x13\n\x0b\x62ytes_limit\x18\x07 \x01(\x03\x12\x10\n\x08previous\x18\x08 \x01(\x08\x12\x0c\n\x04path\x18\t \x01(\t\"\xe0\x01\n\x0f\x45xecOrAttachCmd\x12\x0f\n\x07pod_uid\x18\x01 \x01(\t\x12\x11\n\tcontainer\x18\x02 \x01(\t\x12\r\n\x05stdin\x18\x03 \x01(\x08\x12\x0e\n\x06stdout\x18\x04 \x01(\x08\x12\x0e\n\x06stderr\x18\x05 \x01(\x08\x12\x0b\n\x03tty\x18\x06 \x01(\x08\x12\x0f\n\x07\x63ommand\x18\x07 \x03(\t\x12/\n\x04\x65nvs\x18\x08 \x03(\x0b\x32!.aranya.ExecOrAttachCmd.EnvsEntry\x1a+\n\tEnvsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"A\n\x0ePortForwardCmd\x12\x0f\n\x07pod_uid\x18\x01 \x01(\t\x12\x0c\n\x04port\x18\x02 \x01(\x05\x12\x10\n\x08protocol\x18\x03 \x01(\t\"/\n\x11TerminalResizeCmd\x12\x0c\n\x04\x63ols\x18\x01 \x01(\r\x12\x0c\n\x04rows\x18\x02 \x01(\r\"\xbd\x01\n\x08\x45rrorMsg\x12#\n\x04kind\x18\x01 \x01(\x0e\x32\x15.aranya.ErrorMsg.Kind\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12\x0c\n\x04\x63ode\x18\x03 \x01(\x03\"i\n\x04Kind\x12\x0e\n\nERR_COMMON\x10\x00\x12\x11\n\rERR_NOT_FOUND\x10\x01\x12\x16\n\x12\x45RR_ALREADY_EXISTS\x10\x02\x12\x15\n\x11\x45RR_NOT_SUPPORTED\x10\x03\x12\x0f\n\x0b\x45RR_TIMEOUT\x10\x04\"\x83\x01\n\x08StateMsg\x12#\n\x04kind\x18\x01 \x01(\x0e\x32\x15.aranya.StateMsg.Kind\x12\x11\n\tdevice_id\x18\x02 \x01(\t\"?\n\x04Kind\x12\x12\n\x0e_INVALID_STATE\x10\x00\x12\x10\n\x0cSTATE_ONLINE\x10\x01\x12\x11\n\rSTATE_OFFLINE\x10\x02*\x92\x05\n\x07\x43mdType\x12\x15\n\x11\x43MD_DATA_UPSTREAM\x10\x00\x12\x15\n\x11\x43MD_SESSION_CLOSE\x10\x05\x12\x0e\n\nCMD_REJECT\x10\x06\x12\x15\n\x11\x43MD_NODE_INFO_GET\x10\x0b\x12\x0c\n\x08\x43MD_EXEC\x10\x0c\x12\x0e\n\nCMD_ATTACH\x10\r\x12\x0c\n\x08\x43MD_LOGS\x10\x0e\x12\x12\n\x0e\x43MD_TTY_RESIZE\x10\x0f\x12\x14\n\x10\x43MD_PORT_FORWARD\x10\x10\x12\x16\n\x12\x43MD_METRICS_CONFIG\x10\x15\x12\x17\n\x13\x43MD_METRICS_COLLECT\x10\x16\x12\x13\n\x0f\x43MD_CRED_ENSURE\x10\x1f\x12\x12\n\x0e\x43MD_IMAGE_LIST\x10)\x12\x14\n\x10\x43MD_IMAGE_ENSURE\x10*\x12\x14\n\x10\x43MD_IMAGE_DELETE\x10+\x12\x14\n\x10\x43MD_STORAGE_LIST\x10\x33\x12\x16\n\x12\x43MD_STORAGE_ENSURE\x10\x34\x12\x16\n\x12\x43MD_STORAGE_DELETE\x10\x35\x12\x10\n\x0c\x43MD_POD_LIST\x10=\x12\x12\n\x0e\x43MD_POD_ENSURE\x10>\x12\x12\n\x0e\x43MD_POD_DELETE\x10?\x12\x13\n\x0f\x43MD_DEVICE_LIST\x10G\x12\x15\n\x11\x43MD_DEVICE_ENSURE\x10H\x12\x15\n\x11\x43MD_DEVICE_DELETE\x10I\x12\x16\n\x12\x43MD_DEVICE_OPERATE\x10J\x12\x1e\n\x1a\x43MD_DEVICE_COLLECT_METRICS\x10K\x12\x14\n\x10\x43MD_CTR_NET_LIST\x10Q\x12\x16\n\x12\x43MD_CTR_NET_ENSURE\x10R\x12\x16\n\x12\x43MD_CTR_NET_DELETE\x10S\x12\x15\n\x11\x43MD_HOST_NET_LIST\x10T*\xfc\x03\n\x07MsgType\x12\x0c\n\x08MSG_DATA\x10\x00\x12\x14\n\x10MSG_DATA_DEFAULT\x10\x00\x12\x13\n\x0fMSG_DATA_STDOUT\x10\x00\x12\x14\n\x10MSG_DATA_METRICS\x10\x00\x12\x13\n\x0fMSG_DATA_STDERR\x10\x01\x12\x0c\n\x08MSG_DONE\x10\x05\x12\r\n\tMSG_STATE\x10\x06\x12\r\n\tMSG_ERROR\x10\x07\x12\x13\n\x0fMSG_NODE_STATUS\x10\x0b\x12\x13\n\x0fMSG_CRED_STATUS\x10\x1f\x12\x14\n\x10MSG_IMAGE_STATUS\x10)\x12\x19\n\x15MSG_IMAGE_STATUS_LIST\x10*\x12\x16\n\x12MSG_STORAGE_STATUS\x10\x33\x12\x1b\n\x17MSG_STORAGE_STATUS_LIST\x10\x34\x12\x12\n\x0eMSG_POD_STATUS\x10=\x12\x17\n\x13MSG_POD_STATUS_LIST\x10>\x12\x15\n\x11MSG_DEVICE_STATUS\x10G\x12\x1a\n\x16MSG_DEVICE_STATUS_LIST\x10H\x12\x1f\n\x1bMSG_DEVICE_OPERATION_RESULT\x10I\x12\x16\n\x12MSG_CTR_NET_STATUS\x10Q\x12\x1b\n\x17MSG_CTR_NET_STATUS_LIST\x10R\x12\x17\n\x13MSG_HOST_NET_STATUS\x10S\x1a\x02\x10\x01*\xb8\x01\n\x0fRejectionReason\x12\x1d\n\x19_INVALID_REJECTION_REASON\x10\x00\x12\x1b\n\x17REJECTION_INVALID_PROTO\x10\x01\x12\x1f\n\x1bREJECTION_ALREADY_CONNECTED\x10\x02\x12#\n\x1fREJECTION_INITIAL_CHECK_FAILURE\x10\x03\x12#\n\x1fREJECTION_INTERNAL_SERVER_ERROR\x10\x04\x42#Z!arhat.dev/aranya-proto/aranyagopbb\x06proto3'
+  serialized_pb=b'\n\x0bproto.proto\x12\x06\x61ranya\"\x07\n\x05\x45mpty\"_\n\x03\x43md\x12\x1d\n\x04kind\x18\x01 \x01(\x0e\x32\x0f.aranya.CmdType\x12\x0b\n\x03sid\x18\x02 \x01(\x04\x12\x0b\n\x03seq\x18\x03 \x01(\x04\x12\x11\n\tcompleted\x18\x04 \x01(\x08\x12\x0c\n\x04\x62ody\x18\x0b \x01(\x0c\"_\n\x03Msg\x12\x1d\n\x04kind\x18\x01 \x01(\x0e\x32\x0f.aranya.MsgType\x12\x0b\n\x03sid\x18\x02 \x01(\x04\x12\x0b\n\x03seq\x18\x03 \x01(\x04\x12\x11\n\tcompleted\x18\x04 \x01(\x08\x12\x0c\n\x04\x62ody\x18\x0b \x01(\x0c\"i\n\x0eNodeInfoGetCmd\x12)\n\x04kind\x18\x01 \x01(\x0e\x32\x1b.aranya.NodeInfoGetCmd.Kind\",\n\x04Kind\x12\x11\n\rNODE_INFO_DYN\x10\x00\x12\x11\n\rNODE_INFO_ALL\x10\x01\"\x1e\n\x0fSessionCloseCmd\x12\x0b\n\x03sid\x18\x01 \x01(\x04\"E\n\tRejectCmd\x12\'\n\x06reason\x18\x01 \x01(\x0e\x32\x17.aranya.RejectionReason\x12\x0f\n\x07message\x18\x02 \x01(\t\"\xa8\x01\n\x07LogsCmd\x12\x0f\n\x07pod_uid\x18\x01 \x01(\t\x12\x11\n\tcontainer\x18\x02 \x01(\t\x12\x0e\n\x06\x66ollow\x18\x03 \x01(\x08\x12\x11\n\ttimestamp\x18\x04 \x01(\x08\x12\r\n\x05since\x18\x05 \x01(\t\x12\x12\n\ntail_lines\x18\x06 \x01(\x03\x12\x13\n\x0b\x62ytes_limit\x18\x07 \x01(\x03\x12\x10\n\x08previous\x18\x08 \x01(\x08\x12\x0c\n\x04path\x18\t \x01(\t\"\xe0\x01\n\x0f\x45xecOrAttachCmd\x12\x0f\n\x07pod_uid\x18\x01 \x01(\t\x12\x11\n\tcontainer\x18\x02 \x01(\t\x12\r\n\x05stdin\x18\x03 \x01(\x08\x12\x0e\n\x06stdout\x18\x04 \x01(\x08\x12\x0e\n\x06stderr\x18\x05 \x01(\x08\x12\x0b\n\x03tty\x18\x06 \x01(\x08\x12\x0f\n\x07\x63ommand\x18\x07 \x03(\t\x12/\n\x04\x65nvs\x18\x08 \x03(\x0b\x32!.aranya.ExecOrAttachCmd.EnvsEntry\x1a+\n\tEnvsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"A\n\x0ePortForwardCmd\x12\x0f\n\x07pod_uid\x18\x01 \x01(\t\x12\x0c\n\x04port\x18\x02 \x01(\x05\x12\x10\n\x08protocol\x18\x03 \x01(\t\"/\n\x11TerminalResizeCmd\x12\x0c\n\x04\x63ols\x18\x01 \x01(\r\x12\x0c\n\x04rows\x18\x02 \x01(\r\"\xbd\x01\n\x08\x45rrorMsg\x12#\n\x04kind\x18\x01 \x01(\x0e\x32\x15.aranya.ErrorMsg.Kind\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12\x0c\n\x04\x63ode\x18\x03 \x01(\x03\"i\n\x04Kind\x12\x0e\n\nERR_COMMON\x10\x00\x12\x11\n\rERR_NOT_FOUND\x10\x01\x12\x16\n\x12\x45RR_ALREADY_EXISTS\x10\x02\x12\x15\n\x11\x45RR_NOT_SUPPORTED\x10\x03\x12\x0f\n\x0b\x45RR_TIMEOUT\x10\x04\"\x83\x01\n\x08StateMsg\x12#\n\x04kind\x18\x01 \x01(\x0e\x32\x15.aranya.StateMsg.Kind\x12\x11\n\tdevice_id\x18\x02 \x01(\t\"?\n\x04Kind\x12\x12\n\x0e_INVALID_STATE\x10\x00\x12\x10\n\x0cSTATE_ONLINE\x10\x01\x12\x11\n\rSTATE_OFFLINE\x10\x02*\xa6\x05\n\x07\x43mdType\x12\x15\n\x11\x43MD_DATA_UPSTREAM\x10\x00\x12\x15\n\x11\x43MD_SESSION_CLOSE\x10\x05\x12\x0e\n\nCMD_REJECT\x10\x06\x12\x15\n\x11\x43MD_NODE_INFO_GET\x10\x0b\x12\x0c\n\x08\x43MD_EXEC\x10\x0c\x12\x0e\n\nCMD_ATTACH\x10\r\x12\x0c\n\x08\x43MD_LOGS\x10\x0e\x12\x12\n\x0e\x43MD_TTY_RESIZE\x10\x0f\x12\x14\n\x10\x43MD_PORT_FORWARD\x10\x10\x12\x16\n\x12\x43MD_METRICS_CONFIG\x10\x15\x12\x17\n\x13\x43MD_METRICS_COLLECT\x10\x16\x12\x13\n\x0f\x43MD_CRED_ENSURE\x10\x1f\x12\x12\n\x0e\x43MD_IMAGE_LIST\x10)\x12\x14\n\x10\x43MD_IMAGE_ENSURE\x10*\x12\x14\n\x10\x43MD_IMAGE_DELETE\x10+\x12\x14\n\x10\x43MD_STORAGE_LIST\x10\x33\x12\x16\n\x12\x43MD_STORAGE_ENSURE\x10\x34\x12\x16\n\x12\x43MD_STORAGE_DELETE\x10\x35\x12\x10\n\x0c\x43MD_POD_LIST\x10=\x12\x12\n\x0e\x43MD_POD_ENSURE\x10>\x12\x12\n\x0e\x43MD_POD_DELETE\x10?\x12\x17\n\x13\x43MD_PERIPHERAL_LIST\x10G\x12\x19\n\x15\x43MD_PERIPHERAL_ENSURE\x10H\x12\x19\n\x15\x43MD_PERIPHERAL_DELETE\x10I\x12\x1a\n\x16\x43MD_PERIPHERAL_OPERATE\x10J\x12\"\n\x1e\x43MD_PERIPHERAL_COLLECT_METRICS\x10K\x12\x14\n\x10\x43MD_CTR_NET_LIST\x10Q\x12\x16\n\x12\x43MD_CTR_NET_ENSURE\x10R\x12\x16\n\x12\x43MD_CTR_NET_DELETE\x10S\x12\x15\n\x11\x43MD_HOST_NET_LIST\x10T*\x88\x04\n\x07MsgType\x12\x0c\n\x08MSG_DATA\x10\x00\x12\x14\n\x10MSG_DATA_DEFAULT\x10\x00\x12\x13\n\x0fMSG_DATA_STDOUT\x10\x00\x12\x14\n\x10MSG_DATA_METRICS\x10\x00\x12\x13\n\x0fMSG_DATA_STDERR\x10\x01\x12\x0c\n\x08MSG_DONE\x10\x05\x12\r\n\tMSG_STATE\x10\x06\x12\r\n\tMSG_ERROR\x10\x07\x12\x13\n\x0fMSG_NODE_STATUS\x10\x0b\x12\x13\n\x0fMSG_CRED_STATUS\x10\x1f\x12\x14\n\x10MSG_IMAGE_STATUS\x10)\x12\x19\n\x15MSG_IMAGE_STATUS_LIST\x10*\x12\x16\n\x12MSG_STORAGE_STATUS\x10\x33\x12\x1b\n\x17MSG_STORAGE_STATUS_LIST\x10\x34\x12\x12\n\x0eMSG_POD_STATUS\x10=\x12\x17\n\x13MSG_POD_STATUS_LIST\x10>\x12\x19\n\x15MSG_PERIPHERAL_STATUS\x10G\x12\x1e\n\x1aMSG_PERIPHERAL_STATUS_LIST\x10H\x12#\n\x1fMSG_PERIPHERAL_OPERATION_RESULT\x10I\x12\x16\n\x12MSG_CTR_NET_STATUS\x10Q\x12\x1b\n\x17MSG_CTR_NET_STATUS_LIST\x10R\x12\x17\n\x13MSG_HOST_NET_STATUS\x10S\x1a\x02\x10\x01*\xb8\x01\n\x0fRejectionReason\x12\x1d\n\x19_INVALID_REJECTION_REASON\x10\x00\x12\x1b\n\x17REJECTION_INVALID_PROTO\x10\x01\x12\x1f\n\x1bREJECTION_ALREADY_CONNECTED\x10\x02\x12#\n\x1fREJECTION_INITIAL_CHECK_FAILURE\x10\x03\x12#\n\x1fREJECTION_INTERNAL_SERVER_ERROR\x10\x04\x42#Z!arhat.dev/aranya-proto/aranyagopbb\x06proto3'
 )
 
 _CMDTYPE = _descriptor.EnumDescriptor(
@@ -136,27 +136,27 @@ _CMDTYPE = _descriptor.EnumDescriptor(
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CMD_DEVICE_LIST', index=21, number=71,
+      name='CMD_PERIPHERAL_LIST', index=21, number=71,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CMD_DEVICE_ENSURE', index=22, number=72,
+      name='CMD_PERIPHERAL_ENSURE', index=22, number=72,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CMD_DEVICE_DELETE', index=23, number=73,
+      name='CMD_PERIPHERAL_DELETE', index=23, number=73,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CMD_DEVICE_OPERATE', index=24, number=74,
+      name='CMD_PERIPHERAL_OPERATE', index=24, number=74,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CMD_DEVICE_COLLECT_METRICS', index=25, number=75,
+      name='CMD_PERIPHERAL_COLLECT_METRICS', index=25, number=75,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
@@ -184,7 +184,7 @@ _CMDTYPE = _descriptor.EnumDescriptor(
   containing_type=None,
   serialized_options=None,
   serialized_start=1277,
-  serialized_end=1935,
+  serialized_end=1955,
 )
 _sym_db.RegisterEnumDescriptor(_CMDTYPE)
 
@@ -277,17 +277,17 @@ _MSGTYPE = _descriptor.EnumDescriptor(
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='MSG_DEVICE_STATUS', index=16, number=71,
+      name='MSG_PERIPHERAL_STATUS', index=16, number=71,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='MSG_DEVICE_STATUS_LIST', index=17, number=72,
+      name='MSG_PERIPHERAL_STATUS_LIST', index=17, number=72,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='MSG_DEVICE_OPERATION_RESULT', index=18, number=73,
+      name='MSG_PERIPHERAL_OPERATION_RESULT', index=18, number=73,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
@@ -309,8 +309,8 @@ _MSGTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=b'\020\001',
-  serialized_start=1938,
-  serialized_end=2446,
+  serialized_start=1958,
+  serialized_end=2478,
 )
 _sym_db.RegisterEnumDescriptor(_MSGTYPE)
 
@@ -350,8 +350,8 @@ _REJECTIONREASON = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=2449,
-  serialized_end=2633,
+  serialized_start=2481,
+  serialized_end=2665,
 )
 _sym_db.RegisterEnumDescriptor(_REJECTIONREASON)
 
@@ -377,11 +377,11 @@ CMD_STORAGE_DELETE = 53
 CMD_POD_LIST = 61
 CMD_POD_ENSURE = 62
 CMD_POD_DELETE = 63
-CMD_DEVICE_LIST = 71
-CMD_DEVICE_ENSURE = 72
-CMD_DEVICE_DELETE = 73
-CMD_DEVICE_OPERATE = 74
-CMD_DEVICE_COLLECT_METRICS = 75
+CMD_PERIPHERAL_LIST = 71
+CMD_PERIPHERAL_ENSURE = 72
+CMD_PERIPHERAL_DELETE = 73
+CMD_PERIPHERAL_OPERATE = 74
+CMD_PERIPHERAL_COLLECT_METRICS = 75
 CMD_CTR_NET_LIST = 81
 CMD_CTR_NET_ENSURE = 82
 CMD_CTR_NET_DELETE = 83
@@ -402,9 +402,9 @@ MSG_STORAGE_STATUS = 51
 MSG_STORAGE_STATUS_LIST = 52
 MSG_POD_STATUS = 61
 MSG_POD_STATUS_LIST = 62
-MSG_DEVICE_STATUS = 71
-MSG_DEVICE_STATUS_LIST = 72
-MSG_DEVICE_OPERATION_RESULT = 73
+MSG_PERIPHERAL_STATUS = 71
+MSG_PERIPHERAL_STATUS_LIST = 72
+MSG_PERIPHERAL_OPERATION_RESULT = 73
 MSG_CTR_NET_STATUS = 81
 MSG_CTR_NET_STATUS_LIST = 82
 MSG_HOST_NET_STATUS = 83

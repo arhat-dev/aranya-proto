@@ -21,23 +21,23 @@ package aranya;
 
 option go_package = "arhat.dev/aranya-proto/aranyagopb";
 
-import "device.proto";
+import "peripheral.proto";
 import "connectivity.proto";
 
-message DeviceOperation {
+message PeripheralOperation {
     // (required) identifier of this operation
     string operation_id = 1;
 
-    // (optional) params usd for device connectivity when executing this
+    // (optional) params usd for peripheral connectivity when executing this
     // operation
     map<string, string> params = 2;
 }
 
-message DeviceMetric {
+message PeripheralMetric {
     enum ReportMethod {
-        // Report device metrics when collecting node metrics
+        // Report peripheral metrics when collecting node metrics
         REPORT_WITH_NODE_METRICS = 0;
-        // Report device metrics along with arhat client
+        // Report peripheral metrics along with arhat client
         REPORT_WITH_ARHAT_CONNECTIVITY = 1;
         // Create a standalone client for metrics uploading
         REPORT_WITH_STANDALONE_CLIENT = 2;
@@ -56,8 +56,8 @@ message DeviceMetric {
 
     ValueType value_type = 3;
 
-    // (required) params for device connector to retrieve metrics
-    map<string, string> device_params = 4;
+    // (required) params for peripheral connector to retrieve metrics
+    map<string, string> peripheral_params = 4;
 
     // Hex encoded hash of the metrics reporter
     string reporter_name = 5;
@@ -66,35 +66,35 @@ message DeviceMetric {
     map<string, string> reporter_params = 6;
 }
 
-message DeviceEnsureCmd {
-    DeviceType kind = 1;
+message PeripheralEnsureCmd {
+    PeripheralType kind = 1;
 
-    // (required) User defined device name
+    // (required) User defined peripheral name
     string name = 2;
 
-    // (required) Connector defines how to connect to the device, operations operate
+    // (required) Connector defines how to connect to the peripheral, operations operate
     // upon this connector
     Connectivity connector = 3;
 
-    // (optional) User defined device operations
-    repeated DeviceOperation operations = 4;
+    // (optional) User defined peripheral operations
+    repeated PeripheralOperation operations = 4;
 
-    // (optional) User defined device metrics
-    repeated DeviceMetric metrics = 5;
+    // (optional) User defined peripheral metrics
+    repeated PeripheralMetric metrics = 5;
 }
 
-message DeviceListCmd {
-    repeated string device_names = 1;
+message PeripheralListCmd {
+    repeated string peripheral_names = 1;
 }
 
-message DeviceDeleteCmd {
-    // delete normal devices or metrics reporters
-    repeated string device_names = 1;
+message PeripheralDeleteCmd {
+    // delete normal peripherals or metrics reporters
+    repeated string peripheral_names = 1;
 }
 
-message DeviceOperateCmd {
-    // (required) device id of a normal device
-    string device_name = 1;
+message PeripheralOperateCmd {
+    // (required) peripheral id of a normal peripheral
+    string peripheral_name = 1;
 
     // (required) identifier of this operation
     string operation_id = 2;
@@ -103,6 +103,6 @@ message DeviceOperateCmd {
     bytes data = 3;
 }
 
-message DeviceMetricsCollectCmd {
-    repeated string device_names = 2;
+message PeripheralMetricsCollectCmd {
+    repeated string peripheral_names = 2;
 }

@@ -21,13 +21,31 @@ package aranya;
 
 option go_package = "arhat.dev/aranya-proto/aranyagopb";
 
-enum DeviceType {
-    // unknown type of device
-    _INVALID_DEVICE_TYPE = 0;
+import "peripheral.proto";
 
-    // a normal device for physical operations (e.g. sensor, cam)
-    DEVICE_TYPE_NORMAL = 1;
+enum PeripheralState {
+    PERIPHERAL_STATE_UNKNOWN = 0;
+    PERIPHERAL_STATE_CREATED = 1;
+    PERIPHERAL_STATE_CONNECTED = 2;
+    PERIPHERAL_STATE_ERRORED = 3;
+    PERIPHERAL_STATE_REMOVED = 4;
+}
 
-    // a reporter device is used to report metrics
-    DEVICE_TYPE_METRICS_REPORTER = 2;
+message PeripheralStatusMsg {
+    PeripheralType kind = 1;
+
+    string name = 2;
+
+    PeripheralState state = 3;
+
+    // Human readable description for this state
+    string message = 4;
+}
+
+message PeripheralStatusListMsg {
+    repeated PeripheralStatusMsg peripherals = 1;
+}
+
+message PeripheralOperationResultMsg {
+    repeated bytes data = 1;
 }
