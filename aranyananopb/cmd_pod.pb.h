@@ -164,9 +164,8 @@ typedef struct _aranya_PodEnsureCmd {
 } aranya_PodEnsureCmd;
 
 typedef struct _aranya_PodListCmd {
-    pb_callback_t namespace;
-    pb_callback_t name;
     bool all;
+    pb_callback_t names;
 } aranya_PodListCmd;
 
 typedef struct _aranya_PodVolumeSpec_VolumeDataEntry {
@@ -255,7 +254,7 @@ typedef struct _aranya_ContainerSpec {
 #define aranya_PodEnsureCmd_LabelsEntry_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_PodDeleteCmd_init_default         {{{NULL}, NULL}, {{NULL}, NULL}, 0, {{NULL}, NULL}}
 #define aranya_PodDeleteCmd_HookPreStopEntry_init_default {{{NULL}, NULL}, false, aranya_ContainerAction_init_default}
-#define aranya_PodListCmd_init_default           {{{NULL}, NULL}, {{NULL}, NULL}, 0}
+#define aranya_PodListCmd_init_default           {0, {{NULL}, NULL}}
 #define aranya_NamedData_init_zero               {{{NULL}, NULL}}
 #define aranya_NamedData_DataMapEntry_init_zero  {{{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_SELinuxOptions_init_zero          {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
@@ -281,7 +280,7 @@ typedef struct _aranya_ContainerSpec {
 #define aranya_PodEnsureCmd_LabelsEntry_init_zero {{{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_PodDeleteCmd_init_zero            {{{NULL}, NULL}, {{NULL}, NULL}, 0, {{NULL}, NULL}}
 #define aranya_PodDeleteCmd_HookPreStopEntry_init_zero {{{NULL}, NULL}, false, aranya_ContainerAction_init_zero}
-#define aranya_PodListCmd_init_zero              {{{NULL}, NULL}, {{NULL}, NULL}, 0}
+#define aranya_PodListCmd_init_zero              {0, {{NULL}, NULL}}
 
 /* Field tags (for use in manual encoding/decoding) */
 #define aranya_ContainerAction_Exec_command_tag  1
@@ -355,9 +354,8 @@ typedef struct _aranya_ContainerSpec {
 #define aranya_PodEnsureCmd_volumes_tag          13
 #define aranya_PodEnsureCmd_security_tag         14
 #define aranya_PodEnsureCmd_labels_tag           15
-#define aranya_PodListCmd_namespace_tag          1
-#define aranya_PodListCmd_name_tag               2
-#define aranya_PodListCmd_all_tag                3
+#define aranya_PodListCmd_all_tag                1
+#define aranya_PodListCmd_names_tag              2
 #define aranya_PodVolumeSpec_VolumeDataEntry_key_tag 1
 #define aranya_PodVolumeSpec_VolumeDataEntry_value_tag 2
 #define aranya_ContainerProbeSpec_initial_delay_tag 1
@@ -609,9 +607,8 @@ X(a, STATIC,   OPTIONAL, MESSAGE,  value,             2)
 #define aranya_PodDeleteCmd_HookPreStopEntry_value_MSGTYPE aranya_ContainerAction
 
 #define aranya_PodListCmd_FIELDLIST(X, a) \
-X(a, CALLBACK, SINGULAR, STRING,   namespace,         1) \
-X(a, CALLBACK, SINGULAR, STRING,   name,              2) \
-X(a, STATIC,   SINGULAR, BOOL,     all,               3)
+X(a, STATIC,   SINGULAR, BOOL,     all,               1) \
+X(a, CALLBACK, REPEATED, STRING,   names,             2)
 #define aranya_PodListCmd_CALLBACK pb_default_field_callback
 #define aranya_PodListCmd_DEFAULT NULL
 

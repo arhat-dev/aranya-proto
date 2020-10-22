@@ -25,7 +25,8 @@ message ImageStatusMsg {
     string sha256 = 1;
     // size of the image in bytes
     uint64 size = 2;
-    repeated string names = 3;
+
+    repeated string refs = 3;
 }
 
 message ImageStatusListMsg {

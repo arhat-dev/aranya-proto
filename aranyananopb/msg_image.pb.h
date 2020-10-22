@@ -21,7 +21,7 @@ typedef struct _aranya_ImageStatusListMsg {
 typedef struct _aranya_ImageStatusMsg {
     pb_callback_t sha256;
     uint64_t size;
-    pb_callback_t names;
+    pb_callback_t refs;
 } aranya_ImageStatusMsg;
 
 
@@ -35,13 +35,13 @@ typedef struct _aranya_ImageStatusMsg {
 #define aranya_ImageStatusListMsg_images_tag     1
 #define aranya_ImageStatusMsg_sha256_tag         1
 #define aranya_ImageStatusMsg_size_tag           2
-#define aranya_ImageStatusMsg_names_tag          3
+#define aranya_ImageStatusMsg_refs_tag           3
 
 /* Struct field encoding specification for nanopb */
 #define aranya_ImageStatusMsg_FIELDLIST(X, a) \
 X(a, CALLBACK, SINGULAR, STRING,   sha256,            1) \
 X(a, STATIC,   SINGULAR, UINT64,   size,              2) \
-X(a, CALLBACK, REPEATED, STRING,   names,             3)
+X(a, CALLBACK, REPEATED, STRING,   refs,              3)
 #define aranya_ImageStatusMsg_CALLBACK pb_default_field_callback
 #define aranya_ImageStatusMsg_DEFAULT NULL
 

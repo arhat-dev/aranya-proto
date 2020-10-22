@@ -100,11 +100,10 @@ func NewPodContainerDeleteCmd(podUID string, containers []string) *PodDeleteCmd 
 	}
 }
 
-func NewPodListCmd(namespace, name string, all bool) *PodListCmd {
+func NewPodListCmd(all bool, names ...string) *PodListCmd {
 	return &PodListCmd{
-		Namespace: namespace,
-		Name:      name,
-		All:       all,
+		All:   all,
+		Names: names,
 	}
 }
 

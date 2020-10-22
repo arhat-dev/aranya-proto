@@ -211,7 +211,7 @@ message PodEnsureCmd {
     // wait unitl all containers defined in this cmd exited with no error
     bool wait = 9;
 
-    // custom hostname to override container id as hostname
+    // custom hostname to override pod name as hostname
     string hostname = 10;
 
     repeated ContainerSpec containers = 11;
@@ -238,10 +238,9 @@ message PodDeleteCmd {
 }
 
 message PodListCmd {
-    // pod namespace
-    string namespace = 1;
-    // pod name
-    string name = 2;
     // show all pods available
-    bool all = 3;
+    bool all = 1;
+
+    // pod names filter
+    repeated string names = 2;
 }

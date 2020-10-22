@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z!arhat.dev/aranya-proto/aranyagopb',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x0fmsg_image.proto\x12\x06\x61ranya\"=\n\x0eImageStatusMsg\x12\x0e\n\x06sha256\x18\x01 \x01(\t\x12\x0c\n\x04size\x18\x02 \x01(\x04\x12\r\n\x05names\x18\x03 \x03(\t\"<\n\x12ImageStatusListMsg\x12&\n\x06images\x18\x01 \x03(\x0b\x32\x16.aranya.ImageStatusMsgB#Z!arhat.dev/aranya-proto/aranyagopbb\x06proto3'
+  serialized_pb=b'\n\x0fmsg_image.proto\x12\x06\x61ranya\"<\n\x0eImageStatusMsg\x12\x0e\n\x06sha256\x18\x01 \x01(\t\x12\x0c\n\x04size\x18\x02 \x01(\x04\x12\x0c\n\x04refs\x18\x03 \x03(\t\"<\n\x12ImageStatusListMsg\x12&\n\x06images\x18\x01 \x03(\x0b\x32\x16.aranya.ImageStatusMsgB#Z!arhat.dev/aranya-proto/aranyagopbb\x06proto3'
 )
 
 
@@ -48,7 +48,7 @@ _IMAGESTATUSMSG = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='names', full_name='aranya.ImageStatusMsg.names', index=2,
+      name='refs', full_name='aranya.ImageStatusMsg.refs', index=2,
       number=3, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -67,7 +67,7 @@ _IMAGESTATUSMSG = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=27,
-  serialized_end=88,
+  serialized_end=87,
 )
 
 
@@ -98,8 +98,8 @@ _IMAGESTATUSLISTMSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=90,
-  serialized_end=150,
+  serialized_start=89,
+  serialized_end=149,
 )
 
 _IMAGESTATUSLISTMSG.fields_by_name['images'].message_type = _IMAGESTATUSMSG
