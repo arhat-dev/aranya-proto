@@ -99,7 +99,7 @@ enum MsgType {
     MSG_DONE = 5;
     MSG_STATE = 6;
     MSG_ERROR = 7;
-    
+
     // network msgs, protobuf bytes of abbot proto
     MSG_NET = 10;
 
