@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z!arhat.dev/aranya-proto/aranyagopb',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\rcmd_pod.proto\x12\x06\x61ranya\"m\n\tNamedData\x12\x30\n\x08\x64\x61ta_map\x18\x01 \x03(\x0b\x32\x1e.aranya.NamedData.DataMapEntry\x1a.\n\x0c\x44\x61taMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x0c:\x02\x38\x01\"I\n\x0eSELinuxOptions\x12\x0c\n\x04type\x18\x01 \x01(\t\x12\r\n\x05level\x18\x02 \x01(\t\x12\x0c\n\x04role\x18\x03 \x01(\t\x12\x0c\n\x04user\x18\x04 \x01(\t\"\xf0\x02\n\x15\x43ontainerSecuritySpec\x12\x12\n\nprivileged\x18\x01 \x01(\x08\x12\x1c\n\x14\x61llow_new_privileges\x18\x02 \x01(\x08\x12\x10\n\x08non_root\x18\x03 \x01(\x08\x12\x18\n\x10read_only_rootfs\x18\x04 \x01(\x08\x12\x0c\n\x04user\x18\x05 \x01(\x03\x12\r\n\x05group\x18\x06 \x01(\x03\x12\x10\n\x08\x63\x61ps_add\x18\x07 \x03(\t\x12\x11\n\tcaps_drop\x18\x08 \x03(\t\x12\x44\n\x0fproc_mount_kind\x18\t \x01(\x0e\x32+.aranya.ContainerSecuritySpec.ProcMountKind\x12/\n\x0fselinux_options\x18\n \x01(\x0b\x32\x16.aranya.SELinuxOptions\"@\n\rProcMountKind\x12\x16\n\x12PROC_MOUNT_DEFAULT\x10\x00\x12\x17\n\x13PROC_MOUNT_UNMASKED\x10\x01\"\x8f\x01\n\x12\x43ontainerMountSpec\x12\x12\n\nmount_path\x18\x01 \x01(\t\x12\x10\n\x08sub_path\x18\x02 \x01(\t\x12\x11\n\tread_only\x18\x03 \x01(\x08\x12\x0c\n\x04type\x18\x04 \x01(\t\x12\x0f\n\x07options\x18\x05 \x03(\t\x12\x11\n\tfile_mode\x18\x06 \x01(\r\x12\x0e\n\x06remote\x18\x07 \x01(\x08\"*\n\x0cKeyValuePair\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t\"\xa9\x02\n\x0f\x43ontainerAction\x12,\n\x04\x65xec\x18\x01 \x01(\x0b\x32\x1c.aranya.ContainerAction.ExecH\x00\x12,\n\x04http\x18\x02 \x01(\x0b\x32\x1c.aranya.ContainerAction.HTTPH\x00\x12\x30\n\x06socket\x18\x03 \x01(\x0b\x32\x1e.aranya.ContainerAction.SocketH\x00\x1a\x17\n\x04\x45xec\x12\x0f\n\x07\x63ommand\x18\x01 \x03(\t\x1aJ\n\x04HTTP\x12\x0e\n\x06method\x18\x01 \x01(\t\x12\x0b\n\x03url\x18\x02 \x01(\t\x12%\n\x07headers\x18\x03 \x03(\x0b\x32\x14.aranya.KeyValuePair\x1a\x19\n\x06Socket\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\tB\x08\n\x06\x61\x63tion\"\xb9\x01\n\x12\x43ontainerProbeSpec\x12\x15\n\rinitial_delay\x18\x01 \x01(\x03\x12\x15\n\rprobe_timeout\x18\x02 \x01(\x03\x12\x16\n\x0eprobe_interval\x18\x03 \x01(\x03\x12\x19\n\x11success_threshold\x18\x04 \x01(\x05\x12\x19\n\x11\x66\x61ilure_threshold\x18\x05 \x01(\x05\x12\'\n\x06method\x18\x06 \x01(\x0b\x32\x17.aranya.ContainerAction\"\xb6\x04\n\rContainerSpec\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\r\n\x05image\x18\x02 \x01(\t\x12\x13\n\x0bworking_dir\x18\x03 \x01(\t\x12\r\n\x05stdin\x18\x04 \x01(\x08\x12\x12\n\nstdin_once\x18\x05 \x01(\x08\x12\x0b\n\x03tty\x18\x06 \x01(\x08\x12\x0f\n\x07\x63ommand\x18\x07 \x03(\t\x12\x0c\n\x04\x61rgs\x18\x08 \x03(\t\x12-\n\x04\x65nvs\x18\t \x03(\x0b\x32\x1f.aranya.ContainerSpec.EnvsEntry\x12\x31\n\x06mounts\x18\n \x03(\x0b\x32!.aranya.ContainerSpec.MountsEntry\x12\x33\n\x0freadiness_check\x18\x0b \x01(\x0b\x32\x1a.aranya.ContainerProbeSpec\x12\x32\n\x0eliveness_check\x18\x0c \x01(\x0b\x32\x1a.aranya.ContainerProbeSpec\x12/\n\x08security\x18\r \x01(\x0b\x32\x1d.aranya.ContainerSecuritySpec\x12\x30\n\x0fhook_post_start\x18\x0e \x01(\x0b\x32\x17.aranya.ContainerAction\x1a+\n\tEnvsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1aI\n\x0bMountsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12)\n\x05value\x18\x02 \x01(\x0b\x32\x1a.aranya.ContainerMountSpec:\x02\x38\x01\"\xfd\x01\n\rPodVolumeSpec\x12\x38\n\nhost_paths\x18\x15 \x03(\x0b\x32$.aranya.PodVolumeSpec.HostPathsEntry\x12:\n\x0bvolume_data\x18\x16 \x03(\x0b\x32%.aranya.PodVolumeSpec.VolumeDataEntry\x1a\x30\n\x0eHostPathsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a\x44\n\x0fVolumeDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12 \n\x05value\x18\x02 \x01(\x0b\x32\x11.aranya.NamedData:\x02\x38\x01\"x\n\x0fPodSecuritySpec\x12\x35\n\x07sysctls\x18\x0f \x03(\x0b\x32$.aranya.PodSecuritySpec.SysctlsEntry\x1a.\n\x0cSysctlsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xcc\x03\n\x0cPodEnsureCmd\x12\x0f\n\x07pod_uid\x18\x01 \x01(\t\x12\x11\n\tnamespace\x18\x02 \x01(\t\x12\x0c\n\x04name\x18\x03 \x01(\t\x12-\n\x0erestart_policy\x18\x04 \x01(\x0e\x32\x15.aranya.RestartPolicy\x12\x10\n\x08host_ipc\x18\x05 \x01(\x08\x12\x14\n\x0chost_network\x18\x06 \x01(\x08\x12\x10\n\x08host_pid\x18\x07 \x01(\x08\x12\x11\n\tshare_pid\x18\x08 \x01(\x08\x12\x0c\n\x04wait\x18\t \x01(\x08\x12\x10\n\x08hostname\x18\n \x01(\t\x12)\n\ncontainers\x18\x0b \x03(\x0b\x32\x15.aranya.ContainerSpec\x12\x0f\n\x07network\x18\x0c \x01(\x0c\x12&\n\x07volumes\x18\r \x01(\x0b\x32\x15.aranya.PodVolumeSpec\x12)\n\x08security\x18\x0e \x01(\x0b\x32\x17.aranya.PodSecuritySpec\x12\x30\n\x06labels\x18\x0f \x03(\x0b\x32 .aranya.PodEnsureCmd.LabelsEntry\x1a-\n\x0bLabelsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xd2\x01\n\x0cPodDeleteCmd\x12\x0f\n\x07pod_uid\x18\x01 \x01(\t\x12\x12\n\ncontainers\x18\x02 \x03(\t\x12\x12\n\ngrace_time\x18\n \x01(\x03\x12<\n\rhook_pre_stop\x18\x0b \x03(\x0b\x32%.aranya.PodDeleteCmd.HookPreStopEntry\x1aK\n\x10HookPreStopEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12&\n\x05value\x18\x02 \x01(\x0b\x32\x17.aranya.ContainerAction:\x02\x38\x01\":\n\nPodListCmd\x12\x11\n\tnamespace\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0b\n\x03\x61ll\x18\x03 \x01(\x08*N\n\rRestartPolicy\x12\x12\n\x0eRESTART_ALWAYS\x10\x00\x12\x16\n\x12RESTART_ON_FAILURE\x10\x01\x12\x11\n\rRESTART_NEVER\x10\x02\x42#Z!arhat.dev/aranya-proto/aranyagopbb\x06proto3'
+  serialized_pb=b'\n\rcmd_pod.proto\x12\x06\x61ranya\"m\n\tNamedData\x12\x30\n\x08\x64\x61ta_map\x18\x01 \x03(\x0b\x32\x1e.aranya.NamedData.DataMapEntry\x1a.\n\x0c\x44\x61taMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x0c:\x02\x38\x01\"I\n\x0eSELinuxOptions\x12\x0c\n\x04type\x18\x01 \x01(\t\x12\r\n\x05level\x18\x02 \x01(\t\x12\x0c\n\x04role\x18\x03 \x01(\t\x12\x0c\n\x04user\x18\x04 \x01(\t\"\xf0\x02\n\x15\x43ontainerSecuritySpec\x12\x12\n\nprivileged\x18\x01 \x01(\x08\x12\x1c\n\x14\x61llow_new_privileges\x18\x02 \x01(\x08\x12\x10\n\x08non_root\x18\x03 \x01(\x08\x12\x18\n\x10read_only_rootfs\x18\x04 \x01(\x08\x12\x0c\n\x04user\x18\x05 \x01(\x03\x12\r\n\x05group\x18\x06 \x01(\x03\x12\x10\n\x08\x63\x61ps_add\x18\x07 \x03(\t\x12\x11\n\tcaps_drop\x18\x08 \x03(\t\x12\x44\n\x0fproc_mount_kind\x18\t \x01(\x0e\x32+.aranya.ContainerSecuritySpec.ProcMountKind\x12/\n\x0fselinux_options\x18\n \x01(\x0b\x32\x16.aranya.SELinuxOptions\"@\n\rProcMountKind\x12\x16\n\x12PROC_MOUNT_DEFAULT\x10\x00\x12\x17\n\x13PROC_MOUNT_UNMASKED\x10\x01\"\x8f\x01\n\x12\x43ontainerMountSpec\x12\x12\n\nmount_path\x18\x01 \x01(\t\x12\x10\n\x08sub_path\x18\x02 \x01(\t\x12\x11\n\tread_only\x18\x03 \x01(\x08\x12\x0c\n\x04type\x18\x04 \x01(\t\x12\x0f\n\x07options\x18\x05 \x03(\t\x12\x11\n\tfile_mode\x18\x06 \x01(\r\x12\x0e\n\x06remote\x18\x07 \x01(\x08\"*\n\x0cKeyValuePair\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t\"\xa9\x02\n\x0f\x43ontainerAction\x12,\n\x04\x65xec\x18\x01 \x01(\x0b\x32\x1c.aranya.ContainerAction.ExecH\x00\x12,\n\x04http\x18\x02 \x01(\x0b\x32\x1c.aranya.ContainerAction.HTTPH\x00\x12\x30\n\x06socket\x18\x03 \x01(\x0b\x32\x1e.aranya.ContainerAction.SocketH\x00\x1a\x17\n\x04\x45xec\x12\x0f\n\x07\x63ommand\x18\x01 \x03(\t\x1aJ\n\x04HTTP\x12\x0e\n\x06method\x18\x01 \x01(\t\x12\x0b\n\x03url\x18\x02 \x01(\t\x12%\n\x07headers\x18\x03 \x03(\x0b\x32\x14.aranya.KeyValuePair\x1a\x19\n\x06Socket\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\tB\x08\n\x06\x61\x63tion\"\xb9\x01\n\x12\x43ontainerProbeSpec\x12\x15\n\rinitial_delay\x18\x01 \x01(\x03\x12\x15\n\rprobe_timeout\x18\x02 \x01(\x03\x12\x16\n\x0eprobe_interval\x18\x03 \x01(\x03\x12\x19\n\x11success_threshold\x18\x04 \x01(\x05\x12\x19\n\x11\x66\x61ilure_threshold\x18\x05 \x01(\x05\x12\'\n\x06method\x18\x06 \x01(\x0b\x32\x17.aranya.ContainerAction\"\xb6\x04\n\rContainerSpec\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\r\n\x05image\x18\x02 \x01(\t\x12\x13\n\x0bworking_dir\x18\x03 \x01(\t\x12\r\n\x05stdin\x18\x04 \x01(\x08\x12\x12\n\nstdin_once\x18\x05 \x01(\x08\x12\x0b\n\x03tty\x18\x06 \x01(\x08\x12\x0f\n\x07\x63ommand\x18\x07 \x03(\t\x12\x0c\n\x04\x61rgs\x18\x08 \x03(\t\x12-\n\x04\x65nvs\x18\t \x03(\x0b\x32\x1f.aranya.ContainerSpec.EnvsEntry\x12\x31\n\x06mounts\x18\n \x03(\x0b\x32!.aranya.ContainerSpec.MountsEntry\x12\x33\n\x0freadiness_check\x18\x0b \x01(\x0b\x32\x1a.aranya.ContainerProbeSpec\x12\x32\n\x0eliveness_check\x18\x0c \x01(\x0b\x32\x1a.aranya.ContainerProbeSpec\x12/\n\x08security\x18\r \x01(\x0b\x32\x1d.aranya.ContainerSecuritySpec\x12\x30\n\x0fhook_post_start\x18\x0e \x01(\x0b\x32\x17.aranya.ContainerAction\x1a+\n\tEnvsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1aI\n\x0bMountsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12)\n\x05value\x18\x02 \x01(\x0b\x32\x1a.aranya.ContainerMountSpec:\x02\x38\x01\"\xfd\x01\n\rPodVolumeSpec\x12\x38\n\nhost_paths\x18\x15 \x03(\x0b\x32$.aranya.PodVolumeSpec.HostPathsEntry\x12:\n\x0bvolume_data\x18\x16 \x03(\x0b\x32%.aranya.PodVolumeSpec.VolumeDataEntry\x1a\x30\n\x0eHostPathsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a\x44\n\x0fVolumeDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12 \n\x05value\x18\x02 \x01(\x0b\x32\x11.aranya.NamedData:\x02\x38\x01\"x\n\x0fPodSecuritySpec\x12\x35\n\x07sysctls\x18\x0f \x03(\x0b\x32$.aranya.PodSecuritySpec.SysctlsEntry\x1a.\n\x0cSysctlsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xcd\x01\n\x0ePodNetworkSpec\x12\x13\n\x0bnameservers\x18\x01 \x03(\t\x12\x14\n\x0c\x64ns_searches\x18\x02 \x03(\t\x12\x13\n\x0b\x64ns_options\x18\x03 \x03(\t\x12\x30\n\x05hosts\x18\x04 \x03(\x0b\x32!.aranya.PodNetworkSpec.HostsEntry\x12\x1b\n\x13\x61\x62\x62ot_request_bytes\x18\x0b \x01(\x0c\x1a,\n\nHostsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xcc\x03\n\x0cPodEnsureCmd\x12\x0f\n\x07pod_uid\x18\x01 \x01(\t\x12\x11\n\tnamespace\x18\x02 \x01(\t\x12\x0c\n\x04name\x18\x03 \x01(\t\x12-\n\x0erestart_policy\x18\x04 \x01(\x0e\x32\x15.aranya.RestartPolicy\x12\x10\n\x08host_ipc\x18\x05 \x01(\x08\x12\x14\n\x0chost_network\x18\x06 \x01(\x08\x12\x10\n\x08host_pid\x18\x07 \x01(\x08\x12\x11\n\tshare_pid\x18\x08 \x01(\x08\x12\x0c\n\x04wait\x18\t \x01(\x08\x12\x10\n\x08hostname\x18\n \x01(\t\x12)\n\ncontainers\x18\x0b \x03(\x0b\x32\x15.aranya.ContainerSpec\x12\x0f\n\x07network\x18\x0c \x01(\x0c\x12&\n\x07volumes\x18\r \x01(\x0b\x32\x15.aranya.PodVolumeSpec\x12)\n\x08security\x18\x0e \x01(\x0b\x32\x17.aranya.PodSecuritySpec\x12\x30\n\x06labels\x18\x0f \x03(\x0b\x32 .aranya.PodEnsureCmd.LabelsEntry\x1a-\n\x0bLabelsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xd2\x01\n\x0cPodDeleteCmd\x12\x0f\n\x07pod_uid\x18\x01 \x01(\t\x12\x12\n\ncontainers\x18\x02 \x03(\t\x12\x12\n\ngrace_time\x18\n \x01(\x03\x12<\n\rhook_pre_stop\x18\x0b \x03(\x0b\x32%.aranya.PodDeleteCmd.HookPreStopEntry\x1aK\n\x10HookPreStopEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12&\n\x05value\x18\x02 \x01(\x0b\x32\x17.aranya.ContainerAction:\x02\x38\x01\":\n\nPodListCmd\x12\x11\n\tnamespace\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0b\n\x03\x61ll\x18\x03 \x01(\x08*N\n\rRestartPolicy\x12\x12\n\x0eRESTART_ALWAYS\x10\x00\x12\x16\n\x12RESTART_ON_FAILURE\x10\x01\x12\x11\n\rRESTART_NEVER\x10\x02\x42#Z!arhat.dev/aranya-proto/aranyagopbb\x06proto3'
 )
 
 _RESTARTPOLICY = _descriptor.EnumDescriptor(
@@ -48,8 +48,8 @@ _RESTARTPOLICY = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=2943,
-  serialized_end=3021,
+  serialized_start=3151,
+  serialized_end=3229,
 )
 _sym_db.RegisterEnumDescriptor(_RESTARTPOLICY)
 
@@ -1026,6 +1026,104 @@ _PODSECURITYSPEC = _descriptor.Descriptor(
 )
 
 
+_PODNETWORKSPEC_HOSTSENTRY = _descriptor.Descriptor(
+  name='HostsEntry',
+  full_name='aranya.PodNetworkSpec.HostsEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='aranya.PodNetworkSpec.HostsEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='aranya.PodNetworkSpec.HostsEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=b'8\001',
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2369,
+  serialized_end=2413,
+)
+
+_PODNETWORKSPEC = _descriptor.Descriptor(
+  name='PodNetworkSpec',
+  full_name='aranya.PodNetworkSpec',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='nameservers', full_name='aranya.PodNetworkSpec.nameservers', index=0,
+      number=1, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='dns_searches', full_name='aranya.PodNetworkSpec.dns_searches', index=1,
+      number=2, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='dns_options', full_name='aranya.PodNetworkSpec.dns_options', index=2,
+      number=3, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='hosts', full_name='aranya.PodNetworkSpec.hosts', index=3,
+      number=4, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='abbot_request_bytes', full_name='aranya.PodNetworkSpec.abbot_request_bytes', index=4,
+      number=11, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"",
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[_PODNETWORKSPEC_HOSTSENTRY, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2208,
+  serialized_end=2413,
+)
+
+
 _PODENSURECMD_LABELSENTRY = _descriptor.Descriptor(
   name='LabelsEntry',
   full_name='aranya.PodEnsureCmd.LabelsEntry',
@@ -1060,8 +1158,8 @@ _PODENSURECMD_LABELSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2623,
-  serialized_end=2668,
+  serialized_start=2831,
+  serialized_end=2876,
 )
 
 _PODENSURECMD = _descriptor.Descriptor(
@@ -1189,8 +1287,8 @@ _PODENSURECMD = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2208,
-  serialized_end=2668,
+  serialized_start=2416,
+  serialized_end=2876,
 )
 
 
@@ -1228,8 +1326,8 @@ _PODDELETECMD_HOOKPRESTOPENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2806,
-  serialized_end=2881,
+  serialized_start=3014,
+  serialized_end=3089,
 )
 
 _PODDELETECMD = _descriptor.Descriptor(
@@ -1280,8 +1378,8 @@ _PODDELETECMD = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2671,
-  serialized_end=2881,
+  serialized_start=2879,
+  serialized_end=3089,
 )
 
 
@@ -1326,8 +1424,8 @@ _PODLISTCMD = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2883,
-  serialized_end=2941,
+  serialized_start=3091,
+  serialized_end=3149,
 )
 
 _NAMEDDATA_DATAMAPENTRY.containing_type = _NAMEDDATA
@@ -1368,6 +1466,8 @@ _PODVOLUMESPEC.fields_by_name['host_paths'].message_type = _PODVOLUMESPEC_HOSTPA
 _PODVOLUMESPEC.fields_by_name['volume_data'].message_type = _PODVOLUMESPEC_VOLUMEDATAENTRY
 _PODSECURITYSPEC_SYSCTLSENTRY.containing_type = _PODSECURITYSPEC
 _PODSECURITYSPEC.fields_by_name['sysctls'].message_type = _PODSECURITYSPEC_SYSCTLSENTRY
+_PODNETWORKSPEC_HOSTSENTRY.containing_type = _PODNETWORKSPEC
+_PODNETWORKSPEC.fields_by_name['hosts'].message_type = _PODNETWORKSPEC_HOSTSENTRY
 _PODENSURECMD_LABELSENTRY.containing_type = _PODENSURECMD
 _PODENSURECMD.fields_by_name['restart_policy'].enum_type = _RESTARTPOLICY
 _PODENSURECMD.fields_by_name['containers'].message_type = _CONTAINERSPEC
@@ -1387,6 +1487,7 @@ DESCRIPTOR.message_types_by_name['ContainerProbeSpec'] = _CONTAINERPROBESPEC
 DESCRIPTOR.message_types_by_name['ContainerSpec'] = _CONTAINERSPEC
 DESCRIPTOR.message_types_by_name['PodVolumeSpec'] = _PODVOLUMESPEC
 DESCRIPTOR.message_types_by_name['PodSecuritySpec'] = _PODSECURITYSPEC
+DESCRIPTOR.message_types_by_name['PodNetworkSpec'] = _PODNETWORKSPEC
 DESCRIPTOR.message_types_by_name['PodEnsureCmd'] = _PODENSURECMD
 DESCRIPTOR.message_types_by_name['PodDeleteCmd'] = _PODDELETECMD
 DESCRIPTOR.message_types_by_name['PodListCmd'] = _PODLISTCMD
@@ -1535,6 +1636,21 @@ PodSecuritySpec = _reflection.GeneratedProtocolMessageType('PodSecuritySpec', (_
 _sym_db.RegisterMessage(PodSecuritySpec)
 _sym_db.RegisterMessage(PodSecuritySpec.SysctlsEntry)
 
+PodNetworkSpec = _reflection.GeneratedProtocolMessageType('PodNetworkSpec', (_message.Message,), {
+
+  'HostsEntry' : _reflection.GeneratedProtocolMessageType('HostsEntry', (_message.Message,), {
+    'DESCRIPTOR' : _PODNETWORKSPEC_HOSTSENTRY,
+    '__module__' : 'cmd_pod_pb2'
+    # @@protoc_insertion_point(class_scope:aranya.PodNetworkSpec.HostsEntry)
+    })
+  ,
+  'DESCRIPTOR' : _PODNETWORKSPEC,
+  '__module__' : 'cmd_pod_pb2'
+  # @@protoc_insertion_point(class_scope:aranya.PodNetworkSpec)
+  })
+_sym_db.RegisterMessage(PodNetworkSpec)
+_sym_db.RegisterMessage(PodNetworkSpec.HostsEntry)
+
 PodEnsureCmd = _reflection.GeneratedProtocolMessageType('PodEnsureCmd', (_message.Message,), {
 
   'LabelsEntry' : _reflection.GeneratedProtocolMessageType('LabelsEntry', (_message.Message,), {
@@ -1580,6 +1696,7 @@ _CONTAINERSPEC_MOUNTSENTRY._options = None
 _PODVOLUMESPEC_HOSTPATHSENTRY._options = None
 _PODVOLUMESPEC_VOLUMEDATAENTRY._options = None
 _PODSECURITYSPEC_SYSCTLSENTRY._options = None
+_PODNETWORKSPEC_HOSTSENTRY._options = None
 _PODENSURECMD_LABELSENTRY._options = None
 _PODDELETECMD_HOOKPRESTOPENTRY._options = None
 # @@protoc_insertion_point(module_scope)

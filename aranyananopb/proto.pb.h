@@ -105,11 +105,11 @@ typedef struct _aranya_ExecOrAttachCmd_EnvsEntry {
 } aranya_ExecOrAttachCmd_EnvsEntry;
 
 typedef struct _aranya_NetworkCmd {
-    pb_callback_t payload;
+    pb_callback_t abbot_request_bytes;
 } aranya_NetworkCmd;
 
 typedef struct _aranya_NetworkMsg {
-    pb_callback_t payload;
+    pb_callback_t abbot_response_bytes;
 } aranya_NetworkMsg;
 
 typedef struct _aranya_Cmd {
@@ -248,8 +248,8 @@ typedef struct _aranya_TerminalResizeCmd {
 /* Field tags (for use in manual encoding/decoding) */
 #define aranya_ExecOrAttachCmd_EnvsEntry_key_tag 1
 #define aranya_ExecOrAttachCmd_EnvsEntry_value_tag 2
-#define aranya_NetworkCmd_payload_tag            1
-#define aranya_NetworkMsg_payload_tag            1
+#define aranya_NetworkCmd_abbot_request_bytes_tag 1
+#define aranya_NetworkMsg_abbot_response_bytes_tag 1
 #define aranya_Cmd_kind_tag                      1
 #define aranya_Cmd_sid_tag                       2
 #define aranya_Cmd_seq_tag                       3
@@ -333,7 +333,7 @@ X(a, CALLBACK, SINGULAR, STRING,   message,           2)
 #define aranya_RejectCmd_DEFAULT NULL
 
 #define aranya_NetworkCmd_FIELDLIST(X, a) \
-X(a, CALLBACK, SINGULAR, BYTES,    payload,           1)
+X(a, CALLBACK, SINGULAR, BYTES,    abbot_request_bytes,   1)
 #define aranya_NetworkCmd_CALLBACK pb_default_field_callback
 #define aranya_NetworkCmd_DEFAULT NULL
 
@@ -396,7 +396,7 @@ X(a, CALLBACK, SINGULAR, STRING,   device_id,         2)
 #define aranya_StateMsg_DEFAULT NULL
 
 #define aranya_NetworkMsg_FIELDLIST(X, a) \
-X(a, CALLBACK, SINGULAR, BYTES,    payload,           1)
+X(a, CALLBACK, SINGULAR, BYTES,    abbot_response_bytes,   1)
 #define aranya_NetworkMsg_CALLBACK pb_default_field_callback
 #define aranya_NetworkMsg_DEFAULT NULL
 

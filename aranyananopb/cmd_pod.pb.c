@@ -63,6 +63,12 @@ PB_BIND(aranya_PodSecuritySpec, aranya_PodSecuritySpec, AUTO)
 PB_BIND(aranya_PodSecuritySpec_SysctlsEntry, aranya_PodSecuritySpec_SysctlsEntry, AUTO)
 
 
+PB_BIND(aranya_PodNetworkSpec, aranya_PodNetworkSpec, AUTO)
+
+
+PB_BIND(aranya_PodNetworkSpec_HostsEntry, aranya_PodNetworkSpec_HostsEntry, AUTO)
+
+
 PB_BIND(aranya_PodEnsureCmd, aranya_PodEnsureCmd, AUTO)
 
 

@@ -64,6 +64,19 @@ typedef struct _aranya_PodEnsureCmd_LabelsEntry {
     pb_callback_t value;
 } aranya_PodEnsureCmd_LabelsEntry;
 
+typedef struct _aranya_PodNetworkSpec {
+    pb_callback_t nameservers;
+    pb_callback_t dns_searches;
+    pb_callback_t dns_options;
+    pb_callback_t hosts;
+    pb_callback_t abbot_request_bytes;
+} aranya_PodNetworkSpec;
+
+typedef struct _aranya_PodNetworkSpec_HostsEntry {
+    pb_callback_t key;
+    pb_callback_t value;
+} aranya_PodNetworkSpec_HostsEntry;
+
 typedef struct _aranya_PodSecuritySpec {
     pb_callback_t sysctls;
 } aranya_PodSecuritySpec;
@@ -236,6 +249,8 @@ typedef struct _aranya_ContainerSpec {
 #define aranya_PodVolumeSpec_VolumeDataEntry_init_default {{{NULL}, NULL}, false, aranya_NamedData_init_default}
 #define aranya_PodSecuritySpec_init_default      {{{NULL}, NULL}}
 #define aranya_PodSecuritySpec_SysctlsEntry_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_PodNetworkSpec_init_default       {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_PodNetworkSpec_HostsEntry_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_PodEnsureCmd_init_default         {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, _aranya_RestartPolicy_MIN, 0, 0, 0, 0, 0, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, false, aranya_PodVolumeSpec_init_default, false, aranya_PodSecuritySpec_init_default, {{NULL}, NULL}}
 #define aranya_PodEnsureCmd_LabelsEntry_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_PodDeleteCmd_init_default         {{{NULL}, NULL}, {{NULL}, NULL}, 0, {{NULL}, NULL}}
@@ -260,6 +275,8 @@ typedef struct _aranya_ContainerSpec {
 #define aranya_PodVolumeSpec_VolumeDataEntry_init_zero {{{NULL}, NULL}, false, aranya_NamedData_init_zero}
 #define aranya_PodSecuritySpec_init_zero         {{{NULL}, NULL}}
 #define aranya_PodSecuritySpec_SysctlsEntry_init_zero {{{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_PodNetworkSpec_init_zero          {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_PodNetworkSpec_HostsEntry_init_zero {{{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_PodEnsureCmd_init_zero            {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, _aranya_RestartPolicy_MIN, 0, 0, 0, 0, 0, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, false, aranya_PodVolumeSpec_init_zero, false, aranya_PodSecuritySpec_init_zero, {{NULL}, NULL}}
 #define aranya_PodEnsureCmd_LabelsEntry_init_zero {{{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_PodDeleteCmd_init_zero            {{{NULL}, NULL}, {{NULL}, NULL}, 0, {{NULL}, NULL}}
@@ -281,6 +298,13 @@ typedef struct _aranya_ContainerSpec {
 #define aranya_NamedData_DataMapEntry_value_tag  2
 #define aranya_PodEnsureCmd_LabelsEntry_key_tag  1
 #define aranya_PodEnsureCmd_LabelsEntry_value_tag 2
+#define aranya_PodNetworkSpec_nameservers_tag    1
+#define aranya_PodNetworkSpec_dns_searches_tag   2
+#define aranya_PodNetworkSpec_dns_options_tag    3
+#define aranya_PodNetworkSpec_hosts_tag          4
+#define aranya_PodNetworkSpec_abbot_request_bytes_tag 11
+#define aranya_PodNetworkSpec_HostsEntry_key_tag 1
+#define aranya_PodNetworkSpec_HostsEntry_value_tag 2
 #define aranya_PodSecuritySpec_sysctls_tag       15
 #define aranya_PodSecuritySpec_SysctlsEntry_key_tag 1
 #define aranya_PodSecuritySpec_SysctlsEntry_value_tag 2
@@ -523,6 +547,22 @@ X(a, CALLBACK, SINGULAR, STRING,   value,             2)
 #define aranya_PodSecuritySpec_SysctlsEntry_CALLBACK pb_default_field_callback
 #define aranya_PodSecuritySpec_SysctlsEntry_DEFAULT NULL
 
+#define aranya_PodNetworkSpec_FIELDLIST(X, a) \
+X(a, CALLBACK, REPEATED, STRING,   nameservers,       1) \
+X(a, CALLBACK, REPEATED, STRING,   dns_searches,      2) \
+X(a, CALLBACK, REPEATED, STRING,   dns_options,       3) \
+X(a, CALLBACK, REPEATED, MESSAGE,  hosts,             4) \
+X(a, CALLBACK, SINGULAR, BYTES,    abbot_request_bytes,  11)
+#define aranya_PodNetworkSpec_CALLBACK pb_default_field_callback
+#define aranya_PodNetworkSpec_DEFAULT NULL
+#define aranya_PodNetworkSpec_hosts_MSGTYPE aranya_PodNetworkSpec_HostsEntry
+
+#define aranya_PodNetworkSpec_HostsEntry_FIELDLIST(X, a) \
+X(a, CALLBACK, SINGULAR, STRING,   key,               1) \
+X(a, CALLBACK, SINGULAR, STRING,   value,             2)
+#define aranya_PodNetworkSpec_HostsEntry_CALLBACK pb_default_field_callback
+#define aranya_PodNetworkSpec_HostsEntry_DEFAULT NULL
+
 #define aranya_PodEnsureCmd_FIELDLIST(X, a) \
 X(a, CALLBACK, SINGULAR, STRING,   pod_uid,           1) \
 X(a, CALLBACK, SINGULAR, STRING,   namespace,         2) \
@@ -594,6 +634,8 @@ extern const pb_msgdesc_t aranya_PodVolumeSpec_HostPathsEntry_msg;
 extern const pb_msgdesc_t aranya_PodVolumeSpec_VolumeDataEntry_msg;
 extern const pb_msgdesc_t aranya_PodSecuritySpec_msg;
 extern const pb_msgdesc_t aranya_PodSecuritySpec_SysctlsEntry_msg;
+extern const pb_msgdesc_t aranya_PodNetworkSpec_msg;
+extern const pb_msgdesc_t aranya_PodNetworkSpec_HostsEntry_msg;
 extern const pb_msgdesc_t aranya_PodEnsureCmd_msg;
 extern const pb_msgdesc_t aranya_PodEnsureCmd_LabelsEntry_msg;
 extern const pb_msgdesc_t aranya_PodDeleteCmd_msg;
@@ -620,6 +662,8 @@ extern const pb_msgdesc_t aranya_PodListCmd_msg;
 #define aranya_PodVolumeSpec_VolumeDataEntry_fields &aranya_PodVolumeSpec_VolumeDataEntry_msg
 #define aranya_PodSecuritySpec_fields &aranya_PodSecuritySpec_msg
 #define aranya_PodSecuritySpec_SysctlsEntry_fields &aranya_PodSecuritySpec_SysctlsEntry_msg
+#define aranya_PodNetworkSpec_fields &aranya_PodNetworkSpec_msg
+#define aranya_PodNetworkSpec_HostsEntry_fields &aranya_PodNetworkSpec_HostsEntry_msg
 #define aranya_PodEnsureCmd_fields &aranya_PodEnsureCmd_msg
 #define aranya_PodEnsureCmd_LabelsEntry_fields &aranya_PodEnsureCmd_LabelsEntry_msg
 #define aranya_PodDeleteCmd_fields &aranya_PodDeleteCmd_msg
@@ -646,6 +690,8 @@ extern const pb_msgdesc_t aranya_PodListCmd_msg;
 /* aranya_PodVolumeSpec_VolumeDataEntry_size depends on runtime parameters */
 /* aranya_PodSecuritySpec_size depends on runtime parameters */
 /* aranya_PodSecuritySpec_SysctlsEntry_size depends on runtime parameters */
+/* aranya_PodNetworkSpec_size depends on runtime parameters */
+/* aranya_PodNetworkSpec_HostsEntry_size depends on runtime parameters */
 /* aranya_PodEnsureCmd_size depends on runtime parameters */
 /* aranya_PodEnsureCmd_LabelsEntry_size depends on runtime parameters */
 /* aranya_PodDeleteCmd_size depends on runtime parameters */

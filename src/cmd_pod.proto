@@ -178,6 +178,19 @@ message PodSecuritySpec {
     map<string, string> sysctls = 15;
 }
 
+message PodNetworkSpec {
+    repeated string nameservers = 1;
+    repeated string dns_searches = 2;
+    repeated string dns_options = 3;
+
+    // key: ip
+    // value: space separated domain names (e.g. `example.com example.org`)
+    map<string, string> hosts = 4;
+
+    // protobuf bytes of abbot proto
+    bytes abbot_request_bytes = 11;
+}
+
 message PodEnsureCmd {
     // kubernetes metadata
     string pod_uid = 1;
@@ -202,7 +215,6 @@ message PodEnsureCmd {
     string hostname = 10;
 
     repeated ContainerSpec containers = 11;
-    // protobuf bytes of abbot proto
     bytes network = 12;
     PodVolumeSpec volumes = 13;
     PodSecuritySpec security = 14;

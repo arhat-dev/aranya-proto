@@ -174,7 +174,8 @@ message RejectCmd {
 }
 
 message NetworkCmd {
-    bytes payload = 1;
+    // protobuf bytes of abbot proto
+    bytes abbot_request_bytes = 1;
 }
 
 message LogsCmd {
@@ -276,5 +277,6 @@ message StateMsg {
 }
 
 message NetworkMsg {
-    bytes payload = 1;
+    // protobuf bytes of abbot proto
+    bytes abbot_response_bytes = 1;
 }
