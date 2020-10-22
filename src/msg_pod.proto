@@ -48,12 +48,11 @@ message PodStatusMsg {
     // metadata
     string uid = 1;
 
-    // allocated pod ip address
-    string ipv4 = 2;
-    string ipv6 = 3;
+    // pod network status, protobuf bytes of abbot proto
+    bytes network = 2;
 
     // status
-    map<string, ContainerStatus> containers = 4;
+    map<string, ContainerStatus> containers = 3;
 }
 
 message PodStatusListMsg {

@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z!arhat.dev/aranya-proto/aranyagopb',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\rmsg_pod.proto\x12\x06\x61ranya\"\xc1\x01\n\x0f\x43ontainerStatus\x12\x14\n\x0c\x63ontainer_id\x18\x01 \x01(\t\x12\x10\n\x08image_id\x18\x02 \x01(\t\x12\x12\n\ncreated_at\x18\x04 \x01(\t\x12\x12\n\nstarted_at\x18\x05 \x01(\t\x12\x13\n\x0b\x66inished_at\x18\x06 \x01(\t\x12\x11\n\texit_code\x18\x07 \x01(\x05\x12\x15\n\rrestart_count\x18\x08 \x01(\x05\x12\x0e\n\x06reason\x18\x0b \x01(\t\x12\x0f\n\x07message\x18\x0c \x01(\t\"\xbd\x01\n\x0cPodStatusMsg\x12\x0b\n\x03uid\x18\x01 \x01(\t\x12\x0c\n\x04ipv4\x18\x02 \x01(\t\x12\x0c\n\x04ipv6\x18\x03 \x01(\t\x12\x38\n\ncontainers\x18\x04 \x03(\x0b\x32$.aranya.PodStatusMsg.ContainersEntry\x1aJ\n\x0f\x43ontainersEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12&\n\x05value\x18\x02 \x01(\x0b\x32\x17.aranya.ContainerStatus:\x02\x38\x01\"6\n\x10PodStatusListMsg\x12\"\n\x04pods\x18\x01 \x03(\x0b\x32\x14.aranya.PodStatusMsg*~\n\x08PodState\x12\x15\n\x11POD_STATE_UNKNOWN\x10\x00\x12\x15\n\x11POD_STATE_PENDING\x10\x01\x12\x15\n\x11POD_STATE_RUNNING\x10\x02\x12\x17\n\x13POD_STATE_SUCCEEDED\x10\x03\x12\x14\n\x10POD_STATE_FAILED\x10\x04\x42#Z!arhat.dev/aranya-proto/aranyagopbb\x06proto3'
+  serialized_pb=b'\n\rmsg_pod.proto\x12\x06\x61ranya\"\xc1\x01\n\x0f\x43ontainerStatus\x12\x14\n\x0c\x63ontainer_id\x18\x01 \x01(\t\x12\x10\n\x08image_id\x18\x02 \x01(\t\x12\x12\n\ncreated_at\x18\x04 \x01(\t\x12\x12\n\nstarted_at\x18\x05 \x01(\t\x12\x13\n\x0b\x66inished_at\x18\x06 \x01(\t\x12\x11\n\texit_code\x18\x07 \x01(\x05\x12\x15\n\rrestart_count\x18\x08 \x01(\x05\x12\x0e\n\x06reason\x18\x0b \x01(\t\x12\x0f\n\x07message\x18\x0c \x01(\t\"\xb2\x01\n\x0cPodStatusMsg\x12\x0b\n\x03uid\x18\x01 \x01(\t\x12\x0f\n\x07network\x18\x02 \x01(\x0c\x12\x38\n\ncontainers\x18\x03 \x03(\x0b\x32$.aranya.PodStatusMsg.ContainersEntry\x1aJ\n\x0f\x43ontainersEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12&\n\x05value\x18\x02 \x01(\x0b\x32\x17.aranya.ContainerStatus:\x02\x38\x01\"6\n\x10PodStatusListMsg\x12\"\n\x04pods\x18\x01 \x03(\x0b\x32\x14.aranya.PodStatusMsg*~\n\x08PodState\x12\x15\n\x11POD_STATE_UNKNOWN\x10\x00\x12\x15\n\x11POD_STATE_PENDING\x10\x01\x12\x15\n\x11POD_STATE_RUNNING\x10\x02\x12\x17\n\x13POD_STATE_SUCCEEDED\x10\x03\x12\x14\n\x10POD_STATE_FAILED\x10\x04\x42#Z!arhat.dev/aranya-proto/aranyagopbb\x06proto3'
 )
 
 _PODSTATE = _descriptor.EnumDescriptor(
@@ -58,8 +58,8 @@ _PODSTATE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=469,
-  serialized_end=595,
+  serialized_start=458,
+  serialized_end=584,
 )
 _sym_db.RegisterEnumDescriptor(_PODSTATE)
 
@@ -194,8 +194,8 @@ _PODSTATUSMSG_CONTAINERSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=337,
-  serialized_end=411,
+  serialized_start=326,
+  serialized_end=400,
 )
 
 _PODSTATUSMSG = _descriptor.Descriptor(
@@ -214,22 +214,15 @@ _PODSTATUSMSG = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='ipv4', full_name='aranya.PodStatusMsg.ipv4', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
+      name='network', full_name='aranya.PodStatusMsg.network', index=1,
+      number=2, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='ipv6', full_name='aranya.PodStatusMsg.ipv6', index=2,
-      number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='containers', full_name='aranya.PodStatusMsg.containers', index=3,
-      number=4, type=11, cpp_type=10, label=3,
+      name='containers', full_name='aranya.PodStatusMsg.containers', index=2,
+      number=3, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -247,7 +240,7 @@ _PODSTATUSMSG = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=222,
-  serialized_end=411,
+  serialized_end=400,
 )
 
 
@@ -278,8 +271,8 @@ _PODSTATUSLISTMSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=413,
-  serialized_end=467,
+  serialized_start=402,
+  serialized_end=456,
 )
 
 _PODSTATUSMSG_CONTAINERSENTRY.fields_by_name['value'].message_type = _CONTAINERSTATUS

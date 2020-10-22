@@ -18,6 +18,7 @@ typedef enum _aranya_CmdType {
     aranya_CmdType_CMD_DATA_UPSTREAM = 0,
     aranya_CmdType_CMD_SESSION_CLOSE = 5,
     aranya_CmdType_CMD_REJECT = 6,
+    aranya_CmdType_CMD_NET = 10,
     aranya_CmdType_CMD_NODE_INFO_GET = 11,
     aranya_CmdType_CMD_EXEC = 12,
     aranya_CmdType_CMD_ATTACH = 13,
@@ -40,11 +41,7 @@ typedef enum _aranya_CmdType {
     aranya_CmdType_CMD_PERIPHERAL_ENSURE = 72,
     aranya_CmdType_CMD_PERIPHERAL_DELETE = 73,
     aranya_CmdType_CMD_PERIPHERAL_OPERATE = 74,
-    aranya_CmdType_CMD_PERIPHERAL_COLLECT_METRICS = 75,
-    aranya_CmdType_CMD_CTR_NET_LIST = 81,
-    aranya_CmdType_CMD_CTR_NET_ENSURE = 82,
-    aranya_CmdType_CMD_CTR_NET_DELETE = 83,
-    aranya_CmdType_CMD_HOST_NET_LIST = 84
+    aranya_CmdType_CMD_PERIPHERAL_COLLECT_METRICS = 75
 } aranya_CmdType;
 
 typedef enum _aranya_MsgType {
@@ -56,6 +53,7 @@ typedef enum _aranya_MsgType {
     aranya_MsgType_MSG_DONE = 5,
     aranya_MsgType_MSG_STATE = 6,
     aranya_MsgType_MSG_ERROR = 7,
+    aranya_MsgType_MSG_NET = 10,
     aranya_MsgType_MSG_NODE_STATUS = 11,
     aranya_MsgType_MSG_CRED_STATUS = 31,
     aranya_MsgType_MSG_IMAGE_STATUS = 41,
@@ -66,10 +64,7 @@ typedef enum _aranya_MsgType {
     aranya_MsgType_MSG_POD_STATUS_LIST = 62,
     aranya_MsgType_MSG_PERIPHERAL_STATUS = 71,
     aranya_MsgType_MSG_PERIPHERAL_STATUS_LIST = 72,
-    aranya_MsgType_MSG_PERIPHERAL_OPERATION_RESULT = 73,
-    aranya_MsgType_MSG_CTR_NET_STATUS = 81,
-    aranya_MsgType_MSG_CTR_NET_STATUS_LIST = 82,
-    aranya_MsgType_MSG_HOST_NET_STATUS = 83
+    aranya_MsgType_MSG_PERIPHERAL_OPERATION_RESULT = 73
 } aranya_MsgType;
 
 typedef enum _aranya_RejectionReason {
@@ -108,6 +103,14 @@ typedef struct _aranya_ExecOrAttachCmd_EnvsEntry {
     pb_callback_t key;
     pb_callback_t value;
 } aranya_ExecOrAttachCmd_EnvsEntry;
+
+typedef struct _aranya_NetworkCmd {
+    pb_callback_t payload;
+} aranya_NetworkCmd;
+
+typedef struct _aranya_NetworkMsg {
+    pb_callback_t payload;
+} aranya_NetworkMsg;
 
 typedef struct _aranya_Cmd {
     aranya_CmdType kind;
@@ -186,12 +189,12 @@ typedef struct _aranya_TerminalResizeCmd {
 
 /* Helper constants for enums */
 #define _aranya_CmdType_MIN aranya_CmdType_CMD_DATA_UPSTREAM
-#define _aranya_CmdType_MAX aranya_CmdType_CMD_HOST_NET_LIST
-#define _aranya_CmdType_ARRAYSIZE ((aranya_CmdType)(aranya_CmdType_CMD_HOST_NET_LIST+1))
+#define _aranya_CmdType_MAX aranya_CmdType_CMD_PERIPHERAL_COLLECT_METRICS
+#define _aranya_CmdType_ARRAYSIZE ((aranya_CmdType)(aranya_CmdType_CMD_PERIPHERAL_COLLECT_METRICS+1))
 
 #define _aranya_MsgType_MIN aranya_MsgType_MSG_DATA
-#define _aranya_MsgType_MAX aranya_MsgType_MSG_HOST_NET_STATUS
-#define _aranya_MsgType_ARRAYSIZE ((aranya_MsgType)(aranya_MsgType_MSG_HOST_NET_STATUS+1))
+#define _aranya_MsgType_MAX aranya_MsgType_MSG_PERIPHERAL_OPERATION_RESULT
+#define _aranya_MsgType_ARRAYSIZE ((aranya_MsgType)(aranya_MsgType_MSG_PERIPHERAL_OPERATION_RESULT+1))
 
 #define _aranya_RejectionReason_MIN aranya_RejectionReason__INVALID_REJECTION_REASON
 #define _aranya_RejectionReason_MAX aranya_RejectionReason_REJECTION_INTERNAL_SERVER_ERROR
@@ -217,6 +220,7 @@ typedef struct _aranya_TerminalResizeCmd {
 #define aranya_NodeInfoGetCmd_init_default       {_aranya_NodeInfoGetCmd_Kind_MIN}
 #define aranya_SessionCloseCmd_init_default      {0}
 #define aranya_RejectCmd_init_default            {_aranya_RejectionReason_MIN, {{NULL}, NULL}}
+#define aranya_NetworkCmd_init_default           {{{NULL}, NULL}}
 #define aranya_LogsCmd_init_default              {{{NULL}, NULL}, {{NULL}, NULL}, 0, 0, {{NULL}, NULL}, 0, 0, 0, {{NULL}, NULL}}
 #define aranya_ExecOrAttachCmd_init_default      {{{NULL}, NULL}, {{NULL}, NULL}, 0, 0, 0, 0, {{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_ExecOrAttachCmd_EnvsEntry_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
@@ -224,12 +228,14 @@ typedef struct _aranya_TerminalResizeCmd {
 #define aranya_TerminalResizeCmd_init_default    {0, 0}
 #define aranya_ErrorMsg_init_default             {_aranya_ErrorMsg_Kind_MIN, {{NULL}, NULL}, 0}
 #define aranya_StateMsg_init_default             {_aranya_StateMsg_Kind_MIN, {{NULL}, NULL}}
+#define aranya_NetworkMsg_init_default           {{{NULL}, NULL}}
 #define aranya_Empty_init_zero                   {0}
 #define aranya_Cmd_init_zero                     {_aranya_CmdType_MIN, 0, 0, 0, {{NULL}, NULL}}
 #define aranya_Msg_init_zero                     {_aranya_MsgType_MIN, 0, 0, 0, {{NULL}, NULL}}
 #define aranya_NodeInfoGetCmd_init_zero          {_aranya_NodeInfoGetCmd_Kind_MIN}
 #define aranya_SessionCloseCmd_init_zero         {0}
 #define aranya_RejectCmd_init_zero               {_aranya_RejectionReason_MIN, {{NULL}, NULL}}
+#define aranya_NetworkCmd_init_zero              {{{NULL}, NULL}}
 #define aranya_LogsCmd_init_zero                 {{{NULL}, NULL}, {{NULL}, NULL}, 0, 0, {{NULL}, NULL}, 0, 0, 0, {{NULL}, NULL}}
 #define aranya_ExecOrAttachCmd_init_zero         {{{NULL}, NULL}, {{NULL}, NULL}, 0, 0, 0, 0, {{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_ExecOrAttachCmd_EnvsEntry_init_zero {{{NULL}, NULL}, {{NULL}, NULL}}
@@ -237,10 +243,13 @@ typedef struct _aranya_TerminalResizeCmd {
 #define aranya_TerminalResizeCmd_init_zero       {0, 0}
 #define aranya_ErrorMsg_init_zero                {_aranya_ErrorMsg_Kind_MIN, {{NULL}, NULL}, 0}
 #define aranya_StateMsg_init_zero                {_aranya_StateMsg_Kind_MIN, {{NULL}, NULL}}
+#define aranya_NetworkMsg_init_zero              {{{NULL}, NULL}}
 
 /* Field tags (for use in manual encoding/decoding) */
 #define aranya_ExecOrAttachCmd_EnvsEntry_key_tag 1
 #define aranya_ExecOrAttachCmd_EnvsEntry_value_tag 2
+#define aranya_NetworkCmd_payload_tag            1
+#define aranya_NetworkMsg_payload_tag            1
 #define aranya_Cmd_kind_tag                      1
 #define aranya_Cmd_sid_tag                       2
 #define aranya_Cmd_seq_tag                       3
@@ -323,6 +332,11 @@ X(a, CALLBACK, SINGULAR, STRING,   message,           2)
 #define aranya_RejectCmd_CALLBACK pb_default_field_callback
 #define aranya_RejectCmd_DEFAULT NULL
 
+#define aranya_NetworkCmd_FIELDLIST(X, a) \
+X(a, CALLBACK, SINGULAR, BYTES,    payload,           1)
+#define aranya_NetworkCmd_CALLBACK pb_default_field_callback
+#define aranya_NetworkCmd_DEFAULT NULL
+
 #define aranya_LogsCmd_FIELDLIST(X, a) \
 X(a, CALLBACK, SINGULAR, STRING,   pod_uid,           1) \
 X(a, CALLBACK, SINGULAR, STRING,   container,         2) \
@@ -381,12 +395,18 @@ X(a, CALLBACK, SINGULAR, STRING,   device_id,         2)
 #define aranya_StateMsg_CALLBACK pb_default_field_callback
 #define aranya_StateMsg_DEFAULT NULL
 
+#define aranya_NetworkMsg_FIELDLIST(X, a) \
+X(a, CALLBACK, SINGULAR, BYTES,    payload,           1)
+#define aranya_NetworkMsg_CALLBACK pb_default_field_callback
+#define aranya_NetworkMsg_DEFAULT NULL
+
 extern const pb_msgdesc_t aranya_Empty_msg;
 extern const pb_msgdesc_t aranya_Cmd_msg;
 extern const pb_msgdesc_t aranya_Msg_msg;
 extern const pb_msgdesc_t aranya_NodeInfoGetCmd_msg;
 extern const pb_msgdesc_t aranya_SessionCloseCmd_msg;
 extern const pb_msgdesc_t aranya_RejectCmd_msg;
+extern const pb_msgdesc_t aranya_NetworkCmd_msg;
 extern const pb_msgdesc_t aranya_LogsCmd_msg;
 extern const pb_msgdesc_t aranya_ExecOrAttachCmd_msg;
 extern const pb_msgdesc_t aranya_ExecOrAttachCmd_EnvsEntry_msg;
@@ -394,6 +414,7 @@ extern const pb_msgdesc_t aranya_PortForwardCmd_msg;
 extern const pb_msgdesc_t aranya_TerminalResizeCmd_msg;
 extern const pb_msgdesc_t aranya_ErrorMsg_msg;
 extern const pb_msgdesc_t aranya_StateMsg_msg;
+extern const pb_msgdesc_t aranya_NetworkMsg_msg;
 
 /* Defines for backwards compatibility with code written before nanopb-0.4.0 */
 #define aranya_Empty_fields &aranya_Empty_msg
@@ -402,6 +423,7 @@ extern const pb_msgdesc_t aranya_StateMsg_msg;
 #define aranya_NodeInfoGetCmd_fields &aranya_NodeInfoGetCmd_msg
 #define aranya_SessionCloseCmd_fields &aranya_SessionCloseCmd_msg
 #define aranya_RejectCmd_fields &aranya_RejectCmd_msg
+#define aranya_NetworkCmd_fields &aranya_NetworkCmd_msg
 #define aranya_LogsCmd_fields &aranya_LogsCmd_msg
 #define aranya_ExecOrAttachCmd_fields &aranya_ExecOrAttachCmd_msg
 #define aranya_ExecOrAttachCmd_EnvsEntry_fields &aranya_ExecOrAttachCmd_EnvsEntry_msg
@@ -409,6 +431,7 @@ extern const pb_msgdesc_t aranya_StateMsg_msg;
 #define aranya_TerminalResizeCmd_fields &aranya_TerminalResizeCmd_msg
 #define aranya_ErrorMsg_fields &aranya_ErrorMsg_msg
 #define aranya_StateMsg_fields &aranya_StateMsg_msg
+#define aranya_NetworkMsg_fields &aranya_NetworkMsg_msg
 
 /* Maximum encoded size of messages (where known) */
 #define aranya_Empty_size                        0
@@ -417,6 +440,7 @@ extern const pb_msgdesc_t aranya_StateMsg_msg;
 #define aranya_NodeInfoGetCmd_size               2
 #define aranya_SessionCloseCmd_size              11
 /* aranya_RejectCmd_size depends on runtime parameters */
+/* aranya_NetworkCmd_size depends on runtime parameters */
 /* aranya_LogsCmd_size depends on runtime parameters */
 /* aranya_ExecOrAttachCmd_size depends on runtime parameters */
 /* aranya_ExecOrAttachCmd_EnvsEntry_size depends on runtime parameters */
@@ -424,6 +448,7 @@ extern const pb_msgdesc_t aranya_StateMsg_msg;
 #define aranya_TerminalResizeCmd_size            12
 /* aranya_ErrorMsg_size depends on runtime parameters */
 /* aranya_StateMsg_size depends on runtime parameters */
+/* aranya_NetworkMsg_size depends on runtime parameters */
 
 #ifdef __cplusplus
 } /* extern "C" */

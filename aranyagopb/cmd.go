@@ -193,17 +193,6 @@ func NewMetricsConfigCmd(t MetricsTarget, collect, extraArgs []string) *MetricsC
 	}
 }
 
-func NewContainerNetworkListCmd() *ContainerNetworkListCmd {
-	return &ContainerNetworkListCmd{}
-}
-
-func NewContainerNetworkEnsureCmd(ipv4CIDR, ipv6CIDR string) *ContainerNetworkEnsureCmd {
-	return &ContainerNetworkEnsureCmd{
-		Ipv4Cidr: ipv4CIDR,
-		Ipv6Cidr: ipv6CIDR,
-	}
-}
-
 func NewPeripheralListCmd(names ...string) *PeripheralListCmd {
 	return &PeripheralListCmd{PeripheralNames: names}
 }

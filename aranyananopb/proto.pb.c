@@ -24,6 +24,9 @@ PB_BIND(aranya_SessionCloseCmd, aranya_SessionCloseCmd, AUTO)
 PB_BIND(aranya_RejectCmd, aranya_RejectCmd, AUTO)
 
 
+PB_BIND(aranya_NetworkCmd, aranya_NetworkCmd, AUTO)
+
+
 PB_BIND(aranya_LogsCmd, aranya_LogsCmd, AUTO)
 
 
@@ -43,6 +46,9 @@ PB_BIND(aranya_ErrorMsg, aranya_ErrorMsg, AUTO)
 
 
 PB_BIND(aranya_StateMsg, aranya_StateMsg, AUTO)
+
+
+PB_BIND(aranya_NetworkMsg, aranya_NetworkMsg, AUTO)
 
 
 

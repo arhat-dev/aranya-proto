@@ -29,6 +29,9 @@ enum CmdType {
     CMD_SESSION_CLOSE = 5;
     CMD_REJECT = 6;
 
+    // network operations, protobuf bytes of abbot proto
+    CMD_NET = 10;
+
     // 11-19: node operations
     CMD_NODE_INFO_GET = 11;
     CMD_EXEC = 12;
@@ -65,12 +68,6 @@ enum CmdType {
     CMD_PERIPHERAL_DELETE = 73;
     CMD_PERIPHERAL_OPERATE = 74;
     CMD_PERIPHERAL_COLLECT_METRICS = 75;
-
-    // 81-89: network operations, both container and host
-    CMD_CTR_NET_LIST = 81;      // list container network config
-    CMD_CTR_NET_ENSURE = 82;    // ensure container network config
-    CMD_CTR_NET_DELETE = 83;    // remove container network config
-    CMD_HOST_NET_LIST = 84;     // list all host interface config
 }
 
 message Cmd {
@@ -102,6 +99,9 @@ enum MsgType {
     MSG_DONE = 5;
     MSG_STATE = 6;
     MSG_ERROR = 7;
+    
+    // network msgs, protobuf bytes of abbot proto
+    MSG_NET = 10;
 
     // 11-19: node msgs
     MSG_NODE_STATUS = 11;
@@ -127,11 +127,6 @@ enum MsgType {
     MSG_PERIPHERAL_STATUS = 71;
     MSG_PERIPHERAL_STATUS_LIST = 72;
     MSG_PERIPHERAL_OPERATION_RESULT = 73;
-
-    // 81-89: network msgs
-    MSG_CTR_NET_STATUS = 81;        // container network status
-    MSG_CTR_NET_STATUS_LIST = 82;   // list of container network status
-    MSG_HOST_NET_STATUS = 83;       // host network status
 }
 
 message Msg {
@@ -176,6 +171,10 @@ enum RejectionReason {
 message RejectCmd {
     RejectionReason reason = 1;
     string message = 2;
+}
+
+message NetworkCmd {
+    bytes payload = 1;
 }
 
 message LogsCmd {
@@ -274,4 +273,8 @@ message StateMsg {
 
     Kind kind = 1;
     string device_id = 2;
+}
+
+message NetworkMsg {
+    bytes payload = 1;
 }

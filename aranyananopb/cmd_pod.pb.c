@@ -48,21 +48,6 @@ PB_BIND(aranya_ContainerSpec_EnvsEntry, aranya_ContainerSpec_EnvsEntry, AUTO)
 PB_BIND(aranya_ContainerSpec_MountsEntry, aranya_ContainerSpec_MountsEntry, AUTO)
 
 
-PB_BIND(aranya_Bandwidth, aranya_Bandwidth, AUTO)
-
-
-PB_BIND(aranya_ContainerPortSpec, aranya_ContainerPortSpec, AUTO)
-
-
-PB_BIND(aranya_PodNetworkSpec, aranya_PodNetworkSpec, AUTO)
-
-
-PB_BIND(aranya_PodNetworkSpec_HostsEntry, aranya_PodNetworkSpec_HostsEntry, AUTO)
-
-
-PB_BIND(aranya_PodNetworkSpec_PortsEntry, aranya_PodNetworkSpec_PortsEntry, AUTO)
-
-
 PB_BIND(aranya_PodVolumeSpec, aranya_PodVolumeSpec, AUTO)
 
 
@@ -78,7 +63,7 @@ PB_BIND(aranya_PodSecuritySpec, aranya_PodSecuritySpec, AUTO)
 PB_BIND(aranya_PodSecuritySpec_SysctlsEntry, aranya_PodSecuritySpec_SysctlsEntry, AUTO)
 
 
-PB_BIND(aranya_PodEnsureCmd, aranya_PodEnsureCmd, 2)
+PB_BIND(aranya_PodEnsureCmd, aranya_PodEnsureCmd, AUTO)
 
 
 PB_BIND(aranya_PodEnsureCmd_LabelsEntry, aranya_PodEnsureCmd_LabelsEntry, AUTO)
