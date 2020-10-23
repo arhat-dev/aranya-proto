@@ -155,7 +155,8 @@ typedef struct _aranya_PodEnsureCmd {
     bool wait;
     pb_callback_t hostname;
     pb_callback_t containers;
-    pb_callback_t network;
+    bool has_network;
+    aranya_PodNetworkSpec network;
     bool has_volumes;
     aranya_PodVolumeSpec volumes;
     bool has_security;
@@ -250,7 +251,7 @@ typedef struct _aranya_ContainerSpec {
 #define aranya_PodSecuritySpec_SysctlsEntry_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_PodNetworkSpec_init_default       {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_PodNetworkSpec_HostsEntry_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
-#define aranya_PodEnsureCmd_init_default         {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, _aranya_RestartPolicy_MIN, 0, 0, 0, 0, 0, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, false, aranya_PodVolumeSpec_init_default, false, aranya_PodSecuritySpec_init_default, {{NULL}, NULL}}
+#define aranya_PodEnsureCmd_init_default         {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, _aranya_RestartPolicy_MIN, 0, 0, 0, 0, 0, {{NULL}, NULL}, {{NULL}, NULL}, false, aranya_PodNetworkSpec_init_default, false, aranya_PodVolumeSpec_init_default, false, aranya_PodSecuritySpec_init_default, {{NULL}, NULL}}
 #define aranya_PodEnsureCmd_LabelsEntry_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_PodDeleteCmd_init_default         {{{NULL}, NULL}, {{NULL}, NULL}, 0, {{NULL}, NULL}}
 #define aranya_PodDeleteCmd_HookPreStopEntry_init_default {{{NULL}, NULL}, false, aranya_ContainerAction_init_default}
@@ -276,7 +277,7 @@ typedef struct _aranya_ContainerSpec {
 #define aranya_PodSecuritySpec_SysctlsEntry_init_zero {{{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_PodNetworkSpec_init_zero          {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_PodNetworkSpec_HostsEntry_init_zero {{{NULL}, NULL}, {{NULL}, NULL}}
-#define aranya_PodEnsureCmd_init_zero            {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, _aranya_RestartPolicy_MIN, 0, 0, 0, 0, 0, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, false, aranya_PodVolumeSpec_init_zero, false, aranya_PodSecuritySpec_init_zero, {{NULL}, NULL}}
+#define aranya_PodEnsureCmd_init_zero            {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, _aranya_RestartPolicy_MIN, 0, 0, 0, 0, 0, {{NULL}, NULL}, {{NULL}, NULL}, false, aranya_PodNetworkSpec_init_zero, false, aranya_PodVolumeSpec_init_zero, false, aranya_PodSecuritySpec_init_zero, {{NULL}, NULL}}
 #define aranya_PodEnsureCmd_LabelsEntry_init_zero {{{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_PodDeleteCmd_init_zero            {{{NULL}, NULL}, {{NULL}, NULL}, 0, {{NULL}, NULL}}
 #define aranya_PodDeleteCmd_HookPreStopEntry_init_zero {{{NULL}, NULL}, false, aranya_ContainerAction_init_zero}
@@ -573,13 +574,14 @@ X(a, STATIC,   SINGULAR, BOOL,     share_pid,         8) \
 X(a, STATIC,   SINGULAR, BOOL,     wait,              9) \
 X(a, CALLBACK, SINGULAR, STRING,   hostname,         10) \
 X(a, CALLBACK, REPEATED, MESSAGE,  containers,       11) \
-X(a, CALLBACK, SINGULAR, BYTES,    network,          12) \
+X(a, STATIC,   OPTIONAL, MESSAGE,  network,          12) \
 X(a, STATIC,   OPTIONAL, MESSAGE,  volumes,          13) \
 X(a, STATIC,   OPTIONAL, MESSAGE,  security,         14) \
 X(a, CALLBACK, REPEATED, MESSAGE,  labels,           15)
 #define aranya_PodEnsureCmd_CALLBACK pb_default_field_callback
 #define aranya_PodEnsureCmd_DEFAULT NULL
 #define aranya_PodEnsureCmd_containers_MSGTYPE aranya_ContainerSpec
+#define aranya_PodEnsureCmd_network_MSGTYPE aranya_PodNetworkSpec
 #define aranya_PodEnsureCmd_volumes_MSGTYPE aranya_PodVolumeSpec
 #define aranya_PodEnsureCmd_security_MSGTYPE aranya_PodSecuritySpec
 #define aranya_PodEnsureCmd_labels_MSGTYPE aranya_PodEnsureCmd_LabelsEntry

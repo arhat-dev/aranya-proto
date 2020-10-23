@@ -215,7 +215,7 @@ message PodEnsureCmd {
     string hostname = 10;
 
     repeated ContainerSpec containers = 11;
-    bytes network = 12;
+    PodNetworkSpec network = 12;
     PodVolumeSpec volumes = 13;
     PodSecuritySpec security = 14;
 

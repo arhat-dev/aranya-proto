@@ -69,7 +69,7 @@ PB_BIND(aranya_PodNetworkSpec, aranya_PodNetworkSpec, AUTO)
 PB_BIND(aranya_PodNetworkSpec_HostsEntry, aranya_PodNetworkSpec_HostsEntry, AUTO)
 
 
-PB_BIND(aranya_PodEnsureCmd, aranya_PodEnsureCmd, AUTO)
+PB_BIND(aranya_PodEnsureCmd, aranya_PodEnsureCmd, 2)
 
 
 PB_BIND(aranya_PodEnsureCmd_LabelsEntry, aranya_PodEnsureCmd_LabelsEntry, AUTO)
