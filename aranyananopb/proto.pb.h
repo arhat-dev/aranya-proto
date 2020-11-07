@@ -109,7 +109,7 @@ typedef struct _aranya_Cmd {
     uint64_t sid;
     uint64_t seq;
     bool completed;
-    pb_callback_t body;
+    pb_callback_t payload;
 } aranya_Cmd;
 
 typedef struct _aranya_ErrorMsg {
@@ -146,7 +146,7 @@ typedef struct _aranya_Msg {
     uint64_t sid;
     uint64_t seq;
     bool completed;
-    pb_callback_t body;
+    pb_callback_t payload;
 } aranya_Msg;
 
 typedef struct _aranya_NodeInfoGetCmd {
@@ -246,7 +246,7 @@ typedef struct _aranya_TerminalResizeCmd {
 #define aranya_Cmd_sid_tag                       2
 #define aranya_Cmd_seq_tag                       3
 #define aranya_Cmd_completed_tag                 4
-#define aranya_Cmd_body_tag                      11
+#define aranya_Cmd_payload_tag                   11
 #define aranya_ErrorMsg_kind_tag                 1
 #define aranya_ErrorMsg_description_tag          2
 #define aranya_ErrorMsg_code_tag                 3
@@ -271,7 +271,7 @@ typedef struct _aranya_TerminalResizeCmd {
 #define aranya_Msg_sid_tag                       2
 #define aranya_Msg_seq_tag                       3
 #define aranya_Msg_completed_tag                 4
-#define aranya_Msg_body_tag                      11
+#define aranya_Msg_payload_tag                   11
 #define aranya_NodeInfoGetCmd_kind_tag           1
 #define aranya_PortForwardCmd_pod_uid_tag        1
 #define aranya_PortForwardCmd_port_tag           2
@@ -295,7 +295,7 @@ X(a, STATIC,   SINGULAR, UENUM,    kind,              1) \
 X(a, STATIC,   SINGULAR, UINT64,   sid,               2) \
 X(a, STATIC,   SINGULAR, UINT64,   seq,               3) \
 X(a, STATIC,   SINGULAR, BOOL,     completed,         4) \
-X(a, CALLBACK, SINGULAR, BYTES,    body,             11)
+X(a, CALLBACK, SINGULAR, BYTES,    payload,          11)
 #define aranya_Cmd_CALLBACK pb_default_field_callback
 #define aranya_Cmd_DEFAULT NULL
 
@@ -304,7 +304,7 @@ X(a, STATIC,   SINGULAR, UENUM,    kind,              1) \
 X(a, STATIC,   SINGULAR, UINT64,   sid,               2) \
 X(a, STATIC,   SINGULAR, UINT64,   seq,               3) \
 X(a, STATIC,   SINGULAR, BOOL,     completed,         4) \
-X(a, CALLBACK, SINGULAR, BYTES,    body,             11)
+X(a, CALLBACK, SINGULAR, BYTES,    payload,          11)
 #define aranya_Msg_CALLBACK pb_default_field_callback
 #define aranya_Msg_DEFAULT NULL
 

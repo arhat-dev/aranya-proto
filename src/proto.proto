@@ -75,8 +75,8 @@ message Cmd {
     // mark this Cmd is the last piece in the session
     bool completed = 4;
 
-    // body of encoded XxxCmd or raw data bytes
-    bytes body = 11;
+    // payload of encoded XxxCmd or raw data bytes
+    bytes payload = 11;
 }
 
 enum MsgType {
@@ -129,8 +129,8 @@ message Msg {
     // mark this Msg is the last piece in the session
     bool completed = 4;
 
-    // body of encoded XxxMsg or raw data bytes
-    bytes body = 11;
+    // payload of encoded XxxMsg or raw data bytes
+    bytes payload = 11;
 }
 
 // required Cmds and Msgs

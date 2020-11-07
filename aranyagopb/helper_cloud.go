@@ -28,7 +28,7 @@ func (m *Msg) GetError() *ErrorMsg {
 	}
 
 	err := new(ErrorMsg)
-	if e := err.Unmarshal(m.Body); e != nil {
+	if e := err.Unmarshal(m.Payload); e != nil {
 		return nil
 	}
 
@@ -50,7 +50,7 @@ func (m *Msg) GetStorageStatus() *StorageStatusMsg {
 	}
 
 	ss := new(StorageStatusMsg)
-	if err := ss.Unmarshal(m.Body); err != nil {
+	if err := ss.Unmarshal(m.Payload); err != nil {
 		return nil
 	}
 
@@ -63,7 +63,7 @@ func (m *Msg) GetStorageStatusList() *StorageStatusListMsg {
 	}
 
 	ssl := new(StorageStatusListMsg)
-	if err := ssl.Unmarshal(m.Body); err != nil {
+	if err := ssl.Unmarshal(m.Payload); err != nil {
 		return nil
 	}
 
@@ -77,7 +77,7 @@ func (m *Msg) GetData() []byte {
 		return nil
 	}
 
-	return m.Body
+	return m.Payload
 }
 
 func (m *Msg) GetState() *StateMsg {
@@ -86,7 +86,7 @@ func (m *Msg) GetState() *StateMsg {
 	}
 
 	s := new(StateMsg)
-	if err := s.Unmarshal(m.Body); err != nil {
+	if err := s.Unmarshal(m.Payload); err != nil {
 		return nil
 	}
 
@@ -99,7 +99,7 @@ func (m *Msg) GetNodeStatus() *NodeStatusMsg {
 	}
 
 	ns := new(NodeStatusMsg)
-	if err := ns.Unmarshal(m.Body); err != nil {
+	if err := ns.Unmarshal(m.Payload); err != nil {
 		return nil
 	}
 
@@ -112,7 +112,7 @@ func (m *Msg) GetCredentialStatus() *CredentialStatusMsg {
 	}
 
 	cs := new(CredentialStatusMsg)
-	if err := cs.Unmarshal(m.Body); err != nil {
+	if err := cs.Unmarshal(m.Payload); err != nil {
 		return nil
 	}
 
@@ -125,7 +125,7 @@ func (m *Msg) GetPeripheralStatus() *PeripheralStatusMsg {
 	}
 
 	ds := new(PeripheralStatusMsg)
-	if err := ds.Unmarshal(m.Body); err != nil {
+	if err := ds.Unmarshal(m.Payload); err != nil {
 		return nil
 	}
 
@@ -138,7 +138,7 @@ func (m *Msg) GetPeripheralStatusList() *PeripheralStatusListMsg {
 	}
 
 	dsl := new(PeripheralStatusListMsg)
-	if err := dsl.Unmarshal(m.Body); err != nil {
+	if err := dsl.Unmarshal(m.Payload); err != nil {
 		return nil
 	}
 
@@ -150,7 +150,7 @@ func (m *Msg) GetPeripheralOperationResult() *PeripheralOperationResultMsg {
 		return nil
 	}
 	dor := new(PeripheralOperationResultMsg)
-	if err := dor.Unmarshal(m.Body); err != nil {
+	if err := dor.Unmarshal(m.Payload); err != nil {
 		return nil
 	}
 
@@ -248,7 +248,7 @@ func (m *Msg) decodeAsRuntimePacket() *runtimepb.Packet {
 	}
 
 	pkt := new(runtimepb.Packet)
-	if err := pkt.Unmarshal(m.Body); err != nil {
+	if err := pkt.Unmarshal(m.Payload); err != nil {
 		return nil
 	}
 

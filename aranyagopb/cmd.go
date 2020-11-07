@@ -36,7 +36,7 @@ func init() {
 		Sid:       math.MaxUint64,
 		Seq:       math.MaxUint64,
 		Completed: true,
-		Body:      emptyBody,
+		Payload:   emptyBody,
 	}
 
 	EmptyCmdSize = emptyCmd.Size()
@@ -50,7 +50,7 @@ func NewCmd(kind CmdType, sid, seq uint64, completed bool, payload []byte) *Cmd 
 		Sid:       sid,
 		Seq:       seq,
 		Completed: completed,
-		Body:      payload,
+		Payload:   payload,
 	}
 }
 
