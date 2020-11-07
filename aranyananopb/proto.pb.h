@@ -18,7 +18,8 @@ typedef enum _aranya_CmdType {
     aranya_CmdType_CMD_DATA_UPSTREAM = 0,
     aranya_CmdType_CMD_SESSION_CLOSE = 5,
     aranya_CmdType_CMD_REJECT = 6,
-    aranya_CmdType_CMD_NET = 10,
+    aranya_CmdType_CMD_NET = 9,
+    aranya_CmdType_CMD_RUNTIME = 10,
     aranya_CmdType_CMD_NODE_INFO_GET = 11,
     aranya_CmdType_CMD_EXEC = 12,
     aranya_CmdType_CMD_ATTACH = 13,
@@ -28,20 +29,14 @@ typedef enum _aranya_CmdType {
     aranya_CmdType_CMD_METRICS_CONFIG = 21,
     aranya_CmdType_CMD_METRICS_COLLECT = 22,
     aranya_CmdType_CMD_CRED_ENSURE = 31,
-    aranya_CmdType_CMD_IMAGE_LIST = 41,
-    aranya_CmdType_CMD_IMAGE_ENSURE = 42,
-    aranya_CmdType_CMD_IMAGE_DELETE = 43,
-    aranya_CmdType_CMD_STORAGE_LIST = 51,
-    aranya_CmdType_CMD_STORAGE_ENSURE = 52,
-    aranya_CmdType_CMD_STORAGE_DELETE = 53,
-    aranya_CmdType_CMD_POD_LIST = 61,
-    aranya_CmdType_CMD_POD_ENSURE = 62,
-    aranya_CmdType_CMD_POD_DELETE = 63,
-    aranya_CmdType_CMD_PERIPHERAL_LIST = 71,
-    aranya_CmdType_CMD_PERIPHERAL_ENSURE = 72,
-    aranya_CmdType_CMD_PERIPHERAL_DELETE = 73,
-    aranya_CmdType_CMD_PERIPHERAL_OPERATE = 74,
-    aranya_CmdType_CMD_PERIPHERAL_COLLECT_METRICS = 75
+    aranya_CmdType_CMD_STORAGE_LIST = 41,
+    aranya_CmdType_CMD_STORAGE_ENSURE = 42,
+    aranya_CmdType_CMD_STORAGE_DELETE = 43,
+    aranya_CmdType_CMD_PERIPHERAL_LIST = 51,
+    aranya_CmdType_CMD_PERIPHERAL_ENSURE = 52,
+    aranya_CmdType_CMD_PERIPHERAL_DELETE = 53,
+    aranya_CmdType_CMD_PERIPHERAL_OPERATE = 54,
+    aranya_CmdType_CMD_PERIPHERAL_COLLECT_METRICS = 55
 } aranya_CmdType;
 
 typedef enum _aranya_MsgType {
@@ -53,18 +48,15 @@ typedef enum _aranya_MsgType {
     aranya_MsgType_MSG_DONE = 5,
     aranya_MsgType_MSG_STATE = 6,
     aranya_MsgType_MSG_ERROR = 7,
-    aranya_MsgType_MSG_NET = 10,
+    aranya_MsgType_MSG_NET = 9,
+    aranya_MsgType_MSG_RUNTIME = 10,
     aranya_MsgType_MSG_NODE_STATUS = 11,
     aranya_MsgType_MSG_CRED_STATUS = 31,
-    aranya_MsgType_MSG_IMAGE_STATUS = 41,
-    aranya_MsgType_MSG_IMAGE_STATUS_LIST = 42,
-    aranya_MsgType_MSG_STORAGE_STATUS = 51,
-    aranya_MsgType_MSG_STORAGE_STATUS_LIST = 52,
-    aranya_MsgType_MSG_POD_STATUS = 61,
-    aranya_MsgType_MSG_POD_STATUS_LIST = 62,
-    aranya_MsgType_MSG_PERIPHERAL_STATUS = 71,
-    aranya_MsgType_MSG_PERIPHERAL_STATUS_LIST = 72,
-    aranya_MsgType_MSG_PERIPHERAL_OPERATION_RESULT = 73
+    aranya_MsgType_MSG_STORAGE_STATUS = 41,
+    aranya_MsgType_MSG_STORAGE_STATUS_LIST = 42,
+    aranya_MsgType_MSG_PERIPHERAL_STATUS = 51,
+    aranya_MsgType_MSG_PERIPHERAL_STATUS_LIST = 52,
+    aranya_MsgType_MSG_PERIPHERAL_OPERATION_RESULT = 53
 } aranya_MsgType;
 
 typedef enum _aranya_RejectionReason {

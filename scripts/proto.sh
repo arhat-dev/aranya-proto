@@ -19,7 +19,7 @@ set -ex
 GOPATH=$(go env GOPATH)
 export GOPATH
 
-PROTO_SOURCE="./src/*.proto"
+PROTO_SOURCE="./src/*.proto ./src/rpc/*.proto ./src/runtime/*.proto"
 
 fix_pb_gen_json_name() {
   pb_files="$*"
@@ -33,17 +33,33 @@ fix_pb_gen_json_name() {
   done
 }
 
-_do_gen_proto_go() {
-  rm aranyagopb/*.pb.go || true
+_rename_package_names() {
+  gen_root="$1"
 
-  # shellcheck disable=SC2086
-  protoc \
-    -I"${GOPATH}/src" \
-    -I"${GOPATH}/src/github.com/gogo/protobuf/protobuf" \
-    -I"./src" \
-    --gogoslick_out "plugins=grpc:./aranyagopb" \
-    --gogoslick_opt "paths=source_relative" \
-    ${PROTO_SOURCE}
+  mkdir -p "${gen_root}/runtimepb/" "${gen_root}/rpcpb/"
+  mv "${gen_root}/runtime/"* "${gen_root}/runtimepb/."
+  mv "${gen_root}/rpc/"* "${gen_root}/rpcpb/."
+
+  rm -rf "${gen_root}/runtime" "${gen_root}/rpc"
+}
+
+_do_gen_proto_go() {
+  rm -rf aranyagopb/*.pb.go aranyagopb/runtime aranyagopb/runtimepb/*.pb.go || true
+
+  for t in ${PROTO_SOURCE}; do
+    # shellcheck disable=SC2086
+    protoc \
+      -I "${GOPATH}/src" \
+      -I "${GOPATH}/src/github.com/gogo/protobuf/protobuf" \
+      -I ./src \
+      -I ./src/rpc \
+      -I ./src/runtime \
+      --gogoslick_out "plugins=grpc:./aranyagopb" \
+      --gogoslick_opt "paths=source_relative" \
+      "$t"
+  done
+
+  _rename_package_names aranyagopb
 
   # fix_pb_gen_json_name ./aranyagopb/*.pb.go
 }
@@ -54,12 +70,16 @@ _do_gen_proto_python() {
   # shellcheck disable=SC2086
   pipenv run \
   python -m grpc_tools.protoc \
-    -I"${GOPATH}/src" \
-    -I"${GOPATH}/src/github.com/gogo/protobuf/protobuf" \
-    -I"./src" \
+    -I "${GOPATH}/src" \
+    -I "${GOPATH}/src/github.com/gogo/protobuf/protobuf" \
+    -I ./src \
+    -I ./src/rpc \
+    -I ./src/runtime \
     --python_out "./aranyapythonpb" \
     --grpc_python_out "./aranyapythonpb" \
     ${PROTO_SOURCE}
+
+  _rename_package_names aranyapythonpb
 }
 
 _do_gen_proto_c() {
@@ -71,12 +91,16 @@ _do_gen_proto_c() {
     --no-timestamp \
     -x github.com/gogo/protobuf/gogoproto/gogo.proto \
     --output-dir ./aranyananopb \
-    -I"${GOPATH}/src" \
-    -I"${GOPATH}/src/github.com/gogo/protobuf/protobuf" \
-    -I"./src" \
+    -I "${GOPATH}/src" \
+    -I "${GOPATH}/src/github.com/gogo/protobuf/protobuf" \
+    -I ./src \
+    -I ./src/rpc \
+    -I ./src/runtime \
     ${PROTO_SOURCE}
 
   rm -rf ./aranyananopb/google ./aranyananopb/github.com
+
+  _rename_package_names aranyananopb
 }
 
 _do_gen_proto_rust() {
@@ -85,12 +109,16 @@ _do_gen_proto_rust() {
   # shellcheck disable=SC2086
   pipenv run \
   protoc \
-    -I ./src \
     -I "${GOPATH}/src/github.com/gogo/protobuf/protobuf" \
     -I "${GOPATH}/src" \
+    -I ./src \
+    -I ./src/rpc \
+    -I ./src/runtime \
     --plugin "protoc-gen-rust=$(pwd)/build/pb-jelly/pb-jelly-gen/codegen/codegen.py" \
     --rust_out=./aranyarustpb \
     ${PROTO_SOURCE}
+
+  _rename_package_names aranyarustpb
 }
 
 CODE_LANG=$(printf "%s" "$@" | cut -d. -f3)

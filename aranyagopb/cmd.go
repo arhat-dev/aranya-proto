@@ -73,40 +73,6 @@ func NewCredentialEnsureCmd(sshPrivateKey []byte) *CredentialEnsureCmd {
 	}
 }
 
-func NewImageListCmd(refs ...string) *ImageListCmd {
-	return &ImageListCmd{
-		Refs: refs,
-	}
-}
-
-func NewImageDeleteCmd(refs ...string) *ImageDeleteCmd {
-	return &ImageDeleteCmd{
-		Refs: refs,
-	}
-}
-
-func NewPodDeleteCmd(podUID string, graceTime time.Duration, preStopHooks map[string]*ContainerAction) *PodDeleteCmd {
-	return &PodDeleteCmd{
-		PodUid:      podUID,
-		GraceTime:   int64(graceTime),
-		HookPreStop: preStopHooks,
-	}
-}
-
-func NewPodContainerDeleteCmd(podUID string, containers []string) *PodDeleteCmd {
-	return &PodDeleteCmd{
-		PodUid:     podUID,
-		Containers: containers,
-	}
-}
-
-func NewPodListCmd(all bool, names ...string) *PodListCmd {
-	return &PodListCmd{
-		All:   all,
-		Names: names,
-	}
-}
-
 func NewExecCmd(
 	podUID, container string,
 	command []string,

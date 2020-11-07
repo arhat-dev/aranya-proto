@@ -30,7 +30,10 @@ enum CmdType {
     CMD_REJECT = 6;
 
     // network operations, protobuf bytes of abbot proto
-    CMD_NET = 10;
+    CMD_NET = 9;
+
+    // runtime operations, protobuf bytes of runtime.Packet
+    CMD_RUNTIME = 10;
 
     // 11-19: node operations
     CMD_NODE_INFO_GET = 11;
@@ -47,27 +50,17 @@ enum CmdType {
     // 31-39: credentials operations
     CMD_CRED_ENSURE = 31;
 
-    // 41-49: container image / application bundle operations
-    CMD_IMAGE_LIST = 41;    // TODO
-    CMD_IMAGE_ENSURE = 42;
-    CMD_IMAGE_DELETE = 43;  // TODO
-
     // 51-59: storage operations (remote csi)
-    CMD_STORAGE_LIST = 51;
-    CMD_STORAGE_ENSURE = 52;
-    CMD_STORAGE_DELETE = 53;
-
-    // 61-69: pod container provision
-    CMD_POD_LIST = 61;
-    CMD_POD_ENSURE = 62;
-    CMD_POD_DELETE = 63;
+    CMD_STORAGE_LIST = 41;
+    CMD_STORAGE_ENSURE = 42;
+    CMD_STORAGE_DELETE = 43;
 
     // 71-79: peripheral operations
-    CMD_PERIPHERAL_LIST = 71;
-    CMD_PERIPHERAL_ENSURE = 72;
-    CMD_PERIPHERAL_DELETE = 73;
-    CMD_PERIPHERAL_OPERATE = 74;
-    CMD_PERIPHERAL_COLLECT_METRICS = 75;
+    CMD_PERIPHERAL_LIST = 51;
+    CMD_PERIPHERAL_ENSURE = 52;
+    CMD_PERIPHERAL_DELETE = 53;
+    CMD_PERIPHERAL_OPERATE = 54;
+    CMD_PERIPHERAL_COLLECT_METRICS = 55;
 }
 
 message Cmd {
@@ -101,7 +94,10 @@ enum MsgType {
     MSG_ERROR = 7;
 
     // network msgs, protobuf bytes of abbot proto
-    MSG_NET = 10;
+    MSG_NET = 9;
+
+    // runtime messages, protobuf bytes of runtime.Packet
+    MSG_RUNTIME = 10;
 
     // 11-19: node msgs
     MSG_NODE_STATUS = 11;
@@ -111,22 +107,14 @@ enum MsgType {
     // 31-39: credential msgs
     MSG_CRED_STATUS = 31;
 
-    // 41-49: image msgs
-    MSG_IMAGE_STATUS = 41;
-    MSG_IMAGE_STATUS_LIST = 42;
-
     // 51-59: storage msgs
-    MSG_STORAGE_STATUS = 51;
-    MSG_STORAGE_STATUS_LIST = 52;
-
-    // 61-69: pod msgs
-    MSG_POD_STATUS = 61;
-    MSG_POD_STATUS_LIST = 62;
+    MSG_STORAGE_STATUS = 41;
+    MSG_STORAGE_STATUS_LIST = 42;
 
     // 71-79: peripheral msgs
-    MSG_PERIPHERAL_STATUS = 71;
-    MSG_PERIPHERAL_STATUS_LIST = 72;
-    MSG_PERIPHERAL_OPERATION_RESULT = 73;
+    MSG_PERIPHERAL_STATUS = 51;
+    MSG_PERIPHERAL_STATUS_LIST = 52;
+    MSG_PERIPHERAL_OPERATION_RESULT = 53;
 }
 
 message Msg {

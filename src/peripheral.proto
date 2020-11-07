@@ -31,3 +31,154 @@ enum PeripheralType {
     // a reporter peripheral is used to report metrics
     PERIPHERAL_TYPE_METRICS_REPORTER = 2;
 }
+
+message TLSConfig {
+    string server_name = 1;
+    bool insecure_skip_verify = 2;
+
+    uint32 min_version = 3;
+    uint32 max_version = 4;
+
+    bytes ca_cert = 5;
+    bytes cert = 6;
+    bytes key = 7;
+
+    repeated uint32 cipher_suites = 8;
+    repeated string next_protos = 9;
+}
+
+message Connectivity {
+    // method name of the connectivity
+    string method = 1;
+
+    // target to connect
+    string target = 2;
+
+    // parameters used when creating this connectivity
+    map<string, string> params = 3;
+
+    TLSConfig tls = 4;
+}
+
+
+/*
+
+Commands
+
+*/
+
+message PeripheralOperation {
+    // (required) identifier of this operation
+    string operation_id = 1;
+
+    // (optional) params usd for peripheral connectivity when executing this
+    // operation
+    map<string, string> params = 2;
+}
+
+message PeripheralMetric {
+    enum ReportMethod {
+        // Report peripheral metrics when collecting node metrics
+        REPORT_WITH_NODE_METRICS = 0;
+        // Report peripheral metrics along with arhat client
+        REPORT_WITH_ARHAT_CONNECTIVITY = 1;
+        // Create a standalone client for metrics uploading
+        REPORT_WITH_STANDALONE_CLIENT = 2;
+    }
+
+    enum ValueType {
+        METRICS_VALUE_TYPE_UNTYPED = 0;
+        METRICS_VALUE_TYPE_COUNTER = 1;
+        METRICS_VALUE_TYPE_GAUGE = 2;
+    }
+
+    // Name of this metric
+    string name = 1;
+
+    ReportMethod report_method = 2;
+
+    ValueType value_type = 3;
+
+    // (required) params for peripheral connector to retrieve metrics
+    map<string, string> peripheral_params = 4;
+
+    // Hex encoded hash of the metrics reporter
+    string reporter_name = 5;
+
+    // (optional) params for metrics_reporter to upload metrics
+    map<string, string> reporter_params = 6;
+}
+
+message PeripheralEnsureCmd {
+    PeripheralType kind = 1;
+
+    // (required) User defined peripheral name
+    string name = 2;
+
+    // (required) Connector defines how to connect to the peripheral, operations operate
+    // upon this connector
+    Connectivity connector = 3;
+
+    // (optional) User defined peripheral operations
+    repeated PeripheralOperation operations = 4;
+
+    // (optional) User defined peripheral metrics
+    repeated PeripheralMetric metrics = 5;
+}
+
+message PeripheralListCmd {
+    repeated string peripheral_names = 1;
+}
+
+message PeripheralDeleteCmd {
+    // delete normal peripherals or metrics reporters
+    repeated string peripheral_names = 1;
+}
+
+message PeripheralOperateCmd {
+    // (required) peripheral id of a normal peripheral
+    string peripheral_name = 1;
+
+    // (required) identifier of this operation
+    string operation_id = 2;
+
+    // (optional) extra data for this operation
+    bytes data = 3;
+}
+
+message PeripheralMetricsCollectCmd {
+    repeated string peripheral_names = 2;
+}
+
+/*
+
+Messages
+
+*/
+
+enum PeripheralState {
+    PERIPHERAL_STATE_UNKNOWN = 0;
+    PERIPHERAL_STATE_CREATED = 1;
+    PERIPHERAL_STATE_CONNECTED = 2;
+    PERIPHERAL_STATE_ERRORED = 3;
+    PERIPHERAL_STATE_REMOVED = 4;
+}
+
+message PeripheralStatusMsg {
+    PeripheralType kind = 1;
+
+    string name = 2;
+
+    PeripheralState state = 3;
+
+    // Human readable description for this state
+    string message = 4;
+}
+
+message PeripheralStatusListMsg {
+    repeated PeripheralStatusMsg peripherals = 1;
+}
+
+message PeripheralOperationResultMsg {
+    repeated bytes data = 1;
+}

@@ -14,10 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package aranyagopb
+package runtimepb
 
-import "testing"
+func NewPodStatusMsg(podUID string, network []byte, containerStatus map[string]*ContainerStatus) *PodStatusMsg {
+	return &PodStatusMsg{
+		Uid:        podUID,
+		Network:    network,
+		Containers: containerStatus,
+	}
+}
 
-func TestEmptyMsgSize(t *testing.T) {
-	t.Log(EmptyMsgSize)
+func NewPodStatusListMsg(pods []*PodStatusMsg) *PodStatusListMsg {
+	return &PodStatusListMsg{Pods: pods}
 }

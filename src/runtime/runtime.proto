@@ -1,0 +1,48 @@
+/*
+Copyright 2020 The arhat.dev Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+syntax = "proto3";
+
+package runtime;
+
+option go_package = "arhat.dev/aranya-proto/aranyagopb/runtimepb";
+
+enum PacketType {
+    _INVALID_RUNTIME_DATA = 0;
+
+    // 11-19: container image / application bundle operations
+    CMD_IMAGE_LIST = 11;    // TODO
+    CMD_IMAGE_ENSURE = 12;
+    CMD_IMAGE_DELETE = 13;  // TODO
+
+    // 21-29: image msgs
+    MSG_IMAGE_STATUS = 21;
+    MSG_IMAGE_STATUS_LIST = 22;
+
+    // 31-39: pod provisioning
+    CMD_POD_LIST = 31;
+    CMD_POD_ENSURE = 32;
+    CMD_POD_DELETE = 33;
+
+    // 41-49: pod msgs
+    MSG_POD_STATUS = 41;
+    MSG_POD_STATUS_LIST = 42;
+}
+
+message Packet {
+    PacketType kind = 1;
+    bytes payload = 2;
+}

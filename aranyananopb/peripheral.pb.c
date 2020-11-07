@@ -6,5 +6,56 @@
 #error Regenerate this file with the current version of nanopb generator.
 #endif
 
+PB_BIND(aranya_TLSConfig, aranya_TLSConfig, AUTO)
+
+
+PB_BIND(aranya_Connectivity, aranya_Connectivity, AUTO)
+
+
+PB_BIND(aranya_Connectivity_ParamsEntry, aranya_Connectivity_ParamsEntry, AUTO)
+
+
+PB_BIND(aranya_PeripheralOperation, aranya_PeripheralOperation, AUTO)
+
+
+PB_BIND(aranya_PeripheralOperation_ParamsEntry, aranya_PeripheralOperation_ParamsEntry, AUTO)
+
+
+PB_BIND(aranya_PeripheralMetric, aranya_PeripheralMetric, AUTO)
+
+
+PB_BIND(aranya_PeripheralMetric_PeripheralParamsEntry, aranya_PeripheralMetric_PeripheralParamsEntry, AUTO)
+
+
+PB_BIND(aranya_PeripheralMetric_ReporterParamsEntry, aranya_PeripheralMetric_ReporterParamsEntry, AUTO)
+
+
+PB_BIND(aranya_PeripheralEnsureCmd, aranya_PeripheralEnsureCmd, AUTO)
+
+
+PB_BIND(aranya_PeripheralListCmd, aranya_PeripheralListCmd, AUTO)
+
+
+PB_BIND(aranya_PeripheralDeleteCmd, aranya_PeripheralDeleteCmd, AUTO)
+
+
+PB_BIND(aranya_PeripheralOperateCmd, aranya_PeripheralOperateCmd, AUTO)
+
+
+PB_BIND(aranya_PeripheralMetricsCollectCmd, aranya_PeripheralMetricsCollectCmd, AUTO)
+
+
+PB_BIND(aranya_PeripheralStatusMsg, aranya_PeripheralStatusMsg, AUTO)
+
+
+PB_BIND(aranya_PeripheralStatusListMsg, aranya_PeripheralStatusListMsg, AUTO)
+
+
+PB_BIND(aranya_PeripheralOperationResultMsg, aranya_PeripheralOperationResultMsg, AUTO)
+
+
+
+
+
 
 

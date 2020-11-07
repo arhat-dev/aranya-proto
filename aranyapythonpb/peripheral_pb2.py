@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z!arhat.dev/aranya-proto/aranyagopb',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x10peripheral.proto\x12\x06\x61ranya*p\n\x0ePeripheralType\x12\x1c\n\x18_INVALID_PERIPHERAL_TYPE\x10\x00\x12\x1a\n\x16PERIPHERAL_TYPE_NORMAL\x10\x01\x12$\n PERIPHERAL_TYPE_METRICS_REPORTER\x10\x02\x42#Z!arhat.dev/aranya-proto/aranyagopbb\x06proto3'
+  serialized_pb=b'\n\x10peripheral.proto\x12\x06\x61ranya\"\xc0\x01\n\tTLSConfig\x12\x13\n\x0bserver_name\x18\x01 \x01(\t\x12\x1c\n\x14insecure_skip_verify\x18\x02 \x01(\x08\x12\x13\n\x0bmin_version\x18\x03 \x01(\r\x12\x13\n\x0bmax_version\x18\x04 \x01(\r\x12\x0f\n\x07\x63\x61_cert\x18\x05 \x01(\x0c\x12\x0c\n\x04\x63\x65rt\x18\x06 \x01(\x0c\x12\x0b\n\x03key\x18\x07 \x01(\x0c\x12\x15\n\rcipher_suites\x18\x08 \x03(\r\x12\x13\n\x0bnext_protos\x18\t \x03(\t\"\xaf\x01\n\x0c\x43onnectivity\x12\x0e\n\x06method\x18\x01 \x01(\t\x12\x0e\n\x06target\x18\x02 \x01(\t\x12\x30\n\x06params\x18\x03 \x03(\x0b\x32 .aranya.Connectivity.ParamsEntry\x12\x1e\n\x03tls\x18\x04 \x01(\x0b\x32\x11.aranya.TLSConfig\x1a-\n\x0bParamsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\x93\x01\n\x13PeripheralOperation\x12\x14\n\x0coperation_id\x18\x01 \x01(\t\x12\x37\n\x06params\x18\x02 \x03(\x0b\x32\'.aranya.PeripheralOperation.ParamsEntry\x1a-\n\x0bParamsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\x8f\x05\n\x10PeripheralMetric\x12\x0c\n\x04name\x18\x01 \x01(\t\x12<\n\rreport_method\x18\x02 \x01(\x0e\x32%.aranya.PeripheralMetric.ReportMethod\x12\x36\n\nvalue_type\x18\x03 \x01(\x0e\x32\".aranya.PeripheralMetric.ValueType\x12I\n\x11peripheral_params\x18\x04 \x03(\x0b\x32..aranya.PeripheralMetric.PeripheralParamsEntry\x12\x15\n\rreporter_name\x18\x05 \x01(\t\x12\x45\n\x0freporter_params\x18\x06 \x03(\x0b\x32,.aranya.PeripheralMetric.ReporterParamsEntry\x1a\x37\n\x15PeripheralParamsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a\x35\n\x13ReporterParamsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"s\n\x0cReportMethod\x12\x1c\n\x18REPORT_WITH_NODE_METRICS\x10\x00\x12\"\n\x1eREPORT_WITH_ARHAT_CONNECTIVITY\x10\x01\x12!\n\x1dREPORT_WITH_STANDALONE_CLIENT\x10\x02\"i\n\tValueType\x12\x1e\n\x1aMETRICS_VALUE_TYPE_UNTYPED\x10\x00\x12\x1e\n\x1aMETRICS_VALUE_TYPE_COUNTER\x10\x01\x12\x1c\n\x18METRICS_VALUE_TYPE_GAUGE\x10\x02\"\xce\x01\n\x13PeripheralEnsureCmd\x12$\n\x04kind\x18\x01 \x01(\x0e\x32\x16.aranya.PeripheralType\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\'\n\tconnector\x18\x03 \x01(\x0b\x32\x14.aranya.Connectivity\x12/\n\noperations\x18\x04 \x03(\x0b\x32\x1b.aranya.PeripheralOperation\x12)\n\x07metrics\x18\x05 \x03(\x0b\x32\x18.aranya.PeripheralMetric\"-\n\x11PeripheralListCmd\x12\x18\n\x10peripheral_names\x18\x01 \x03(\t\"/\n\x13PeripheralDeleteCmd\x12\x18\n\x10peripheral_names\x18\x01 \x03(\t\"S\n\x14PeripheralOperateCmd\x12\x17\n\x0fperipheral_name\x18\x01 \x01(\t\x12\x14\n\x0coperation_id\x18\x02 \x01(\t\x12\x0c\n\x04\x64\x61ta\x18\x03 \x01(\x0c\"7\n\x1bPeripheralMetricsCollectCmd\x12\x18\n\x10peripheral_names\x18\x02 \x03(\t\"\x82\x01\n\x13PeripheralStatusMsg\x12$\n\x04kind\x18\x01 \x01(\x0e\x32\x16.aranya.PeripheralType\x12\x0c\n\x04name\x18\x02 \x01(\t\x12&\n\x05state\x18\x03 \x01(\x0e\x32\x17.aranya.PeripheralState\x12\x0f\n\x07message\x18\x04 \x01(\t\"K\n\x17PeripheralStatusListMsg\x12\x30\n\x0bperipherals\x18\x01 \x03(\x0b\x32\x1b.aranya.PeripheralStatusMsg\",\n\x1cPeripheralOperationResultMsg\x12\x0c\n\x04\x64\x61ta\x18\x01 \x03(\x0c*p\n\x0ePeripheralType\x12\x1c\n\x18_INVALID_PERIPHERAL_TYPE\x10\x00\x12\x1a\n\x16PERIPHERAL_TYPE_NORMAL\x10\x01\x12$\n PERIPHERAL_TYPE_METRICS_REPORTER\x10\x02*\xa9\x01\n\x0fPeripheralState\x12\x1c\n\x18PERIPHERAL_STATE_UNKNOWN\x10\x00\x12\x1c\n\x18PERIPHERAL_STATE_CREATED\x10\x01\x12\x1e\n\x1aPERIPHERAL_STATE_CONNECTED\x10\x02\x12\x1c\n\x18PERIPHERAL_STATE_ERRORED\x10\x03\x12\x1c\n\x18PERIPHERAL_STATE_REMOVED\x10\x04\x42#Z!arhat.dev/aranya-proto/aranyagopbb\x06proto3'
 )
 
 _PERIPHERALTYPE = _descriptor.EnumDescriptor(
@@ -48,20 +48,999 @@ _PERIPHERALTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=28,
-  serialized_end=140,
+  serialized_start=1912,
+  serialized_end=2024,
 )
 _sym_db.RegisterEnumDescriptor(_PERIPHERALTYPE)
 
 PeripheralType = enum_type_wrapper.EnumTypeWrapper(_PERIPHERALTYPE)
+_PERIPHERALSTATE = _descriptor.EnumDescriptor(
+  name='PeripheralState',
+  full_name='aranya.PeripheralState',
+  filename=None,
+  file=DESCRIPTOR,
+  create_key=_descriptor._internal_create_key,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='PERIPHERAL_STATE_UNKNOWN', index=0, number=0,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='PERIPHERAL_STATE_CREATED', index=1, number=1,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='PERIPHERAL_STATE_CONNECTED', index=2, number=2,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='PERIPHERAL_STATE_ERRORED', index=3, number=3,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='PERIPHERAL_STATE_REMOVED', index=4, number=4,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=2027,
+  serialized_end=2196,
+)
+_sym_db.RegisterEnumDescriptor(_PERIPHERALSTATE)
+
+PeripheralState = enum_type_wrapper.EnumTypeWrapper(_PERIPHERALSTATE)
 _INVALID_PERIPHERAL_TYPE = 0
 PERIPHERAL_TYPE_NORMAL = 1
 PERIPHERAL_TYPE_METRICS_REPORTER = 2
+PERIPHERAL_STATE_UNKNOWN = 0
+PERIPHERAL_STATE_CREATED = 1
+PERIPHERAL_STATE_CONNECTED = 2
+PERIPHERAL_STATE_ERRORED = 3
+PERIPHERAL_STATE_REMOVED = 4
 
 
+_PERIPHERALMETRIC_REPORTMETHOD = _descriptor.EnumDescriptor(
+  name='ReportMethod',
+  full_name='aranya.PeripheralMetric.ReportMethod',
+  filename=None,
+  file=DESCRIPTOR,
+  create_key=_descriptor._internal_create_key,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='REPORT_WITH_NODE_METRICS', index=0, number=0,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='REPORT_WITH_ARHAT_CONNECTIVITY', index=1, number=1,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='REPORT_WITH_STANDALONE_CLIENT', index=2, number=2,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=985,
+  serialized_end=1100,
+)
+_sym_db.RegisterEnumDescriptor(_PERIPHERALMETRIC_REPORTMETHOD)
+
+_PERIPHERALMETRIC_VALUETYPE = _descriptor.EnumDescriptor(
+  name='ValueType',
+  full_name='aranya.PeripheralMetric.ValueType',
+  filename=None,
+  file=DESCRIPTOR,
+  create_key=_descriptor._internal_create_key,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='METRICS_VALUE_TYPE_UNTYPED', index=0, number=0,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='METRICS_VALUE_TYPE_COUNTER', index=1, number=1,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='METRICS_VALUE_TYPE_GAUGE', index=2, number=2,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=1102,
+  serialized_end=1207,
+)
+_sym_db.RegisterEnumDescriptor(_PERIPHERALMETRIC_VALUETYPE)
+
+
+_TLSCONFIG = _descriptor.Descriptor(
+  name='TLSConfig',
+  full_name='aranya.TLSConfig',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='server_name', full_name='aranya.TLSConfig.server_name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='insecure_skip_verify', full_name='aranya.TLSConfig.insecure_skip_verify', index=1,
+      number=2, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='min_version', full_name='aranya.TLSConfig.min_version', index=2,
+      number=3, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='max_version', full_name='aranya.TLSConfig.max_version', index=3,
+      number=4, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='ca_cert', full_name='aranya.TLSConfig.ca_cert', index=4,
+      number=5, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"",
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='cert', full_name='aranya.TLSConfig.cert', index=5,
+      number=6, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"",
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='key', full_name='aranya.TLSConfig.key', index=6,
+      number=7, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"",
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='cipher_suites', full_name='aranya.TLSConfig.cipher_suites', index=7,
+      number=8, type=13, cpp_type=3, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='next_protos', full_name='aranya.TLSConfig.next_protos', index=8,
+      number=9, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=29,
+  serialized_end=221,
+)
+
+
+_CONNECTIVITY_PARAMSENTRY = _descriptor.Descriptor(
+  name='ParamsEntry',
+  full_name='aranya.Connectivity.ParamsEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='aranya.Connectivity.ParamsEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='aranya.Connectivity.ParamsEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=b'8\001',
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=354,
+  serialized_end=399,
+)
+
+_CONNECTIVITY = _descriptor.Descriptor(
+  name='Connectivity',
+  full_name='aranya.Connectivity',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='method', full_name='aranya.Connectivity.method', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='target', full_name='aranya.Connectivity.target', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='params', full_name='aranya.Connectivity.params', index=2,
+      number=3, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='tls', full_name='aranya.Connectivity.tls', index=3,
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[_CONNECTIVITY_PARAMSENTRY, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=224,
+  serialized_end=399,
+)
+
+
+_PERIPHERALOPERATION_PARAMSENTRY = _descriptor.Descriptor(
+  name='ParamsEntry',
+  full_name='aranya.PeripheralOperation.ParamsEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='aranya.PeripheralOperation.ParamsEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='aranya.PeripheralOperation.ParamsEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=b'8\001',
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=354,
+  serialized_end=399,
+)
+
+_PERIPHERALOPERATION = _descriptor.Descriptor(
+  name='PeripheralOperation',
+  full_name='aranya.PeripheralOperation',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='operation_id', full_name='aranya.PeripheralOperation.operation_id', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='params', full_name='aranya.PeripheralOperation.params', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[_PERIPHERALOPERATION_PARAMSENTRY, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=402,
+  serialized_end=549,
+)
+
+
+_PERIPHERALMETRIC_PERIPHERALPARAMSENTRY = _descriptor.Descriptor(
+  name='PeripheralParamsEntry',
+  full_name='aranya.PeripheralMetric.PeripheralParamsEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='aranya.PeripheralMetric.PeripheralParamsEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='aranya.PeripheralMetric.PeripheralParamsEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=b'8\001',
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=873,
+  serialized_end=928,
+)
+
+_PERIPHERALMETRIC_REPORTERPARAMSENTRY = _descriptor.Descriptor(
+  name='ReporterParamsEntry',
+  full_name='aranya.PeripheralMetric.ReporterParamsEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='aranya.PeripheralMetric.ReporterParamsEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='aranya.PeripheralMetric.ReporterParamsEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=b'8\001',
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=930,
+  serialized_end=983,
+)
+
+_PERIPHERALMETRIC = _descriptor.Descriptor(
+  name='PeripheralMetric',
+  full_name='aranya.PeripheralMetric',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='name', full_name='aranya.PeripheralMetric.name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='report_method', full_name='aranya.PeripheralMetric.report_method', index=1,
+      number=2, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='value_type', full_name='aranya.PeripheralMetric.value_type', index=2,
+      number=3, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='peripheral_params', full_name='aranya.PeripheralMetric.peripheral_params', index=3,
+      number=4, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='reporter_name', full_name='aranya.PeripheralMetric.reporter_name', index=4,
+      number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='reporter_params', full_name='aranya.PeripheralMetric.reporter_params', index=5,
+      number=6, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[_PERIPHERALMETRIC_PERIPHERALPARAMSENTRY, _PERIPHERALMETRIC_REPORTERPARAMSENTRY, ],
+  enum_types=[
+    _PERIPHERALMETRIC_REPORTMETHOD,
+    _PERIPHERALMETRIC_VALUETYPE,
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=552,
+  serialized_end=1207,
+)
+
+
+_PERIPHERALENSURECMD = _descriptor.Descriptor(
+  name='PeripheralEnsureCmd',
+  full_name='aranya.PeripheralEnsureCmd',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='kind', full_name='aranya.PeripheralEnsureCmd.kind', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='name', full_name='aranya.PeripheralEnsureCmd.name', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='connector', full_name='aranya.PeripheralEnsureCmd.connector', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='operations', full_name='aranya.PeripheralEnsureCmd.operations', index=3,
+      number=4, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='metrics', full_name='aranya.PeripheralEnsureCmd.metrics', index=4,
+      number=5, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1210,
+  serialized_end=1416,
+)
+
+
+_PERIPHERALLISTCMD = _descriptor.Descriptor(
+  name='PeripheralListCmd',
+  full_name='aranya.PeripheralListCmd',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='peripheral_names', full_name='aranya.PeripheralListCmd.peripheral_names', index=0,
+      number=1, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1418,
+  serialized_end=1463,
+)
+
+
+_PERIPHERALDELETECMD = _descriptor.Descriptor(
+  name='PeripheralDeleteCmd',
+  full_name='aranya.PeripheralDeleteCmd',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='peripheral_names', full_name='aranya.PeripheralDeleteCmd.peripheral_names', index=0,
+      number=1, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1465,
+  serialized_end=1512,
+)
+
+
+_PERIPHERALOPERATECMD = _descriptor.Descriptor(
+  name='PeripheralOperateCmd',
+  full_name='aranya.PeripheralOperateCmd',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='peripheral_name', full_name='aranya.PeripheralOperateCmd.peripheral_name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='operation_id', full_name='aranya.PeripheralOperateCmd.operation_id', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='data', full_name='aranya.PeripheralOperateCmd.data', index=2,
+      number=3, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"",
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1514,
+  serialized_end=1597,
+)
+
+
+_PERIPHERALMETRICSCOLLECTCMD = _descriptor.Descriptor(
+  name='PeripheralMetricsCollectCmd',
+  full_name='aranya.PeripheralMetricsCollectCmd',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='peripheral_names', full_name='aranya.PeripheralMetricsCollectCmd.peripheral_names', index=0,
+      number=2, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1599,
+  serialized_end=1654,
+)
+
+
+_PERIPHERALSTATUSMSG = _descriptor.Descriptor(
+  name='PeripheralStatusMsg',
+  full_name='aranya.PeripheralStatusMsg',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='kind', full_name='aranya.PeripheralStatusMsg.kind', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='name', full_name='aranya.PeripheralStatusMsg.name', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='state', full_name='aranya.PeripheralStatusMsg.state', index=2,
+      number=3, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='message', full_name='aranya.PeripheralStatusMsg.message', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1657,
+  serialized_end=1787,
+)
+
+
+_PERIPHERALSTATUSLISTMSG = _descriptor.Descriptor(
+  name='PeripheralStatusListMsg',
+  full_name='aranya.PeripheralStatusListMsg',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='peripherals', full_name='aranya.PeripheralStatusListMsg.peripherals', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1789,
+  serialized_end=1864,
+)
+
+
+_PERIPHERALOPERATIONRESULTMSG = _descriptor.Descriptor(
+  name='PeripheralOperationResultMsg',
+  full_name='aranya.PeripheralOperationResultMsg',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='data', full_name='aranya.PeripheralOperationResultMsg.data', index=0,
+      number=1, type=12, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1866,
+  serialized_end=1910,
+)
+
+_CONNECTIVITY_PARAMSENTRY.containing_type = _CONNECTIVITY
+_CONNECTIVITY.fields_by_name['params'].message_type = _CONNECTIVITY_PARAMSENTRY
+_CONNECTIVITY.fields_by_name['tls'].message_type = _TLSCONFIG
+_PERIPHERALOPERATION_PARAMSENTRY.containing_type = _PERIPHERALOPERATION
+_PERIPHERALOPERATION.fields_by_name['params'].message_type = _PERIPHERALOPERATION_PARAMSENTRY
+_PERIPHERALMETRIC_PERIPHERALPARAMSENTRY.containing_type = _PERIPHERALMETRIC
+_PERIPHERALMETRIC_REPORTERPARAMSENTRY.containing_type = _PERIPHERALMETRIC
+_PERIPHERALMETRIC.fields_by_name['report_method'].enum_type = _PERIPHERALMETRIC_REPORTMETHOD
+_PERIPHERALMETRIC.fields_by_name['value_type'].enum_type = _PERIPHERALMETRIC_VALUETYPE
+_PERIPHERALMETRIC.fields_by_name['peripheral_params'].message_type = _PERIPHERALMETRIC_PERIPHERALPARAMSENTRY
+_PERIPHERALMETRIC.fields_by_name['reporter_params'].message_type = _PERIPHERALMETRIC_REPORTERPARAMSENTRY
+_PERIPHERALMETRIC_REPORTMETHOD.containing_type = _PERIPHERALMETRIC
+_PERIPHERALMETRIC_VALUETYPE.containing_type = _PERIPHERALMETRIC
+_PERIPHERALENSURECMD.fields_by_name['kind'].enum_type = _PERIPHERALTYPE
+_PERIPHERALENSURECMD.fields_by_name['connector'].message_type = _CONNECTIVITY
+_PERIPHERALENSURECMD.fields_by_name['operations'].message_type = _PERIPHERALOPERATION
+_PERIPHERALENSURECMD.fields_by_name['metrics'].message_type = _PERIPHERALMETRIC
+_PERIPHERALSTATUSMSG.fields_by_name['kind'].enum_type = _PERIPHERALTYPE
+_PERIPHERALSTATUSMSG.fields_by_name['state'].enum_type = _PERIPHERALSTATE
+_PERIPHERALSTATUSLISTMSG.fields_by_name['peripherals'].message_type = _PERIPHERALSTATUSMSG
+DESCRIPTOR.message_types_by_name['TLSConfig'] = _TLSCONFIG
+DESCRIPTOR.message_types_by_name['Connectivity'] = _CONNECTIVITY
+DESCRIPTOR.message_types_by_name['PeripheralOperation'] = _PERIPHERALOPERATION
+DESCRIPTOR.message_types_by_name['PeripheralMetric'] = _PERIPHERALMETRIC
+DESCRIPTOR.message_types_by_name['PeripheralEnsureCmd'] = _PERIPHERALENSURECMD
+DESCRIPTOR.message_types_by_name['PeripheralListCmd'] = _PERIPHERALLISTCMD
+DESCRIPTOR.message_types_by_name['PeripheralDeleteCmd'] = _PERIPHERALDELETECMD
+DESCRIPTOR.message_types_by_name['PeripheralOperateCmd'] = _PERIPHERALOPERATECMD
+DESCRIPTOR.message_types_by_name['PeripheralMetricsCollectCmd'] = _PERIPHERALMETRICSCOLLECTCMD
+DESCRIPTOR.message_types_by_name['PeripheralStatusMsg'] = _PERIPHERALSTATUSMSG
+DESCRIPTOR.message_types_by_name['PeripheralStatusListMsg'] = _PERIPHERALSTATUSLISTMSG
+DESCRIPTOR.message_types_by_name['PeripheralOperationResultMsg'] = _PERIPHERALOPERATIONRESULTMSG
 DESCRIPTOR.enum_types_by_name['PeripheralType'] = _PERIPHERALTYPE
+DESCRIPTOR.enum_types_by_name['PeripheralState'] = _PERIPHERALSTATE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
+
+TLSConfig = _reflection.GeneratedProtocolMessageType('TLSConfig', (_message.Message,), {
+  'DESCRIPTOR' : _TLSCONFIG,
+  '__module__' : 'peripheral_pb2'
+  # @@protoc_insertion_point(class_scope:aranya.TLSConfig)
+  })
+_sym_db.RegisterMessage(TLSConfig)
+
+Connectivity = _reflection.GeneratedProtocolMessageType('Connectivity', (_message.Message,), {
+
+  'ParamsEntry' : _reflection.GeneratedProtocolMessageType('ParamsEntry', (_message.Message,), {
+    'DESCRIPTOR' : _CONNECTIVITY_PARAMSENTRY,
+    '__module__' : 'peripheral_pb2'
+    # @@protoc_insertion_point(class_scope:aranya.Connectivity.ParamsEntry)
+    })
+  ,
+  'DESCRIPTOR' : _CONNECTIVITY,
+  '__module__' : 'peripheral_pb2'
+  # @@protoc_insertion_point(class_scope:aranya.Connectivity)
+  })
+_sym_db.RegisterMessage(Connectivity)
+_sym_db.RegisterMessage(Connectivity.ParamsEntry)
+
+PeripheralOperation = _reflection.GeneratedProtocolMessageType('PeripheralOperation', (_message.Message,), {
+
+  'ParamsEntry' : _reflection.GeneratedProtocolMessageType('ParamsEntry', (_message.Message,), {
+    'DESCRIPTOR' : _PERIPHERALOPERATION_PARAMSENTRY,
+    '__module__' : 'peripheral_pb2'
+    # @@protoc_insertion_point(class_scope:aranya.PeripheralOperation.ParamsEntry)
+    })
+  ,
+  'DESCRIPTOR' : _PERIPHERALOPERATION,
+  '__module__' : 'peripheral_pb2'
+  # @@protoc_insertion_point(class_scope:aranya.PeripheralOperation)
+  })
+_sym_db.RegisterMessage(PeripheralOperation)
+_sym_db.RegisterMessage(PeripheralOperation.ParamsEntry)
+
+PeripheralMetric = _reflection.GeneratedProtocolMessageType('PeripheralMetric', (_message.Message,), {
+
+  'PeripheralParamsEntry' : _reflection.GeneratedProtocolMessageType('PeripheralParamsEntry', (_message.Message,), {
+    'DESCRIPTOR' : _PERIPHERALMETRIC_PERIPHERALPARAMSENTRY,
+    '__module__' : 'peripheral_pb2'
+    # @@protoc_insertion_point(class_scope:aranya.PeripheralMetric.PeripheralParamsEntry)
+    })
+  ,
+
+  'ReporterParamsEntry' : _reflection.GeneratedProtocolMessageType('ReporterParamsEntry', (_message.Message,), {
+    'DESCRIPTOR' : _PERIPHERALMETRIC_REPORTERPARAMSENTRY,
+    '__module__' : 'peripheral_pb2'
+    # @@protoc_insertion_point(class_scope:aranya.PeripheralMetric.ReporterParamsEntry)
+    })
+  ,
+  'DESCRIPTOR' : _PERIPHERALMETRIC,
+  '__module__' : 'peripheral_pb2'
+  # @@protoc_insertion_point(class_scope:aranya.PeripheralMetric)
+  })
+_sym_db.RegisterMessage(PeripheralMetric)
+_sym_db.RegisterMessage(PeripheralMetric.PeripheralParamsEntry)
+_sym_db.RegisterMessage(PeripheralMetric.ReporterParamsEntry)
+
+PeripheralEnsureCmd = _reflection.GeneratedProtocolMessageType('PeripheralEnsureCmd', (_message.Message,), {
+  'DESCRIPTOR' : _PERIPHERALENSURECMD,
+  '__module__' : 'peripheral_pb2'
+  # @@protoc_insertion_point(class_scope:aranya.PeripheralEnsureCmd)
+  })
+_sym_db.RegisterMessage(PeripheralEnsureCmd)
+
+PeripheralListCmd = _reflection.GeneratedProtocolMessageType('PeripheralListCmd', (_message.Message,), {
+  'DESCRIPTOR' : _PERIPHERALLISTCMD,
+  '__module__' : 'peripheral_pb2'
+  # @@protoc_insertion_point(class_scope:aranya.PeripheralListCmd)
+  })
+_sym_db.RegisterMessage(PeripheralListCmd)
+
+PeripheralDeleteCmd = _reflection.GeneratedProtocolMessageType('PeripheralDeleteCmd', (_message.Message,), {
+  'DESCRIPTOR' : _PERIPHERALDELETECMD,
+  '__module__' : 'peripheral_pb2'
+  # @@protoc_insertion_point(class_scope:aranya.PeripheralDeleteCmd)
+  })
+_sym_db.RegisterMessage(PeripheralDeleteCmd)
+
+PeripheralOperateCmd = _reflection.GeneratedProtocolMessageType('PeripheralOperateCmd', (_message.Message,), {
+  'DESCRIPTOR' : _PERIPHERALOPERATECMD,
+  '__module__' : 'peripheral_pb2'
+  # @@protoc_insertion_point(class_scope:aranya.PeripheralOperateCmd)
+  })
+_sym_db.RegisterMessage(PeripheralOperateCmd)
+
+PeripheralMetricsCollectCmd = _reflection.GeneratedProtocolMessageType('PeripheralMetricsCollectCmd', (_message.Message,), {
+  'DESCRIPTOR' : _PERIPHERALMETRICSCOLLECTCMD,
+  '__module__' : 'peripheral_pb2'
+  # @@protoc_insertion_point(class_scope:aranya.PeripheralMetricsCollectCmd)
+  })
+_sym_db.RegisterMessage(PeripheralMetricsCollectCmd)
+
+PeripheralStatusMsg = _reflection.GeneratedProtocolMessageType('PeripheralStatusMsg', (_message.Message,), {
+  'DESCRIPTOR' : _PERIPHERALSTATUSMSG,
+  '__module__' : 'peripheral_pb2'
+  # @@protoc_insertion_point(class_scope:aranya.PeripheralStatusMsg)
+  })
+_sym_db.RegisterMessage(PeripheralStatusMsg)
+
+PeripheralStatusListMsg = _reflection.GeneratedProtocolMessageType('PeripheralStatusListMsg', (_message.Message,), {
+  'DESCRIPTOR' : _PERIPHERALSTATUSLISTMSG,
+  '__module__' : 'peripheral_pb2'
+  # @@protoc_insertion_point(class_scope:aranya.PeripheralStatusListMsg)
+  })
+_sym_db.RegisterMessage(PeripheralStatusListMsg)
+
+PeripheralOperationResultMsg = _reflection.GeneratedProtocolMessageType('PeripheralOperationResultMsg', (_message.Message,), {
+  'DESCRIPTOR' : _PERIPHERALOPERATIONRESULTMSG,
+  '__module__' : 'peripheral_pb2'
+  # @@protoc_insertion_point(class_scope:aranya.PeripheralOperationResultMsg)
+  })
+_sym_db.RegisterMessage(PeripheralOperationResultMsg)
 
 
 DESCRIPTOR._options = None
+_CONNECTIVITY_PARAMSENTRY._options = None
+_PERIPHERALOPERATION_PARAMSENTRY._options = None
+_PERIPHERALMETRIC_PERIPHERALPARAMSENTRY._options = None
+_PERIPHERALMETRIC_REPORTERPARAMSENTRY._options = None
 # @@protoc_insertion_point(module_scope)

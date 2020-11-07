@@ -20,11 +20,396 @@ typedef enum _aranya_PeripheralType {
     aranya_PeripheralType_PERIPHERAL_TYPE_METRICS_REPORTER = 2
 } aranya_PeripheralType;
 
+typedef enum _aranya_PeripheralState {
+    aranya_PeripheralState_PERIPHERAL_STATE_UNKNOWN = 0,
+    aranya_PeripheralState_PERIPHERAL_STATE_CREATED = 1,
+    aranya_PeripheralState_PERIPHERAL_STATE_CONNECTED = 2,
+    aranya_PeripheralState_PERIPHERAL_STATE_ERRORED = 3,
+    aranya_PeripheralState_PERIPHERAL_STATE_REMOVED = 4
+} aranya_PeripheralState;
+
+typedef enum _aranya_PeripheralMetric_ReportMethod {
+    aranya_PeripheralMetric_ReportMethod_REPORT_WITH_NODE_METRICS = 0,
+    aranya_PeripheralMetric_ReportMethod_REPORT_WITH_ARHAT_CONNECTIVITY = 1,
+    aranya_PeripheralMetric_ReportMethod_REPORT_WITH_STANDALONE_CLIENT = 2
+} aranya_PeripheralMetric_ReportMethod;
+
+typedef enum _aranya_PeripheralMetric_ValueType {
+    aranya_PeripheralMetric_ValueType_METRICS_VALUE_TYPE_UNTYPED = 0,
+    aranya_PeripheralMetric_ValueType_METRICS_VALUE_TYPE_COUNTER = 1,
+    aranya_PeripheralMetric_ValueType_METRICS_VALUE_TYPE_GAUGE = 2
+} aranya_PeripheralMetric_ValueType;
+
+/* Struct definitions */
+typedef struct _aranya_Connectivity_ParamsEntry {
+    pb_callback_t key;
+    pb_callback_t value;
+} aranya_Connectivity_ParamsEntry;
+
+typedef struct _aranya_PeripheralDeleteCmd {
+    pb_callback_t peripheral_names;
+} aranya_PeripheralDeleteCmd;
+
+typedef struct _aranya_PeripheralListCmd {
+    pb_callback_t peripheral_names;
+} aranya_PeripheralListCmd;
+
+typedef struct _aranya_PeripheralMetric_PeripheralParamsEntry {
+    pb_callback_t key;
+    pb_callback_t value;
+} aranya_PeripheralMetric_PeripheralParamsEntry;
+
+typedef struct _aranya_PeripheralMetric_ReporterParamsEntry {
+    pb_callback_t key;
+    pb_callback_t value;
+} aranya_PeripheralMetric_ReporterParamsEntry;
+
+typedef struct _aranya_PeripheralMetricsCollectCmd {
+    pb_callback_t peripheral_names;
+} aranya_PeripheralMetricsCollectCmd;
+
+typedef struct _aranya_PeripheralOperateCmd {
+    pb_callback_t peripheral_name;
+    pb_callback_t operation_id;
+    pb_callback_t data;
+} aranya_PeripheralOperateCmd;
+
+typedef struct _aranya_PeripheralOperation {
+    pb_callback_t operation_id;
+    pb_callback_t params;
+} aranya_PeripheralOperation;
+
+typedef struct _aranya_PeripheralOperationResultMsg {
+    pb_callback_t data;
+} aranya_PeripheralOperationResultMsg;
+
+typedef struct _aranya_PeripheralOperation_ParamsEntry {
+    pb_callback_t key;
+    pb_callback_t value;
+} aranya_PeripheralOperation_ParamsEntry;
+
+typedef struct _aranya_PeripheralStatusListMsg {
+    pb_callback_t peripherals;
+} aranya_PeripheralStatusListMsg;
+
+typedef struct _aranya_PeripheralMetric {
+    pb_callback_t name;
+    aranya_PeripheralMetric_ReportMethod report_method;
+    aranya_PeripheralMetric_ValueType value_type;
+    pb_callback_t peripheral_params;
+    pb_callback_t reporter_name;
+    pb_callback_t reporter_params;
+} aranya_PeripheralMetric;
+
+typedef struct _aranya_PeripheralStatusMsg {
+    aranya_PeripheralType kind;
+    pb_callback_t name;
+    aranya_PeripheralState state;
+    pb_callback_t message;
+} aranya_PeripheralStatusMsg;
+
+typedef struct _aranya_TLSConfig {
+    pb_callback_t server_name;
+    bool insecure_skip_verify;
+    uint32_t min_version;
+    uint32_t max_version;
+    pb_callback_t ca_cert;
+    pb_callback_t cert;
+    pb_callback_t key;
+    pb_callback_t cipher_suites;
+    pb_callback_t next_protos;
+} aranya_TLSConfig;
+
+typedef struct _aranya_Connectivity {
+    pb_callback_t method;
+    pb_callback_t target;
+    pb_callback_t params;
+    bool has_tls;
+    aranya_TLSConfig tls;
+} aranya_Connectivity;
+
+typedef struct _aranya_PeripheralEnsureCmd {
+    aranya_PeripheralType kind;
+    pb_callback_t name;
+    bool has_connector;
+    aranya_Connectivity connector;
+    pb_callback_t operations;
+    pb_callback_t metrics;
+} aranya_PeripheralEnsureCmd;
+
+
 /* Helper constants for enums */
 #define _aranya_PeripheralType_MIN aranya_PeripheralType__INVALID_PERIPHERAL_TYPE
 #define _aranya_PeripheralType_MAX aranya_PeripheralType_PERIPHERAL_TYPE_METRICS_REPORTER
 #define _aranya_PeripheralType_ARRAYSIZE ((aranya_PeripheralType)(aranya_PeripheralType_PERIPHERAL_TYPE_METRICS_REPORTER+1))
 
+#define _aranya_PeripheralState_MIN aranya_PeripheralState_PERIPHERAL_STATE_UNKNOWN
+#define _aranya_PeripheralState_MAX aranya_PeripheralState_PERIPHERAL_STATE_REMOVED
+#define _aranya_PeripheralState_ARRAYSIZE ((aranya_PeripheralState)(aranya_PeripheralState_PERIPHERAL_STATE_REMOVED+1))
+
+#define _aranya_PeripheralMetric_ReportMethod_MIN aranya_PeripheralMetric_ReportMethod_REPORT_WITH_NODE_METRICS
+#define _aranya_PeripheralMetric_ReportMethod_MAX aranya_PeripheralMetric_ReportMethod_REPORT_WITH_STANDALONE_CLIENT
+#define _aranya_PeripheralMetric_ReportMethod_ARRAYSIZE ((aranya_PeripheralMetric_ReportMethod)(aranya_PeripheralMetric_ReportMethod_REPORT_WITH_STANDALONE_CLIENT+1))
+
+#define _aranya_PeripheralMetric_ValueType_MIN aranya_PeripheralMetric_ValueType_METRICS_VALUE_TYPE_UNTYPED
+#define _aranya_PeripheralMetric_ValueType_MAX aranya_PeripheralMetric_ValueType_METRICS_VALUE_TYPE_GAUGE
+#define _aranya_PeripheralMetric_ValueType_ARRAYSIZE ((aranya_PeripheralMetric_ValueType)(aranya_PeripheralMetric_ValueType_METRICS_VALUE_TYPE_GAUGE+1))
+
+
+/* Initializer values for message structs */
+#define aranya_TLSConfig_init_default            {{{NULL}, NULL}, 0, 0, 0, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_Connectivity_init_default         {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, false, aranya_TLSConfig_init_default}
+#define aranya_Connectivity_ParamsEntry_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_PeripheralOperation_init_default  {{{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_PeripheralOperation_ParamsEntry_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_PeripheralMetric_init_default     {{{NULL}, NULL}, _aranya_PeripheralMetric_ReportMethod_MIN, _aranya_PeripheralMetric_ValueType_MIN, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_PeripheralMetric_PeripheralParamsEntry_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_PeripheralMetric_ReporterParamsEntry_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_PeripheralEnsureCmd_init_default  {_aranya_PeripheralType_MIN, {{NULL}, NULL}, false, aranya_Connectivity_init_default, {{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_PeripheralListCmd_init_default    {{{NULL}, NULL}}
+#define aranya_PeripheralDeleteCmd_init_default  {{{NULL}, NULL}}
+#define aranya_PeripheralOperateCmd_init_default {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_PeripheralMetricsCollectCmd_init_default {{{NULL}, NULL}}
+#define aranya_PeripheralStatusMsg_init_default  {_aranya_PeripheralType_MIN, {{NULL}, NULL}, _aranya_PeripheralState_MIN, {{NULL}, NULL}}
+#define aranya_PeripheralStatusListMsg_init_default {{{NULL}, NULL}}
+#define aranya_PeripheralOperationResultMsg_init_default {{{NULL}, NULL}}
+#define aranya_TLSConfig_init_zero               {{{NULL}, NULL}, 0, 0, 0, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_Connectivity_init_zero            {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, false, aranya_TLSConfig_init_zero}
+#define aranya_Connectivity_ParamsEntry_init_zero {{{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_PeripheralOperation_init_zero     {{{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_PeripheralOperation_ParamsEntry_init_zero {{{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_PeripheralMetric_init_zero        {{{NULL}, NULL}, _aranya_PeripheralMetric_ReportMethod_MIN, _aranya_PeripheralMetric_ValueType_MIN, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_PeripheralMetric_PeripheralParamsEntry_init_zero {{{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_PeripheralMetric_ReporterParamsEntry_init_zero {{{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_PeripheralEnsureCmd_init_zero     {_aranya_PeripheralType_MIN, {{NULL}, NULL}, false, aranya_Connectivity_init_zero, {{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_PeripheralListCmd_init_zero       {{{NULL}, NULL}}
+#define aranya_PeripheralDeleteCmd_init_zero     {{{NULL}, NULL}}
+#define aranya_PeripheralOperateCmd_init_zero    {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_PeripheralMetricsCollectCmd_init_zero {{{NULL}, NULL}}
+#define aranya_PeripheralStatusMsg_init_zero     {_aranya_PeripheralType_MIN, {{NULL}, NULL}, _aranya_PeripheralState_MIN, {{NULL}, NULL}}
+#define aranya_PeripheralStatusListMsg_init_zero {{{NULL}, NULL}}
+#define aranya_PeripheralOperationResultMsg_init_zero {{{NULL}, NULL}}
+
+/* Field tags (for use in manual encoding/decoding) */
+#define aranya_Connectivity_ParamsEntry_key_tag  1
+#define aranya_Connectivity_ParamsEntry_value_tag 2
+#define aranya_PeripheralDeleteCmd_peripheral_names_tag 1
+#define aranya_PeripheralListCmd_peripheral_names_tag 1
+#define aranya_PeripheralMetric_PeripheralParamsEntry_key_tag 1
+#define aranya_PeripheralMetric_PeripheralParamsEntry_value_tag 2
+#define aranya_PeripheralMetric_ReporterParamsEntry_key_tag 1
+#define aranya_PeripheralMetric_ReporterParamsEntry_value_tag 2
+#define aranya_PeripheralMetricsCollectCmd_peripheral_names_tag 2
+#define aranya_PeripheralOperateCmd_peripheral_name_tag 1
+#define aranya_PeripheralOperateCmd_operation_id_tag 2
+#define aranya_PeripheralOperateCmd_data_tag     3
+#define aranya_PeripheralOperation_operation_id_tag 1
+#define aranya_PeripheralOperation_params_tag    2
+#define aranya_PeripheralOperationResultMsg_data_tag 1
+#define aranya_PeripheralOperation_ParamsEntry_key_tag 1
+#define aranya_PeripheralOperation_ParamsEntry_value_tag 2
+#define aranya_PeripheralStatusListMsg_peripherals_tag 1
+#define aranya_PeripheralMetric_name_tag         1
+#define aranya_PeripheralMetric_report_method_tag 2
+#define aranya_PeripheralMetric_value_type_tag   3
+#define aranya_PeripheralMetric_peripheral_params_tag 4
+#define aranya_PeripheralMetric_reporter_name_tag 5
+#define aranya_PeripheralMetric_reporter_params_tag 6
+#define aranya_PeripheralStatusMsg_kind_tag      1
+#define aranya_PeripheralStatusMsg_name_tag      2
+#define aranya_PeripheralStatusMsg_state_tag     3
+#define aranya_PeripheralStatusMsg_message_tag   4
+#define aranya_TLSConfig_server_name_tag         1
+#define aranya_TLSConfig_insecure_skip_verify_tag 2
+#define aranya_TLSConfig_min_version_tag         3
+#define aranya_TLSConfig_max_version_tag         4
+#define aranya_TLSConfig_ca_cert_tag             5
+#define aranya_TLSConfig_cert_tag                6
+#define aranya_TLSConfig_key_tag                 7
+#define aranya_TLSConfig_cipher_suites_tag       8
+#define aranya_TLSConfig_next_protos_tag         9
+#define aranya_Connectivity_method_tag           1
+#define aranya_Connectivity_target_tag           2
+#define aranya_Connectivity_params_tag           3
+#define aranya_Connectivity_tls_tag              4
+#define aranya_PeripheralEnsureCmd_kind_tag      1
+#define aranya_PeripheralEnsureCmd_name_tag      2
+#define aranya_PeripheralEnsureCmd_connector_tag 3
+#define aranya_PeripheralEnsureCmd_operations_tag 4
+#define aranya_PeripheralEnsureCmd_metrics_tag   5
+
+/* Struct field encoding specification for nanopb */
+#define aranya_TLSConfig_FIELDLIST(X, a) \
+X(a, CALLBACK, SINGULAR, STRING,   server_name,       1) \
+X(a, STATIC,   SINGULAR, BOOL,     insecure_skip_verify,   2) \
+X(a, STATIC,   SINGULAR, UINT32,   min_version,       3) \
+X(a, STATIC,   SINGULAR, UINT32,   max_version,       4) \
+X(a, CALLBACK, SINGULAR, BYTES,    ca_cert,           5) \
+X(a, CALLBACK, SINGULAR, BYTES,    cert,              6) \
+X(a, CALLBACK, SINGULAR, BYTES,    key,               7) \
+X(a, CALLBACK, REPEATED, UINT32,   cipher_suites,     8) \
+X(a, CALLBACK, REPEATED, STRING,   next_protos,       9)
+#define aranya_TLSConfig_CALLBACK pb_default_field_callback
+#define aranya_TLSConfig_DEFAULT NULL
+
+#define aranya_Connectivity_FIELDLIST(X, a) \
+X(a, CALLBACK, SINGULAR, STRING,   method,            1) \
+X(a, CALLBACK, SINGULAR, STRING,   target,            2) \
+X(a, CALLBACK, REPEATED, MESSAGE,  params,            3) \
+X(a, STATIC,   OPTIONAL, MESSAGE,  tls,               4)
+#define aranya_Connectivity_CALLBACK pb_default_field_callback
+#define aranya_Connectivity_DEFAULT NULL
+#define aranya_Connectivity_params_MSGTYPE aranya_Connectivity_ParamsEntry
+#define aranya_Connectivity_tls_MSGTYPE aranya_TLSConfig
+
+#define aranya_Connectivity_ParamsEntry_FIELDLIST(X, a) \
+X(a, CALLBACK, SINGULAR, STRING,   key,               1) \
+X(a, CALLBACK, SINGULAR, STRING,   value,             2)
+#define aranya_Connectivity_ParamsEntry_CALLBACK pb_default_field_callback
+#define aranya_Connectivity_ParamsEntry_DEFAULT NULL
+
+#define aranya_PeripheralOperation_FIELDLIST(X, a) \
+X(a, CALLBACK, SINGULAR, STRING,   operation_id,      1) \
+X(a, CALLBACK, REPEATED, MESSAGE,  params,            2)
+#define aranya_PeripheralOperation_CALLBACK pb_default_field_callback
+#define aranya_PeripheralOperation_DEFAULT NULL
+#define aranya_PeripheralOperation_params_MSGTYPE aranya_PeripheralOperation_ParamsEntry
+
+#define aranya_PeripheralOperation_ParamsEntry_FIELDLIST(X, a) \
+X(a, CALLBACK, SINGULAR, STRING,   key,               1) \
+X(a, CALLBACK, SINGULAR, STRING,   value,             2)
+#define aranya_PeripheralOperation_ParamsEntry_CALLBACK pb_default_field_callback
+#define aranya_PeripheralOperation_ParamsEntry_DEFAULT NULL
+
+#define aranya_PeripheralMetric_FIELDLIST(X, a) \
+X(a, CALLBACK, SINGULAR, STRING,   name,              1) \
+X(a, STATIC,   SINGULAR, UENUM,    report_method,     2) \
+X(a, STATIC,   SINGULAR, UENUM,    value_type,        3) \
+X(a, CALLBACK, REPEATED, MESSAGE,  peripheral_params,   4) \
+X(a, CALLBACK, SINGULAR, STRING,   reporter_name,     5) \
+X(a, CALLBACK, REPEATED, MESSAGE,  reporter_params,   6)
+#define aranya_PeripheralMetric_CALLBACK pb_default_field_callback
+#define aranya_PeripheralMetric_DEFAULT NULL
+#define aranya_PeripheralMetric_peripheral_params_MSGTYPE aranya_PeripheralMetric_PeripheralParamsEntry
+#define aranya_PeripheralMetric_reporter_params_MSGTYPE aranya_PeripheralMetric_ReporterParamsEntry
+
+#define aranya_PeripheralMetric_PeripheralParamsEntry_FIELDLIST(X, a) \
+X(a, CALLBACK, SINGULAR, STRING,   key,               1) \
+X(a, CALLBACK, SINGULAR, STRING,   value,             2)
+#define aranya_PeripheralMetric_PeripheralParamsEntry_CALLBACK pb_default_field_callback
+#define aranya_PeripheralMetric_PeripheralParamsEntry_DEFAULT NULL
+
+#define aranya_PeripheralMetric_ReporterParamsEntry_FIELDLIST(X, a) \
+X(a, CALLBACK, SINGULAR, STRING,   key,               1) \
+X(a, CALLBACK, SINGULAR, STRING,   value,             2)
+#define aranya_PeripheralMetric_ReporterParamsEntry_CALLBACK pb_default_field_callback
+#define aranya_PeripheralMetric_ReporterParamsEntry_DEFAULT NULL
+
+#define aranya_PeripheralEnsureCmd_FIELDLIST(X, a) \
+X(a, STATIC,   SINGULAR, UENUM,    kind,              1) \
+X(a, CALLBACK, SINGULAR, STRING,   name,              2) \
+X(a, STATIC,   OPTIONAL, MESSAGE,  connector,         3) \
+X(a, CALLBACK, REPEATED, MESSAGE,  operations,        4) \
+X(a, CALLBACK, REPEATED, MESSAGE,  metrics,           5)
+#define aranya_PeripheralEnsureCmd_CALLBACK pb_default_field_callback
+#define aranya_PeripheralEnsureCmd_DEFAULT NULL
+#define aranya_PeripheralEnsureCmd_connector_MSGTYPE aranya_Connectivity
+#define aranya_PeripheralEnsureCmd_operations_MSGTYPE aranya_PeripheralOperation
+#define aranya_PeripheralEnsureCmd_metrics_MSGTYPE aranya_PeripheralMetric
+
+#define aranya_PeripheralListCmd_FIELDLIST(X, a) \
+X(a, CALLBACK, REPEATED, STRING,   peripheral_names,   1)
+#define aranya_PeripheralListCmd_CALLBACK pb_default_field_callback
+#define aranya_PeripheralListCmd_DEFAULT NULL
+
+#define aranya_PeripheralDeleteCmd_FIELDLIST(X, a) \
+X(a, CALLBACK, REPEATED, STRING,   peripheral_names,   1)
+#define aranya_PeripheralDeleteCmd_CALLBACK pb_default_field_callback
+#define aranya_PeripheralDeleteCmd_DEFAULT NULL
+
+#define aranya_PeripheralOperateCmd_FIELDLIST(X, a) \
+X(a, CALLBACK, SINGULAR, STRING,   peripheral_name,   1) \
+X(a, CALLBACK, SINGULAR, STRING,   operation_id,      2) \
+X(a, CALLBACK, SINGULAR, BYTES,    data,              3)
+#define aranya_PeripheralOperateCmd_CALLBACK pb_default_field_callback
+#define aranya_PeripheralOperateCmd_DEFAULT NULL
+
+#define aranya_PeripheralMetricsCollectCmd_FIELDLIST(X, a) \
+X(a, CALLBACK, REPEATED, STRING,   peripheral_names,   2)
+#define aranya_PeripheralMetricsCollectCmd_CALLBACK pb_default_field_callback
+#define aranya_PeripheralMetricsCollectCmd_DEFAULT NULL
+
+#define aranya_PeripheralStatusMsg_FIELDLIST(X, a) \
+X(a, STATIC,   SINGULAR, UENUM,    kind,              1) \
+X(a, CALLBACK, SINGULAR, STRING,   name,              2) \
+X(a, STATIC,   SINGULAR, UENUM,    state,             3) \
+X(a, CALLBACK, SINGULAR, STRING,   message,           4)
+#define aranya_PeripheralStatusMsg_CALLBACK pb_default_field_callback
+#define aranya_PeripheralStatusMsg_DEFAULT NULL
+
+#define aranya_PeripheralStatusListMsg_FIELDLIST(X, a) \
+X(a, CALLBACK, REPEATED, MESSAGE,  peripherals,       1)
+#define aranya_PeripheralStatusListMsg_CALLBACK pb_default_field_callback
+#define aranya_PeripheralStatusListMsg_DEFAULT NULL
+#define aranya_PeripheralStatusListMsg_peripherals_MSGTYPE aranya_PeripheralStatusMsg
+
+#define aranya_PeripheralOperationResultMsg_FIELDLIST(X, a) \
+X(a, CALLBACK, REPEATED, BYTES,    data,              1)
+#define aranya_PeripheralOperationResultMsg_CALLBACK pb_default_field_callback
+#define aranya_PeripheralOperationResultMsg_DEFAULT NULL
+
+extern const pb_msgdesc_t aranya_TLSConfig_msg;
+extern const pb_msgdesc_t aranya_Connectivity_msg;
+extern const pb_msgdesc_t aranya_Connectivity_ParamsEntry_msg;
+extern const pb_msgdesc_t aranya_PeripheralOperation_msg;
+extern const pb_msgdesc_t aranya_PeripheralOperation_ParamsEntry_msg;
+extern const pb_msgdesc_t aranya_PeripheralMetric_msg;
+extern const pb_msgdesc_t aranya_PeripheralMetric_PeripheralParamsEntry_msg;
+extern const pb_msgdesc_t aranya_PeripheralMetric_ReporterParamsEntry_msg;
+extern const pb_msgdesc_t aranya_PeripheralEnsureCmd_msg;
+extern const pb_msgdesc_t aranya_PeripheralListCmd_msg;
+extern const pb_msgdesc_t aranya_PeripheralDeleteCmd_msg;
+extern const pb_msgdesc_t aranya_PeripheralOperateCmd_msg;
+extern const pb_msgdesc_t aranya_PeripheralMetricsCollectCmd_msg;
+extern const pb_msgdesc_t aranya_PeripheralStatusMsg_msg;
+extern const pb_msgdesc_t aranya_PeripheralStatusListMsg_msg;
+extern const pb_msgdesc_t aranya_PeripheralOperationResultMsg_msg;
+
+/* Defines for backwards compatibility with code written before nanopb-0.4.0 */
+#define aranya_TLSConfig_fields &aranya_TLSConfig_msg
+#define aranya_Connectivity_fields &aranya_Connectivity_msg
+#define aranya_Connectivity_ParamsEntry_fields &aranya_Connectivity_ParamsEntry_msg
+#define aranya_PeripheralOperation_fields &aranya_PeripheralOperation_msg
+#define aranya_PeripheralOperation_ParamsEntry_fields &aranya_PeripheralOperation_ParamsEntry_msg
+#define aranya_PeripheralMetric_fields &aranya_PeripheralMetric_msg
+#define aranya_PeripheralMetric_PeripheralParamsEntry_fields &aranya_PeripheralMetric_PeripheralParamsEntry_msg
+#define aranya_PeripheralMetric_ReporterParamsEntry_fields &aranya_PeripheralMetric_ReporterParamsEntry_msg
+#define aranya_PeripheralEnsureCmd_fields &aranya_PeripheralEnsureCmd_msg
+#define aranya_PeripheralListCmd_fields &aranya_PeripheralListCmd_msg
+#define aranya_PeripheralDeleteCmd_fields &aranya_PeripheralDeleteCmd_msg
+#define aranya_PeripheralOperateCmd_fields &aranya_PeripheralOperateCmd_msg
+#define aranya_PeripheralMetricsCollectCmd_fields &aranya_PeripheralMetricsCollectCmd_msg
+#define aranya_PeripheralStatusMsg_fields &aranya_PeripheralStatusMsg_msg
+#define aranya_PeripheralStatusListMsg_fields &aranya_PeripheralStatusListMsg_msg
+#define aranya_PeripheralOperationResultMsg_fields &aranya_PeripheralOperationResultMsg_msg
+
+/* Maximum encoded size of messages (where known) */
+/* aranya_TLSConfig_size depends on runtime parameters */
+/* aranya_Connectivity_size depends on runtime parameters */
+/* aranya_Connectivity_ParamsEntry_size depends on runtime parameters */
+/* aranya_PeripheralOperation_size depends on runtime parameters */
+/* aranya_PeripheralOperation_ParamsEntry_size depends on runtime parameters */
+/* aranya_PeripheralMetric_size depends on runtime parameters */
+/* aranya_PeripheralMetric_PeripheralParamsEntry_size depends on runtime parameters */
+/* aranya_PeripheralMetric_ReporterParamsEntry_size depends on runtime parameters */
+/* aranya_PeripheralEnsureCmd_size depends on runtime parameters */
+/* aranya_PeripheralListCmd_size depends on runtime parameters */
+/* aranya_PeripheralDeleteCmd_size depends on runtime parameters */
+/* aranya_PeripheralOperateCmd_size depends on runtime parameters */
+/* aranya_PeripheralMetricsCollectCmd_size depends on runtime parameters */
+/* aranya_PeripheralStatusMsg_size depends on runtime parameters */
+/* aranya_PeripheralStatusListMsg_size depends on runtime parameters */
+/* aranya_PeripheralOperationResultMsg_size depends on runtime parameters */
 
 #ifdef __cplusplus
 } /* extern "C" */
