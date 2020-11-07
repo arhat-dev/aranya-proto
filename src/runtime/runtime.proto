@@ -23,6 +23,15 @@ option go_package = "arhat.dev/aranya-proto/aranyagopb/runtimepb";
 enum PacketType {
     _INVALID_RUNTIME_DATA = 0;
 
+    // 1-9: runtime basic operation
+    CMD_GET_INFO = 1;
+
+    CMD_EXEC = 2;
+    CMD_ATTACH = 3;
+    CMD_LOGS = 4;
+    CMD_TTY_RESIZE = 5;
+    CMD_PORT_FORWARD = 6;
+
     // 11-19: container image / application bundle operations
     CMD_IMAGE_LIST = 11;    // TODO
     CMD_IMAGE_ENSURE = 12;
