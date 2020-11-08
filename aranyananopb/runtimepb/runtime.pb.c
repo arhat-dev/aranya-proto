@@ -9,5 +9,8 @@
 PB_BIND(runtime_Packet, runtime_Packet, AUTO)
 
 
+PB_BIND(runtime_RuntimeInfo, runtime_RuntimeInfo, AUTO)
+
+
 
 

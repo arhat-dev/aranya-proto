@@ -27,11 +27,6 @@ Messages
 
 */
 
-message NodeContainerRuntimeInfo {
-    string name = 1;
-    string version = 2;
-}
-
 message NodeSystemInfo {
     string os = 1;
     string os_image = 2;
@@ -40,8 +35,6 @@ message NodeSystemInfo {
     string boot_id = 5;
     string machine_id = 6;
     string system_uuid = 7;
-
-    NodeContainerRuntimeInfo runtime_info = 11;
 }
 
 message NodeResources {

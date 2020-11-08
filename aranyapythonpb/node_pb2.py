@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z!arhat.dev/aranya-proto/aranyagopb',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\nnode.proto\x12\x06\x61ranya\"9\n\x18NodeContainerRuntimeInfo\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0f\n\x07version\x18\x02 \x01(\t\"\xc6\x01\n\x0eNodeSystemInfo\x12\n\n\x02os\x18\x01 \x01(\t\x12\x10\n\x08os_image\x18\x02 \x01(\t\x12\x0c\n\x04\x61rch\x18\x03 \x01(\t\x12\x16\n\x0ekernel_version\x18\x04 \x01(\t\x12\x0f\n\x07\x62oot_id\x18\x05 \x01(\t\x12\x12\n\nmachine_id\x18\x06 \x01(\t\x12\x13\n\x0bsystem_uuid\x18\x07 \x01(\t\x12\x36\n\x0cruntime_info\x18\x0b \x01(\x0b\x32 .aranya.NodeContainerRuntimeInfo\"O\n\rNodeResources\x12\x11\n\tcpu_count\x18\x01 \x01(\x04\x12\x14\n\x0cmemory_bytes\x18\x02 \x01(\x04\x12\x15\n\rstorage_bytes\x18\x03 \x01(\x04\"\xf2\x01\n\x0eNodeConditions\x12$\n\x05ready\x18\x01 \x01(\x0e\x32\x15.aranya.NodeCondition\x12%\n\x06memory\x18\x02 \x01(\x0e\x32\x15.aranya.NodeCondition\x12#\n\x04\x64isk\x18\x03 \x01(\x0e\x32\x15.aranya.NodeCondition\x12\"\n\x03pid\x18\x04 \x01(\x0e\x32\x15.aranya.NodeCondition\x12&\n\x07network\x18\x05 \x01(\x0e\x32\x15.aranya.NodeCondition\x12\"\n\x03pod\x18\x06 \x01(\x0e\x32\x15.aranya.NodeCondition\"\xe6\x03\n\x0bNodeExtInfo\x12\r\n\x05value\x18\x01 \x01(\t\x12\x31\n\nvalue_type\x18\x02 \x01(\x0e\x32\x1d.aranya.NodeExtInfo.ValueType\x12.\n\x08operator\x18\x03 \x01(\x0e\x32\x1c.aranya.NodeExtInfo.Operator\x12*\n\x06target\x18\x04 \x01(\x0e\x32\x1a.aranya.NodeExtInfo.Target\x12\x12\n\ntarget_key\x18\x05 \x01(\t\"h\n\tValueType\x12\x1d\n\x19NODE_EXT_INFO_TYPE_STRING\x10\x00\x12\x1e\n\x1aNODE_EXT_INFO_TYPE_INTEGER\x10\x01\x12\x1c\n\x18NODE_EXT_INFO_TYPE_FLOAT\x10\x02\"l\n\x08Operator\x12\x1e\n\x1aNODE_EXT_INFO_OPERATOR_SET\x10\x00\x12\x1e\n\x1aNODE_EXT_INFO_OPERATOR_ADD\x10\x01\x12 \n\x1cNODE_EXT_INFO_OPERATOR_MINUS\x10\x02\"M\n\x06Target\x12#\n\x1fNODE_EXT_INFO_TARGET_ANNOTATION\x10\x00\x12\x1e\n\x1aNODE_EXT_INFO_TARGET_LABEL\x10\x01\"\xb8\x01\n\rNodeStatusMsg\x12+\n\x0bsystem_info\x18\x01 \x01(\x0b\x32\x16.aranya.NodeSystemInfo\x12\'\n\x08\x63\x61pacity\x18\x02 \x01(\x0b\x32\x15.aranya.NodeResources\x12*\n\nconditions\x18\x03 \x01(\x0b\x32\x16.aranya.NodeConditions\x12%\n\x08\x65xt_info\x18\x04 \x03(\x0b\x32\x13.aranya.NodeExtInfo*e\n\rNodeCondition\x12\x1a\n\x16NODE_CONDITION_UNKNOWN\x10\x00\x12\x1a\n\x16NODE_CONDITION_HEALTHY\x10\x01\x12\x1c\n\x18NODE_CONDITION_UNHEALTHY\x10\x02\x42#Z!arhat.dev/aranya-proto/aranyagopbb\x06proto3'
+  serialized_pb=b'\n\nnode.proto\x12\x06\x61ranya\"\x8e\x01\n\x0eNodeSystemInfo\x12\n\n\x02os\x18\x01 \x01(\t\x12\x10\n\x08os_image\x18\x02 \x01(\t\x12\x0c\n\x04\x61rch\x18\x03 \x01(\t\x12\x16\n\x0ekernel_version\x18\x04 \x01(\t\x12\x0f\n\x07\x62oot_id\x18\x05 \x01(\t\x12\x12\n\nmachine_id\x18\x06 \x01(\t\x12\x13\n\x0bsystem_uuid\x18\x07 \x01(\t\"O\n\rNodeResources\x12\x11\n\tcpu_count\x18\x01 \x01(\x04\x12\x14\n\x0cmemory_bytes\x18\x02 \x01(\x04\x12\x15\n\rstorage_bytes\x18\x03 \x01(\x04\"\xf2\x01\n\x0eNodeConditions\x12$\n\x05ready\x18\x01 \x01(\x0e\x32\x15.aranya.NodeCondition\x12%\n\x06memory\x18\x02 \x01(\x0e\x32\x15.aranya.NodeCondition\x12#\n\x04\x64isk\x18\x03 \x01(\x0e\x32\x15.aranya.NodeCondition\x12\"\n\x03pid\x18\x04 \x01(\x0e\x32\x15.aranya.NodeCondition\x12&\n\x07network\x18\x05 \x01(\x0e\x32\x15.aranya.NodeCondition\x12\"\n\x03pod\x18\x06 \x01(\x0e\x32\x15.aranya.NodeCondition\"\xe6\x03\n\x0bNodeExtInfo\x12\r\n\x05value\x18\x01 \x01(\t\x12\x31\n\nvalue_type\x18\x02 \x01(\x0e\x32\x1d.aranya.NodeExtInfo.ValueType\x12.\n\x08operator\x18\x03 \x01(\x0e\x32\x1c.aranya.NodeExtInfo.Operator\x12*\n\x06target\x18\x04 \x01(\x0e\x32\x1a.aranya.NodeExtInfo.Target\x12\x12\n\ntarget_key\x18\x05 \x01(\t\"h\n\tValueType\x12\x1d\n\x19NODE_EXT_INFO_TYPE_STRING\x10\x00\x12\x1e\n\x1aNODE_EXT_INFO_TYPE_INTEGER\x10\x01\x12\x1c\n\x18NODE_EXT_INFO_TYPE_FLOAT\x10\x02\"l\n\x08Operator\x12\x1e\n\x1aNODE_EXT_INFO_OPERATOR_SET\x10\x00\x12\x1e\n\x1aNODE_EXT_INFO_OPERATOR_ADD\x10\x01\x12 \n\x1cNODE_EXT_INFO_OPERATOR_MINUS\x10\x02\"M\n\x06Target\x12#\n\x1fNODE_EXT_INFO_TARGET_ANNOTATION\x10\x00\x12\x1e\n\x1aNODE_EXT_INFO_TARGET_LABEL\x10\x01\"\xb8\x01\n\rNodeStatusMsg\x12+\n\x0bsystem_info\x18\x01 \x01(\x0b\x32\x16.aranya.NodeSystemInfo\x12\'\n\x08\x63\x61pacity\x18\x02 \x01(\x0b\x32\x15.aranya.NodeResources\x12*\n\nconditions\x18\x03 \x01(\x0b\x32\x16.aranya.NodeConditions\x12%\n\x08\x65xt_info\x18\x04 \x03(\x0b\x32\x13.aranya.NodeExtInfo*e\n\rNodeCondition\x12\x1a\n\x16NODE_CONDITION_UNKNOWN\x10\x00\x12\x1a\n\x16NODE_CONDITION_HEALTHY\x10\x01\x12\x1c\n\x18NODE_CONDITION_UNHEALTHY\x10\x02\x42#Z!arhat.dev/aranya-proto/aranyagopbb\x06proto3'
 )
 
 _NODECONDITION = _descriptor.EnumDescriptor(
@@ -48,8 +48,8 @@ _NODECONDITION = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1284,
-  serialized_end=1385,
+  serialized_start=1169,
+  serialized_end=1270,
 )
 _sym_db.RegisterEnumDescriptor(_NODECONDITION)
 
@@ -84,8 +84,8 @@ _NODEEXTINFO_VALUETYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=802,
-  serialized_end=906,
+  serialized_start=687,
+  serialized_end=791,
 )
 _sym_db.RegisterEnumDescriptor(_NODEEXTINFO_VALUETYPE)
 
@@ -114,8 +114,8 @@ _NODEEXTINFO_OPERATOR = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=908,
-  serialized_end=1016,
+  serialized_start=793,
+  serialized_end=901,
 )
 _sym_db.RegisterEnumDescriptor(_NODEEXTINFO_OPERATOR)
 
@@ -139,49 +139,10 @@ _NODEEXTINFO_TARGET = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1018,
-  serialized_end=1095,
+  serialized_start=903,
+  serialized_end=980,
 )
 _sym_db.RegisterEnumDescriptor(_NODEEXTINFO_TARGET)
-
-
-_NODECONTAINERRUNTIMEINFO = _descriptor.Descriptor(
-  name='NodeContainerRuntimeInfo',
-  full_name='aranya.NodeContainerRuntimeInfo',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='name', full_name='aranya.NodeContainerRuntimeInfo.name', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='version', full_name='aranya.NodeContainerRuntimeInfo.version', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=22,
-  serialized_end=79,
-)
 
 
 _NODESYSTEMINFO = _descriptor.Descriptor(
@@ -241,13 +202,6 @@ _NODESYSTEMINFO = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='runtime_info', full_name='aranya.NodeSystemInfo.runtime_info', index=7,
-      number=11, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -260,8 +214,8 @@ _NODESYSTEMINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=82,
-  serialized_end=280,
+  serialized_start=23,
+  serialized_end=165,
 )
 
 
@@ -306,8 +260,8 @@ _NODERESOURCES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=282,
-  serialized_end=361,
+  serialized_start=167,
+  serialized_end=246,
 )
 
 
@@ -373,8 +327,8 @@ _NODECONDITIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=364,
-  serialized_end=606,
+  serialized_start=249,
+  serialized_end=491,
 )
 
 
@@ -436,8 +390,8 @@ _NODEEXTINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=609,
-  serialized_end=1095,
+  serialized_start=494,
+  serialized_end=980,
 )
 
 
@@ -489,11 +443,10 @@ _NODESTATUSMSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1098,
-  serialized_end=1282,
+  serialized_start=983,
+  serialized_end=1167,
 )
 
-_NODESYSTEMINFO.fields_by_name['runtime_info'].message_type = _NODECONTAINERRUNTIMEINFO
 _NODECONDITIONS.fields_by_name['ready'].enum_type = _NODECONDITION
 _NODECONDITIONS.fields_by_name['memory'].enum_type = _NODECONDITION
 _NODECONDITIONS.fields_by_name['disk'].enum_type = _NODECONDITION
@@ -510,7 +463,6 @@ _NODESTATUSMSG.fields_by_name['system_info'].message_type = _NODESYSTEMINFO
 _NODESTATUSMSG.fields_by_name['capacity'].message_type = _NODERESOURCES
 _NODESTATUSMSG.fields_by_name['conditions'].message_type = _NODECONDITIONS
 _NODESTATUSMSG.fields_by_name['ext_info'].message_type = _NODEEXTINFO
-DESCRIPTOR.message_types_by_name['NodeContainerRuntimeInfo'] = _NODECONTAINERRUNTIMEINFO
 DESCRIPTOR.message_types_by_name['NodeSystemInfo'] = _NODESYSTEMINFO
 DESCRIPTOR.message_types_by_name['NodeResources'] = _NODERESOURCES
 DESCRIPTOR.message_types_by_name['NodeConditions'] = _NODECONDITIONS
@@ -518,13 +470,6 @@ DESCRIPTOR.message_types_by_name['NodeExtInfo'] = _NODEEXTINFO
 DESCRIPTOR.message_types_by_name['NodeStatusMsg'] = _NODESTATUSMSG
 DESCRIPTOR.enum_types_by_name['NodeCondition'] = _NODECONDITION
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
-
-NodeContainerRuntimeInfo = _reflection.GeneratedProtocolMessageType('NodeContainerRuntimeInfo', (_message.Message,), {
-  'DESCRIPTOR' : _NODECONTAINERRUNTIMEINFO,
-  '__module__' : 'node_pb2'
-  # @@protoc_insertion_point(class_scope:aranya.NodeContainerRuntimeInfo)
-  })
-_sym_db.RegisterMessage(NodeContainerRuntimeInfo)
 
 NodeSystemInfo = _reflection.GeneratedProtocolMessageType('NodeSystemInfo', (_message.Message,), {
   'DESCRIPTOR' : _NODESYSTEMINFO,

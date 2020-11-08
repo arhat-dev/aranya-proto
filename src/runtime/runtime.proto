@@ -32,6 +32,7 @@ enum PacketType {
     CMD_TTY_RESIZE = 5;
     CMD_PORT_FORWARD = 6;
 
+    MSG_RUNTIME_INFO = 9;
     MSG_ERROR = 10;
 
     // 11-19: container image / application bundle operations
@@ -56,4 +57,14 @@ enum PacketType {
 message Packet {
     PacketType kind = 1;
     bytes payload = 2;
+}
+
+// runtime info to override node info
+message RuntimeInfo {
+    string name = 1;
+    string version = 2;
+    string os = 3;
+    string os_image = 4;
+    string arch = 5;
+    string kernel_version = 6;
 }
