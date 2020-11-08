@@ -32,6 +32,8 @@ enum PacketType {
     CMD_TTY_RESIZE = 5;
     CMD_PORT_FORWARD = 6;
 
+    MSG_ERROR = 10;
+
     // 11-19: container image / application bundle operations
     CMD_IMAGE_LIST = 11;    // TODO
     CMD_IMAGE_ENSURE = 12;

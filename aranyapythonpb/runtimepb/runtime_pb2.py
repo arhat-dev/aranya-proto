@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z+arhat.dev/aranya-proto/aranyagopb/runtimepb',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x15runtime/runtime.proto\x12\x07runtime\"<\n\x06Packet\x12!\n\x04kind\x18\x01 \x01(\x0e\x32\x13.runtime.PacketType\x12\x0f\n\x07payload\x18\x02 \x01(\x0c*\xe7\x02\n\nPacketType\x12\x19\n\x15_INVALID_RUNTIME_DATA\x10\x00\x12\x10\n\x0c\x43MD_GET_INFO\x10\x01\x12\x0c\n\x08\x43MD_EXEC\x10\x02\x12\x0e\n\nCMD_ATTACH\x10\x03\x12\x0c\n\x08\x43MD_LOGS\x10\x04\x12\x12\n\x0e\x43MD_TTY_RESIZE\x10\x05\x12\x14\n\x10\x43MD_PORT_FORWARD\x10\x06\x12\x12\n\x0e\x43MD_IMAGE_LIST\x10\x0b\x12\x14\n\x10\x43MD_IMAGE_ENSURE\x10\x0c\x12\x14\n\x10\x43MD_IMAGE_DELETE\x10\r\x12\x14\n\x10MSG_IMAGE_STATUS\x10\x15\x12\x19\n\x15MSG_IMAGE_STATUS_LIST\x10\x16\x12\x10\n\x0c\x43MD_POD_LIST\x10\x1f\x12\x12\n\x0e\x43MD_POD_ENSURE\x10 \x12\x12\n\x0e\x43MD_POD_DELETE\x10!\x12\x12\n\x0eMSG_POD_STATUS\x10)\x12\x17\n\x13MSG_POD_STATUS_LIST\x10*B-Z+arhat.dev/aranya-proto/aranyagopb/runtimepbb\x06proto3'
+  serialized_pb=b'\n\x15runtime/runtime.proto\x12\x07runtime\"<\n\x06Packet\x12!\n\x04kind\x18\x01 \x01(\x0e\x32\x13.runtime.PacketType\x12\x0f\n\x07payload\x18\x02 \x01(\x0c*\xf6\x02\n\nPacketType\x12\x19\n\x15_INVALID_RUNTIME_DATA\x10\x00\x12\x10\n\x0c\x43MD_GET_INFO\x10\x01\x12\x0c\n\x08\x43MD_EXEC\x10\x02\x12\x0e\n\nCMD_ATTACH\x10\x03\x12\x0c\n\x08\x43MD_LOGS\x10\x04\x12\x12\n\x0e\x43MD_TTY_RESIZE\x10\x05\x12\x14\n\x10\x43MD_PORT_FORWARD\x10\x06\x12\r\n\tMSG_ERROR\x10\n\x12\x12\n\x0e\x43MD_IMAGE_LIST\x10\x0b\x12\x14\n\x10\x43MD_IMAGE_ENSURE\x10\x0c\x12\x14\n\x10\x43MD_IMAGE_DELETE\x10\r\x12\x14\n\x10MSG_IMAGE_STATUS\x10\x15\x12\x19\n\x15MSG_IMAGE_STATUS_LIST\x10\x16\x12\x10\n\x0c\x43MD_POD_LIST\x10\x1f\x12\x12\n\x0e\x43MD_POD_ENSURE\x10 \x12\x12\n\x0e\x43MD_POD_DELETE\x10!\x12\x12\n\x0eMSG_POD_STATUS\x10)\x12\x17\n\x13MSG_POD_STATUS_LIST\x10*B-Z+arhat.dev/aranya-proto/aranyagopb/runtimepbb\x06proto3'
 )
 
 _PACKETTYPE = _descriptor.EnumDescriptor(
@@ -66,52 +66,57 @@ _PACKETTYPE = _descriptor.EnumDescriptor(
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CMD_IMAGE_LIST', index=7, number=11,
+      name='MSG_ERROR', index=7, number=10,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CMD_IMAGE_ENSURE', index=8, number=12,
+      name='CMD_IMAGE_LIST', index=8, number=11,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CMD_IMAGE_DELETE', index=9, number=13,
+      name='CMD_IMAGE_ENSURE', index=9, number=12,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='MSG_IMAGE_STATUS', index=10, number=21,
+      name='CMD_IMAGE_DELETE', index=10, number=13,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='MSG_IMAGE_STATUS_LIST', index=11, number=22,
+      name='MSG_IMAGE_STATUS', index=11, number=21,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CMD_POD_LIST', index=12, number=31,
+      name='MSG_IMAGE_STATUS_LIST', index=12, number=22,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CMD_POD_ENSURE', index=13, number=32,
+      name='CMD_POD_LIST', index=13, number=31,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CMD_POD_DELETE', index=14, number=33,
+      name='CMD_POD_ENSURE', index=14, number=32,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='MSG_POD_STATUS', index=15, number=41,
+      name='CMD_POD_DELETE', index=15, number=33,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='MSG_POD_STATUS_LIST', index=16, number=42,
+      name='MSG_POD_STATUS', index=16, number=41,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='MSG_POD_STATUS_LIST', index=17, number=42,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
@@ -119,7 +124,7 @@ _PACKETTYPE = _descriptor.EnumDescriptor(
   containing_type=None,
   serialized_options=None,
   serialized_start=97,
-  serialized_end=456,
+  serialized_end=471,
 )
 _sym_db.RegisterEnumDescriptor(_PACKETTYPE)
 
@@ -131,6 +136,7 @@ CMD_ATTACH = 3
 CMD_LOGS = 4
 CMD_TTY_RESIZE = 5
 CMD_PORT_FORWARD = 6
+MSG_ERROR = 10
 CMD_IMAGE_LIST = 11
 CMD_IMAGE_ENSURE = 12
 CMD_IMAGE_DELETE = 13

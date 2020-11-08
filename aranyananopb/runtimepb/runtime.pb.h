@@ -22,6 +22,7 @@ typedef enum _runtime_PacketType {
     runtime_PacketType_CMD_LOGS = 4,
     runtime_PacketType_CMD_TTY_RESIZE = 5,
     runtime_PacketType_CMD_PORT_FORWARD = 6,
+    runtime_PacketType_MSG_ERROR = 10,
     runtime_PacketType_CMD_IMAGE_LIST = 11,
     runtime_PacketType_CMD_IMAGE_ENSURE = 12,
     runtime_PacketType_CMD_IMAGE_DELETE = 13,

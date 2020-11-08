@@ -31,6 +31,12 @@ type CmdType int32
 
 const (
 	// 0-4: raw data related cmd
+	// to reduce overhead, we also use this identifier to send data targeting the runtime
+	// extension connected
+	//
+	// the agent should cache all non-terminated session ids
+	// if the session id doesn't exist, send data to the runtime
+	// if there is not runtime connected, discard data
 	CMD_DATA_UPSTREAM CmdType = 0
 	CMD_SESSION_CLOSE CmdType = 5
 	CMD_REJECT        CmdType = 6
