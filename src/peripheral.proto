@@ -16,7 +16,7 @@ limitations under the License.
 
 syntax = "proto3";
 
-// +build !noperipheral
+// +build !noextension,!noextension_peripheral
 package aranya;
 
 option go_package = "arhat.dev/aranya-proto/aranyagopb";
