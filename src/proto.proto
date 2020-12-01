@@ -20,8 +20,6 @@ package aranya;
 
 option go_package = "arhat.dev/aranya-proto/aranyagopb";
 
-message Empty {}
-
 enum CmdType {
     // 0-4: raw data related cmd
     // to reduce overhead, we also use this identifier to send data targeting the runtime
@@ -82,6 +80,8 @@ message Cmd {
     bool completed = 4;
 
     // payload of encoded XxxCmd or raw data bytes
+    //
+    // payload can be nil if kind has clear indication of what operation to do
     bytes payload = 11;
 }
 
@@ -136,6 +136,8 @@ message Msg {
     bool completed = 4;
 
     // payload of encoded XxxMsg or raw data bytes
+    //
+    // payload can be nil if kind is clearly defined
     bytes payload = 11;
 }
 
@@ -143,6 +145,9 @@ message Msg {
 
 message NodeInfoGetCmd {
     enum Kind {
+        // Get dynamic node information only
+        // including node conditions and resources
+        // not including node system info and node ext info
         NODE_INFO_DYN = 0;
         NODE_INFO_ALL = 1;
     }
@@ -151,6 +156,7 @@ message NodeInfoGetCmd {
 }
 
 message SessionCloseCmd {
+    // session id to be closed
     uint64 sid = 1;
 }
 
@@ -208,15 +214,28 @@ message ExecOrAttachCmd {
 }
 
 message PortForwardCmd {
+    // pod uid to help runtime to find pod ip if no host provided
     string pod_uid = 1;
 
-    int32 port = 2;
-    string protocol = 3;
+    // Network type of the forwarded endpoint
+    string network = 2;
+
+    // host part of forwarded endpoint
+    string host = 3;
+
+    // port used for ip based protocols (e.g. tcp/udp)
+    // for filed based protocols (e.g. unix/NamedPipe), this should be ignored
+    int32 port = 4;
 }
 
 message TerminalResizeCmd {
     uint32 cols = 1;
     uint32 rows = 2;
+}
+
+message MetricsConfigCmd {
+    repeated string collect = 1;
+    repeated string extra_args = 2;
 }
 
 // Error infomation
@@ -273,4 +292,128 @@ message StateMsg {
 message NetworkMsg {
     // protobuf bytes of abbot proto
     bytes abbot_response_bytes = 1;
+}
+
+/*
+
+Node Information Sync
+
+*/
+message NodeSystemInfo {
+    string os = 1;
+    string os_image = 2;
+    string arch = 3;
+    string kernel_version = 4;
+    string boot_id = 5;
+    string machine_id = 6;
+    string system_uuid = 7;
+}
+
+message NodeResources {
+    uint64 cpu_count = 1;
+    uint64 memory_bytes = 2;
+    uint64 storage_bytes = 3;
+}
+
+enum NodeCondition {
+    NODE_CONDITION_UNKNOWN = 0;
+    NODE_CONDITION_HEALTHY = 1;
+    NODE_CONDITION_UNHEALTHY = 2;
+}
+
+message NodeConditions {
+    NodeCondition ready = 1;
+    NodeCondition memory = 2;
+    NodeCondition disk = 3;
+    NodeCondition pid = 4;
+    NodeCondition network = 5;
+    NodeCondition pod = 6;
+}
+
+message NodeExtInfo {
+    enum ValueType {
+        NODE_EXT_INFO_TYPE_STRING = 0;
+        NODE_EXT_INFO_TYPE_INTEGER = 1;
+        NODE_EXT_INFO_TYPE_FLOAT = 2;
+    }
+
+    enum Operator {
+        // no matter what previous value is, set to new value
+        NODE_EXT_INFO_OPERATOR_SET = 0;
+        // only valid for {integer, float}
+        NODE_EXT_INFO_OPERATOR_ADD = 1;
+        // only valid for {integer, float}
+        NODE_EXT_INFO_OPERATOR_MINUS = 2;
+    }
+
+    enum Target {
+        NODE_EXT_INFO_TARGET_ANNOTATION = 0;
+        NODE_EXT_INFO_TARGET_LABEL = 1;
+    }
+
+    // value is always transmitted in string format
+    string value = 1;
+    // type of the value
+    ValueType value_type = 2;
+    // operator
+    Operator operator = 3;
+
+    Target target = 4;
+    string target_key = 5;
+}
+
+message NodeStatusMsg {
+    NodeSystemInfo system_info = 1;
+    NodeResources capacity = 2;
+    NodeConditions conditions = 3;
+    repeated NodeExtInfo ext_info = 4;
+}
+
+/*
+
+Storage Sync (remote mount)
+
+*/
+
+message StorageListCmd {}
+message StorageEnsureCmd {
+    string remote_path = 1;
+    string local_path = 2;
+}
+
+message StorageDeleteCmd {
+    string remote_path = 1;
+    string local_path = 2;
+}
+
+enum StorageState {
+    STORAGE_STATE_UNKONW = 0;
+    STORAGE_STATE_UNMOUNTED = 1;
+    STORAGE_STATE_MOUNTED = 2;
+}
+
+message StorageStatusMsg {
+    StorageState state = 1;
+    string remote_path = 2;
+    string mount_point = 3;
+}
+
+message StorageStatusListMsg {
+    repeated StorageStatusMsg storages = 1;
+}
+
+/*
+
+Credential Sync
+
+*/
+
+message CredentialListCmd {}
+message CredentialDeleteCmd {}
+message CredentialEnsureCmd {
+    bytes ssh_private_key = 1;
+}
+
+message CredentialStatusMsg {
+    bytes ssh_private_key_sha256 = 1;
 }

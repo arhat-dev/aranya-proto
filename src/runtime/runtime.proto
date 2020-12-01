@@ -52,6 +52,10 @@ enum PacketType {
     // 41-49: pod msgs
     MSG_POD_STATUS = 41;
     MSG_POD_STATUS_LIST = 42;
+
+    // 51-59: metrics operations
+    CMD_METRICS_CONFIG = 51;
+    CMD_METRICS_COLLECT = 52;
 }
 
 message Packet {

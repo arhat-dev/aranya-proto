@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z+arhat.dev/aranya-proto/aranyagopb/runtimepb',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x15runtime/runtime.proto\x12\x07runtime\"<\n\x06Packet\x12!\n\x04kind\x18\x01 \x01(\x0e\x32\x13.runtime.PacketType\x12\x0f\n\x07payload\x18\x02 \x01(\x0c\"p\n\x0bRuntimeInfo\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0f\n\x07version\x18\x02 \x01(\t\x12\n\n\x02os\x18\x03 \x01(\t\x12\x10\n\x08os_image\x18\x04 \x01(\t\x12\x0c\n\x04\x61rch\x18\x05 \x01(\t\x12\x16\n\x0ekernel_version\x18\x06 \x01(\t*\x8c\x03\n\nPacketType\x12\x19\n\x15_INVALID_RUNTIME_DATA\x10\x00\x12\x10\n\x0c\x43MD_GET_INFO\x10\x01\x12\x0c\n\x08\x43MD_EXEC\x10\x02\x12\x0e\n\nCMD_ATTACH\x10\x03\x12\x0c\n\x08\x43MD_LOGS\x10\x04\x12\x12\n\x0e\x43MD_TTY_RESIZE\x10\x05\x12\x14\n\x10\x43MD_PORT_FORWARD\x10\x06\x12\x14\n\x10MSG_RUNTIME_INFO\x10\t\x12\r\n\tMSG_ERROR\x10\n\x12\x12\n\x0e\x43MD_IMAGE_LIST\x10\x0b\x12\x14\n\x10\x43MD_IMAGE_ENSURE\x10\x0c\x12\x14\n\x10\x43MD_IMAGE_DELETE\x10\r\x12\x14\n\x10MSG_IMAGE_STATUS\x10\x15\x12\x19\n\x15MSG_IMAGE_STATUS_LIST\x10\x16\x12\x10\n\x0c\x43MD_POD_LIST\x10\x1f\x12\x12\n\x0e\x43MD_POD_ENSURE\x10 \x12\x12\n\x0e\x43MD_POD_DELETE\x10!\x12\x12\n\x0eMSG_POD_STATUS\x10)\x12\x17\n\x13MSG_POD_STATUS_LIST\x10*B-Z+arhat.dev/aranya-proto/aranyagopb/runtimepbb\x06proto3'
+  serialized_pb=b'\n\x15runtime/runtime.proto\x12\x07runtime\"<\n\x06Packet\x12!\n\x04kind\x18\x01 \x01(\x0e\x32\x13.runtime.PacketType\x12\x0f\n\x07payload\x18\x02 \x01(\x0c\"p\n\x0bRuntimeInfo\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0f\n\x07version\x18\x02 \x01(\t\x12\n\n\x02os\x18\x03 \x01(\t\x12\x10\n\x08os_image\x18\x04 \x01(\t\x12\x0c\n\x04\x61rch\x18\x05 \x01(\t\x12\x16\n\x0ekernel_version\x18\x06 \x01(\t*\xbd\x03\n\nPacketType\x12\x19\n\x15_INVALID_RUNTIME_DATA\x10\x00\x12\x10\n\x0c\x43MD_GET_INFO\x10\x01\x12\x0c\n\x08\x43MD_EXEC\x10\x02\x12\x0e\n\nCMD_ATTACH\x10\x03\x12\x0c\n\x08\x43MD_LOGS\x10\x04\x12\x12\n\x0e\x43MD_TTY_RESIZE\x10\x05\x12\x14\n\x10\x43MD_PORT_FORWARD\x10\x06\x12\x14\n\x10MSG_RUNTIME_INFO\x10\t\x12\r\n\tMSG_ERROR\x10\n\x12\x12\n\x0e\x43MD_IMAGE_LIST\x10\x0b\x12\x14\n\x10\x43MD_IMAGE_ENSURE\x10\x0c\x12\x14\n\x10\x43MD_IMAGE_DELETE\x10\r\x12\x14\n\x10MSG_IMAGE_STATUS\x10\x15\x12\x19\n\x15MSG_IMAGE_STATUS_LIST\x10\x16\x12\x10\n\x0c\x43MD_POD_LIST\x10\x1f\x12\x12\n\x0e\x43MD_POD_ENSURE\x10 \x12\x12\n\x0e\x43MD_POD_DELETE\x10!\x12\x12\n\x0eMSG_POD_STATUS\x10)\x12\x17\n\x13MSG_POD_STATUS_LIST\x10*\x12\x16\n\x12\x43MD_METRICS_CONFIG\x10\x33\x12\x17\n\x13\x43MD_METRICS_COLLECT\x10\x34\x42-Z+arhat.dev/aranya-proto/aranyagopb/runtimepbb\x06proto3'
 )
 
 _PACKETTYPE = _descriptor.EnumDescriptor(
@@ -125,11 +125,21 @@ _PACKETTYPE = _descriptor.EnumDescriptor(
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='CMD_METRICS_CONFIG', index=19, number=51,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='CMD_METRICS_COLLECT', index=20, number=52,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
   ],
   containing_type=None,
   serialized_options=None,
   serialized_start=211,
-  serialized_end=607,
+  serialized_end=656,
 )
 _sym_db.RegisterEnumDescriptor(_PACKETTYPE)
 
@@ -153,6 +163,8 @@ CMD_POD_ENSURE = 32
 CMD_POD_DELETE = 33
 MSG_POD_STATUS = 41
 MSG_POD_STATUS_LIST = 42
+CMD_METRICS_CONFIG = 51
+CMD_METRICS_COLLECT = 52
 
 
 

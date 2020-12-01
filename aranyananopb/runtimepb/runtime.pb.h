@@ -33,7 +33,9 @@ typedef enum _runtime_PacketType {
     runtime_PacketType_CMD_POD_ENSURE = 32,
     runtime_PacketType_CMD_POD_DELETE = 33,
     runtime_PacketType_MSG_POD_STATUS = 41,
-    runtime_PacketType_MSG_POD_STATUS_LIST = 42
+    runtime_PacketType_MSG_POD_STATUS_LIST = 42,
+    runtime_PacketType_CMD_METRICS_CONFIG = 51,
+    runtime_PacketType_CMD_METRICS_COLLECT = 52
 } runtime_PacketType;
 
 /* Struct definitions */
@@ -54,8 +56,8 @@ typedef struct _runtime_Packet {
 
 /* Helper constants for enums */
 #define _runtime_PacketType_MIN runtime_PacketType__INVALID_RUNTIME_DATA
-#define _runtime_PacketType_MAX runtime_PacketType_MSG_POD_STATUS_LIST
-#define _runtime_PacketType_ARRAYSIZE ((runtime_PacketType)(runtime_PacketType_MSG_POD_STATUS_LIST+1))
+#define _runtime_PacketType_MAX runtime_PacketType_CMD_METRICS_COLLECT
+#define _runtime_PacketType_ARRAYSIZE ((runtime_PacketType)(runtime_PacketType_CMD_METRICS_COLLECT+1))
 
 
 /* Initializer values for message structs */

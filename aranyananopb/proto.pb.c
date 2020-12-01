@@ -6,9 +6,6 @@
 #error Regenerate this file with the current version of nanopb generator.
 #endif
 
-PB_BIND(aranya_Empty, aranya_Empty, AUTO)
-
-
 PB_BIND(aranya_Cmd, aranya_Cmd, AUTO)
 
 
@@ -42,6 +39,9 @@ PB_BIND(aranya_PortForwardCmd, aranya_PortForwardCmd, AUTO)
 PB_BIND(aranya_TerminalResizeCmd, aranya_TerminalResizeCmd, AUTO)
 
 
+PB_BIND(aranya_MetricsConfigCmd, aranya_MetricsConfigCmd, AUTO)
+
+
 PB_BIND(aranya_ErrorMsg, aranya_ErrorMsg, AUTO)
 
 
@@ -49,6 +49,53 @@ PB_BIND(aranya_StateMsg, aranya_StateMsg, AUTO)
 
 
 PB_BIND(aranya_NetworkMsg, aranya_NetworkMsg, AUTO)
+
+
+PB_BIND(aranya_NodeSystemInfo, aranya_NodeSystemInfo, AUTO)
+
+
+PB_BIND(aranya_NodeResources, aranya_NodeResources, AUTO)
+
+
+PB_BIND(aranya_NodeConditions, aranya_NodeConditions, AUTO)
+
+
+PB_BIND(aranya_NodeExtInfo, aranya_NodeExtInfo, AUTO)
+
+
+PB_BIND(aranya_NodeStatusMsg, aranya_NodeStatusMsg, AUTO)
+
+
+PB_BIND(aranya_StorageListCmd, aranya_StorageListCmd, AUTO)
+
+
+PB_BIND(aranya_StorageEnsureCmd, aranya_StorageEnsureCmd, AUTO)
+
+
+PB_BIND(aranya_StorageDeleteCmd, aranya_StorageDeleteCmd, AUTO)
+
+
+PB_BIND(aranya_StorageStatusMsg, aranya_StorageStatusMsg, AUTO)
+
+
+PB_BIND(aranya_StorageStatusListMsg, aranya_StorageStatusListMsg, AUTO)
+
+
+PB_BIND(aranya_CredentialListCmd, aranya_CredentialListCmd, AUTO)
+
+
+PB_BIND(aranya_CredentialDeleteCmd, aranya_CredentialDeleteCmd, AUTO)
+
+
+PB_BIND(aranya_CredentialEnsureCmd, aranya_CredentialEnsureCmd, AUTO)
+
+
+PB_BIND(aranya_CredentialStatusMsg, aranya_CredentialStatusMsg, AUTO)
+
+
+
+
+
 
 
 

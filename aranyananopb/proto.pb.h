@@ -67,6 +67,18 @@ typedef enum _aranya_RejectionReason {
     aranya_RejectionReason_REJECTION_INTERNAL_SERVER_ERROR = 4
 } aranya_RejectionReason;
 
+typedef enum _aranya_NodeCondition {
+    aranya_NodeCondition_NODE_CONDITION_UNKNOWN = 0,
+    aranya_NodeCondition_NODE_CONDITION_HEALTHY = 1,
+    aranya_NodeCondition_NODE_CONDITION_UNHEALTHY = 2
+} aranya_NodeCondition;
+
+typedef enum _aranya_StorageState {
+    aranya_StorageState_STORAGE_STATE_UNKONW = 0,
+    aranya_StorageState_STORAGE_STATE_UNMOUNTED = 1,
+    aranya_StorageState_STORAGE_STATE_MOUNTED = 2
+} aranya_StorageState;
+
 typedef enum _aranya_NodeInfoGetCmd_Kind {
     aranya_NodeInfoGetCmd_Kind_NODE_INFO_DYN = 0,
     aranya_NodeInfoGetCmd_Kind_NODE_INFO_ALL = 1
@@ -86,15 +98,49 @@ typedef enum _aranya_StateMsg_Kind {
     aranya_StateMsg_Kind_STATE_OFFLINE = 2
 } aranya_StateMsg_Kind;
 
+typedef enum _aranya_NodeExtInfo_ValueType {
+    aranya_NodeExtInfo_ValueType_NODE_EXT_INFO_TYPE_STRING = 0,
+    aranya_NodeExtInfo_ValueType_NODE_EXT_INFO_TYPE_INTEGER = 1,
+    aranya_NodeExtInfo_ValueType_NODE_EXT_INFO_TYPE_FLOAT = 2
+} aranya_NodeExtInfo_ValueType;
+
+typedef enum _aranya_NodeExtInfo_Operator {
+    aranya_NodeExtInfo_Operator_NODE_EXT_INFO_OPERATOR_SET = 0,
+    aranya_NodeExtInfo_Operator_NODE_EXT_INFO_OPERATOR_ADD = 1,
+    aranya_NodeExtInfo_Operator_NODE_EXT_INFO_OPERATOR_MINUS = 2
+} aranya_NodeExtInfo_Operator;
+
+typedef enum _aranya_NodeExtInfo_Target {
+    aranya_NodeExtInfo_Target_NODE_EXT_INFO_TARGET_ANNOTATION = 0,
+    aranya_NodeExtInfo_Target_NODE_EXT_INFO_TARGET_LABEL = 1
+} aranya_NodeExtInfo_Target;
+
 /* Struct definitions */
-typedef struct _aranya_Empty {
+typedef struct _aranya_CredentialDeleteCmd {
     char dummy_field;
-} aranya_Empty;
+} aranya_CredentialDeleteCmd;
+
+typedef struct _aranya_CredentialEnsureCmd {
+    pb_callback_t ssh_private_key;
+} aranya_CredentialEnsureCmd;
+
+typedef struct _aranya_CredentialListCmd {
+    char dummy_field;
+} aranya_CredentialListCmd;
+
+typedef struct _aranya_CredentialStatusMsg {
+    pb_callback_t ssh_private_key_sha256;
+} aranya_CredentialStatusMsg;
 
 typedef struct _aranya_ExecOrAttachCmd_EnvsEntry {
     pb_callback_t key;
     pb_callback_t value;
 } aranya_ExecOrAttachCmd_EnvsEntry;
+
+typedef struct _aranya_MetricsConfigCmd {
+    pb_callback_t collect;
+    pb_callback_t extra_args;
+} aranya_MetricsConfigCmd;
 
 typedef struct _aranya_NetworkCmd {
     pb_callback_t abbot_request_bytes;
@@ -103,6 +149,34 @@ typedef struct _aranya_NetworkCmd {
 typedef struct _aranya_NetworkMsg {
     pb_callback_t abbot_response_bytes;
 } aranya_NetworkMsg;
+
+typedef struct _aranya_NodeSystemInfo {
+    pb_callback_t os;
+    pb_callback_t os_image;
+    pb_callback_t arch;
+    pb_callback_t kernel_version;
+    pb_callback_t boot_id;
+    pb_callback_t machine_id;
+    pb_callback_t system_uuid;
+} aranya_NodeSystemInfo;
+
+typedef struct _aranya_StorageDeleteCmd {
+    pb_callback_t remote_path;
+    pb_callback_t local_path;
+} aranya_StorageDeleteCmd;
+
+typedef struct _aranya_StorageEnsureCmd {
+    pb_callback_t remote_path;
+    pb_callback_t local_path;
+} aranya_StorageEnsureCmd;
+
+typedef struct _aranya_StorageListCmd {
+    char dummy_field;
+} aranya_StorageListCmd;
+
+typedef struct _aranya_StorageStatusListMsg {
+    pb_callback_t storages;
+} aranya_StorageStatusListMsg;
 
 typedef struct _aranya_Cmd {
     aranya_CmdType kind;
@@ -149,14 +223,38 @@ typedef struct _aranya_Msg {
     pb_callback_t payload;
 } aranya_Msg;
 
+typedef struct _aranya_NodeConditions {
+    aranya_NodeCondition ready;
+    aranya_NodeCondition memory;
+    aranya_NodeCondition disk;
+    aranya_NodeCondition pid;
+    aranya_NodeCondition network;
+    aranya_NodeCondition pod;
+} aranya_NodeConditions;
+
+typedef struct _aranya_NodeExtInfo {
+    pb_callback_t value;
+    aranya_NodeExtInfo_ValueType value_type;
+    aranya_NodeExtInfo_Operator operator;
+    aranya_NodeExtInfo_Target target;
+    pb_callback_t target_key;
+} aranya_NodeExtInfo;
+
 typedef struct _aranya_NodeInfoGetCmd {
     aranya_NodeInfoGetCmd_Kind kind;
 } aranya_NodeInfoGetCmd;
 
+typedef struct _aranya_NodeResources {
+    uint64_t cpu_count;
+    uint64_t memory_bytes;
+    uint64_t storage_bytes;
+} aranya_NodeResources;
+
 typedef struct _aranya_PortForwardCmd {
     pb_callback_t pod_uid;
+    pb_callback_t network;
+    pb_callback_t host;
     int32_t port;
-    pb_callback_t protocol;
 } aranya_PortForwardCmd;
 
 typedef struct _aranya_RejectCmd {
@@ -173,10 +271,26 @@ typedef struct _aranya_StateMsg {
     pb_callback_t device_id;
 } aranya_StateMsg;
 
+typedef struct _aranya_StorageStatusMsg {
+    aranya_StorageState state;
+    pb_callback_t remote_path;
+    pb_callback_t mount_point;
+} aranya_StorageStatusMsg;
+
 typedef struct _aranya_TerminalResizeCmd {
     uint32_t cols;
     uint32_t rows;
 } aranya_TerminalResizeCmd;
+
+typedef struct _aranya_NodeStatusMsg {
+    bool has_system_info;
+    aranya_NodeSystemInfo system_info;
+    bool has_capacity;
+    aranya_NodeResources capacity;
+    bool has_conditions;
+    aranya_NodeConditions conditions;
+    pb_callback_t ext_info;
+} aranya_NodeStatusMsg;
 
 
 /* Helper constants for enums */
@@ -192,6 +306,14 @@ typedef struct _aranya_TerminalResizeCmd {
 #define _aranya_RejectionReason_MAX aranya_RejectionReason_REJECTION_INTERNAL_SERVER_ERROR
 #define _aranya_RejectionReason_ARRAYSIZE ((aranya_RejectionReason)(aranya_RejectionReason_REJECTION_INTERNAL_SERVER_ERROR+1))
 
+#define _aranya_NodeCondition_MIN aranya_NodeCondition_NODE_CONDITION_UNKNOWN
+#define _aranya_NodeCondition_MAX aranya_NodeCondition_NODE_CONDITION_UNHEALTHY
+#define _aranya_NodeCondition_ARRAYSIZE ((aranya_NodeCondition)(aranya_NodeCondition_NODE_CONDITION_UNHEALTHY+1))
+
+#define _aranya_StorageState_MIN aranya_StorageState_STORAGE_STATE_UNKONW
+#define _aranya_StorageState_MAX aranya_StorageState_STORAGE_STATE_MOUNTED
+#define _aranya_StorageState_ARRAYSIZE ((aranya_StorageState)(aranya_StorageState_STORAGE_STATE_MOUNTED+1))
+
 #define _aranya_NodeInfoGetCmd_Kind_MIN aranya_NodeInfoGetCmd_Kind_NODE_INFO_DYN
 #define _aranya_NodeInfoGetCmd_Kind_MAX aranya_NodeInfoGetCmd_Kind_NODE_INFO_ALL
 #define _aranya_NodeInfoGetCmd_Kind_ARRAYSIZE ((aranya_NodeInfoGetCmd_Kind)(aranya_NodeInfoGetCmd_Kind_NODE_INFO_ALL+1))
@@ -204,9 +326,20 @@ typedef struct _aranya_TerminalResizeCmd {
 #define _aranya_StateMsg_Kind_MAX aranya_StateMsg_Kind_STATE_OFFLINE
 #define _aranya_StateMsg_Kind_ARRAYSIZE ((aranya_StateMsg_Kind)(aranya_StateMsg_Kind_STATE_OFFLINE+1))
 
+#define _aranya_NodeExtInfo_ValueType_MIN aranya_NodeExtInfo_ValueType_NODE_EXT_INFO_TYPE_STRING
+#define _aranya_NodeExtInfo_ValueType_MAX aranya_NodeExtInfo_ValueType_NODE_EXT_INFO_TYPE_FLOAT
+#define _aranya_NodeExtInfo_ValueType_ARRAYSIZE ((aranya_NodeExtInfo_ValueType)(aranya_NodeExtInfo_ValueType_NODE_EXT_INFO_TYPE_FLOAT+1))
+
+#define _aranya_NodeExtInfo_Operator_MIN aranya_NodeExtInfo_Operator_NODE_EXT_INFO_OPERATOR_SET
+#define _aranya_NodeExtInfo_Operator_MAX aranya_NodeExtInfo_Operator_NODE_EXT_INFO_OPERATOR_MINUS
+#define _aranya_NodeExtInfo_Operator_ARRAYSIZE ((aranya_NodeExtInfo_Operator)(aranya_NodeExtInfo_Operator_NODE_EXT_INFO_OPERATOR_MINUS+1))
+
+#define _aranya_NodeExtInfo_Target_MIN aranya_NodeExtInfo_Target_NODE_EXT_INFO_TARGET_ANNOTATION
+#define _aranya_NodeExtInfo_Target_MAX aranya_NodeExtInfo_Target_NODE_EXT_INFO_TARGET_LABEL
+#define _aranya_NodeExtInfo_Target_ARRAYSIZE ((aranya_NodeExtInfo_Target)(aranya_NodeExtInfo_Target_NODE_EXT_INFO_TARGET_LABEL+1))
+
 
 /* Initializer values for message structs */
-#define aranya_Empty_init_default                {0}
 #define aranya_Cmd_init_default                  {_aranya_CmdType_MIN, 0, 0, 0, {{NULL}, NULL}}
 #define aranya_Msg_init_default                  {_aranya_MsgType_MIN, 0, 0, 0, {{NULL}, NULL}}
 #define aranya_NodeInfoGetCmd_init_default       {_aranya_NodeInfoGetCmd_Kind_MIN}
@@ -216,12 +349,26 @@ typedef struct _aranya_TerminalResizeCmd {
 #define aranya_LogsCmd_init_default              {{{NULL}, NULL}, {{NULL}, NULL}, 0, 0, {{NULL}, NULL}, 0, 0, 0, {{NULL}, NULL}}
 #define aranya_ExecOrAttachCmd_init_default      {{{NULL}, NULL}, {{NULL}, NULL}, 0, 0, 0, 0, {{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_ExecOrAttachCmd_EnvsEntry_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
-#define aranya_PortForwardCmd_init_default       {{{NULL}, NULL}, 0, {{NULL}, NULL}}
+#define aranya_PortForwardCmd_init_default       {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, 0}
 #define aranya_TerminalResizeCmd_init_default    {0, 0}
+#define aranya_MetricsConfigCmd_init_default     {{{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_ErrorMsg_init_default             {_aranya_ErrorMsg_Kind_MIN, {{NULL}, NULL}, 0}
 #define aranya_StateMsg_init_default             {_aranya_StateMsg_Kind_MIN, {{NULL}, NULL}}
 #define aranya_NetworkMsg_init_default           {{{NULL}, NULL}}
-#define aranya_Empty_init_zero                   {0}
+#define aranya_NodeSystemInfo_init_default       {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_NodeResources_init_default        {0, 0, 0}
+#define aranya_NodeConditions_init_default       {_aranya_NodeCondition_MIN, _aranya_NodeCondition_MIN, _aranya_NodeCondition_MIN, _aranya_NodeCondition_MIN, _aranya_NodeCondition_MIN, _aranya_NodeCondition_MIN}
+#define aranya_NodeExtInfo_init_default          {{{NULL}, NULL}, _aranya_NodeExtInfo_ValueType_MIN, _aranya_NodeExtInfo_Operator_MIN, _aranya_NodeExtInfo_Target_MIN, {{NULL}, NULL}}
+#define aranya_NodeStatusMsg_init_default        {false, aranya_NodeSystemInfo_init_default, false, aranya_NodeResources_init_default, false, aranya_NodeConditions_init_default, {{NULL}, NULL}}
+#define aranya_StorageListCmd_init_default       {0}
+#define aranya_StorageEnsureCmd_init_default     {{{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_StorageDeleteCmd_init_default     {{{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_StorageStatusMsg_init_default     {_aranya_StorageState_MIN, {{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_StorageStatusListMsg_init_default {{{NULL}, NULL}}
+#define aranya_CredentialListCmd_init_default    {0}
+#define aranya_CredentialDeleteCmd_init_default  {0}
+#define aranya_CredentialEnsureCmd_init_default  {{{NULL}, NULL}}
+#define aranya_CredentialStatusMsg_init_default  {{{NULL}, NULL}}
 #define aranya_Cmd_init_zero                     {_aranya_CmdType_MIN, 0, 0, 0, {{NULL}, NULL}}
 #define aranya_Msg_init_zero                     {_aranya_MsgType_MIN, 0, 0, 0, {{NULL}, NULL}}
 #define aranya_NodeInfoGetCmd_init_zero          {_aranya_NodeInfoGetCmd_Kind_MIN}
@@ -231,17 +378,48 @@ typedef struct _aranya_TerminalResizeCmd {
 #define aranya_LogsCmd_init_zero                 {{{NULL}, NULL}, {{NULL}, NULL}, 0, 0, {{NULL}, NULL}, 0, 0, 0, {{NULL}, NULL}}
 #define aranya_ExecOrAttachCmd_init_zero         {{{NULL}, NULL}, {{NULL}, NULL}, 0, 0, 0, 0, {{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_ExecOrAttachCmd_EnvsEntry_init_zero {{{NULL}, NULL}, {{NULL}, NULL}}
-#define aranya_PortForwardCmd_init_zero          {{{NULL}, NULL}, 0, {{NULL}, NULL}}
+#define aranya_PortForwardCmd_init_zero          {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, 0}
 #define aranya_TerminalResizeCmd_init_zero       {0, 0}
+#define aranya_MetricsConfigCmd_init_zero        {{{NULL}, NULL}, {{NULL}, NULL}}
 #define aranya_ErrorMsg_init_zero                {_aranya_ErrorMsg_Kind_MIN, {{NULL}, NULL}, 0}
 #define aranya_StateMsg_init_zero                {_aranya_StateMsg_Kind_MIN, {{NULL}, NULL}}
 #define aranya_NetworkMsg_init_zero              {{{NULL}, NULL}}
+#define aranya_NodeSystemInfo_init_zero          {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_NodeResources_init_zero           {0, 0, 0}
+#define aranya_NodeConditions_init_zero          {_aranya_NodeCondition_MIN, _aranya_NodeCondition_MIN, _aranya_NodeCondition_MIN, _aranya_NodeCondition_MIN, _aranya_NodeCondition_MIN, _aranya_NodeCondition_MIN}
+#define aranya_NodeExtInfo_init_zero             {{{NULL}, NULL}, _aranya_NodeExtInfo_ValueType_MIN, _aranya_NodeExtInfo_Operator_MIN, _aranya_NodeExtInfo_Target_MIN, {{NULL}, NULL}}
+#define aranya_NodeStatusMsg_init_zero           {false, aranya_NodeSystemInfo_init_zero, false, aranya_NodeResources_init_zero, false, aranya_NodeConditions_init_zero, {{NULL}, NULL}}
+#define aranya_StorageListCmd_init_zero          {0}
+#define aranya_StorageEnsureCmd_init_zero        {{{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_StorageDeleteCmd_init_zero        {{{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_StorageStatusMsg_init_zero        {_aranya_StorageState_MIN, {{NULL}, NULL}, {{NULL}, NULL}}
+#define aranya_StorageStatusListMsg_init_zero    {{{NULL}, NULL}}
+#define aranya_CredentialListCmd_init_zero       {0}
+#define aranya_CredentialDeleteCmd_init_zero     {0}
+#define aranya_CredentialEnsureCmd_init_zero     {{{NULL}, NULL}}
+#define aranya_CredentialStatusMsg_init_zero     {{{NULL}, NULL}}
 
 /* Field tags (for use in manual encoding/decoding) */
+#define aranya_CredentialEnsureCmd_ssh_private_key_tag 1
+#define aranya_CredentialStatusMsg_ssh_private_key_sha256_tag 1
 #define aranya_ExecOrAttachCmd_EnvsEntry_key_tag 1
 #define aranya_ExecOrAttachCmd_EnvsEntry_value_tag 2
+#define aranya_MetricsConfigCmd_collect_tag      1
+#define aranya_MetricsConfigCmd_extra_args_tag   2
 #define aranya_NetworkCmd_abbot_request_bytes_tag 1
 #define aranya_NetworkMsg_abbot_response_bytes_tag 1
+#define aranya_NodeSystemInfo_os_tag             1
+#define aranya_NodeSystemInfo_os_image_tag       2
+#define aranya_NodeSystemInfo_arch_tag           3
+#define aranya_NodeSystemInfo_kernel_version_tag 4
+#define aranya_NodeSystemInfo_boot_id_tag        5
+#define aranya_NodeSystemInfo_machine_id_tag     6
+#define aranya_NodeSystemInfo_system_uuid_tag    7
+#define aranya_StorageDeleteCmd_remote_path_tag  1
+#define aranya_StorageDeleteCmd_local_path_tag   2
+#define aranya_StorageEnsureCmd_remote_path_tag  1
+#define aranya_StorageEnsureCmd_local_path_tag   2
+#define aranya_StorageStatusListMsg_storages_tag 1
 #define aranya_Cmd_kind_tag                      1
 #define aranya_Cmd_sid_tag                       2
 #define aranya_Cmd_seq_tag                       3
@@ -272,24 +450,41 @@ typedef struct _aranya_TerminalResizeCmd {
 #define aranya_Msg_seq_tag                       3
 #define aranya_Msg_completed_tag                 4
 #define aranya_Msg_payload_tag                   11
+#define aranya_NodeConditions_ready_tag          1
+#define aranya_NodeConditions_memory_tag         2
+#define aranya_NodeConditions_disk_tag           3
+#define aranya_NodeConditions_pid_tag            4
+#define aranya_NodeConditions_network_tag        5
+#define aranya_NodeConditions_pod_tag            6
+#define aranya_NodeExtInfo_value_tag             1
+#define aranya_NodeExtInfo_value_type_tag        2
+#define aranya_NodeExtInfo_operator_tag          3
+#define aranya_NodeExtInfo_target_tag            4
+#define aranya_NodeExtInfo_target_key_tag        5
 #define aranya_NodeInfoGetCmd_kind_tag           1
+#define aranya_NodeResources_cpu_count_tag       1
+#define aranya_NodeResources_memory_bytes_tag    2
+#define aranya_NodeResources_storage_bytes_tag   3
 #define aranya_PortForwardCmd_pod_uid_tag        1
-#define aranya_PortForwardCmd_port_tag           2
-#define aranya_PortForwardCmd_protocol_tag       3
+#define aranya_PortForwardCmd_network_tag        2
+#define aranya_PortForwardCmd_host_tag           3
+#define aranya_PortForwardCmd_port_tag           4
 #define aranya_RejectCmd_reason_tag              1
 #define aranya_RejectCmd_message_tag             2
 #define aranya_SessionCloseCmd_sid_tag           1
 #define aranya_StateMsg_kind_tag                 1
 #define aranya_StateMsg_device_id_tag            2
+#define aranya_StorageStatusMsg_state_tag        1
+#define aranya_StorageStatusMsg_remote_path_tag  2
+#define aranya_StorageStatusMsg_mount_point_tag  3
 #define aranya_TerminalResizeCmd_cols_tag        1
 #define aranya_TerminalResizeCmd_rows_tag        2
+#define aranya_NodeStatusMsg_system_info_tag     1
+#define aranya_NodeStatusMsg_capacity_tag        2
+#define aranya_NodeStatusMsg_conditions_tag      3
+#define aranya_NodeStatusMsg_ext_info_tag        4
 
 /* Struct field encoding specification for nanopb */
-#define aranya_Empty_FIELDLIST(X, a) \
-
-#define aranya_Empty_CALLBACK NULL
-#define aranya_Empty_DEFAULT NULL
-
 #define aranya_Cmd_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, UENUM,    kind,              1) \
 X(a, STATIC,   SINGULAR, UINT64,   sid,               2) \
@@ -363,8 +558,9 @@ X(a, CALLBACK, SINGULAR, STRING,   value,             2)
 
 #define aranya_PortForwardCmd_FIELDLIST(X, a) \
 X(a, CALLBACK, SINGULAR, STRING,   pod_uid,           1) \
-X(a, STATIC,   SINGULAR, INT32,    port,              2) \
-X(a, CALLBACK, SINGULAR, STRING,   protocol,          3)
+X(a, CALLBACK, SINGULAR, STRING,   network,           2) \
+X(a, CALLBACK, SINGULAR, STRING,   host,              3) \
+X(a, STATIC,   SINGULAR, INT32,    port,              4)
 #define aranya_PortForwardCmd_CALLBACK pb_default_field_callback
 #define aranya_PortForwardCmd_DEFAULT NULL
 
@@ -373,6 +569,12 @@ X(a, STATIC,   SINGULAR, UINT32,   cols,              1) \
 X(a, STATIC,   SINGULAR, UINT32,   rows,              2)
 #define aranya_TerminalResizeCmd_CALLBACK NULL
 #define aranya_TerminalResizeCmd_DEFAULT NULL
+
+#define aranya_MetricsConfigCmd_FIELDLIST(X, a) \
+X(a, CALLBACK, REPEATED, STRING,   collect,           1) \
+X(a, CALLBACK, REPEATED, STRING,   extra_args,        2)
+#define aranya_MetricsConfigCmd_CALLBACK pb_default_field_callback
+#define aranya_MetricsConfigCmd_DEFAULT NULL
 
 #define aranya_ErrorMsg_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, UENUM,    kind,              1) \
@@ -392,7 +594,105 @@ X(a, CALLBACK, SINGULAR, BYTES,    abbot_response_bytes,   1)
 #define aranya_NetworkMsg_CALLBACK pb_default_field_callback
 #define aranya_NetworkMsg_DEFAULT NULL
 
-extern const pb_msgdesc_t aranya_Empty_msg;
+#define aranya_NodeSystemInfo_FIELDLIST(X, a) \
+X(a, CALLBACK, SINGULAR, STRING,   os,                1) \
+X(a, CALLBACK, SINGULAR, STRING,   os_image,          2) \
+X(a, CALLBACK, SINGULAR, STRING,   arch,              3) \
+X(a, CALLBACK, SINGULAR, STRING,   kernel_version,    4) \
+X(a, CALLBACK, SINGULAR, STRING,   boot_id,           5) \
+X(a, CALLBACK, SINGULAR, STRING,   machine_id,        6) \
+X(a, CALLBACK, SINGULAR, STRING,   system_uuid,       7)
+#define aranya_NodeSystemInfo_CALLBACK pb_default_field_callback
+#define aranya_NodeSystemInfo_DEFAULT NULL
+
+#define aranya_NodeResources_FIELDLIST(X, a) \
+X(a, STATIC,   SINGULAR, UINT64,   cpu_count,         1) \
+X(a, STATIC,   SINGULAR, UINT64,   memory_bytes,      2) \
+X(a, STATIC,   SINGULAR, UINT64,   storage_bytes,     3)
+#define aranya_NodeResources_CALLBACK NULL
+#define aranya_NodeResources_DEFAULT NULL
+
+#define aranya_NodeConditions_FIELDLIST(X, a) \
+X(a, STATIC,   SINGULAR, UENUM,    ready,             1) \
+X(a, STATIC,   SINGULAR, UENUM,    memory,            2) \
+X(a, STATIC,   SINGULAR, UENUM,    disk,              3) \
+X(a, STATIC,   SINGULAR, UENUM,    pid,               4) \
+X(a, STATIC,   SINGULAR, UENUM,    network,           5) \
+X(a, STATIC,   SINGULAR, UENUM,    pod,               6)
+#define aranya_NodeConditions_CALLBACK NULL
+#define aranya_NodeConditions_DEFAULT NULL
+
+#define aranya_NodeExtInfo_FIELDLIST(X, a) \
+X(a, CALLBACK, SINGULAR, STRING,   value,             1) \
+X(a, STATIC,   SINGULAR, UENUM,    value_type,        2) \
+X(a, STATIC,   SINGULAR, UENUM,    operator,          3) \
+X(a, STATIC,   SINGULAR, UENUM,    target,            4) \
+X(a, CALLBACK, SINGULAR, STRING,   target_key,        5)
+#define aranya_NodeExtInfo_CALLBACK pb_default_field_callback
+#define aranya_NodeExtInfo_DEFAULT NULL
+
+#define aranya_NodeStatusMsg_FIELDLIST(X, a) \
+X(a, STATIC,   OPTIONAL, MESSAGE,  system_info,       1) \
+X(a, STATIC,   OPTIONAL, MESSAGE,  capacity,          2) \
+X(a, STATIC,   OPTIONAL, MESSAGE,  conditions,        3) \
+X(a, CALLBACK, REPEATED, MESSAGE,  ext_info,          4)
+#define aranya_NodeStatusMsg_CALLBACK pb_default_field_callback
+#define aranya_NodeStatusMsg_DEFAULT NULL
+#define aranya_NodeStatusMsg_system_info_MSGTYPE aranya_NodeSystemInfo
+#define aranya_NodeStatusMsg_capacity_MSGTYPE aranya_NodeResources
+#define aranya_NodeStatusMsg_conditions_MSGTYPE aranya_NodeConditions
+#define aranya_NodeStatusMsg_ext_info_MSGTYPE aranya_NodeExtInfo
+
+#define aranya_StorageListCmd_FIELDLIST(X, a) \
+
+#define aranya_StorageListCmd_CALLBACK NULL
+#define aranya_StorageListCmd_DEFAULT NULL
+
+#define aranya_StorageEnsureCmd_FIELDLIST(X, a) \
+X(a, CALLBACK, SINGULAR, STRING,   remote_path,       1) \
+X(a, CALLBACK, SINGULAR, STRING,   local_path,        2)
+#define aranya_StorageEnsureCmd_CALLBACK pb_default_field_callback
+#define aranya_StorageEnsureCmd_DEFAULT NULL
+
+#define aranya_StorageDeleteCmd_FIELDLIST(X, a) \
+X(a, CALLBACK, SINGULAR, STRING,   remote_path,       1) \
+X(a, CALLBACK, SINGULAR, STRING,   local_path,        2)
+#define aranya_StorageDeleteCmd_CALLBACK pb_default_field_callback
+#define aranya_StorageDeleteCmd_DEFAULT NULL
+
+#define aranya_StorageStatusMsg_FIELDLIST(X, a) \
+X(a, STATIC,   SINGULAR, UENUM,    state,             1) \
+X(a, CALLBACK, SINGULAR, STRING,   remote_path,       2) \
+X(a, CALLBACK, SINGULAR, STRING,   mount_point,       3)
+#define aranya_StorageStatusMsg_CALLBACK pb_default_field_callback
+#define aranya_StorageStatusMsg_DEFAULT NULL
+
+#define aranya_StorageStatusListMsg_FIELDLIST(X, a) \
+X(a, CALLBACK, REPEATED, MESSAGE,  storages,          1)
+#define aranya_StorageStatusListMsg_CALLBACK pb_default_field_callback
+#define aranya_StorageStatusListMsg_DEFAULT NULL
+#define aranya_StorageStatusListMsg_storages_MSGTYPE aranya_StorageStatusMsg
+
+#define aranya_CredentialListCmd_FIELDLIST(X, a) \
+
+#define aranya_CredentialListCmd_CALLBACK NULL
+#define aranya_CredentialListCmd_DEFAULT NULL
+
+#define aranya_CredentialDeleteCmd_FIELDLIST(X, a) \
+
+#define aranya_CredentialDeleteCmd_CALLBACK NULL
+#define aranya_CredentialDeleteCmd_DEFAULT NULL
+
+#define aranya_CredentialEnsureCmd_FIELDLIST(X, a) \
+X(a, CALLBACK, SINGULAR, BYTES,    ssh_private_key,   1)
+#define aranya_CredentialEnsureCmd_CALLBACK pb_default_field_callback
+#define aranya_CredentialEnsureCmd_DEFAULT NULL
+
+#define aranya_CredentialStatusMsg_FIELDLIST(X, a) \
+X(a, CALLBACK, SINGULAR, BYTES,    ssh_private_key_sha256,   1)
+#define aranya_CredentialStatusMsg_CALLBACK pb_default_field_callback
+#define aranya_CredentialStatusMsg_DEFAULT NULL
+
 extern const pb_msgdesc_t aranya_Cmd_msg;
 extern const pb_msgdesc_t aranya_Msg_msg;
 extern const pb_msgdesc_t aranya_NodeInfoGetCmd_msg;
@@ -404,12 +704,26 @@ extern const pb_msgdesc_t aranya_ExecOrAttachCmd_msg;
 extern const pb_msgdesc_t aranya_ExecOrAttachCmd_EnvsEntry_msg;
 extern const pb_msgdesc_t aranya_PortForwardCmd_msg;
 extern const pb_msgdesc_t aranya_TerminalResizeCmd_msg;
+extern const pb_msgdesc_t aranya_MetricsConfigCmd_msg;
 extern const pb_msgdesc_t aranya_ErrorMsg_msg;
 extern const pb_msgdesc_t aranya_StateMsg_msg;
 extern const pb_msgdesc_t aranya_NetworkMsg_msg;
+extern const pb_msgdesc_t aranya_NodeSystemInfo_msg;
+extern const pb_msgdesc_t aranya_NodeResources_msg;
+extern const pb_msgdesc_t aranya_NodeConditions_msg;
+extern const pb_msgdesc_t aranya_NodeExtInfo_msg;
+extern const pb_msgdesc_t aranya_NodeStatusMsg_msg;
+extern const pb_msgdesc_t aranya_StorageListCmd_msg;
+extern const pb_msgdesc_t aranya_StorageEnsureCmd_msg;
+extern const pb_msgdesc_t aranya_StorageDeleteCmd_msg;
+extern const pb_msgdesc_t aranya_StorageStatusMsg_msg;
+extern const pb_msgdesc_t aranya_StorageStatusListMsg_msg;
+extern const pb_msgdesc_t aranya_CredentialListCmd_msg;
+extern const pb_msgdesc_t aranya_CredentialDeleteCmd_msg;
+extern const pb_msgdesc_t aranya_CredentialEnsureCmd_msg;
+extern const pb_msgdesc_t aranya_CredentialStatusMsg_msg;
 
 /* Defines for backwards compatibility with code written before nanopb-0.4.0 */
-#define aranya_Empty_fields &aranya_Empty_msg
 #define aranya_Cmd_fields &aranya_Cmd_msg
 #define aranya_Msg_fields &aranya_Msg_msg
 #define aranya_NodeInfoGetCmd_fields &aranya_NodeInfoGetCmd_msg
@@ -421,12 +735,26 @@ extern const pb_msgdesc_t aranya_NetworkMsg_msg;
 #define aranya_ExecOrAttachCmd_EnvsEntry_fields &aranya_ExecOrAttachCmd_EnvsEntry_msg
 #define aranya_PortForwardCmd_fields &aranya_PortForwardCmd_msg
 #define aranya_TerminalResizeCmd_fields &aranya_TerminalResizeCmd_msg
+#define aranya_MetricsConfigCmd_fields &aranya_MetricsConfigCmd_msg
 #define aranya_ErrorMsg_fields &aranya_ErrorMsg_msg
 #define aranya_StateMsg_fields &aranya_StateMsg_msg
 #define aranya_NetworkMsg_fields &aranya_NetworkMsg_msg
+#define aranya_NodeSystemInfo_fields &aranya_NodeSystemInfo_msg
+#define aranya_NodeResources_fields &aranya_NodeResources_msg
+#define aranya_NodeConditions_fields &aranya_NodeConditions_msg
+#define aranya_NodeExtInfo_fields &aranya_NodeExtInfo_msg
+#define aranya_NodeStatusMsg_fields &aranya_NodeStatusMsg_msg
+#define aranya_StorageListCmd_fields &aranya_StorageListCmd_msg
+#define aranya_StorageEnsureCmd_fields &aranya_StorageEnsureCmd_msg
+#define aranya_StorageDeleteCmd_fields &aranya_StorageDeleteCmd_msg
+#define aranya_StorageStatusMsg_fields &aranya_StorageStatusMsg_msg
+#define aranya_StorageStatusListMsg_fields &aranya_StorageStatusListMsg_msg
+#define aranya_CredentialListCmd_fields &aranya_CredentialListCmd_msg
+#define aranya_CredentialDeleteCmd_fields &aranya_CredentialDeleteCmd_msg
+#define aranya_CredentialEnsureCmd_fields &aranya_CredentialEnsureCmd_msg
+#define aranya_CredentialStatusMsg_fields &aranya_CredentialStatusMsg_msg
 
 /* Maximum encoded size of messages (where known) */
-#define aranya_Empty_size                        0
 /* aranya_Cmd_size depends on runtime parameters */
 /* aranya_Msg_size depends on runtime parameters */
 #define aranya_NodeInfoGetCmd_size               2
@@ -438,9 +766,24 @@ extern const pb_msgdesc_t aranya_NetworkMsg_msg;
 /* aranya_ExecOrAttachCmd_EnvsEntry_size depends on runtime parameters */
 /* aranya_PortForwardCmd_size depends on runtime parameters */
 #define aranya_TerminalResizeCmd_size            12
+/* aranya_MetricsConfigCmd_size depends on runtime parameters */
 /* aranya_ErrorMsg_size depends on runtime parameters */
 /* aranya_StateMsg_size depends on runtime parameters */
 /* aranya_NetworkMsg_size depends on runtime parameters */
+/* aranya_NodeSystemInfo_size depends on runtime parameters */
+#define aranya_NodeResources_size                33
+#define aranya_NodeConditions_size               12
+/* aranya_NodeExtInfo_size depends on runtime parameters */
+/* aranya_NodeStatusMsg_size depends on runtime parameters */
+#define aranya_StorageListCmd_size               0
+/* aranya_StorageEnsureCmd_size depends on runtime parameters */
+/* aranya_StorageDeleteCmd_size depends on runtime parameters */
+/* aranya_StorageStatusMsg_size depends on runtime parameters */
+/* aranya_StorageStatusListMsg_size depends on runtime parameters */
+#define aranya_CredentialListCmd_size            0
+#define aranya_CredentialDeleteCmd_size          0
+/* aranya_CredentialEnsureCmd_size depends on runtime parameters */
+/* aranya_CredentialStatusMsg_size depends on runtime parameters */
 
 #ifdef __cplusplus
 } /* extern "C" */

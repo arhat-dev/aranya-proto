@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z!arhat.dev/aranya-proto/aranyagopb',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x0bproto.proto\x12\x06\x61ranya\"\x07\n\x05\x45mpty\"b\n\x03\x43md\x12\x1d\n\x04kind\x18\x01 \x01(\x0e\x32\x0f.aranya.CmdType\x12\x0b\n\x03sid\x18\x02 \x01(\x04\x12\x0b\n\x03seq\x18\x03 \x01(\x04\x12\x11\n\tcompleted\x18\x04 \x01(\x08\x12\x0f\n\x07payload\x18\x0b \x01(\x0c\"b\n\x03Msg\x12\x1d\n\x04kind\x18\x01 \x01(\x0e\x32\x0f.aranya.MsgType\x12\x0b\n\x03sid\x18\x02 \x01(\x04\x12\x0b\n\x03seq\x18\x03 \x01(\x04\x12\x11\n\tcompleted\x18\x04 \x01(\x08\x12\x0f\n\x07payload\x18\x0b \x01(\x0c\"i\n\x0eNodeInfoGetCmd\x12)\n\x04kind\x18\x01 \x01(\x0e\x32\x1b.aranya.NodeInfoGetCmd.Kind\",\n\x04Kind\x12\x11\n\rNODE_INFO_DYN\x10\x00\x12\x11\n\rNODE_INFO_ALL\x10\x01\"\x1e\n\x0fSessionCloseCmd\x12\x0b\n\x03sid\x18\x01 \x01(\x04\"E\n\tRejectCmd\x12\'\n\x06reason\x18\x01 \x01(\x0e\x32\x17.aranya.RejectionReason\x12\x0f\n\x07message\x18\x02 \x01(\t\")\n\nNetworkCmd\x12\x1b\n\x13\x61\x62\x62ot_request_bytes\x18\x01 \x01(\x0c\"\xa8\x01\n\x07LogsCmd\x12\x0f\n\x07pod_uid\x18\x01 \x01(\t\x12\x11\n\tcontainer\x18\x02 \x01(\t\x12\x0e\n\x06\x66ollow\x18\x03 \x01(\x08\x12\x11\n\ttimestamp\x18\x04 \x01(\x08\x12\r\n\x05since\x18\x05 \x01(\t\x12\x12\n\ntail_lines\x18\x06 \x01(\x03\x12\x13\n\x0b\x62ytes_limit\x18\x07 \x01(\x03\x12\x10\n\x08previous\x18\x08 \x01(\x08\x12\x0c\n\x04path\x18\t \x01(\t\"\xe0\x01\n\x0f\x45xecOrAttachCmd\x12\x0f\n\x07pod_uid\x18\x01 \x01(\t\x12\x11\n\tcontainer\x18\x02 \x01(\t\x12\r\n\x05stdin\x18\x03 \x01(\x08\x12\x0e\n\x06stdout\x18\x04 \x01(\x08\x12\x0e\n\x06stderr\x18\x05 \x01(\x08\x12\x0b\n\x03tty\x18\x06 \x01(\x08\x12\x0f\n\x07\x63ommand\x18\x07 \x03(\t\x12/\n\x04\x65nvs\x18\x08 \x03(\x0b\x32!.aranya.ExecOrAttachCmd.EnvsEntry\x1a+\n\tEnvsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"A\n\x0ePortForwardCmd\x12\x0f\n\x07pod_uid\x18\x01 \x01(\t\x12\x0c\n\x04port\x18\x02 \x01(\x05\x12\x10\n\x08protocol\x18\x03 \x01(\t\"/\n\x11TerminalResizeCmd\x12\x0c\n\x04\x63ols\x18\x01 \x01(\r\x12\x0c\n\x04rows\x18\x02 \x01(\r\"\xbd\x01\n\x08\x45rrorMsg\x12#\n\x04kind\x18\x01 \x01(\x0e\x32\x15.aranya.ErrorMsg.Kind\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12\x0c\n\x04\x63ode\x18\x03 \x01(\x03\"i\n\x04Kind\x12\x0e\n\nERR_COMMON\x10\x00\x12\x11\n\rERR_NOT_FOUND\x10\x01\x12\x16\n\x12\x45RR_ALREADY_EXISTS\x10\x02\x12\x15\n\x11\x45RR_NOT_SUPPORTED\x10\x03\x12\x0f\n\x0b\x45RR_TIMEOUT\x10\x04\"\x83\x01\n\x08StateMsg\x12#\n\x04kind\x18\x01 \x01(\x0e\x32\x15.aranya.StateMsg.Kind\x12\x11\n\tdevice_id\x18\x02 \x01(\t\"?\n\x04Kind\x12\x12\n\x0e_INVALID_STATE\x10\x00\x12\x10\n\x0cSTATE_ONLINE\x10\x01\x12\x11\n\rSTATE_OFFLINE\x10\x02\"*\n\nNetworkMsg\x12\x1c\n\x14\x61\x62\x62ot_response_bytes\x18\x01 \x01(\x0c*\xed\x03\n\x07\x43mdType\x12\x15\n\x11\x43MD_DATA_UPSTREAM\x10\x00\x12\x15\n\x11\x43MD_SESSION_CLOSE\x10\x05\x12\x0e\n\nCMD_REJECT\x10\x06\x12\x0b\n\x07\x43MD_NET\x10\t\x12\x0f\n\x0b\x43MD_RUNTIME\x10\n\x12\x15\n\x11\x43MD_NODE_INFO_GET\x10\x0b\x12\x0c\n\x08\x43MD_EXEC\x10\x0c\x12\x0e\n\nCMD_ATTACH\x10\r\x12\x0c\n\x08\x43MD_LOGS\x10\x0e\x12\x12\n\x0e\x43MD_TTY_RESIZE\x10\x0f\x12\x14\n\x10\x43MD_PORT_FORWARD\x10\x10\x12\x16\n\x12\x43MD_METRICS_CONFIG\x10\x15\x12\x17\n\x13\x43MD_METRICS_COLLECT\x10\x16\x12\x13\n\x0f\x43MD_CRED_ENSURE\x10\x1f\x12\x14\n\x10\x43MD_STORAGE_LIST\x10)\x12\x16\n\x12\x43MD_STORAGE_ENSURE\x10*\x12\x16\n\x12\x43MD_STORAGE_DELETE\x10+\x12\x17\n\x13\x43MD_PERIPHERAL_LIST\x10\x33\x12\x19\n\x15\x43MD_PERIPHERAL_ENSURE\x10\x34\x12\x19\n\x15\x43MD_PERIPHERAL_DELETE\x10\x35\x12\x1a\n\x16\x43MD_PERIPHERAL_OPERATE\x10\x36\x12\"\n\x1e\x43MD_PERIPHERAL_COLLECT_METRICS\x10\x37*\xfa\x02\n\x07MsgType\x12\x0c\n\x08MSG_DATA\x10\x00\x12\x14\n\x10MSG_DATA_DEFAULT\x10\x00\x12\x13\n\x0fMSG_DATA_STDOUT\x10\x00\x12\x14\n\x10MSG_DATA_METRICS\x10\x00\x12\x13\n\x0fMSG_DATA_STDERR\x10\x01\x12\x0c\n\x08MSG_DONE\x10\x05\x12\r\n\tMSG_STATE\x10\x06\x12\r\n\tMSG_ERROR\x10\x07\x12\x0b\n\x07MSG_NET\x10\t\x12\x0f\n\x0bMSG_RUNTIME\x10\n\x12\x13\n\x0fMSG_NODE_STATUS\x10\x0b\x12\x13\n\x0fMSG_CRED_STATUS\x10\x1f\x12\x16\n\x12MSG_STORAGE_STATUS\x10)\x12\x1b\n\x17MSG_STORAGE_STATUS_LIST\x10*\x12\x19\n\x15MSG_PERIPHERAL_STATUS\x10\x33\x12\x1e\n\x1aMSG_PERIPHERAL_STATUS_LIST\x10\x34\x12#\n\x1fMSG_PERIPHERAL_OPERATION_RESULT\x10\x35\x1a\x02\x10\x01*\xb8\x01\n\x0fRejectionReason\x12\x1d\n\x19_INVALID_REJECTION_REASON\x10\x00\x12\x1b\n\x17REJECTION_INVALID_PROTO\x10\x01\x12\x1f\n\x1bREJECTION_ALREADY_CONNECTED\x10\x02\x12#\n\x1fREJECTION_INITIAL_CHECK_FAILURE\x10\x03\x12#\n\x1fREJECTION_INTERNAL_SERVER_ERROR\x10\x04\x42#Z!arhat.dev/aranya-proto/aranyagopbb\x06proto3'
+  serialized_pb=b'\n\x0bproto.proto\x12\x06\x61ranya\"b\n\x03\x43md\x12\x1d\n\x04kind\x18\x01 \x01(\x0e\x32\x0f.aranya.CmdType\x12\x0b\n\x03sid\x18\x02 \x01(\x04\x12\x0b\n\x03seq\x18\x03 \x01(\x04\x12\x11\n\tcompleted\x18\x04 \x01(\x08\x12\x0f\n\x07payload\x18\x0b \x01(\x0c\"b\n\x03Msg\x12\x1d\n\x04kind\x18\x01 \x01(\x0e\x32\x0f.aranya.MsgType\x12\x0b\n\x03sid\x18\x02 \x01(\x04\x12\x0b\n\x03seq\x18\x03 \x01(\x04\x12\x11\n\tcompleted\x18\x04 \x01(\x08\x12\x0f\n\x07payload\x18\x0b \x01(\x0c\"i\n\x0eNodeInfoGetCmd\x12)\n\x04kind\x18\x01 \x01(\x0e\x32\x1b.aranya.NodeInfoGetCmd.Kind\",\n\x04Kind\x12\x11\n\rNODE_INFO_DYN\x10\x00\x12\x11\n\rNODE_INFO_ALL\x10\x01\"\x1e\n\x0fSessionCloseCmd\x12\x0b\n\x03sid\x18\x01 \x01(\x04\"E\n\tRejectCmd\x12\'\n\x06reason\x18\x01 \x01(\x0e\x32\x17.aranya.RejectionReason\x12\x0f\n\x07message\x18\x02 \x01(\t\")\n\nNetworkCmd\x12\x1b\n\x13\x61\x62\x62ot_request_bytes\x18\x01 \x01(\x0c\"\xa8\x01\n\x07LogsCmd\x12\x0f\n\x07pod_uid\x18\x01 \x01(\t\x12\x11\n\tcontainer\x18\x02 \x01(\t\x12\x0e\n\x06\x66ollow\x18\x03 \x01(\x08\x12\x11\n\ttimestamp\x18\x04 \x01(\x08\x12\r\n\x05since\x18\x05 \x01(\t\x12\x12\n\ntail_lines\x18\x06 \x01(\x03\x12\x13\n\x0b\x62ytes_limit\x18\x07 \x01(\x03\x12\x10\n\x08previous\x18\x08 \x01(\x08\x12\x0c\n\x04path\x18\t \x01(\t\"\xe0\x01\n\x0f\x45xecOrAttachCmd\x12\x0f\n\x07pod_uid\x18\x01 \x01(\t\x12\x11\n\tcontainer\x18\x02 \x01(\t\x12\r\n\x05stdin\x18\x03 \x01(\x08\x12\x0e\n\x06stdout\x18\x04 \x01(\x08\x12\x0e\n\x06stderr\x18\x05 \x01(\x08\x12\x0b\n\x03tty\x18\x06 \x01(\x08\x12\x0f\n\x07\x63ommand\x18\x07 \x03(\t\x12/\n\x04\x65nvs\x18\x08 \x03(\x0b\x32!.aranya.ExecOrAttachCmd.EnvsEntry\x1a+\n\tEnvsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"N\n\x0ePortForwardCmd\x12\x0f\n\x07pod_uid\x18\x01 \x01(\t\x12\x0f\n\x07network\x18\x02 \x01(\t\x12\x0c\n\x04host\x18\x03 \x01(\t\x12\x0c\n\x04port\x18\x04 \x01(\x05\"/\n\x11TerminalResizeCmd\x12\x0c\n\x04\x63ols\x18\x01 \x01(\r\x12\x0c\n\x04rows\x18\x02 \x01(\r\"7\n\x10MetricsConfigCmd\x12\x0f\n\x07\x63ollect\x18\x01 \x03(\t\x12\x12\n\nextra_args\x18\x02 \x03(\t\"\xbd\x01\n\x08\x45rrorMsg\x12#\n\x04kind\x18\x01 \x01(\x0e\x32\x15.aranya.ErrorMsg.Kind\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12\x0c\n\x04\x63ode\x18\x03 \x01(\x03\"i\n\x04Kind\x12\x0e\n\nERR_COMMON\x10\x00\x12\x11\n\rERR_NOT_FOUND\x10\x01\x12\x16\n\x12\x45RR_ALREADY_EXISTS\x10\x02\x12\x15\n\x11\x45RR_NOT_SUPPORTED\x10\x03\x12\x0f\n\x0b\x45RR_TIMEOUT\x10\x04\"\x83\x01\n\x08StateMsg\x12#\n\x04kind\x18\x01 \x01(\x0e\x32\x15.aranya.StateMsg.Kind\x12\x11\n\tdevice_id\x18\x02 \x01(\t\"?\n\x04Kind\x12\x12\n\x0e_INVALID_STATE\x10\x00\x12\x10\n\x0cSTATE_ONLINE\x10\x01\x12\x11\n\rSTATE_OFFLINE\x10\x02\"*\n\nNetworkMsg\x12\x1c\n\x14\x61\x62\x62ot_response_bytes\x18\x01 \x01(\x0c\"\x8e\x01\n\x0eNodeSystemInfo\x12\n\n\x02os\x18\x01 \x01(\t\x12\x10\n\x08os_image\x18\x02 \x01(\t\x12\x0c\n\x04\x61rch\x18\x03 \x01(\t\x12\x16\n\x0ekernel_version\x18\x04 \x01(\t\x12\x0f\n\x07\x62oot_id\x18\x05 \x01(\t\x12\x12\n\nmachine_id\x18\x06 \x01(\t\x12\x13\n\x0bsystem_uuid\x18\x07 \x01(\t\"O\n\rNodeResources\x12\x11\n\tcpu_count\x18\x01 \x01(\x04\x12\x14\n\x0cmemory_bytes\x18\x02 \x01(\x04\x12\x15\n\rstorage_bytes\x18\x03 \x01(\x04\"\xf2\x01\n\x0eNodeConditions\x12$\n\x05ready\x18\x01 \x01(\x0e\x32\x15.aranya.NodeCondition\x12%\n\x06memory\x18\x02 \x01(\x0e\x32\x15.aranya.NodeCondition\x12#\n\x04\x64isk\x18\x03 \x01(\x0e\x32\x15.aranya.NodeCondition\x12\"\n\x03pid\x18\x04 \x01(\x0e\x32\x15.aranya.NodeCondition\x12&\n\x07network\x18\x05 \x01(\x0e\x32\x15.aranya.NodeCondition\x12\"\n\x03pod\x18\x06 \x01(\x0e\x32\x15.aranya.NodeCondition\"\xe6\x03\n\x0bNodeExtInfo\x12\r\n\x05value\x18\x01 \x01(\t\x12\x31\n\nvalue_type\x18\x02 \x01(\x0e\x32\x1d.aranya.NodeExtInfo.ValueType\x12.\n\x08operator\x18\x03 \x01(\x0e\x32\x1c.aranya.NodeExtInfo.Operator\x12*\n\x06target\x18\x04 \x01(\x0e\x32\x1a.aranya.NodeExtInfo.Target\x12\x12\n\ntarget_key\x18\x05 \x01(\t\"h\n\tValueType\x12\x1d\n\x19NODE_EXT_INFO_TYPE_STRING\x10\x00\x12\x1e\n\x1aNODE_EXT_INFO_TYPE_INTEGER\x10\x01\x12\x1c\n\x18NODE_EXT_INFO_TYPE_FLOAT\x10\x02\"l\n\x08Operator\x12\x1e\n\x1aNODE_EXT_INFO_OPERATOR_SET\x10\x00\x12\x1e\n\x1aNODE_EXT_INFO_OPERATOR_ADD\x10\x01\x12 \n\x1cNODE_EXT_INFO_OPERATOR_MINUS\x10\x02\"M\n\x06Target\x12#\n\x1fNODE_EXT_INFO_TARGET_ANNOTATION\x10\x00\x12\x1e\n\x1aNODE_EXT_INFO_TARGET_LABEL\x10\x01\"\xb8\x01\n\rNodeStatusMsg\x12+\n\x0bsystem_info\x18\x01 \x01(\x0b\x32\x16.aranya.NodeSystemInfo\x12\'\n\x08\x63\x61pacity\x18\x02 \x01(\x0b\x32\x15.aranya.NodeResources\x12*\n\nconditions\x18\x03 \x01(\x0b\x32\x16.aranya.NodeConditions\x12%\n\x08\x65xt_info\x18\x04 \x03(\x0b\x32\x13.aranya.NodeExtInfo\"\x10\n\x0eStorageListCmd\";\n\x10StorageEnsureCmd\x12\x13\n\x0bremote_path\x18\x01 \x01(\t\x12\x12\n\nlocal_path\x18\x02 \x01(\t\";\n\x10StorageDeleteCmd\x12\x13\n\x0bremote_path\x18\x01 \x01(\t\x12\x12\n\nlocal_path\x18\x02 \x01(\t\"a\n\x10StorageStatusMsg\x12#\n\x05state\x18\x01 \x01(\x0e\x32\x14.aranya.StorageState\x12\x13\n\x0bremote_path\x18\x02 \x01(\t\x12\x13\n\x0bmount_point\x18\x03 \x01(\t\"B\n\x14StorageStatusListMsg\x12*\n\x08storages\x18\x01 \x03(\x0b\x32\x18.aranya.StorageStatusMsg\"\x13\n\x11\x43redentialListCmd\"\x15\n\x13\x43redentialDeleteCmd\".\n\x13\x43redentialEnsureCmd\x12\x17\n\x0fssh_private_key\x18\x01 \x01(\x0c\"5\n\x13\x43redentialStatusMsg\x12\x1e\n\x16ssh_private_key_sha256\x18\x01 \x01(\x0c*\xed\x03\n\x07\x43mdType\x12\x15\n\x11\x43MD_DATA_UPSTREAM\x10\x00\x12\x15\n\x11\x43MD_SESSION_CLOSE\x10\x05\x12\x0e\n\nCMD_REJECT\x10\x06\x12\x0b\n\x07\x43MD_NET\x10\t\x12\x0f\n\x0b\x43MD_RUNTIME\x10\n\x12\x15\n\x11\x43MD_NODE_INFO_GET\x10\x0b\x12\x0c\n\x08\x43MD_EXEC\x10\x0c\x12\x0e\n\nCMD_ATTACH\x10\r\x12\x0c\n\x08\x43MD_LOGS\x10\x0e\x12\x12\n\x0e\x43MD_TTY_RESIZE\x10\x0f\x12\x14\n\x10\x43MD_PORT_FORWARD\x10\x10\x12\x16\n\x12\x43MD_METRICS_CONFIG\x10\x15\x12\x17\n\x13\x43MD_METRICS_COLLECT\x10\x16\x12\x13\n\x0f\x43MD_CRED_ENSURE\x10\x1f\x12\x14\n\x10\x43MD_STORAGE_LIST\x10)\x12\x16\n\x12\x43MD_STORAGE_ENSURE\x10*\x12\x16\n\x12\x43MD_STORAGE_DELETE\x10+\x12\x17\n\x13\x43MD_PERIPHERAL_LIST\x10\x33\x12\x19\n\x15\x43MD_PERIPHERAL_ENSURE\x10\x34\x12\x19\n\x15\x43MD_PERIPHERAL_DELETE\x10\x35\x12\x1a\n\x16\x43MD_PERIPHERAL_OPERATE\x10\x36\x12\"\n\x1e\x43MD_PERIPHERAL_COLLECT_METRICS\x10\x37*\xfa\x02\n\x07MsgType\x12\x0c\n\x08MSG_DATA\x10\x00\x12\x14\n\x10MSG_DATA_DEFAULT\x10\x00\x12\x13\n\x0fMSG_DATA_STDOUT\x10\x00\x12\x14\n\x10MSG_DATA_METRICS\x10\x00\x12\x13\n\x0fMSG_DATA_STDERR\x10\x01\x12\x0c\n\x08MSG_DONE\x10\x05\x12\r\n\tMSG_STATE\x10\x06\x12\r\n\tMSG_ERROR\x10\x07\x12\x0b\n\x07MSG_NET\x10\t\x12\x0f\n\x0bMSG_RUNTIME\x10\n\x12\x13\n\x0fMSG_NODE_STATUS\x10\x0b\x12\x13\n\x0fMSG_CRED_STATUS\x10\x1f\x12\x16\n\x12MSG_STORAGE_STATUS\x10)\x12\x1b\n\x17MSG_STORAGE_STATUS_LIST\x10*\x12\x19\n\x15MSG_PERIPHERAL_STATUS\x10\x33\x12\x1e\n\x1aMSG_PERIPHERAL_STATUS_LIST\x10\x34\x12#\n\x1fMSG_PERIPHERAL_OPERATION_RESULT\x10\x35\x1a\x02\x10\x01*\xb8\x01\n\x0fRejectionReason\x12\x1d\n\x19_INVALID_REJECTION_REASON\x10\x00\x12\x1b\n\x17REJECTION_INVALID_PROTO\x10\x01\x12\x1f\n\x1bREJECTION_ALREADY_CONNECTED\x10\x02\x12#\n\x1fREJECTION_INITIAL_CHECK_FAILURE\x10\x03\x12#\n\x1fREJECTION_INTERNAL_SERVER_ERROR\x10\x04*e\n\rNodeCondition\x12\x1a\n\x16NODE_CONDITION_UNKNOWN\x10\x00\x12\x1a\n\x16NODE_CONDITION_HEALTHY\x10\x01\x12\x1c\n\x18NODE_CONDITION_UNHEALTHY\x10\x02*`\n\x0cStorageState\x12\x18\n\x14STORAGE_STATE_UNKONW\x10\x00\x12\x1b\n\x17STORAGE_STATE_UNMOUNTED\x10\x01\x12\x19\n\x15STORAGE_STATE_MOUNTED\x10\x02\x42#Z!arhat.dev/aranya-proto/aranyagopbb\x06proto3'
 )
 
 _CMDTYPE = _descriptor.EnumDescriptor(
@@ -143,8 +143,8 @@ _CMDTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1370,
-  serialized_end=1863,
+  serialized_start=3032,
+  serialized_end=3525,
 )
 _sym_db.RegisterEnumDescriptor(_CMDTYPE)
 
@@ -244,8 +244,8 @@ _MSGTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=b'\020\001',
-  serialized_start=1866,
-  serialized_end=2244,
+  serialized_start=3528,
+  serialized_end=3906,
 )
 _sym_db.RegisterEnumDescriptor(_MSGTYPE)
 
@@ -285,12 +285,74 @@ _REJECTIONREASON = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=2247,
-  serialized_end=2431,
+  serialized_start=3909,
+  serialized_end=4093,
 )
 _sym_db.RegisterEnumDescriptor(_REJECTIONREASON)
 
 RejectionReason = enum_type_wrapper.EnumTypeWrapper(_REJECTIONREASON)
+_NODECONDITION = _descriptor.EnumDescriptor(
+  name='NodeCondition',
+  full_name='aranya.NodeCondition',
+  filename=None,
+  file=DESCRIPTOR,
+  create_key=_descriptor._internal_create_key,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='NODE_CONDITION_UNKNOWN', index=0, number=0,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='NODE_CONDITION_HEALTHY', index=1, number=1,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='NODE_CONDITION_UNHEALTHY', index=2, number=2,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=4095,
+  serialized_end=4196,
+)
+_sym_db.RegisterEnumDescriptor(_NODECONDITION)
+
+NodeCondition = enum_type_wrapper.EnumTypeWrapper(_NODECONDITION)
+_STORAGESTATE = _descriptor.EnumDescriptor(
+  name='StorageState',
+  full_name='aranya.StorageState',
+  filename=None,
+  file=DESCRIPTOR,
+  create_key=_descriptor._internal_create_key,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='STORAGE_STATE_UNKONW', index=0, number=0,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='STORAGE_STATE_UNMOUNTED', index=1, number=1,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='STORAGE_STATE_MOUNTED', index=2, number=2,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=4198,
+  serialized_end=4294,
+)
+_sym_db.RegisterEnumDescriptor(_STORAGESTATE)
+
+StorageState = enum_type_wrapper.EnumTypeWrapper(_STORAGESTATE)
 CMD_DATA_UPSTREAM = 0
 CMD_SESSION_CLOSE = 5
 CMD_REJECT = 6
@@ -335,6 +397,12 @@ REJECTION_INVALID_PROTO = 1
 REJECTION_ALREADY_CONNECTED = 2
 REJECTION_INITIAL_CHECK_FAILURE = 3
 REJECTION_INTERNAL_SERVER_ERROR = 4
+NODE_CONDITION_UNKNOWN = 0
+NODE_CONDITION_HEALTHY = 1
+NODE_CONDITION_UNHEALTHY = 2
+STORAGE_STATE_UNKONW = 0
+STORAGE_STATE_UNMOUNTED = 1
+STORAGE_STATE_MOUNTED = 2
 
 
 _NODEINFOGETCMD_KIND = _descriptor.EnumDescriptor(
@@ -357,8 +425,8 @@ _NODEINFOGETCMD_KIND = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=293,
-  serialized_end=337,
+  serialized_start=284,
+  serialized_end=328,
 )
 _sym_db.RegisterEnumDescriptor(_NODEINFOGETCMD_KIND)
 
@@ -397,8 +465,8 @@ _ERRORMSG_KIND = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1084,
-  serialized_end=1189,
+  serialized_start=1145,
+  serialized_end=1250,
 )
 _sym_db.RegisterEnumDescriptor(_ERRORMSG_KIND)
 
@@ -427,35 +495,95 @@ _STATEMSG_KIND = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1260,
-  serialized_end=1323,
+  serialized_start=1321,
+  serialized_end=1384,
 )
 _sym_db.RegisterEnumDescriptor(_STATEMSG_KIND)
 
-
-_EMPTY = _descriptor.Descriptor(
-  name='Empty',
-  full_name='aranya.Empty',
+_NODEEXTINFO_VALUETYPE = _descriptor.EnumDescriptor(
+  name='ValueType',
+  full_name='aranya.NodeExtInfo.ValueType',
   filename=None,
   file=DESCRIPTOR,
-  containing_type=None,
   create_key=_descriptor._internal_create_key,
-  fields=[
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='NODE_EXT_INFO_TYPE_STRING', index=0, number=0,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='NODE_EXT_INFO_TYPE_INTEGER', index=1, number=1,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='NODE_EXT_INFO_TYPE_FLOAT', index=2, number=2,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
   ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
+  containing_type=None,
   serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=23,
-  serialized_end=30,
+  serialized_start=2095,
+  serialized_end=2199,
 )
+_sym_db.RegisterEnumDescriptor(_NODEEXTINFO_VALUETYPE)
+
+_NODEEXTINFO_OPERATOR = _descriptor.EnumDescriptor(
+  name='Operator',
+  full_name='aranya.NodeExtInfo.Operator',
+  filename=None,
+  file=DESCRIPTOR,
+  create_key=_descriptor._internal_create_key,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='NODE_EXT_INFO_OPERATOR_SET', index=0, number=0,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='NODE_EXT_INFO_OPERATOR_ADD', index=1, number=1,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='NODE_EXT_INFO_OPERATOR_MINUS', index=2, number=2,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=2201,
+  serialized_end=2309,
+)
+_sym_db.RegisterEnumDescriptor(_NODEEXTINFO_OPERATOR)
+
+_NODEEXTINFO_TARGET = _descriptor.EnumDescriptor(
+  name='Target',
+  full_name='aranya.NodeExtInfo.Target',
+  filename=None,
+  file=DESCRIPTOR,
+  create_key=_descriptor._internal_create_key,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='NODE_EXT_INFO_TARGET_ANNOTATION', index=0, number=0,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='NODE_EXT_INFO_TARGET_LABEL', index=1, number=1,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=2311,
+  serialized_end=2388,
+)
+_sym_db.RegisterEnumDescriptor(_NODEEXTINFO_TARGET)
 
 
 _CMD = _descriptor.Descriptor(
@@ -513,8 +641,8 @@ _CMD = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=32,
-  serialized_end=130,
+  serialized_start=23,
+  serialized_end=121,
 )
 
 
@@ -573,8 +701,8 @@ _MSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=132,
-  serialized_end=230,
+  serialized_start=123,
+  serialized_end=221,
 )
 
 
@@ -606,8 +734,8 @@ _NODEINFOGETCMD = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=232,
-  serialized_end=337,
+  serialized_start=223,
+  serialized_end=328,
 )
 
 
@@ -638,8 +766,8 @@ _SESSIONCLOSECMD = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=339,
-  serialized_end=369,
+  serialized_start=330,
+  serialized_end=360,
 )
 
 
@@ -677,8 +805,8 @@ _REJECTCMD = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=371,
-  serialized_end=440,
+  serialized_start=362,
+  serialized_end=431,
 )
 
 
@@ -709,8 +837,8 @@ _NETWORKCMD = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=442,
-  serialized_end=483,
+  serialized_start=433,
+  serialized_end=474,
 )
 
 
@@ -797,8 +925,8 @@ _LOGSCMD = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=486,
-  serialized_end=654,
+  serialized_start=477,
+  serialized_end=645,
 )
 
 
@@ -836,8 +964,8 @@ _EXECORATTACHCMD_ENVSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=838,
-  serialized_end=881,
+  serialized_start=829,
+  serialized_end=872,
 )
 
 _EXECORATTACHCMD = _descriptor.Descriptor(
@@ -916,8 +1044,8 @@ _EXECORATTACHCMD = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=657,
-  serialized_end=881,
+  serialized_start=648,
+  serialized_end=872,
 )
 
 
@@ -937,16 +1065,23 @@ _PORTFORWARDCMD = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='port', full_name='aranya.PortForwardCmd.port', index=1,
-      number=2, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
+      name='network', full_name='aranya.PortForwardCmd.network', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='protocol', full_name='aranya.PortForwardCmd.protocol', index=2,
+      name='host', full_name='aranya.PortForwardCmd.host', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='port', full_name='aranya.PortForwardCmd.port', index=3,
+      number=4, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -962,8 +1097,8 @@ _PORTFORWARDCMD = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=883,
-  serialized_end=948,
+  serialized_start=874,
+  serialized_end=952,
 )
 
 
@@ -1001,8 +1136,47 @@ _TERMINALRESIZECMD = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=950,
-  serialized_end=997,
+  serialized_start=954,
+  serialized_end=1001,
+)
+
+
+_METRICSCONFIGCMD = _descriptor.Descriptor(
+  name='MetricsConfigCmd',
+  full_name='aranya.MetricsConfigCmd',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='collect', full_name='aranya.MetricsConfigCmd.collect', index=0,
+      number=1, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='extra_args', full_name='aranya.MetricsConfigCmd.extra_args', index=1,
+      number=2, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1003,
+  serialized_end=1058,
 )
 
 
@@ -1048,8 +1222,8 @@ _ERRORMSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1000,
-  serialized_end=1189,
+  serialized_start=1061,
+  serialized_end=1250,
 )
 
 
@@ -1088,8 +1262,8 @@ _STATEMSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1192,
-  serialized_end=1323,
+  serialized_start=1253,
+  serialized_end=1384,
 )
 
 
@@ -1120,8 +1294,606 @@ _NETWORKMSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1325,
-  serialized_end=1367,
+  serialized_start=1386,
+  serialized_end=1428,
+)
+
+
+_NODESYSTEMINFO = _descriptor.Descriptor(
+  name='NodeSystemInfo',
+  full_name='aranya.NodeSystemInfo',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='os', full_name='aranya.NodeSystemInfo.os', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='os_image', full_name='aranya.NodeSystemInfo.os_image', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='arch', full_name='aranya.NodeSystemInfo.arch', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='kernel_version', full_name='aranya.NodeSystemInfo.kernel_version', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='boot_id', full_name='aranya.NodeSystemInfo.boot_id', index=4,
+      number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='machine_id', full_name='aranya.NodeSystemInfo.machine_id', index=5,
+      number=6, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='system_uuid', full_name='aranya.NodeSystemInfo.system_uuid', index=6,
+      number=7, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1431,
+  serialized_end=1573,
+)
+
+
+_NODERESOURCES = _descriptor.Descriptor(
+  name='NodeResources',
+  full_name='aranya.NodeResources',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='cpu_count', full_name='aranya.NodeResources.cpu_count', index=0,
+      number=1, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='memory_bytes', full_name='aranya.NodeResources.memory_bytes', index=1,
+      number=2, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='storage_bytes', full_name='aranya.NodeResources.storage_bytes', index=2,
+      number=3, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1575,
+  serialized_end=1654,
+)
+
+
+_NODECONDITIONS = _descriptor.Descriptor(
+  name='NodeConditions',
+  full_name='aranya.NodeConditions',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='ready', full_name='aranya.NodeConditions.ready', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='memory', full_name='aranya.NodeConditions.memory', index=1,
+      number=2, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='disk', full_name='aranya.NodeConditions.disk', index=2,
+      number=3, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='pid', full_name='aranya.NodeConditions.pid', index=3,
+      number=4, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='network', full_name='aranya.NodeConditions.network', index=4,
+      number=5, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='pod', full_name='aranya.NodeConditions.pod', index=5,
+      number=6, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1657,
+  serialized_end=1899,
+)
+
+
+_NODEEXTINFO = _descriptor.Descriptor(
+  name='NodeExtInfo',
+  full_name='aranya.NodeExtInfo',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='value', full_name='aranya.NodeExtInfo.value', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='value_type', full_name='aranya.NodeExtInfo.value_type', index=1,
+      number=2, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='operator', full_name='aranya.NodeExtInfo.operator', index=2,
+      number=3, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='target', full_name='aranya.NodeExtInfo.target', index=3,
+      number=4, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='target_key', full_name='aranya.NodeExtInfo.target_key', index=4,
+      number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+    _NODEEXTINFO_VALUETYPE,
+    _NODEEXTINFO_OPERATOR,
+    _NODEEXTINFO_TARGET,
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1902,
+  serialized_end=2388,
+)
+
+
+_NODESTATUSMSG = _descriptor.Descriptor(
+  name='NodeStatusMsg',
+  full_name='aranya.NodeStatusMsg',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='system_info', full_name='aranya.NodeStatusMsg.system_info', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='capacity', full_name='aranya.NodeStatusMsg.capacity', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='conditions', full_name='aranya.NodeStatusMsg.conditions', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='ext_info', full_name='aranya.NodeStatusMsg.ext_info', index=3,
+      number=4, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2391,
+  serialized_end=2575,
+)
+
+
+_STORAGELISTCMD = _descriptor.Descriptor(
+  name='StorageListCmd',
+  full_name='aranya.StorageListCmd',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2577,
+  serialized_end=2593,
+)
+
+
+_STORAGEENSURECMD = _descriptor.Descriptor(
+  name='StorageEnsureCmd',
+  full_name='aranya.StorageEnsureCmd',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='remote_path', full_name='aranya.StorageEnsureCmd.remote_path', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='local_path', full_name='aranya.StorageEnsureCmd.local_path', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2595,
+  serialized_end=2654,
+)
+
+
+_STORAGEDELETECMD = _descriptor.Descriptor(
+  name='StorageDeleteCmd',
+  full_name='aranya.StorageDeleteCmd',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='remote_path', full_name='aranya.StorageDeleteCmd.remote_path', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='local_path', full_name='aranya.StorageDeleteCmd.local_path', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2656,
+  serialized_end=2715,
+)
+
+
+_STORAGESTATUSMSG = _descriptor.Descriptor(
+  name='StorageStatusMsg',
+  full_name='aranya.StorageStatusMsg',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='state', full_name='aranya.StorageStatusMsg.state', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='remote_path', full_name='aranya.StorageStatusMsg.remote_path', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='mount_point', full_name='aranya.StorageStatusMsg.mount_point', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2717,
+  serialized_end=2814,
+)
+
+
+_STORAGESTATUSLISTMSG = _descriptor.Descriptor(
+  name='StorageStatusListMsg',
+  full_name='aranya.StorageStatusListMsg',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='storages', full_name='aranya.StorageStatusListMsg.storages', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2816,
+  serialized_end=2882,
+)
+
+
+_CREDENTIALLISTCMD = _descriptor.Descriptor(
+  name='CredentialListCmd',
+  full_name='aranya.CredentialListCmd',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2884,
+  serialized_end=2903,
+)
+
+
+_CREDENTIALDELETECMD = _descriptor.Descriptor(
+  name='CredentialDeleteCmd',
+  full_name='aranya.CredentialDeleteCmd',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2905,
+  serialized_end=2926,
+)
+
+
+_CREDENTIALENSURECMD = _descriptor.Descriptor(
+  name='CredentialEnsureCmd',
+  full_name='aranya.CredentialEnsureCmd',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='ssh_private_key', full_name='aranya.CredentialEnsureCmd.ssh_private_key', index=0,
+      number=1, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"",
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2928,
+  serialized_end=2974,
+)
+
+
+_CREDENTIALSTATUSMSG = _descriptor.Descriptor(
+  name='CredentialStatusMsg',
+  full_name='aranya.CredentialStatusMsg',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='ssh_private_key_sha256', full_name='aranya.CredentialStatusMsg.ssh_private_key_sha256', index=0,
+      number=1, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"",
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2976,
+  serialized_end=3029,
 )
 
 _CMD.fields_by_name['kind'].enum_type = _CMDTYPE
@@ -1135,7 +1907,24 @@ _ERRORMSG.fields_by_name['kind'].enum_type = _ERRORMSG_KIND
 _ERRORMSG_KIND.containing_type = _ERRORMSG
 _STATEMSG.fields_by_name['kind'].enum_type = _STATEMSG_KIND
 _STATEMSG_KIND.containing_type = _STATEMSG
-DESCRIPTOR.message_types_by_name['Empty'] = _EMPTY
+_NODECONDITIONS.fields_by_name['ready'].enum_type = _NODECONDITION
+_NODECONDITIONS.fields_by_name['memory'].enum_type = _NODECONDITION
+_NODECONDITIONS.fields_by_name['disk'].enum_type = _NODECONDITION
+_NODECONDITIONS.fields_by_name['pid'].enum_type = _NODECONDITION
+_NODECONDITIONS.fields_by_name['network'].enum_type = _NODECONDITION
+_NODECONDITIONS.fields_by_name['pod'].enum_type = _NODECONDITION
+_NODEEXTINFO.fields_by_name['value_type'].enum_type = _NODEEXTINFO_VALUETYPE
+_NODEEXTINFO.fields_by_name['operator'].enum_type = _NODEEXTINFO_OPERATOR
+_NODEEXTINFO.fields_by_name['target'].enum_type = _NODEEXTINFO_TARGET
+_NODEEXTINFO_VALUETYPE.containing_type = _NODEEXTINFO
+_NODEEXTINFO_OPERATOR.containing_type = _NODEEXTINFO
+_NODEEXTINFO_TARGET.containing_type = _NODEEXTINFO
+_NODESTATUSMSG.fields_by_name['system_info'].message_type = _NODESYSTEMINFO
+_NODESTATUSMSG.fields_by_name['capacity'].message_type = _NODERESOURCES
+_NODESTATUSMSG.fields_by_name['conditions'].message_type = _NODECONDITIONS
+_NODESTATUSMSG.fields_by_name['ext_info'].message_type = _NODEEXTINFO
+_STORAGESTATUSMSG.fields_by_name['state'].enum_type = _STORAGESTATE
+_STORAGESTATUSLISTMSG.fields_by_name['storages'].message_type = _STORAGESTATUSMSG
 DESCRIPTOR.message_types_by_name['Cmd'] = _CMD
 DESCRIPTOR.message_types_by_name['Msg'] = _MSG
 DESCRIPTOR.message_types_by_name['NodeInfoGetCmd'] = _NODEINFOGETCMD
@@ -1146,20 +1935,30 @@ DESCRIPTOR.message_types_by_name['LogsCmd'] = _LOGSCMD
 DESCRIPTOR.message_types_by_name['ExecOrAttachCmd'] = _EXECORATTACHCMD
 DESCRIPTOR.message_types_by_name['PortForwardCmd'] = _PORTFORWARDCMD
 DESCRIPTOR.message_types_by_name['TerminalResizeCmd'] = _TERMINALRESIZECMD
+DESCRIPTOR.message_types_by_name['MetricsConfigCmd'] = _METRICSCONFIGCMD
 DESCRIPTOR.message_types_by_name['ErrorMsg'] = _ERRORMSG
 DESCRIPTOR.message_types_by_name['StateMsg'] = _STATEMSG
 DESCRIPTOR.message_types_by_name['NetworkMsg'] = _NETWORKMSG
+DESCRIPTOR.message_types_by_name['NodeSystemInfo'] = _NODESYSTEMINFO
+DESCRIPTOR.message_types_by_name['NodeResources'] = _NODERESOURCES
+DESCRIPTOR.message_types_by_name['NodeConditions'] = _NODECONDITIONS
+DESCRIPTOR.message_types_by_name['NodeExtInfo'] = _NODEEXTINFO
+DESCRIPTOR.message_types_by_name['NodeStatusMsg'] = _NODESTATUSMSG
+DESCRIPTOR.message_types_by_name['StorageListCmd'] = _STORAGELISTCMD
+DESCRIPTOR.message_types_by_name['StorageEnsureCmd'] = _STORAGEENSURECMD
+DESCRIPTOR.message_types_by_name['StorageDeleteCmd'] = _STORAGEDELETECMD
+DESCRIPTOR.message_types_by_name['StorageStatusMsg'] = _STORAGESTATUSMSG
+DESCRIPTOR.message_types_by_name['StorageStatusListMsg'] = _STORAGESTATUSLISTMSG
+DESCRIPTOR.message_types_by_name['CredentialListCmd'] = _CREDENTIALLISTCMD
+DESCRIPTOR.message_types_by_name['CredentialDeleteCmd'] = _CREDENTIALDELETECMD
+DESCRIPTOR.message_types_by_name['CredentialEnsureCmd'] = _CREDENTIALENSURECMD
+DESCRIPTOR.message_types_by_name['CredentialStatusMsg'] = _CREDENTIALSTATUSMSG
 DESCRIPTOR.enum_types_by_name['CmdType'] = _CMDTYPE
 DESCRIPTOR.enum_types_by_name['MsgType'] = _MSGTYPE
 DESCRIPTOR.enum_types_by_name['RejectionReason'] = _REJECTIONREASON
+DESCRIPTOR.enum_types_by_name['NodeCondition'] = _NODECONDITION
+DESCRIPTOR.enum_types_by_name['StorageState'] = _STORAGESTATE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
-
-Empty = _reflection.GeneratedProtocolMessageType('Empty', (_message.Message,), {
-  'DESCRIPTOR' : _EMPTY,
-  '__module__' : 'proto_pb2'
-  # @@protoc_insertion_point(class_scope:aranya.Empty)
-  })
-_sym_db.RegisterMessage(Empty)
 
 Cmd = _reflection.GeneratedProtocolMessageType('Cmd', (_message.Message,), {
   'DESCRIPTOR' : _CMD,
@@ -1239,6 +2038,13 @@ TerminalResizeCmd = _reflection.GeneratedProtocolMessageType('TerminalResizeCmd'
   })
 _sym_db.RegisterMessage(TerminalResizeCmd)
 
+MetricsConfigCmd = _reflection.GeneratedProtocolMessageType('MetricsConfigCmd', (_message.Message,), {
+  'DESCRIPTOR' : _METRICSCONFIGCMD,
+  '__module__' : 'proto_pb2'
+  # @@protoc_insertion_point(class_scope:aranya.MetricsConfigCmd)
+  })
+_sym_db.RegisterMessage(MetricsConfigCmd)
+
 ErrorMsg = _reflection.GeneratedProtocolMessageType('ErrorMsg', (_message.Message,), {
   'DESCRIPTOR' : _ERRORMSG,
   '__module__' : 'proto_pb2'
@@ -1259,6 +2065,104 @@ NetworkMsg = _reflection.GeneratedProtocolMessageType('NetworkMsg', (_message.Me
   # @@protoc_insertion_point(class_scope:aranya.NetworkMsg)
   })
 _sym_db.RegisterMessage(NetworkMsg)
+
+NodeSystemInfo = _reflection.GeneratedProtocolMessageType('NodeSystemInfo', (_message.Message,), {
+  'DESCRIPTOR' : _NODESYSTEMINFO,
+  '__module__' : 'proto_pb2'
+  # @@protoc_insertion_point(class_scope:aranya.NodeSystemInfo)
+  })
+_sym_db.RegisterMessage(NodeSystemInfo)
+
+NodeResources = _reflection.GeneratedProtocolMessageType('NodeResources', (_message.Message,), {
+  'DESCRIPTOR' : _NODERESOURCES,
+  '__module__' : 'proto_pb2'
+  # @@protoc_insertion_point(class_scope:aranya.NodeResources)
+  })
+_sym_db.RegisterMessage(NodeResources)
+
+NodeConditions = _reflection.GeneratedProtocolMessageType('NodeConditions', (_message.Message,), {
+  'DESCRIPTOR' : _NODECONDITIONS,
+  '__module__' : 'proto_pb2'
+  # @@protoc_insertion_point(class_scope:aranya.NodeConditions)
+  })
+_sym_db.RegisterMessage(NodeConditions)
+
+NodeExtInfo = _reflection.GeneratedProtocolMessageType('NodeExtInfo', (_message.Message,), {
+  'DESCRIPTOR' : _NODEEXTINFO,
+  '__module__' : 'proto_pb2'
+  # @@protoc_insertion_point(class_scope:aranya.NodeExtInfo)
+  })
+_sym_db.RegisterMessage(NodeExtInfo)
+
+NodeStatusMsg = _reflection.GeneratedProtocolMessageType('NodeStatusMsg', (_message.Message,), {
+  'DESCRIPTOR' : _NODESTATUSMSG,
+  '__module__' : 'proto_pb2'
+  # @@protoc_insertion_point(class_scope:aranya.NodeStatusMsg)
+  })
+_sym_db.RegisterMessage(NodeStatusMsg)
+
+StorageListCmd = _reflection.GeneratedProtocolMessageType('StorageListCmd', (_message.Message,), {
+  'DESCRIPTOR' : _STORAGELISTCMD,
+  '__module__' : 'proto_pb2'
+  # @@protoc_insertion_point(class_scope:aranya.StorageListCmd)
+  })
+_sym_db.RegisterMessage(StorageListCmd)
+
+StorageEnsureCmd = _reflection.GeneratedProtocolMessageType('StorageEnsureCmd', (_message.Message,), {
+  'DESCRIPTOR' : _STORAGEENSURECMD,
+  '__module__' : 'proto_pb2'
+  # @@protoc_insertion_point(class_scope:aranya.StorageEnsureCmd)
+  })
+_sym_db.RegisterMessage(StorageEnsureCmd)
+
+StorageDeleteCmd = _reflection.GeneratedProtocolMessageType('StorageDeleteCmd', (_message.Message,), {
+  'DESCRIPTOR' : _STORAGEDELETECMD,
+  '__module__' : 'proto_pb2'
+  # @@protoc_insertion_point(class_scope:aranya.StorageDeleteCmd)
+  })
+_sym_db.RegisterMessage(StorageDeleteCmd)
+
+StorageStatusMsg = _reflection.GeneratedProtocolMessageType('StorageStatusMsg', (_message.Message,), {
+  'DESCRIPTOR' : _STORAGESTATUSMSG,
+  '__module__' : 'proto_pb2'
+  # @@protoc_insertion_point(class_scope:aranya.StorageStatusMsg)
+  })
+_sym_db.RegisterMessage(StorageStatusMsg)
+
+StorageStatusListMsg = _reflection.GeneratedProtocolMessageType('StorageStatusListMsg', (_message.Message,), {
+  'DESCRIPTOR' : _STORAGESTATUSLISTMSG,
+  '__module__' : 'proto_pb2'
+  # @@protoc_insertion_point(class_scope:aranya.StorageStatusListMsg)
+  })
+_sym_db.RegisterMessage(StorageStatusListMsg)
+
+CredentialListCmd = _reflection.GeneratedProtocolMessageType('CredentialListCmd', (_message.Message,), {
+  'DESCRIPTOR' : _CREDENTIALLISTCMD,
+  '__module__' : 'proto_pb2'
+  # @@protoc_insertion_point(class_scope:aranya.CredentialListCmd)
+  })
+_sym_db.RegisterMessage(CredentialListCmd)
+
+CredentialDeleteCmd = _reflection.GeneratedProtocolMessageType('CredentialDeleteCmd', (_message.Message,), {
+  'DESCRIPTOR' : _CREDENTIALDELETECMD,
+  '__module__' : 'proto_pb2'
+  # @@protoc_insertion_point(class_scope:aranya.CredentialDeleteCmd)
+  })
+_sym_db.RegisterMessage(CredentialDeleteCmd)
+
+CredentialEnsureCmd = _reflection.GeneratedProtocolMessageType('CredentialEnsureCmd', (_message.Message,), {
+  'DESCRIPTOR' : _CREDENTIALENSURECMD,
+  '__module__' : 'proto_pb2'
+  # @@protoc_insertion_point(class_scope:aranya.CredentialEnsureCmd)
+  })
+_sym_db.RegisterMessage(CredentialEnsureCmd)
+
+CredentialStatusMsg = _reflection.GeneratedProtocolMessageType('CredentialStatusMsg', (_message.Message,), {
+  'DESCRIPTOR' : _CREDENTIALSTATUSMSG,
+  '__module__' : 'proto_pb2'
+  # @@protoc_insertion_point(class_scope:aranya.CredentialStatusMsg)
+  })
+_sym_db.RegisterMessage(CredentialStatusMsg)
 
 
 DESCRIPTOR._options = None
