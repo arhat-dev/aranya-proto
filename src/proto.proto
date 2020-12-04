@@ -93,6 +93,10 @@ enum MsgType {
     MSG_DATA_STDOUT = 0;
     MSG_DATA_METRICS = 0;
 
+    // special message to allow data streaming, aranya can only send data after
+    // receiving this message (empty data)
+    MSG_STREAM_CONTINUE = 0;
+
     MSG_DATA_STDERR = 1;
 
     MSG_DONE = 5;

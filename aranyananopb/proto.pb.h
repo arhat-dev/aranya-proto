@@ -44,6 +44,7 @@ typedef enum _aranya_MsgType {
     aranya_MsgType_MSG_DATA_DEFAULT = 0,
     aranya_MsgType_MSG_DATA_STDOUT = 0,
     aranya_MsgType_MSG_DATA_METRICS = 0,
+    aranya_MsgType_MSG_STREAM_CONTINUE = 0,
     aranya_MsgType_MSG_DATA_STDERR = 1,
     aranya_MsgType_MSG_DONE = 5,
     aranya_MsgType_MSG_STATE = 6,
