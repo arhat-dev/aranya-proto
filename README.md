@@ -5,7 +5,7 @@
 [![GoReportCard](https://goreportcard.com/badge/arhat.dev/aranya-proto)](https://goreportcard.com/report/arhat.dev/aranya-proto)
 [![codecov](https://codecov.io/gh/arhat-dev/aranya-proto/branch/master/graph/badge.svg)](https://codecov.io/gh/arhat-dev/aranya-proto)
 
-aranya protocol repo
+Protocol messages for packet oriented communication with streaming support
 
 ## Workflow
 
