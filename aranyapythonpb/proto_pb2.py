@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z!arhat.dev/aranya-proto/aranyagopb',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x0bproto.proto\x12\x06\x61ranya\"b\n\x03\x43md\x12\x1d\n\x04kind\x18\x01 \x01(\x0e\x32\x0f.aranya.CmdType\x12\x0b\n\x03sid\x18\x02 \x01(\x04\x12\x0b\n\x03seq\x18\x03 \x01(\x04\x12\x11\n\tcompleted\x18\x04 \x01(\x08\x12\x0f\n\x07payload\x18\x0b \x01(\x0c\"b\n\x03Msg\x12\x1d\n\x04kind\x18\x01 \x01(\x0e\x32\x0f.aranya.MsgType\x12\x0b\n\x03sid\x18\x02 \x01(\x04\x12\x0b\n\x03seq\x18\x03 \x01(\x04\x12\x11\n\tcompleted\x18\x04 \x01(\x08\x12\x0f\n\x07payload\x18\x0b \x01(\x0c\"i\n\x0eNodeInfoGetCmd\x12)\n\x04kind\x18\x01 \x01(\x0e\x32\x1b.aranya.NodeInfoGetCmd.Kind\",\n\x04Kind\x12\x11\n\rNODE_INFO_DYN\x10\x00\x12\x11\n\rNODE_INFO_ALL\x10\x01\"\x1e\n\x0fSessionCloseCmd\x12\x0b\n\x03sid\x18\x01 \x01(\x04\"E\n\tRejectCmd\x12\'\n\x06reason\x18\x01 \x01(\x0e\x32\x17.aranya.RejectionReason\x12\x0f\n\x07message\x18\x02 \x01(\t\")\n\nNetworkCmd\x12\x1b\n\x13\x61\x62\x62ot_request_bytes\x18\x01 \x01(\x0c\"\xa8\x01\n\x07LogsCmd\x12\x0f\n\x07pod_uid\x18\x01 \x01(\t\x12\x11\n\tcontainer\x18\x02 \x01(\t\x12\x0e\n\x06\x66ollow\x18\x03 \x01(\x08\x12\x11\n\ttimestamp\x18\x04 \x01(\x08\x12\r\n\x05since\x18\x05 \x01(\t\x12\x12\n\ntail_lines\x18\x06 \x01(\x03\x12\x13\n\x0b\x62ytes_limit\x18\x07 \x01(\x03\x12\x10\n\x08previous\x18\x08 \x01(\x08\x12\x0c\n\x04path\x18\t \x01(\t\"\xe0\x01\n\x0f\x45xecOrAttachCmd\x12\x0f\n\x07pod_uid\x18\x01 \x01(\t\x12\x11\n\tcontainer\x18\x02 \x01(\t\x12\r\n\x05stdin\x18\x03 \x01(\x08\x12\x0e\n\x06stdout\x18\x04 \x01(\x08\x12\x0e\n\x06stderr\x18\x05 \x01(\x08\x12\x0b\n\x03tty\x18\x06 \x01(\x08\x12\x0f\n\x07\x63ommand\x18\x07 \x03(\t\x12/\n\x04\x65nvs\x18\x08 \x03(\x0b\x32!.aranya.ExecOrAttachCmd.EnvsEntry\x1a+\n\tEnvsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"N\n\x0ePortForwardCmd\x12\x0f\n\x07pod_uid\x18\x01 \x01(\t\x12\x0f\n\x07network\x18\x02 \x01(\t\x12\x0c\n\x04host\x18\x03 \x01(\t\x12\x0c\n\x04port\x18\x04 \x01(\x05\"/\n\x11TerminalResizeCmd\x12\x0c\n\x04\x63ols\x18\x01 \x01(\r\x12\x0c\n\x04rows\x18\x02 \x01(\r\"7\n\x10MetricsConfigCmd\x12\x0f\n\x07\x63ollect\x18\x01 \x03(\t\x12\x12\n\nextra_args\x18\x02 \x03(\t\"\xbd\x01\n\x08\x45rrorMsg\x12#\n\x04kind\x18\x01 \x01(\x0e\x32\x15.aranya.ErrorMsg.Kind\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12\x0c\n\x04\x63ode\x18\x03 \x01(\x03\"i\n\x04Kind\x12\x0e\n\nERR_COMMON\x10\x00\x12\x11\n\rERR_NOT_FOUND\x10\x01\x12\x16\n\x12\x45RR_ALREADY_EXISTS\x10\x02\x12\x15\n\x11\x45RR_NOT_SUPPORTED\x10\x03\x12\x0f\n\x0b\x45RR_TIMEOUT\x10\x04\"\x83\x01\n\x08StateMsg\x12#\n\x04kind\x18\x01 \x01(\x0e\x32\x15.aranya.StateMsg.Kind\x12\x11\n\tdevice_id\x18\x02 \x01(\t\"?\n\x04Kind\x12\x12\n\x0e_INVALID_STATE\x10\x00\x12\x10\n\x0cSTATE_ONLINE\x10\x01\x12\x11\n\rSTATE_OFFLINE\x10\x02\"*\n\nNetworkMsg\x12\x1c\n\x14\x61\x62\x62ot_response_bytes\x18\x01 \x01(\x0c\"\x8e\x01\n\x0eNodeSystemInfo\x12\n\n\x02os\x18\x01 \x01(\t\x12\x10\n\x08os_image\x18\x02 \x01(\t\x12\x0c\n\x04\x61rch\x18\x03 \x01(\t\x12\x16\n\x0ekernel_version\x18\x04 \x01(\t\x12\x0f\n\x07\x62oot_id\x18\x05 \x01(\t\x12\x12\n\nmachine_id\x18\x06 \x01(\t\x12\x13\n\x0bsystem_uuid\x18\x07 \x01(\t\"O\n\rNodeResources\x12\x11\n\tcpu_count\x18\x01 \x01(\x04\x12\x14\n\x0cmemory_bytes\x18\x02 \x01(\x04\x12\x15\n\rstorage_bytes\x18\x03 \x01(\x04\"\xf2\x01\n\x0eNodeConditions\x12$\n\x05ready\x18\x01 \x01(\x0e\x32\x15.aranya.NodeCondition\x12%\n\x06memory\x18\x02 \x01(\x0e\x32\x15.aranya.NodeCondition\x12#\n\x04\x64isk\x18\x03 \x01(\x0e\x32\x15.aranya.NodeCondition\x12\"\n\x03pid\x18\x04 \x01(\x0e\x32\x15.aranya.NodeCondition\x12&\n\x07network\x18\x05 \x01(\x0e\x32\x15.aranya.NodeCondition\x12\"\n\x03pod\x18\x06 \x01(\x0e\x32\x15.aranya.NodeCondition\"\xe6\x03\n\x0bNodeExtInfo\x12\r\n\x05value\x18\x01 \x01(\t\x12\x31\n\nvalue_type\x18\x02 \x01(\x0e\x32\x1d.aranya.NodeExtInfo.ValueType\x12.\n\x08operator\x18\x03 \x01(\x0e\x32\x1c.aranya.NodeExtInfo.Operator\x12*\n\x06target\x18\x04 \x01(\x0e\x32\x1a.aranya.NodeExtInfo.Target\x12\x12\n\ntarget_key\x18\x05 \x01(\t\"h\n\tValueType\x12\x1d\n\x19NODE_EXT_INFO_TYPE_STRING\x10\x00\x12\x1e\n\x1aNODE_EXT_INFO_TYPE_INTEGER\x10\x01\x12\x1c\n\x18NODE_EXT_INFO_TYPE_FLOAT\x10\x02\"l\n\x08Operator\x12\x1e\n\x1aNODE_EXT_INFO_OPERATOR_SET\x10\x00\x12\x1e\n\x1aNODE_EXT_INFO_OPERATOR_ADD\x10\x01\x12 \n\x1cNODE_EXT_INFO_OPERATOR_MINUS\x10\x02\"M\n\x06Target\x12#\n\x1fNODE_EXT_INFO_TARGET_ANNOTATION\x10\x00\x12\x1e\n\x1aNODE_EXT_INFO_TARGET_LABEL\x10\x01\"\xb8\x01\n\rNodeStatusMsg\x12+\n\x0bsystem_info\x18\x01 \x01(\x0b\x32\x16.aranya.NodeSystemInfo\x12\'\n\x08\x63\x61pacity\x18\x02 \x01(\x0b\x32\x15.aranya.NodeResources\x12*\n\nconditions\x18\x03 \x01(\x0b\x32\x16.aranya.NodeConditions\x12%\n\x08\x65xt_info\x18\x04 \x03(\x0b\x32\x13.aranya.NodeExtInfo\"\x10\n\x0eStorageListCmd\";\n\x10StorageEnsureCmd\x12\x13\n\x0bremote_path\x18\x01 \x01(\t\x12\x12\n\nlocal_path\x18\x02 \x01(\t\";\n\x10StorageDeleteCmd\x12\x13\n\x0bremote_path\x18\x01 \x01(\t\x12\x12\n\nlocal_path\x18\x02 \x01(\t\"a\n\x10StorageStatusMsg\x12#\n\x05state\x18\x01 \x01(\x0e\x32\x14.aranya.StorageState\x12\x13\n\x0bremote_path\x18\x02 \x01(\t\x12\x13\n\x0bmount_point\x18\x03 \x01(\t\"B\n\x14StorageStatusListMsg\x12*\n\x08storages\x18\x01 \x03(\x0b\x32\x18.aranya.StorageStatusMsg\"\x13\n\x11\x43redentialListCmd\"\x15\n\x13\x43redentialDeleteCmd\".\n\x13\x43redentialEnsureCmd\x12\x17\n\x0fssh_private_key\x18\x01 \x01(\x0c\"5\n\x13\x43redentialStatusMsg\x12\x1e\n\x16ssh_private_key_sha256\x18\x01 \x01(\x0c*\xed\x03\n\x07\x43mdType\x12\x15\n\x11\x43MD_DATA_UPSTREAM\x10\x00\x12\x15\n\x11\x43MD_SESSION_CLOSE\x10\x05\x12\x0e\n\nCMD_REJECT\x10\x06\x12\x0b\n\x07\x43MD_NET\x10\t\x12\x0f\n\x0b\x43MD_RUNTIME\x10\n\x12\x15\n\x11\x43MD_NODE_INFO_GET\x10\x0b\x12\x0c\n\x08\x43MD_EXEC\x10\x0c\x12\x0e\n\nCMD_ATTACH\x10\r\x12\x0c\n\x08\x43MD_LOGS\x10\x0e\x12\x12\n\x0e\x43MD_TTY_RESIZE\x10\x0f\x12\x14\n\x10\x43MD_PORT_FORWARD\x10\x10\x12\x16\n\x12\x43MD_METRICS_CONFIG\x10\x15\x12\x17\n\x13\x43MD_METRICS_COLLECT\x10\x16\x12\x13\n\x0f\x43MD_CRED_ENSURE\x10\x1f\x12\x14\n\x10\x43MD_STORAGE_LIST\x10)\x12\x16\n\x12\x43MD_STORAGE_ENSURE\x10*\x12\x16\n\x12\x43MD_STORAGE_DELETE\x10+\x12\x17\n\x13\x43MD_PERIPHERAL_LIST\x10\x33\x12\x19\n\x15\x43MD_PERIPHERAL_ENSURE\x10\x34\x12\x19\n\x15\x43MD_PERIPHERAL_DELETE\x10\x35\x12\x1a\n\x16\x43MD_PERIPHERAL_OPERATE\x10\x36\x12\"\n\x1e\x43MD_PERIPHERAL_COLLECT_METRICS\x10\x37*\x93\x03\n\x07MsgType\x12\x0c\n\x08MSG_DATA\x10\x00\x12\x14\n\x10MSG_DATA_DEFAULT\x10\x00\x12\x13\n\x0fMSG_DATA_STDOUT\x10\x00\x12\x14\n\x10MSG_DATA_METRICS\x10\x00\x12\x17\n\x13MSG_STREAM_CONTINUE\x10\x00\x12\x13\n\x0fMSG_DATA_STDERR\x10\x01\x12\x0c\n\x08MSG_DONE\x10\x05\x12\r\n\tMSG_STATE\x10\x06\x12\r\n\tMSG_ERROR\x10\x07\x12\x0b\n\x07MSG_NET\x10\t\x12\x0f\n\x0bMSG_RUNTIME\x10\n\x12\x13\n\x0fMSG_NODE_STATUS\x10\x0b\x12\x13\n\x0fMSG_CRED_STATUS\x10\x1f\x12\x16\n\x12MSG_STORAGE_STATUS\x10)\x12\x1b\n\x17MSG_STORAGE_STATUS_LIST\x10*\x12\x19\n\x15MSG_PERIPHERAL_STATUS\x10\x33\x12\x1e\n\x1aMSG_PERIPHERAL_STATUS_LIST\x10\x34\x12#\n\x1fMSG_PERIPHERAL_OPERATION_RESULT\x10\x35\x1a\x02\x10\x01*\xb8\x01\n\x0fRejectionReason\x12\x1d\n\x19_INVALID_REJECTION_REASON\x10\x00\x12\x1b\n\x17REJECTION_INVALID_PROTO\x10\x01\x12\x1f\n\x1bREJECTION_ALREADY_CONNECTED\x10\x02\x12#\n\x1fREJECTION_INITIAL_CHECK_FAILURE\x10\x03\x12#\n\x1fREJECTION_INTERNAL_SERVER_ERROR\x10\x04*e\n\rNodeCondition\x12\x1a\n\x16NODE_CONDITION_UNKNOWN\x10\x00\x12\x1a\n\x16NODE_CONDITION_HEALTHY\x10\x01\x12\x1c\n\x18NODE_CONDITION_UNHEALTHY\x10\x02*`\n\x0cStorageState\x12\x18\n\x14STORAGE_STATE_UNKONW\x10\x00\x12\x1b\n\x17STORAGE_STATE_UNMOUNTED\x10\x01\x12\x19\n\x15STORAGE_STATE_MOUNTED\x10\x02\x42#Z!arhat.dev/aranya-proto/aranyagopbb\x06proto3'
+  serialized_pb=b'\n\x0bproto.proto\x12\x06\x61ranya\"a\n\x03\x43md\x12\x1d\n\x04kind\x18\x01 \x01(\x0e\x32\x0f.aranya.CmdType\x12\x0b\n\x03sid\x18\x02 \x01(\x04\x12\x0b\n\x03seq\x18\x03 \x01(\x04\x12\x10\n\x08\x63omplete\x18\x04 \x01(\x08\x12\x0f\n\x07payload\x18\x0b \x01(\x0c\"a\n\x03Msg\x12\x1d\n\x04kind\x18\x01 \x01(\x0e\x32\x0f.aranya.MsgType\x12\x0b\n\x03sid\x18\x02 \x01(\x04\x12\x0b\n\x03seq\x18\x03 \x01(\x04\x12\x10\n\x08\x63omplete\x18\x04 \x01(\x08\x12\x0f\n\x07payload\x18\x0b \x01(\x0c\"i\n\x0eNodeInfoGetCmd\x12)\n\x04kind\x18\x01 \x01(\x0e\x32\x1b.aranya.NodeInfoGetCmd.Kind\",\n\x04Kind\x12\x11\n\rNODE_INFO_DYN\x10\x00\x12\x11\n\rNODE_INFO_ALL\x10\x01\"\x1e\n\x0fSessionCloseCmd\x12\x0b\n\x03sid\x18\x01 \x01(\x04\"E\n\tRejectCmd\x12\'\n\x06reason\x18\x01 \x01(\x0e\x32\x17.aranya.RejectionReason\x12\x0f\n\x07message\x18\x02 \x01(\t\")\n\nNetworkCmd\x12\x1b\n\x13\x61\x62\x62ot_request_bytes\x18\x01 \x01(\x0c\"\xa8\x01\n\x07LogsCmd\x12\x0f\n\x07pod_uid\x18\x01 \x01(\t\x12\x11\n\tcontainer\x18\x02 \x01(\t\x12\x0e\n\x06\x66ollow\x18\x03 \x01(\x08\x12\x11\n\ttimestamp\x18\x04 \x01(\x08\x12\r\n\x05since\x18\x05 \x01(\t\x12\x12\n\ntail_lines\x18\x06 \x01(\x03\x12\x13\n\x0b\x62ytes_limit\x18\x07 \x01(\x03\x12\x10\n\x08previous\x18\x08 \x01(\x08\x12\x0c\n\x04path\x18\t \x01(\t\"\xe0\x01\n\x0f\x45xecOrAttachCmd\x12\x0f\n\x07pod_uid\x18\x01 \x01(\t\x12\x11\n\tcontainer\x18\x02 \x01(\t\x12\r\n\x05stdin\x18\x03 \x01(\x08\x12\x0e\n\x06stdout\x18\x04 \x01(\x08\x12\x0e\n\x06stderr\x18\x05 \x01(\x08\x12\x0b\n\x03tty\x18\x06 \x01(\x08\x12\x0f\n\x07\x63ommand\x18\x07 \x03(\t\x12/\n\x04\x65nvs\x18\x08 \x03(\x0b\x32!.aranya.ExecOrAttachCmd.EnvsEntry\x1a+\n\tEnvsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"Q\n\x0ePortForwardCmd\x12\x0f\n\x07pod_uid\x18\x01 \x01(\t\x12\x0f\n\x07network\x18\x02 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x03 \x01(\t\x12\x0c\n\x04port\x18\x04 \x01(\x05\"/\n\x11TerminalResizeCmd\x12\x0c\n\x04\x63ols\x18\x01 \x01(\r\x12\x0c\n\x04rows\x18\x02 \x01(\r\"7\n\x10MetricsConfigCmd\x12\x0f\n\x07\x63ollect\x18\x01 \x03(\t\x12\x12\n\nextra_args\x18\x02 \x03(\t\"\xbd\x01\n\x08\x45rrorMsg\x12#\n\x04kind\x18\x01 \x01(\x0e\x32\x15.aranya.ErrorMsg.Kind\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12\x0c\n\x04\x63ode\x18\x03 \x01(\x03\"i\n\x04Kind\x12\x0e\n\nERR_COMMON\x10\x00\x12\x11\n\rERR_NOT_FOUND\x10\x01\x12\x16\n\x12\x45RR_ALREADY_EXISTS\x10\x02\x12\x15\n\x11\x45RR_NOT_SUPPORTED\x10\x03\x12\x0f\n\x0b\x45RR_TIMEOUT\x10\x04\"\x83\x01\n\x08StateMsg\x12#\n\x04kind\x18\x01 \x01(\x0e\x32\x15.aranya.StateMsg.Kind\x12\x11\n\tdevice_id\x18\x02 \x01(\t\"?\n\x04Kind\x12\x12\n\x0e_INVALID_STATE\x10\x00\x12\x10\n\x0cSTATE_ONLINE\x10\x01\x12\x11\n\rSTATE_OFFLINE\x10\x02\"*\n\nNetworkMsg\x12\x1c\n\x14\x61\x62\x62ot_response_bytes\x18\x01 \x01(\x0c\"\x8e\x01\n\x0eNodeSystemInfo\x12\n\n\x02os\x18\x01 \x01(\t\x12\x10\n\x08os_image\x18\x02 \x01(\t\x12\x0c\n\x04\x61rch\x18\x03 \x01(\t\x12\x16\n\x0ekernel_version\x18\x04 \x01(\t\x12\x0f\n\x07\x62oot_id\x18\x05 \x01(\t\x12\x12\n\nmachine_id\x18\x06 \x01(\t\x12\x13\n\x0bsystem_uuid\x18\x07 \x01(\t\"O\n\rNodeResources\x12\x11\n\tcpu_count\x18\x01 \x01(\x04\x12\x14\n\x0cmemory_bytes\x18\x02 \x01(\x04\x12\x15\n\rstorage_bytes\x18\x03 \x01(\x04\"\xf2\x01\n\x0eNodeConditions\x12$\n\x05ready\x18\x01 \x01(\x0e\x32\x15.aranya.NodeCondition\x12%\n\x06memory\x18\x02 \x01(\x0e\x32\x15.aranya.NodeCondition\x12#\n\x04\x64isk\x18\x03 \x01(\x0e\x32\x15.aranya.NodeCondition\x12\"\n\x03pid\x18\x04 \x01(\x0e\x32\x15.aranya.NodeCondition\x12&\n\x07network\x18\x05 \x01(\x0e\x32\x15.aranya.NodeCondition\x12\"\n\x03pod\x18\x06 \x01(\x0e\x32\x15.aranya.NodeCondition\"\xe6\x03\n\x0bNodeExtInfo\x12\r\n\x05value\x18\x01 \x01(\t\x12\x31\n\nvalue_type\x18\x02 \x01(\x0e\x32\x1d.aranya.NodeExtInfo.ValueType\x12.\n\x08operator\x18\x03 \x01(\x0e\x32\x1c.aranya.NodeExtInfo.Operator\x12*\n\x06target\x18\x04 \x01(\x0e\x32\x1a.aranya.NodeExtInfo.Target\x12\x12\n\ntarget_key\x18\x05 \x01(\t\"h\n\tValueType\x12\x1d\n\x19NODE_EXT_INFO_TYPE_STRING\x10\x00\x12\x1e\n\x1aNODE_EXT_INFO_TYPE_INTEGER\x10\x01\x12\x1c\n\x18NODE_EXT_INFO_TYPE_FLOAT\x10\x02\"l\n\x08Operator\x12\x1e\n\x1aNODE_EXT_INFO_OPERATOR_SET\x10\x00\x12\x1e\n\x1aNODE_EXT_INFO_OPERATOR_ADD\x10\x01\x12 \n\x1cNODE_EXT_INFO_OPERATOR_MINUS\x10\x02\"M\n\x06Target\x12#\n\x1fNODE_EXT_INFO_TARGET_ANNOTATION\x10\x00\x12\x1e\n\x1aNODE_EXT_INFO_TARGET_LABEL\x10\x01\"\xb8\x01\n\rNodeStatusMsg\x12+\n\x0bsystem_info\x18\x01 \x01(\x0b\x32\x16.aranya.NodeSystemInfo\x12\'\n\x08\x63\x61pacity\x18\x02 \x01(\x0b\x32\x15.aranya.NodeResources\x12*\n\nconditions\x18\x03 \x01(\x0b\x32\x16.aranya.NodeConditions\x12%\n\x08\x65xt_info\x18\x04 \x03(\x0b\x32\x13.aranya.NodeExtInfo\"\x10\n\x0eStorageListCmd\";\n\x10StorageEnsureCmd\x12\x13\n\x0bremote_path\x18\x01 \x01(\t\x12\x12\n\nlocal_path\x18\x02 \x01(\t\";\n\x10StorageDeleteCmd\x12\x13\n\x0bremote_path\x18\x01 \x01(\t\x12\x12\n\nlocal_path\x18\x02 \x01(\t\"a\n\x10StorageStatusMsg\x12#\n\x05state\x18\x01 \x01(\x0e\x32\x14.aranya.StorageState\x12\x13\n\x0bremote_path\x18\x02 \x01(\t\x12\x13\n\x0bmount_point\x18\x03 \x01(\t\"B\n\x14StorageStatusListMsg\x12*\n\x08storages\x18\x01 \x03(\x0b\x32\x18.aranya.StorageStatusMsg\"\x13\n\x11\x43redentialListCmd\"\x15\n\x13\x43redentialDeleteCmd\".\n\x13\x43redentialEnsureCmd\x12\x17\n\x0fssh_private_key\x18\x01 \x01(\x0c\"5\n\x13\x43redentialStatusMsg\x12\x1e\n\x16ssh_private_key_sha256\x18\x01 \x01(\x0c*\xed\x03\n\x07\x43mdType\x12\x15\n\x11\x43MD_DATA_UPSTREAM\x10\x00\x12\x15\n\x11\x43MD_SESSION_CLOSE\x10\x05\x12\x0e\n\nCMD_REJECT\x10\x06\x12\x0b\n\x07\x43MD_NET\x10\t\x12\x0f\n\x0b\x43MD_RUNTIME\x10\n\x12\x15\n\x11\x43MD_NODE_INFO_GET\x10\x0b\x12\x0c\n\x08\x43MD_EXEC\x10\x0c\x12\x0e\n\nCMD_ATTACH\x10\r\x12\x0c\n\x08\x43MD_LOGS\x10\x0e\x12\x12\n\x0e\x43MD_TTY_RESIZE\x10\x0f\x12\x14\n\x10\x43MD_PORT_FORWARD\x10\x10\x12\x16\n\x12\x43MD_METRICS_CONFIG\x10\x15\x12\x17\n\x13\x43MD_METRICS_COLLECT\x10\x16\x12\x13\n\x0f\x43MD_CRED_ENSURE\x10\x1f\x12\x14\n\x10\x43MD_STORAGE_LIST\x10)\x12\x16\n\x12\x43MD_STORAGE_ENSURE\x10*\x12\x16\n\x12\x43MD_STORAGE_DELETE\x10+\x12\x17\n\x13\x43MD_PERIPHERAL_LIST\x10\x33\x12\x19\n\x15\x43MD_PERIPHERAL_ENSURE\x10\x34\x12\x19\n\x15\x43MD_PERIPHERAL_DELETE\x10\x35\x12\x1a\n\x16\x43MD_PERIPHERAL_OPERATE\x10\x36\x12\"\n\x1e\x43MD_PERIPHERAL_COLLECT_METRICS\x10\x37*\x93\x03\n\x07MsgType\x12\x0c\n\x08MSG_DATA\x10\x00\x12\x14\n\x10MSG_DATA_DEFAULT\x10\x00\x12\x13\n\x0fMSG_DATA_STDOUT\x10\x00\x12\x14\n\x10MSG_DATA_METRICS\x10\x00\x12\x17\n\x13MSG_STREAM_CONTINUE\x10\x00\x12\x13\n\x0fMSG_DATA_STDERR\x10\x01\x12\x0c\n\x08MSG_DONE\x10\x05\x12\r\n\tMSG_STATE\x10\x06\x12\r\n\tMSG_ERROR\x10\x07\x12\x0b\n\x07MSG_NET\x10\t\x12\x0f\n\x0bMSG_RUNTIME\x10\n\x12\x13\n\x0fMSG_NODE_STATUS\x10\x0b\x12\x13\n\x0fMSG_CRED_STATUS\x10\x1f\x12\x16\n\x12MSG_STORAGE_STATUS\x10)\x12\x1b\n\x17MSG_STORAGE_STATUS_LIST\x10*\x12\x19\n\x15MSG_PERIPHERAL_STATUS\x10\x33\x12\x1e\n\x1aMSG_PERIPHERAL_STATUS_LIST\x10\x34\x12#\n\x1fMSG_PERIPHERAL_OPERATION_RESULT\x10\x35\x1a\x02\x10\x01*\xb8\x01\n\x0fRejectionReason\x12\x1d\n\x19_INVALID_REJECTION_REASON\x10\x00\x12\x1b\n\x17REJECTION_INVALID_PROTO\x10\x01\x12\x1f\n\x1bREJECTION_ALREADY_CONNECTED\x10\x02\x12#\n\x1fREJECTION_INITIAL_CHECK_FAILURE\x10\x03\x12#\n\x1fREJECTION_INTERNAL_SERVER_ERROR\x10\x04*e\n\rNodeCondition\x12\x1a\n\x16NODE_CONDITION_UNKNOWN\x10\x00\x12\x1a\n\x16NODE_CONDITION_HEALTHY\x10\x01\x12\x1c\n\x18NODE_CONDITION_UNHEALTHY\x10\x02*`\n\x0cStorageState\x12\x18\n\x14STORAGE_STATE_UNKONW\x10\x00\x12\x1b\n\x17STORAGE_STATE_UNMOUNTED\x10\x01\x12\x19\n\x15STORAGE_STATE_MOUNTED\x10\x02\x42#Z!arhat.dev/aranya-proto/aranyagopbb\x06proto3'
 )
 
 _CMDTYPE = _descriptor.EnumDescriptor(
@@ -143,8 +143,8 @@ _CMDTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=3032,
-  serialized_end=3525,
+  serialized_start=3033,
+  serialized_end=3526,
 )
 _sym_db.RegisterEnumDescriptor(_CMDTYPE)
 
@@ -249,8 +249,8 @@ _MSGTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=b'\020\001',
-  serialized_start=3528,
-  serialized_end=3931,
+  serialized_start=3529,
+  serialized_end=3932,
 )
 _sym_db.RegisterEnumDescriptor(_MSGTYPE)
 
@@ -290,8 +290,8 @@ _REJECTIONREASON = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=3934,
-  serialized_end=4118,
+  serialized_start=3935,
+  serialized_end=4119,
 )
 _sym_db.RegisterEnumDescriptor(_REJECTIONREASON)
 
@@ -321,8 +321,8 @@ _NODECONDITION = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=4120,
-  serialized_end=4221,
+  serialized_start=4121,
+  serialized_end=4222,
 )
 _sym_db.RegisterEnumDescriptor(_NODECONDITION)
 
@@ -352,8 +352,8 @@ _STORAGESTATE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=4223,
-  serialized_end=4319,
+  serialized_start=4224,
+  serialized_end=4320,
 )
 _sym_db.RegisterEnumDescriptor(_STORAGESTATE)
 
@@ -431,8 +431,8 @@ _NODEINFOGETCMD_KIND = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=284,
-  serialized_end=328,
+  serialized_start=282,
+  serialized_end=326,
 )
 _sym_db.RegisterEnumDescriptor(_NODEINFOGETCMD_KIND)
 
@@ -471,8 +471,8 @@ _ERRORMSG_KIND = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1145,
-  serialized_end=1250,
+  serialized_start=1146,
+  serialized_end=1251,
 )
 _sym_db.RegisterEnumDescriptor(_ERRORMSG_KIND)
 
@@ -501,8 +501,8 @@ _STATEMSG_KIND = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1321,
-  serialized_end=1384,
+  serialized_start=1322,
+  serialized_end=1385,
 )
 _sym_db.RegisterEnumDescriptor(_STATEMSG_KIND)
 
@@ -531,8 +531,8 @@ _NODEEXTINFO_VALUETYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=2095,
-  serialized_end=2199,
+  serialized_start=2096,
+  serialized_end=2200,
 )
 _sym_db.RegisterEnumDescriptor(_NODEEXTINFO_VALUETYPE)
 
@@ -561,8 +561,8 @@ _NODEEXTINFO_OPERATOR = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=2201,
-  serialized_end=2309,
+  serialized_start=2202,
+  serialized_end=2310,
 )
 _sym_db.RegisterEnumDescriptor(_NODEEXTINFO_OPERATOR)
 
@@ -586,8 +586,8 @@ _NODEEXTINFO_TARGET = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=2311,
-  serialized_end=2388,
+  serialized_start=2312,
+  serialized_end=2389,
 )
 _sym_db.RegisterEnumDescriptor(_NODEEXTINFO_TARGET)
 
@@ -622,7 +622,7 @@ _CMD = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='completed', full_name='aranya.Cmd.completed', index=3,
+      name='complete', full_name='aranya.Cmd.complete', index=3,
       number=4, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
@@ -648,7 +648,7 @@ _CMD = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=23,
-  serialized_end=121,
+  serialized_end=120,
 )
 
 
@@ -682,7 +682,7 @@ _MSG = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='completed', full_name='aranya.Msg.completed', index=3,
+      name='complete', full_name='aranya.Msg.complete', index=3,
       number=4, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
@@ -707,8 +707,8 @@ _MSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=123,
-  serialized_end=221,
+  serialized_start=122,
+  serialized_end=219,
 )
 
 
@@ -740,8 +740,8 @@ _NODEINFOGETCMD = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=223,
-  serialized_end=328,
+  serialized_start=221,
+  serialized_end=326,
 )
 
 
@@ -772,8 +772,8 @@ _SESSIONCLOSECMD = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=330,
-  serialized_end=360,
+  serialized_start=328,
+  serialized_end=358,
 )
 
 
@@ -811,8 +811,8 @@ _REJECTCMD = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=362,
-  serialized_end=431,
+  serialized_start=360,
+  serialized_end=429,
 )
 
 
@@ -843,8 +843,8 @@ _NETWORKCMD = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=433,
-  serialized_end=474,
+  serialized_start=431,
+  serialized_end=472,
 )
 
 
@@ -931,8 +931,8 @@ _LOGSCMD = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=477,
-  serialized_end=645,
+  serialized_start=475,
+  serialized_end=643,
 )
 
 
@@ -970,8 +970,8 @@ _EXECORATTACHCMD_ENVSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=829,
-  serialized_end=872,
+  serialized_start=827,
+  serialized_end=870,
 )
 
 _EXECORATTACHCMD = _descriptor.Descriptor(
@@ -1050,8 +1050,8 @@ _EXECORATTACHCMD = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=648,
-  serialized_end=872,
+  serialized_start=646,
+  serialized_end=870,
 )
 
 
@@ -1078,7 +1078,7 @@ _PORTFORWARDCMD = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='host', full_name='aranya.PortForwardCmd.host', index=2,
+      name='address', full_name='aranya.PortForwardCmd.address', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -1103,8 +1103,8 @@ _PORTFORWARDCMD = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=874,
-  serialized_end=952,
+  serialized_start=872,
+  serialized_end=953,
 )
 
 
@@ -1142,8 +1142,8 @@ _TERMINALRESIZECMD = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=954,
-  serialized_end=1001,
+  serialized_start=955,
+  serialized_end=1002,
 )
 
 
@@ -1181,8 +1181,8 @@ _METRICSCONFIGCMD = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1003,
-  serialized_end=1058,
+  serialized_start=1004,
+  serialized_end=1059,
 )
 
 
@@ -1228,8 +1228,8 @@ _ERRORMSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1061,
-  serialized_end=1250,
+  serialized_start=1062,
+  serialized_end=1251,
 )
 
 
@@ -1268,8 +1268,8 @@ _STATEMSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1253,
-  serialized_end=1384,
+  serialized_start=1254,
+  serialized_end=1385,
 )
 
 
@@ -1300,8 +1300,8 @@ _NETWORKMSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1386,
-  serialized_end=1428,
+  serialized_start=1387,
+  serialized_end=1429,
 )
 
 
@@ -1374,8 +1374,8 @@ _NODESYSTEMINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1431,
-  serialized_end=1573,
+  serialized_start=1432,
+  serialized_end=1574,
 )
 
 
@@ -1420,8 +1420,8 @@ _NODERESOURCES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1575,
-  serialized_end=1654,
+  serialized_start=1576,
+  serialized_end=1655,
 )
 
 
@@ -1487,8 +1487,8 @@ _NODECONDITIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1657,
-  serialized_end=1899,
+  serialized_start=1658,
+  serialized_end=1900,
 )
 
 
@@ -1550,8 +1550,8 @@ _NODEEXTINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1902,
-  serialized_end=2388,
+  serialized_start=1903,
+  serialized_end=2389,
 )
 
 
@@ -1603,8 +1603,8 @@ _NODESTATUSMSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2391,
-  serialized_end=2575,
+  serialized_start=2392,
+  serialized_end=2576,
 )
 
 
@@ -1628,8 +1628,8 @@ _STORAGELISTCMD = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2577,
-  serialized_end=2593,
+  serialized_start=2578,
+  serialized_end=2594,
 )
 
 
@@ -1667,8 +1667,8 @@ _STORAGEENSURECMD = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2595,
-  serialized_end=2654,
+  serialized_start=2596,
+  serialized_end=2655,
 )
 
 
@@ -1706,8 +1706,8 @@ _STORAGEDELETECMD = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2656,
-  serialized_end=2715,
+  serialized_start=2657,
+  serialized_end=2716,
 )
 
 
@@ -1752,8 +1752,8 @@ _STORAGESTATUSMSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2717,
-  serialized_end=2814,
+  serialized_start=2718,
+  serialized_end=2815,
 )
 
 
@@ -1784,8 +1784,8 @@ _STORAGESTATUSLISTMSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2816,
-  serialized_end=2882,
+  serialized_start=2817,
+  serialized_end=2883,
 )
 
 
@@ -1809,8 +1809,8 @@ _CREDENTIALLISTCMD = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2884,
-  serialized_end=2903,
+  serialized_start=2885,
+  serialized_end=2904,
 )
 
 
@@ -1834,8 +1834,8 @@ _CREDENTIALDELETECMD = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2905,
-  serialized_end=2926,
+  serialized_start=2906,
+  serialized_end=2927,
 )
 
 
@@ -1866,8 +1866,8 @@ _CREDENTIALENSURECMD = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2928,
-  serialized_end=2974,
+  serialized_start=2929,
+  serialized_end=2975,
 )
 
 
@@ -1898,8 +1898,8 @@ _CREDENTIALSTATUSMSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2976,
-  serialized_end=3029,
+  serialized_start=2977,
+  serialized_end=3030,
 )
 
 _CMD.fields_by_name['kind'].enum_type = _CMDTYPE

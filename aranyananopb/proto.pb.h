@@ -183,7 +183,7 @@ typedef struct _aranya_Cmd {
     aranya_CmdType kind;
     uint64_t sid;
     uint64_t seq;
-    bool completed;
+    bool complete;
     pb_callback_t payload;
 } aranya_Cmd;
 
@@ -220,7 +220,7 @@ typedef struct _aranya_Msg {
     aranya_MsgType kind;
     uint64_t sid;
     uint64_t seq;
-    bool completed;
+    bool complete;
     pb_callback_t payload;
 } aranya_Msg;
 
@@ -254,7 +254,7 @@ typedef struct _aranya_NodeResources {
 typedef struct _aranya_PortForwardCmd {
     pb_callback_t pod_uid;
     pb_callback_t network;
-    pb_callback_t host;
+    pb_callback_t address;
     int32_t port;
 } aranya_PortForwardCmd;
 
@@ -424,7 +424,7 @@ typedef struct _aranya_NodeStatusMsg {
 #define aranya_Cmd_kind_tag                      1
 #define aranya_Cmd_sid_tag                       2
 #define aranya_Cmd_seq_tag                       3
-#define aranya_Cmd_completed_tag                 4
+#define aranya_Cmd_complete_tag                  4
 #define aranya_Cmd_payload_tag                   11
 #define aranya_ErrorMsg_kind_tag                 1
 #define aranya_ErrorMsg_description_tag          2
@@ -449,7 +449,7 @@ typedef struct _aranya_NodeStatusMsg {
 #define aranya_Msg_kind_tag                      1
 #define aranya_Msg_sid_tag                       2
 #define aranya_Msg_seq_tag                       3
-#define aranya_Msg_completed_tag                 4
+#define aranya_Msg_complete_tag                  4
 #define aranya_Msg_payload_tag                   11
 #define aranya_NodeConditions_ready_tag          1
 #define aranya_NodeConditions_memory_tag         2
@@ -468,7 +468,7 @@ typedef struct _aranya_NodeStatusMsg {
 #define aranya_NodeResources_storage_bytes_tag   3
 #define aranya_PortForwardCmd_pod_uid_tag        1
 #define aranya_PortForwardCmd_network_tag        2
-#define aranya_PortForwardCmd_host_tag           3
+#define aranya_PortForwardCmd_address_tag        3
 #define aranya_PortForwardCmd_port_tag           4
 #define aranya_RejectCmd_reason_tag              1
 #define aranya_RejectCmd_message_tag             2
@@ -490,7 +490,7 @@ typedef struct _aranya_NodeStatusMsg {
 X(a, STATIC,   SINGULAR, UENUM,    kind,              1) \
 X(a, STATIC,   SINGULAR, UINT64,   sid,               2) \
 X(a, STATIC,   SINGULAR, UINT64,   seq,               3) \
-X(a, STATIC,   SINGULAR, BOOL,     completed,         4) \
+X(a, STATIC,   SINGULAR, BOOL,     complete,          4) \
 X(a, CALLBACK, SINGULAR, BYTES,    payload,          11)
 #define aranya_Cmd_CALLBACK pb_default_field_callback
 #define aranya_Cmd_DEFAULT NULL
@@ -499,7 +499,7 @@ X(a, CALLBACK, SINGULAR, BYTES,    payload,          11)
 X(a, STATIC,   SINGULAR, UENUM,    kind,              1) \
 X(a, STATIC,   SINGULAR, UINT64,   sid,               2) \
 X(a, STATIC,   SINGULAR, UINT64,   seq,               3) \
-X(a, STATIC,   SINGULAR, BOOL,     completed,         4) \
+X(a, STATIC,   SINGULAR, BOOL,     complete,          4) \
 X(a, CALLBACK, SINGULAR, BYTES,    payload,          11)
 #define aranya_Msg_CALLBACK pb_default_field_callback
 #define aranya_Msg_DEFAULT NULL
@@ -560,7 +560,7 @@ X(a, CALLBACK, SINGULAR, STRING,   value,             2)
 #define aranya_PortForwardCmd_FIELDLIST(X, a) \
 X(a, CALLBACK, SINGULAR, STRING,   pod_uid,           1) \
 X(a, CALLBACK, SINGULAR, STRING,   network,           2) \
-X(a, CALLBACK, SINGULAR, STRING,   host,              3) \
+X(a, CALLBACK, SINGULAR, STRING,   address,           3) \
 X(a, STATIC,   SINGULAR, INT32,    port,              4)
 #define aranya_PortForwardCmd_CALLBACK pb_default_field_callback
 #define aranya_PortForwardCmd_DEFAULT NULL

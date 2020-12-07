@@ -77,7 +77,7 @@ message Cmd {
     uint64 seq = 3;
 
     // mark this Cmd is the last piece in the session
-    bool completed = 4;
+    bool complete = 4;
 
     // payload of encoded XxxCmd or raw data bytes
     //
@@ -137,7 +137,7 @@ message Msg {
     uint64 seq = 3;
 
     // mark this Msg is the last piece in the session
-    bool completed = 4;
+    bool complete = 4;
 
     // payload of encoded XxxMsg or raw data bytes
     //
@@ -224,11 +224,13 @@ message PortForwardCmd {
     // Network type of the forwarded endpoint
     string network = 2;
 
-    // host part of forwarded endpoint
-    string host = 3;
+    // address part of forwarded endpoint
+    // for ip based protocols (e.g. tcp/udp), this is the ip address or hostname
+    // for file based protocols (e.g. unix/NamedPipe), this is the file path
+    string address = 3;
 
     // port used for ip based protocols (e.g. tcp/udp)
-    // for filed based protocols (e.g. unix/NamedPipe), this should be ignored
+    // for file based protocols (e.g. unix/NamedPipe), this should be ignored
     int32 port = 4;
 }
 
