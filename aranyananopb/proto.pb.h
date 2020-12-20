@@ -101,8 +101,7 @@ typedef enum _aranya_StateMsg_Kind {
 
 typedef enum _aranya_NodeExtInfo_ValueType {
     aranya_NodeExtInfo_ValueType_NODE_EXT_INFO_TYPE_STRING = 0,
-    aranya_NodeExtInfo_ValueType_NODE_EXT_INFO_TYPE_INTEGER = 1,
-    aranya_NodeExtInfo_ValueType_NODE_EXT_INFO_TYPE_FLOAT = 2
+    aranya_NodeExtInfo_ValueType_NODE_EXT_INFO_TYPE_NUMBER = 1
 } aranya_NodeExtInfo_ValueType;
 
 typedef enum _aranya_NodeExtInfo_Operator {
@@ -328,8 +327,8 @@ typedef struct _aranya_NodeStatusMsg {
 #define _aranya_StateMsg_Kind_ARRAYSIZE ((aranya_StateMsg_Kind)(aranya_StateMsg_Kind_STATE_OFFLINE+1))
 
 #define _aranya_NodeExtInfo_ValueType_MIN aranya_NodeExtInfo_ValueType_NODE_EXT_INFO_TYPE_STRING
-#define _aranya_NodeExtInfo_ValueType_MAX aranya_NodeExtInfo_ValueType_NODE_EXT_INFO_TYPE_FLOAT
-#define _aranya_NodeExtInfo_ValueType_ARRAYSIZE ((aranya_NodeExtInfo_ValueType)(aranya_NodeExtInfo_ValueType_NODE_EXT_INFO_TYPE_FLOAT+1))
+#define _aranya_NodeExtInfo_ValueType_MAX aranya_NodeExtInfo_ValueType_NODE_EXT_INFO_TYPE_NUMBER
+#define _aranya_NodeExtInfo_ValueType_ARRAYSIZE ((aranya_NodeExtInfo_ValueType)(aranya_NodeExtInfo_ValueType_NODE_EXT_INFO_TYPE_NUMBER+1))
 
 #define _aranya_NodeExtInfo_Operator_MIN aranya_NodeExtInfo_Operator_NODE_EXT_INFO_OPERATOR_SET
 #define _aranya_NodeExtInfo_Operator_MAX aranya_NodeExtInfo_Operator_NODE_EXT_INFO_OPERATOR_MINUS

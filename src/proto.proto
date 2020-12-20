@@ -339,16 +339,15 @@ message NodeConditions {
 message NodeExtInfo {
     enum ValueType {
         NODE_EXT_INFO_TYPE_STRING = 0;
-        NODE_EXT_INFO_TYPE_INTEGER = 1;
-        NODE_EXT_INFO_TYPE_FLOAT = 2;
+        NODE_EXT_INFO_TYPE_NUMBER = 1;
     }
 
     enum Operator {
-        // no matter what previous value is, set to new value
+        // no matter what previous value is, set to the new value
         NODE_EXT_INFO_OPERATOR_SET = 0;
-        // only valid for {integer, float}
+        // only valid for {string, number}
         NODE_EXT_INFO_OPERATOR_ADD = 1;
-        // only valid for {integer, float}
+        // only valid for {number}
         NODE_EXT_INFO_OPERATOR_MINUS = 2;
     }
 
