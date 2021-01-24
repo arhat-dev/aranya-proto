@@ -3,6 +3,6 @@ module arhat.dev/aranya-proto
 go 1.15
 
 require (
-	github.com/gogo/protobuf v1.3.1
-	google.golang.org/grpc v1.33.2
+	github.com/gogo/protobuf v1.3.2
+	google.golang.org/grpc v1.35.0
 )
